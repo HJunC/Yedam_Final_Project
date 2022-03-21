@@ -10,7 +10,7 @@
 		<result property="memberExp" column="member_exp"/>
 		<result property="memberCash" column="member_cash"/>
 		<result property="memberResume" column="member_resume"/>
-		<result property="memberPhoto" column="memberPhoto"/>
+		<result property="memberPhoto" column="member_photo"/>
 	</resultMap>
 	
 	<select id="memberSelect" resultMap="memberMap">
