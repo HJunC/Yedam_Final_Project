@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.yd.deval.member.service.MemberMapper">
+	<resultMap type="co.yd.deval.member.vo.MemberVO" id="memberMap">
+		<id property="memberId" column="member_id"/>
+		<result property="memberPassword" column="member_password"/>
+		<result property="memberPhone" column="member_phone"/>
+		<result property="memberMail" column="member_mail"/>
+		<result property="memberName" column="member_name"/>
+		<result property="memberExp" column="member_exp"/>
+		<result property="memberCash" column="member_cash"/>
+		<result property="memberResume" column="member_resume"/>
+		<result property="memberPhoto" column="memberPhoto"/>
+	</resultMap>
+	
+	<select id="memberSelect" resultMap="memberMap">
+		SELECT * 
+		FROM MEMBER
+		WHERE MEMBER_ID = #{memberId}
+		<if test="memberPassword != null">
+		AND MEMBER_PASSWORD = #{memberPassword}
+		</if>
+	</select>
+	
+	<insert id="memberInsert" parameterType="co.yd.deval.member.vo.MemberVO">
+		INSERT INTO MEMBER (MEMBER_ID,MEMBER_PASSWORD,MEMBER_PHONE,MEMBER_MAIL,MEMBER_NAME)
+		VALUES      (#{memberId},#{memberPassword},#{memberPhone},#{memberMail},#{memberName})
+	</insert>
+	
+	<update id="memberUpdate" parameterType="co.yd.deval.member.vo.MemberVO">
+		UPDATE MEMBER
+		<set>
+			<if test="memberPassword != null"> MEMBER_PASSWORD = #{memberPassword}, </if>
+			<if test="memberPhone != null"> MEMBER_PHONE = #{memberPhone}, </if>
+			<if test="memberMail != null"> MEMBER_MAIL = #{memberMail}, </if>
+			<if test="memberResume != null"> MEMBER_RESUME = #{memberResume}, </if>
+			<if test="memberPhoto != null"> MEMBER_PHOTO = #{memberPhoto}, </if>
+		</set>
+		WHERE MEMBER_ID = #{memberId}
+	</update>
+	
+	<delete id="memberDelete" parameterType="co.yd.deval.member.vo.MemberVO">
+		DELETE FROM MEMBER
+		WHERE  MEMBER_ID = #{memberId}
+		AND    MEMBER_PASSWORD = #{memberPassword}
+	</delete>
+	
+	<update id="memberExpUp" parameterType="HashMap">
+		UPDATE MEMBER
+		SET MEMBER_EXP = MEMBER_EXP + #{exp}
+		WHERE MEMBER_ID = #{id}
+	</update>
+	
+	<update id="memberCashUpdate" parameterType="HashMap">
+		UPDATE MEMBER
+		SET MEMBER_CASH = MEMBER_CASH + #{cash}
+		WHERE MEMBER_ID = #{id}
+	</update>
+	
+	
+</mapper>
