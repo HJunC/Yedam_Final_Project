@@ -157,3 +157,7 @@
 	</div>
 </section>
 <!-- End Section -->
+
+<!-- Divider -->
+<hr class="mt-0 mb-0 white" />
+<!-- End Divider -->

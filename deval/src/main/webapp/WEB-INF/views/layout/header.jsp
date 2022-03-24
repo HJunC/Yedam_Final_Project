@@ -25,7 +25,7 @@
 			<ul class="clearlist">
 
 				<li>
-					<a href="#" class="mn-has-sub active">커뮤니티 <i class="mn-has-sub-icon"></i></a>
+					<a href="home.do" class="mn-has-sub active">커뮤니티 <i class="mn-has-sub-icon"></i></a>
 					<!-- Sub Multilevel -->
 					<ul class="mn-sub mn-has-multi">
 
