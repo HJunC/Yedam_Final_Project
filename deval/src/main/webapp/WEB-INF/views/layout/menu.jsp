@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <hr>
+
 <a href="home.do">홈으로</a>
 <c:if test="${empty user && empty company}">
 	<a href="loginForm.do">로그인</a>

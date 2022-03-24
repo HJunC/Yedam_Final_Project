@@ -39,6 +39,4 @@
 	
 	<context:component-scan base-package="co.yd.deval" />
 	
-	
-	
 </beans:beans>
