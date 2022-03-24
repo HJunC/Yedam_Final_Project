@@ -15,7 +15,6 @@ public class HomeController {
 	
 	@RequestMapping("/home.do")
 	public String main() {
-//		test
 		return "home/home";
 	}
 	
