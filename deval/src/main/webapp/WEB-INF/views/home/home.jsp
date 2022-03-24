@@ -10,7 +10,6 @@
 <body>
 <div align="center">
 <h1>here is test</h1>
-test
 <c:if test="${not empty user}">
 	<h1>${user.memberName}님 환영합니다</h1>
 </c:if>
