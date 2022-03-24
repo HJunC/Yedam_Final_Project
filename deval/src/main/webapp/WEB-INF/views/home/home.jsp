@@ -24,7 +24,7 @@
     <!-- End Slide Item -->
 
     <!-- Slide Item -->
-    <section class="home-section bg-scroll bg-dark-alfa-50 light-content" data-background="images/full-width-images/section-bg-14.jpg">
+    <section class="home-section bg-scroll bg-dark-alfa-50 light-content" data-background="${resources}/images/full-width-images/section-bg-14.jpg">
         <div class="container fixed-height-medium d-flex align-items-center">
 
             <!-- Hero Content -->
@@ -43,7 +43,7 @@
     <!-- End Slide Item -->
 
     <!-- Slide Item -->
-    <section class="home-section bg-scroll bg-dark-alfa-70 light-content" data-background="images/full-width-images/section-bg-21.jpg">
+    <section class="home-section bg-scroll bg-dark-alfa-70 light-content" data-background="${resources}/images/full-width-images/section-bg-21.jpg">
         <div class="container fixed-height-medium d-flex align-items-center">
 
             <!-- Hero Content -->

@@ -51,11 +51,7 @@
 				</li>
 
 				<li>
-					<a href="#" class="mn-has-sub">구인구직 <i class="mn-has-sub-icon"></i></a>
-					<ul class="mn-sub to-right">
-						<li><a href="#">구인</a></li>
-						<li><a href="#">구직</a></li>
-					</ul>
+					<a href="#" class="mn-has-sub">채용공고</a>
 				</li>
 
 				<li>
@@ -76,8 +72,8 @@
 				<!-- End Divider -->
 
 				<c:if test="${empty user && empty company}">
-				<li><a href="#" class="mn-has-sub">로그인</a></li>
-				<li><a href="#" class="mn-has-sub">회원가입</a></li>
+				<li><a href="loginForm.do" class="mn-has-sub">로그인</a></li>
+				<li><a href="signUpForm.do" class="mn-has-sub">회원가입</a></li>
 				</c:if>
 
 				<c:if test="${not empty user}">
@@ -85,9 +81,19 @@
 					<a href="#" class="mn-has-sub">내 정보 <i class="mn-has-sub-icon"></i></a>
 					<ul class="mn-sub">
 						<li><a href="">마이페이지</a></li>
-						<li><a href="">로그아웃</a></li>
+						<li><a href="logout.do">로그아웃</a></li>
 					</ul>
 				</li>
+				</c:if>
+
+				<c:if test="${not empty company}">
+					<li>
+						<a href="#" class="mn-has-sub">내 정보 <i class="mn-has-sub-icon"></i></a>
+						<ul class="mn-sub">
+							<li><a href="">회사페이지</a></li>
+							<li><a href="logout.do">로그아웃</a></li>
+						</ul>
+					</li>
 				</c:if>
 
 			</ul>

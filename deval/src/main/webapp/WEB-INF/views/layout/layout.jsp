@@ -23,8 +23,19 @@
 		<link rel="stylesheet" href="${resources}/css/owl.carousel.css">
 		<link rel="stylesheet" href="${resources}/css/animate.min.css">
 		<link rel="stylesheet" href="${resources}/css/splitting.css">
+		<link rel="stylesheet" href="${resources}/css/custom/team-project-style.css">
 	</head>
-	<body>
+	<body class="appear-animate">
+		<!-- Page Loader -->
+		<div class="page-loader dark">
+			<div class="loader">Loading...</div>
+		</div>
+		<!-- End Page Loader -->
+
+		<!-- Skip to Content -->
+		<a href="#main" class="btn skip-to-content">Skip to Content</a>
+		<!-- End Skip to Content -->
+
 		<div class="page bg-dark light-content" id="top">
 			<tiles:insertAttribute name="header"/>
 			<main id="main">
