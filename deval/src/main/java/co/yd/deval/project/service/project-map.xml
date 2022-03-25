@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="co.yd.deval.project.service.ProjectMapper">
+
+<!--    <resultMap id="projectMap" type="co.yd.deval.project.vo.ProjectVO">
+        <id property="projectNo" column="project_no" />
+        <result property="projectName" column="project_name"/>
+        <result property="state" column="state"/>
+        <result property="process" column="process"/>
+        <result property="recruitSdt" column="recruit_sdt"/>
+        <result property="recruitEdt" column=""/>
+        <result property="subject" column=""/>
+        <result property="lang" column=""/>
+        <result property="totalRcnt" column=""/>
+        <result property="projectSdt" column=""/>
+        <result property="frontRcnt" column=""/>
+        <result property="backRcnt" column=""/>
+        <result property="designRcnt" column=""/>
+        <result property="projectEdt" column=""/>
+        <result property="lang" column=""/>
+        <result property="lang" column=""/>
+    </resultMap>-->
+
+    <insert id="projectInsert">
+        insert into PROJECT (PROJECT_NO,
+                             PROJECT_NAME,
+                             STATE,
+                             PROCESS,
+                             RECRUIT_SDT,
+                             RECRUIT_EDT,
+                             SUBJECT,
+                             LANG,
+                             TOTAL_RCNT,
+                             PROJECT_SDT,
+                             FRONT_RCNT,
+                             BACK_RCNT,
+                             DESIGN_RCNT,
+                             PROJECT_EDT,
+                             FULL_RCNT,
+                             PLANNER_RCNT,
+                             PROJECT_TERM,
+                             HIT,
+                             APPLY_RCNT,
+                             LEADER_ID)
+        values (#{projectNo}, #{projectName}, #{state}, #{process}, sysdate, #{recruitEdt}, #{subject}, #{lang}, #{totalRcnt},
+                #{projectSdt}, #{frontRcnt}, #{backRcnt}, #{designRcnt}, #{projectEdt}, #{fullRcnt}, #{plannerRcnt}, #{projectTerm},
+                #{hit}, #{applyRcnt}, #{leaderId});
+    </insert>
+
+    <delete id="projectDelete"></delete>
+    <update id="projectUpdate"></update>
+    <select id="projectSelectList" resultType="co.yd.deval.project.vo.ProjectVO"></select>
+    <select id="findByLeaderId" resultType="co.yd.deval.project.vo.ProjectVO"></select>
+    <select id="projectSelect" resultType="co.yd.deval.project.vo.ProjectVO"></select>
+</mapper>
