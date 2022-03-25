@@ -8,9 +8,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/job")
 public class JobController {
 
-    @GetMapping("main.do")
-    public String main() {
-        return "job/jobMain";
+    @GetMapping("/seeking.do")
+    public String seeking() {
+        return "job/seeking";
+    }
+
+    @GetMapping("/offer.do")
+    public String offer() {
+        return "job/jobOffer";
     }
 
 }

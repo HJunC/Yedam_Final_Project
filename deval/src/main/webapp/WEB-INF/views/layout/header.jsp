@@ -18,7 +18,7 @@
 		<!-- Mobile Menu Button -->
 		<div class="mobile-nav" role="button" tabindex="0">
 			<i class="fa fa-bars"></i>
-			<span class="sr-only">Menu</span>
+			<span class="sr-only">메뉴</span>
 		</div>
 
 		<!-- Main Menu -->
@@ -52,7 +52,15 @@
 				</li>
 
 				<li>
-					<a href="${root}/job/main.do" class="mn-has-sub">채용공고</a>
+					<a href="#" class="mn-has-sub">구인구직 <i class="mn-has-sub-icon"></i></a>
+					<ul class="mn-sub mn-has-multi">
+						<li class="mn-sub-multi">
+							<ul>
+								<li><a href="${root}/job/offer.do">구인</a></li>
+								<li><a href="${root}/job/seeking.do">구직</a></li>
+							</ul>
+						</li>
+					</ul>
 				</li>
 
 				<li>
@@ -73,16 +81,16 @@
 				<!-- End Divider -->
 
 				<c:if test="${empty user && empty company}">
-				<li><a href="loginForm.do" class="mn-has-sub">로그인</a></li>
-				<li><a href="signUpForm.do" class="mn-has-sub">회원가입</a></li>
+				<li><a href="${root}/loginForm.do" class="mn-has-sub">로그인</a></li>
+				<li><a href="${root}/signUpForm.do" class="mn-has-sub">회원가입</a></li>
 				</c:if>
 
 				<c:if test="${not empty user}">
 				<li>
 					<a href="#" class="mn-has-sub">내 정보 <i class="mn-has-sub-icon"></i></a>
 					<ul class="mn-sub">
-						<li><a href="">마이페이지</a></li>
-						<li><a href="logout.do">로그아웃</a></li>
+						<li><a href="${root}/myPage.do">마이페이지</a></li>
+						<li><a href="${root}/logout.do">로그아웃</a></li>
 					</ul>
 				</li>
 				</c:if>
@@ -91,8 +99,8 @@
 					<li>
 						<a href="#" class="mn-has-sub">내 정보 <i class="mn-has-sub-icon"></i></a>
 						<ul class="mn-sub">
-							<li><a href="">회사페이지</a></li>
-							<li><a href="logout.do">로그아웃</a></li>
+							<li><a href="${root}/coPage.do">회사페이지</a></li>
+							<li><a href="${root}/logout.do">로그아웃</a></li>
 						</ul>
 					</li>
 				</c:if>

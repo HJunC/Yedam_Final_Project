@@ -23,8 +23,4 @@ public class BoardController {
         return "board/technical";
     }
 
-    @GetMapping("/usedTransaction.do")
-    public String usedTransaction() {
-        return "board/usedTransaction";
-    }
 }
