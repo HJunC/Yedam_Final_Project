@@ -1,4 +1,4 @@
-package co.yd.deval.board.web;
+package co.yd.deval.usedDeal.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/board")
-public class usedTransactionController {
+public class usedDealController {
 
-    @GetMapping("/usedTransaction.do")
-    public String usedTransaction() {
-        return "board/usedTransaction";
+    @GetMapping("/usedDeal.do")
+    public String usedDeal() {
+        return "board/usedDeal";
     }
 
 }

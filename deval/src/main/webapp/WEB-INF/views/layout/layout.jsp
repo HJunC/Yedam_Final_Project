@@ -16,13 +16,7 @@
 
 		<!-- CSS -->
 		<link rel="stylesheet" href="${resources}/css/bootstrap.min.css">
-		<link rel="stylesheet" href="${resources}/css/style.css">
-		<link rel="stylesheet" href="${resources}/css/style-responsive.css">
-		<link rel="stylesheet" href="${resources}/css/vertical-rhythm.min.css">
-		<link rel="stylesheet" href="${resources}/css/magnific-popup.css">
-		<link rel="stylesheet" href="${resources}/css/owl.carousel.css">
-		<link rel="stylesheet" href="${resources}/css/animate.min.css">
-		<link rel="stylesheet" href="${resources}/css/splitting.css">
+		<link rel="stylesheet" href="${resources}/css/template.css">
 		<link rel="stylesheet" href="${resources}/css/custom/team-project-style.css">
 	</head>
 	<body class="appear-animate">
