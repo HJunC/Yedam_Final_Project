@@ -22,5 +22,10 @@ public class BoardController {
     public String technical() {
         return "board/technical";
     }
+    
+    @GetMapping("/write.do")
+    public String write() {
+    	return "board/write";
+    }
 
 }
