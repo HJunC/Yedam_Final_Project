@@ -42,17 +42,17 @@
 						<li class="mn-sub-multi">
 							<a class="mn-group-title">Code</a>
 							<ul>
-								<li><a href="${root}/code/shared.do">코드공유</a></li>
-								<li><a href="${root}/code/review.do">코드리뷰</a></li>
-								<li><a href="${root}/code/question.do">질문</a></li>
-								<li><a href="${root}/code/answer.do">답변</a></li>
+								<li><a href="${root}/code/shared.do">코드공유/질문</a></li>
+								<%-- <li><a href="${root}/code/review.do">코드리뷰</a></li> --%>
+								<%-- <li><a href="${root}/code/question.do">질문</a></li> --%>
+								<%-- <li><a href="${root}/code/answer.do">답변</a></li> --%>
 							</ul>
 						</li>
 					</ul>
 				</li>
 
 				<li>
-					<a href="#" class="mn-has-sub">구인구직 <i class="mn-has-sub-icon"></i></a>
+					<a href="#" class="mn-has-sub">구인/구직 <i class="mn-has-sub-icon"></i></a>
 					<ul class="mn-sub mn-has-multi">
 						<li class="mn-sub-multi">
 							<ul>
