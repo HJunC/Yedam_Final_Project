@@ -119,7 +119,7 @@
                                                 15
                                             </div>
                                             <div class="count-descr">
-                                                <i class="fa fa-hads-helping"></i>
+                                                <i class="fa fa-hands-helping"></i>
                                                 <span class="count-title">매칭</span>
                                             </div>
                                         </div>
