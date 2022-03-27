@@ -4,7 +4,7 @@ import co.yd.deval.project.vo.ProjectRequestVO;
 
 import java.util.List;
 
-public interface ProjectRequestService {
+public interface ProjectRequestMapper {
     List<ProjectRequestVO> selectProjectRequestAll();
     ProjectRequestVO selectProjectRequest(ProjectRequestVO vo);
     int insertProjectRequest(ProjectRequestVO vo);

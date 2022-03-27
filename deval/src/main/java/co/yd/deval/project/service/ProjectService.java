@@ -5,11 +5,12 @@ import co.yd.deval.project.vo.ProjectVO;
 import java.util.List;
 
 public interface ProjectService {
-    List<ProjectVO> projectSelectList();
-    ProjectVO projectSelect(ProjectVO vo);
-    int projectInsert(ProjectVO vo);
-    int projectDelete(ProjectVO vo);
-    int projectUpdate(ProjectVO vo);
+    List<ProjectVO> selectProjectAll();
+    ProjectVO selectProject(ProjectVO vo);
+    int insertProject(ProjectVO vo);
+    int deletePproject(ProjectVO vo);
+    int updateProject(ProjectVO vo);
 
-    ProjectVO findByLeaderId(String leaderId);
+    List<ProjectVO> findByLeaderIdAndState(String leaderId, String state);
+    int updateHit(ProjectVO vo);
 }

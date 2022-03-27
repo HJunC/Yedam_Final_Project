@@ -4,7 +4,7 @@ import co.yd.deval.project.vo.ProjectTeamVO;
 
 import java.util.List;
 
-public interface ProjectTeamService {
+public interface ProjectTeamMapper {
     List<ProjectTeamVO> selectProjectTeamAll();
     ProjectTeamVO selectProjectTeam(ProjectTeamVO vo);
     int insertProjectTeam(ProjectTeamVO vo);

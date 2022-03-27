@@ -1,12 +1,10 @@
 package co.yd.deval.project.vo;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.sql.Date;
 
-@Getter
-@Setter
+@Data
 public class ProjectRequestVO {
     private int projectNo;
     private String memberId;

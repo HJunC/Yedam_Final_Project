@@ -1,13 +1,11 @@
 package co.yd.deval.project.vo;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class ProjectTeamVO {
-    private String memberId;
     private int projectNo;
+    private String memberId;
     private String position;
     private String isLeader;
 }

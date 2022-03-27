@@ -2,27 +2,31 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="co.yd.deval.project.service.ProjectMapper">
 
-<!--    <resultMap id="projectMap" type="co.yd.deval.project.vo.ProjectVO">
+    <resultMap id="projectResultMap" type="co.yd.deval.project.vo.ProjectVO">
         <id property="projectNo" column="project_no" />
         <result property="projectName" column="project_name"/>
         <result property="state" column="state"/>
         <result property="process" column="process"/>
         <result property="recruitSdt" column="recruit_sdt"/>
-        <result property="recruitEdt" column=""/>
-        <result property="subject" column=""/>
-        <result property="lang" column=""/>
-        <result property="totalRcnt" column=""/>
-        <result property="projectSdt" column=""/>
-        <result property="frontRcnt" column=""/>
-        <result property="backRcnt" column=""/>
-        <result property="designRcnt" column=""/>
-        <result property="projectEdt" column=""/>
-        <result property="lang" column=""/>
-        <result property="lang" column=""/>
-    </resultMap>-->
+        <result property="recruitEdt" column="recruit_edt"/>
+        <result property="subject" column="subject"/>
+        <result property="lang" column="lang"/>
+        <result property="totalRcnt" column="total_rcnt"/>
+        <result property="projectSdt" column="project_sdt"/>
+        <result property="frontRcnt" column="front_rcnt"/>
+        <result property="backRcnt" column="back_rcnt"/>
+        <result property="designRcnt" column="design_rcnt"/>
+        <result property="projectEdt" column="project_edt"/>
+        <result property="fullRcnt" column="full_rcnt"/>
+        <result property="plannerRcnt" column="planner_rcnt"/>
+        <result property="projectTerm" column="project_term"/>
+        <result property="hit" column="hit"/>
+        <result property="applyRcnt" column="apply_rcnt"/>
+        <result property="leaderId" column="leader_id"/>
+    </resultMap>
 
-    <insert id="projectInsert">
-        insert into PROJECT (PROJECT_NO,
+    <insert id="insertProject">
+        INSERT INTO PROJECT (PROJECT_NO,
                              PROJECT_NAME,
                              STATE,
                              PROCESS,
@@ -42,14 +46,77 @@
                              HIT,
                              APPLY_RCNT,
                              LEADER_ID)
-        values (#{projectNo}, #{projectName}, #{state}, #{process}, sysdate, #{recruitEdt}, #{subject}, #{lang}, #{totalRcnt},
-                #{projectSdt}, #{frontRcnt}, #{backRcnt}, #{designRcnt}, #{projectEdt}, #{fullRcnt}, #{plannerRcnt}, #{projectTerm},
-                #{hit}, #{applyRcnt}, #{leaderId});
+        VALUES (#{projectNo},
+                #{projectName},
+                #{state},
+                #{process},
+                sysdate,
+                #{recruitEdt},
+                #{subject},
+                #{lang},
+                #{totalRcnt},
+                #{projectSdt},
+                #{frontRcnt},
+                #{backRcnt},
+                #{designRcnt},
+                #{projectEdt},
+                #{fullRcnt},
+                #{plannerRcnt},
+                #{projectTerm},
+                0,
+                0,
+                #{leaderId});
     </insert>
 
-    <delete id="projectDelete"></delete>
-    <update id="projectUpdate"></update>
-    <select id="projectSelectList" resultType="co.yd.deval.project.vo.ProjectVO"></select>
-    <select id="findByLeaderId" resultType="co.yd.deval.project.vo.ProjectVO"></select>
-    <select id="projectSelect" resultType="co.yd.deval.project.vo.ProjectVO"></select>
+    <update id="updateProject">
+        UPDATE PROJECT
+        <set>
+            <if test="projectName != null">PROJECT_NAME = #{projectName},</if>
+            <if test="state != null">STATE = #{state},</if>
+            <if test="process != null">PROCESS = #{process},</if>
+            <if test="recruitEdt != null">RECRUIT_EDT = #{recruitEdt},</if>
+            <if test="subject != null">SUBJECT = #{subject},</if>
+            <if test="lang != null">LANG = #{lang},</if>
+            <if test="totalRcnt != null">TOTAL_RCNT = #{totalRcnt},</if>
+            <if test="projectSdt != null">PROJECT_SDT = #{projectSdt},</if>
+            <if test="frontRcnt != null">FRONT_RCNT = #{frontRcnt},</if>
+            <if test="backRcnt != null">BACK_RCNT = #{backRcnt},</if>
+            <if test="designRcnt != null">DESIGN_RCNT = #{designRcnt},</if>
+            <if test="projectEdt != null">PROJECT_EDT = #{projectEdt},</if>
+            <if test="fullRcnt != null">FULL_RCNT = #{fullRcnt},</if>
+            <if test="plannerRcnt != null">PLANNER_RCNT = #{plannerRcnt},</if>
+            <if test="projectTerm != null">PROJECT_TERM = #{projectTerm},</if>
+            <if test="applyRcnt != null">APPLY_RCNT = #{applyRcnt},</if>
+            <if test="leaderId != null">LEADER_ID = #{leaderId},</if>
+        </set>
+        WHERE PROJECT_NO = #{projectNo}
+    </update>
+
+    <update id="updateHit">
+        UPDATE PROJECT SET HIT = #{hit}
+        WHERE PROJECT_NO = #{projectNo}
+    </update>
+
+    <delete id="deletePproject">
+        DELETE FROM PROJECT
+        WHERE PROJECT_NO = #{projectNo}
+    </delete>
+
+    <select id="selectProjectAll" resultMap="projectResultMap">
+        SELECT *
+          FROM PROJECT
+    </select>
+
+    <select id="selectProject" resultMap="projectResultMap">
+        SELECT *
+          FROM PROJECT
+         WHERE PROJECT_NO = #{projectNo}
+    </select>
+
+    <select id="findByLeaderIdAndState" resultMap="projectResultMap">
+        SELECT *
+          FROM PROJECT
+         WHERE LEADER_ID = #{leaderId}
+           AND STATE = #{state}
+    </select>
 </mapper>
