@@ -12,5 +12,15 @@ public class MentoController {
     public String main() {
         return "mento/mentoMain";
     }
+    
+    @GetMapping("/mentoList.do")
+    public String mentoList() {
+    	return "mento/mentoList";
+    }
+    
+    @GetMapping("/mentoInsertForm.do")
+    public String mentoInsertForm() {
+    	return "mento/mentoInsertForm";
+    }
 
 }

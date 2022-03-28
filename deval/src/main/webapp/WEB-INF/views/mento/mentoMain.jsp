@@ -156,7 +156,7 @@
                                             <option>Ruby</option>
                                         </select>
                                     </div>
-                       <a href="pages-services-1-dark.html" class="btn btn-mod btn-w btn-medium btn-round me-md-1" style="background-color:#00D8FF">언어 선택</a>
+                       <a href="mentoList.do" class="btn btn-mod btn-w btn-medium btn-round me-md-1" style="background-color:#00D8FF">언어 선택</a>
                       </form>
                  </div>
                 
