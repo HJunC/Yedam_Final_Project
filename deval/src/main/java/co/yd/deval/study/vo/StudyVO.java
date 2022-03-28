@@ -16,7 +16,6 @@ public class StudyVO {
 	private int maxRcnt;
 	private String defficulty;
 	private String leaderId;
-	private String studyTerm;
 	private Date studySdt;
 	private Date studyEdt;
 	private String state;

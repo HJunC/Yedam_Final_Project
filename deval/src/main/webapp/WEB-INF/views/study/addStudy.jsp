@@ -36,13 +36,19 @@
 		</select><br><br>
 
 		<!-- 언어선택 -->
+		<label class="checkbox-inline">
+			<input type="checkbox" name="ck_lang" id="lang1" value="C"> <span class="small">C</span>
+		</label>
+		
+		<label class="checkbox-inline">
+			<input type="checkbox" name="ck_lang" id="lang2" value="C++"><span class="small">C++</span>
+		</label>
+		
+		<label class="checkbox-inline">
+			<input type="checkbox" name="ck_lang" id="lang3" value="Java"><span class="small">Java</span>
+		</label>
+		
 		<label class="checkbox-inline"> <input type="checkbox"
-			name="ck_lang" id="lang1" value="C"> <span class="small">C</span>
-		</label> <label class="checkbox-inline"> <input type="checkbox"
-			name="ck_lang" id="lang2" value="C++"><span class="small">C++</span>
-		</label> <label class="checkbox-inline"> <input type="checkbox"
-			name="ck_lang" id="lang3" value="Java"><span class="small">Java</span>
-		</label> <label class="checkbox-inline"> <input type="checkbox"
 			name="ck_lang" id="lang4" value="JavaScript"><span class="small">JavaScript</span>
 		</label> <label class="checkbox-inline"> <input type="checkbox"
 			name="ck_lang" id="lang5" value="Node.js"><span class="small">Node.js</span>

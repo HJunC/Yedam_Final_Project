@@ -11,7 +11,6 @@
 		<result property="maxRcnt" column="max_rcnt" />
 		<result property="defficulty" column="defficulty" />
 		<result property="leaderId" column="leader_id" />
-		<result property="studyTerm" column="study_term" />
 		<result property="studySdt" column="study_sdt" />
 		<result property="studyEdt" column="study_edt" />
 		<result property="state" column="state" />
