@@ -31,10 +31,25 @@
 	<logger name="org.springframework.web">
 		<level value="info" />
 	</logger>
+<<<<<<< HEAD
+=======
+	
+	<logger name="jdbc.resultset">
+		<level value="warn" />
+	</logger>
+	
+	<logger name="jdbc.audit">
+		<level value="warn" />
+	</logger>
+	
+	<logger name="jdbc.connection">
+		<level value="warn" />
+	</logger> 
+>>>>>>> 6266cd4 (feat:jdbc log처리)
 
 	<!-- Root Logger -->
 	<root>
-		<priority value="warn" />
+		<priority value="debug" />
 		<appender-ref ref="console" />
 	</root>
 	
