@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import co.yd.deval.study.service.StudyService;
-import co.yd.deval.study.vo.StudyVO;
+import co.yd.deval.study.service.StudyVO;
 
 @Controller
 @RequestMapping("/study")

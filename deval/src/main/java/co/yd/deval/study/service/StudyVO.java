@@ -1,4 +1,4 @@
-package co.yd.deval.study.vo;
+package co.yd.deval.study.service;
 
 import java.sql.Date;
 
