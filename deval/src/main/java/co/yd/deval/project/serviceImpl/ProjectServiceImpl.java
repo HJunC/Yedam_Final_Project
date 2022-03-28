@@ -32,8 +32,8 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public int deletePproject(ProjectVO vo) {
-        return map.deletePproject(vo);
+    public int deleteProject(ProjectVO vo) {
+        return map.deleteProject(vo);
     }
 
     @Override

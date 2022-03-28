@@ -97,7 +97,7 @@
         WHERE PROJECT_NO = #{projectNo}
     </update>
 
-    <delete id="deletePproject">
+    <delete id="deleteProject">
         DELETE FROM PROJECT
         WHERE PROJECT_NO = #{projectNo}
     </delete>

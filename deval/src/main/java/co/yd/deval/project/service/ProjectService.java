@@ -8,7 +8,7 @@ public interface ProjectService {
     List<ProjectVO> selectProjectAll();
     ProjectVO selectProject(ProjectVO vo);
     int insertProject(ProjectVO vo);
-    int deletePproject(ProjectVO vo);
+    int deleteProject(ProjectVO vo);
     int updateProject(ProjectVO vo);
 
     List<ProjectVO> findByLeaderIdAndState(String leaderId, String state);
