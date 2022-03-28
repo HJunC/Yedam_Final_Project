@@ -7,3 +7,4 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 마이페이지
+${member.memberId}

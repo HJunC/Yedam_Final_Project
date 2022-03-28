@@ -5,6 +5,33 @@
 <c:set var="resources" value="${pageContext.request.contextPath}/resources"/>
 <c:set var="root" value="${pageContext.request.contextPath}"/>
 <!-- Navigation panel -->
+<style>
+.inner-nav ul li .mn-sub li form button{
+	display: block;
+    width: 100%;
+    height: auto !important;
+    line-height: 1.3 !important;
+    position: relative;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 12px 15px;
+    font-size: 15px;
+    font-weight: 400;
+    text-align: left;
+    text-transform: none;
+    border-left: none;
+    border-right: none;
+    letter-spacing: 0;
+    color: #ccc !important;
+    outline-offset: -2px !important;
+    cursor: pointer;
+    -webkit-transition: all 0.27s cubic-bezier(0.000, 0.000, 0.580, 1.000);
+    transition: all 0.27s cubic-bezier(0.000, 0.000, 0.580, 1.000);
+    background-color: transparent;
+    border: 0;
+}
+</style>
 <nav class="main-nav dark transparent stick-fixed wow-menubar">
 	<div class="full-wrapper relative clearfix">
 
@@ -80,7 +107,7 @@
 				<li><a>&nbsp;</a></li>
 				<li><a>&nbsp;</a></li>
 				<!-- End Divider -->
-
+				
 				<sec:authorize access="isAnonymous()">
 					<li><a href="${root}/loginForm.do" class="mn-has-sub">로그인</a></li>
 					<li><a href="${root}/signUpForm.do" class="mn-has-sub">회원가입</a></li>
@@ -89,14 +116,17 @@
 					<li>
 						<a href="#" class="mn-has-sub">내 정보 <i class="mn-has-sub-icon"></i></a>
 						<ul class="mn-sub">
-						<li><a href="#">a${session.username}</a></li>
 						<sec:authorize access="hasRole('USER')">
 							<li><a href="${root}/myPage.do">마이페이지</a></li>						
 						</sec:authorize>
 						<sec:authorize access="hasRole('COMPANY')">
 							<li><a href="${root}/coPage.do">회사페이지</a></li>						
 						</sec:authorize>
-							<li><a href="logout">로그아웃</a></li>
+							<li><form action="logout" method="post">
+									<sec:csrfInput/>
+									<button type="submit">로그아웃</button>
+								</form>
+							</li>
 						</ul>
 					</li>
 				</sec:authorize>
