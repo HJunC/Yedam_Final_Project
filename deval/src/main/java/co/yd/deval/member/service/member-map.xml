@@ -14,7 +14,7 @@
 	</resultMap>
 	
 	<select id="memberSelect" resultMap="memberMap">
-		SELECT * 
+		SELECT member_id, password, mail, name, exp, cashPt, profile_img, 'ROLE_'||role as role
 		FROM MEMBER
 		WHERE MEMBER_ID = #{memberId}
 	</select>
