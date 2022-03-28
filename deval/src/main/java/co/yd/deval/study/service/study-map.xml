@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.yd.deval.study.service.StudyMapper">
+	<resultMap type="co.yd.deval.study.vo.StudyVO"
+		id="studyResultMap">
+		<id property="studyNo" column="study_no" />
+		<result property="lang" column="lang" />
+		<result property="location" column="location" />
+		<result property="subject" column="subject" />
+		<result property="uploadDate" column="upload_date" />
+		<result property="maxRcnt" column="max_rcnt" />
+		<result property="defficulty" column="defficulty" />
+		<result property="leaderId" column="leader_id" />
+		<result property="studyTerm" column="study_term" />
+		<result property="studySdt" column="study_sdt" />
+		<result property="studyEdt" column="study_edt" />
+		<result property="state" column="state" />
+		<result property="studyNm" column="study_nm" />
+	</resultMap>
+
+	<select id="studySelectAll"
+		resultType="co.yd.deval.study.vo.StudyVO" resultMap="studyResultMap">
+		SELECT *
+		FROM STUDY
+		WHERE STATE = '1'
+	</select>
+	
+	<select id="studySelectNo"
+		resultType="co.yd.deval.study.vo.StudyVO" resultMap="studyResultMap">
+		SELECT MAX(STUDY_NO) AS STUDYNO
+		FROM STUDY
+	</select>
+
+	<insert id="studyInsert"
+		parameterType="co.yd.deval.study.vo.StudyVO">
+		<selectKey keyProperty="studyNo" resultType="int"
+			order="BEFORE">
+			SELECT MAX(STUDY_NO)+1 AS "studyNo"
+			FROM STUDY
+		</selectKey>
+		INSERT INTO STUDY
+		VALUES (#{studyNo}, #{lang}, #{location}, #{subject},
+		SYSDATE, #{maxRcnt},
+		#{defficulty}, 'test1', #{studyTerm}, #{studySdt},
+		#{studyEdt}, '1', #{studyNm})
+	</insert>
+
+	<update id="studyUpdate"
+		parameterType="co.yd.deval.study.vo.StudyVO">
+		UPDATE STUDY
+		<set>
+			<if test="lang 		 != null"> LANG =#{lang},</if>
+			<if test="location   != null"> LOCATION =#{location},</if>
+			<if test="subject    != null"> SUBJECT =#{subject},</if>
+			<if test="uploadDate != null"> UPLOAD_DATE =#{upload_date},</if>
+			<if test="maxRcnt 	 != null"> MAX_RCNT =#{max_rcnt},</if>
+			<if test="defficulty != null"> DEFFICULTY =#{defficulty},</if>
+			<if test="leaderId 	 != null"> LEADER_ID =#{leader_id},</if>
+			<if test="studyTerm  != null"> STUDY_TERM =#{study_term},</if>
+			<if test="studySdt   != null"> STUDY_SDT =#{study_sdt},</if>
+			<if test="studyEdt   != null"> STUDY_EDT =#{study_edt},</if>
+		</set>
+		WHERE STUDY_NO=#{studyNo}
+	</update>
+
+</mapper>

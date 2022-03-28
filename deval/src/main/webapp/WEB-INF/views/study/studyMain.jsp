@@ -30,8 +30,8 @@
 							<span class="wrap"></span></span>
 						</h2>
 						<div class="local-scroll wow fadeInUpShort" data-wow-delay=".3s">
-							<a href="#about" class="btn btn-mod btn-w btn-medium btn-round mx-md-1">See More</a>
-							<a href="pages-services-1-dark.html" class="btn btn-mod btn-w btn-medium btn-round mx-md-1">Get Pricing</a>
+							<a href="addStudy.do" class="btn btn-mod btn-w btn-medium btn-round mx-md-1">스터디등록</a>
+							<a href="studyList.do" class="btn btn-mod btn-w btn-medium btn-round mx-md-1">스터디 목록</a>
 						</div>
 					</div>
 				</div>

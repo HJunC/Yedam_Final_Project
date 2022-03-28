@@ -68,7 +68,7 @@
 				</li>
 
 				<li>
-					<a href="${root}/study/main.do" class="mn-has-sub">스터디</a>
+					<a href="${root}/study/studyMain.do" class="mn-has-sub">스터디</a>
 				</li>
 
 				<li>
