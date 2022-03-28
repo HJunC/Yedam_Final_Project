@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 public class StudyVO {
 	private int studyNo;
-	private String lang;
+	private String lang1;
 	private String location;
 	private String subject;
 	private Date uploadDate;
@@ -21,4 +21,5 @@ public class StudyVO {
 	private Date studyEdt;
 	private String state;
 	private String studyNm;
+	private String lang2;
 }

@@ -23,7 +23,7 @@
 			<option>One</option>
 			<option>Two</option>
 			<option>Three</option>
-		</select> <br> <br>
+		</select><br><br>
 
 		<!-- 인원 설정 -->
 		<select class="input-md round form-control" id="selRcnt"
@@ -33,10 +33,7 @@
 			<option>3</option>
 			<option>4</option>
 			<option>5</option>
-			<option>6</option>
-			<option>7</option>
-			<option>8</option>
-		</select> <br> <br>
+		</select><br><br>
 
 		<!-- 언어선택 -->
 		<label class="checkbox-inline"> <input type="checkbox"
@@ -121,13 +118,14 @@
 				type : "post",
 				data : {
 					"studyNm" : $("#title").val(),
-					"lang" : $('input:checkbox[name="ck_lang"]').val() ,
+					"lang1" : $('input:checkbox[name="ck_lang"]').val(),
 					"location" : $("select[name='selArea']").val(),	
 					"subject" :  $("#subject").val(),
 					"maxRcnt" : $("select[name='selRcnt']").val() ,
 					"defficulty" : $('input:radio[name="lv"]').val() ,
 					"studySdt" : $("#dtSdt").val(),
-					"studyEdt" : $("#dtEdt").val()
+					"studyEdt" : $("#dtEdt").val(),
+					"lang2" : $('input:checkbox[name="ck_lang"]').val()
 				},
 				dataType : "text",
 				success : function(result) {

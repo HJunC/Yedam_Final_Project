@@ -32,7 +32,10 @@
 					<tr>
 						<td>${study.studyNo }</td>
 						<td>${study.location }</td>
-						<td>${study.lang }</td>
+						<td>${study.lang1 }
+						<c:if test="${not empty study.lang2 }">
+						/ ${study.lang2 }
+						</c:if></td>
 						<td>${study.studyNm }</td>
 						<td>${study.leaderId }</td>
 						<td>${study.defficulty }</td>
