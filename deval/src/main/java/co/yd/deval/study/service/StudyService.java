@@ -6,7 +6,7 @@ import co.yd.deval.study.vo.StudyVO;
 
 public interface StudyService {
 	List<StudyVO> studySelectAll();
-	StudyVO studySelectNo();
+	StudyVO studySelectNo(StudyVO vo);
 	
 	int studyInsert(StudyVO vo);
 	int studyUpdate(StudyVO vo);

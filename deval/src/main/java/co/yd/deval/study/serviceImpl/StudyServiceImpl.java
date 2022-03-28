@@ -26,8 +26,8 @@ public class StudyServiceImpl implements StudyService {
 	}
 
 	@Override
-	public StudyVO studySelectNo() {
-		return map.studySelectNo();
+	public StudyVO studySelectNo(StudyVO vo) {
+		return map.studySelectNo(vo);
 	}
 
 	@Override

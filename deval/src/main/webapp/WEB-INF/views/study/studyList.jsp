@@ -45,11 +45,22 @@
 				</c:forEach>
 			</tbody>
 		</table>
-
 	</div>
+	<div>
+		<form id="selfrm" action="studySelect.do" method="post">
+			<input type="hidden" id="studyNo" name="studyNo">
+		</form>
+	</div>
+	<script type="text/javascript">
+		function studySearch(n) {
+			selfrm.studyNo.value = n;
+			selfrm.submit();
+		}
+	</script>
+	
+	<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+	<script src="${resources}/js/study/common.js"></script>
 </body>
 
-<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
-<script src="${resources}/js/study/common.js"></script>
 
 </html>

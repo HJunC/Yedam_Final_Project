@@ -1,32 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.yd.deval.study.service.StudyMapper">
-	<resultMap type="co.yd.deval.study.vo.StudyVO"
-		id="studyResultMap">
-		<id property="studyNo" column="study_no" />
-		<result property="lang1" column="lang1" />
-		<result property="location" column="location" />
-		<result property="subject" column="subject" />
-		<result property="uploadDate" column="upload_date" />
-		<result property="maxRcnt" column="max_rcnt" />
-		<result property="defficulty" column="defficulty" />
-		<result property="leaderId" column="leader_id" />
-		<result property="studySdt" column="study_sdt" />
-		<result property="studyEdt" column="study_edt" />
-		<result property="state" column="state" />
-		<result property="studyNm" column="study_nm" />
-		<result property="lang2" column="lang2" />
-	</resultMap>
+
 
 	<select id="studySelectAll"
-		resultType="co.yd.deval.study.vo.StudyVO" resultMap="studyResultMap">
+		resultType="co.yd.deval.study.vo.StudyVO">
 		SELECT *
 		FROM STUDY
 		WHERE STATE = '0'
 	</select>
 	
 	<select id="studySelectNo"
-		resultType="co.yd.deval.study.vo.StudyVO" resultMap="studyResultMap">
+		resultType="co.yd.deval.study.vo.StudyVO">
 		SELECT MAX(STUDY_NO) AS STUDYNO
 		FROM STUDY
 	</select>
@@ -35,14 +20,36 @@
 		parameterType="co.yd.deval.study.vo.StudyVO">
 		<selectKey keyProperty="studyNo" resultType="int"
 			order="BEFORE">
-			SELECT MAX(STUDY_NO)+1 AS "studyNo"
+			SELECT NVL(MAX(STUDY_NO),0)+1 AS "studyNo"
 			FROM STUDY
 		</selectKey>
-		INSERT INTO STUDY
-		VALUES (#{studyNo}, #{lang1}, #{location}, #{subject},
-		SYSDATE, #{maxRcnt},
-		#{defficulty}, 'test1', #{studySdt},
-		#{studyEdt}, '0', #{studyNm}, #{lang2})
+		INSERT INTO STUDY (STUDY_NO,
+						LANG1,
+						LOCATION,
+						SUBJECT,
+						UPLOAD_DATE,
+						MAX_RCNT,
+						DEFFICULTY,
+						LEADER_ID,
+						STUDY_SDT,
+						STUDY_EDT,
+						STATE,
+						STUDY_NM,
+						LANG2)
+						
+		VALUES (		#{studyNo}, 
+						#{lang1}, 
+						#{location}, 
+						#{subject},
+						SYSDATE, 
+						#{maxRcnt},
+						#{defficulty}, 
+						'test1', 
+						#{studySdt},
+						#{studyEdt}, 
+						'0', 
+						#{studyNm}, 
+						#{lang2})
 	</insert>
 
 	<update id="studyUpdate"

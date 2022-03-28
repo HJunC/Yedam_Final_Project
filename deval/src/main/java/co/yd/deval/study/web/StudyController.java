@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import co.yd.deval.study.service.StudyService;
@@ -37,6 +38,19 @@ public class StudyController {
     public String studyList(Model model) {
     	model.addAttribute("study", studyDao.studySelectAll());
     	return "study/studyList";
+    }
+    
+    @PostMapping("/studySelect.do")
+    public String studySelect(StudyVO vo, Model model) {
+    	vo = studyDao.studySelectNo(vo);
+    	
+    	if(vo != null) {
+    		model.addAttribute("study", vo);
+    		return "study/studySelect";
+    	} else {
+    		model.addAttribute("message", "게시글존재x");
+    		return "study/studytesterr";
+    	}
     }
 
 }
