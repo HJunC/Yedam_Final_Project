@@ -9,6 +9,7 @@
 <meta charset="UTF-8">
 <title>mentoInsertForm</title>
 </head>
+<link rel="stylesheet" type="text/css" href="${resources }/css/custom/team-project-style.css">
 <body>
 	<section class="page-section bg-dark light-content">
         <div class="container relative">
@@ -18,11 +19,11 @@
             </div>
             <!-- 값이 들어가는 곳-->
             <!-- mentoInsert Form tag-->
-            <form action="mentoInsert.do" id="frm" type="post">
+            <form action="mentoInsert.do" id="frm">
                 <div class="row">
                     <!-- 사진 미리보기 div-->
                     <div id="image_container">
-                        <img>
+                        <img id="prev" src="${resources }/images/mento/prev.bmp">
                     </div>
                     <!-- 사진 파일등록-->
                     <div class="mb-20 mb-md-10">
@@ -107,7 +108,7 @@
 		var reader = new FileReader();
 		
 		reader.onload = function(event){
-			var img = document.createElement("img");
+			var img = document.getElementById("prev");
 			img.setAttribute("src", event.target.result);
 			img.setAttribute("class", "col-lg-6");
             img.style.cssText  = 'width:400px;height:400px;';
