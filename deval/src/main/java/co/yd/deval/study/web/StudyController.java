@@ -29,6 +29,7 @@ public class StudyController {
 
     @RequestMapping("/insertStudy.do")
     public String insertStudy(StudyVO vo) {
+    	vo.setLeaderId("popo");
     	int n = studyDao.studyInsert(vo);
     	
     	return Integer.toString(n);

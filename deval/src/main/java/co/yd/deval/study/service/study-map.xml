@@ -44,7 +44,7 @@
 						SYSDATE, 
 						#{maxRcnt},
 						#{defficulty}, 
-						'test1', 
+						#{leaderId}, 
 						#{studySdt},
 						#{studyEdt}, 
 						'0', 

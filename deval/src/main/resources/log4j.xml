@@ -15,6 +15,12 @@
 		<level value="info" />
 	</logger>
 	
+	
+	<logger name="org.apache.commons">
+		<level value="info" />
+	</logger>
+	
+	
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">
 		<level value="info" />
@@ -31,8 +37,6 @@
 	<logger name="org.springframework.web">
 		<level value="info" />
 	</logger>
-<<<<<<< HEAD
-=======
 	
 	<logger name="jdbc.resultset">
 		<level value="warn" />
@@ -45,7 +49,6 @@
 	<logger name="jdbc.connection">
 		<level value="warn" />
 	</logger> 
->>>>>>> 6266cd4 (feat:jdbc log처리)
 
 	<!-- Root Logger -->
 	<root>
