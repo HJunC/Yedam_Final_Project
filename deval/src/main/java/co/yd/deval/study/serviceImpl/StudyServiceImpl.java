@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import co.yd.deval.study.service.StudyMapper;
+
+import co.yd.deval.study.mapper.StudyMapper;
 import co.yd.deval.study.service.StudyService;
-import co.yd.deval.study.vo.StudyVO;
+import co.yd.deval.study.service.StudyVO;
+
 
 @Repository("studyDao")
 public class StudyServiceImpl implements StudyService {

@@ -1,9 +1,12 @@
-package co.yd.deval.study.service;
+package co.yd.deval.study.mapper;
 
 import java.util.List;
-import co.yd.deval.study.vo.StudyVO;
 
-public interface StudyService {
+import org.apache.ibatis.annotations.Param;
+
+import co.yd.deval.study.service.StudyVO;
+
+public interface StudyMapper {
 	List<StudyVO> studySelectAll();
 	StudyVO studySelectNo(StudyVO vo);
 	

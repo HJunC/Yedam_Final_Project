@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.yd.deval.study.mapper.StudyMapper">
+
+
+	<select id="studySelectAll"
+		resultType="co.yd.deval.study.service.StudyVO">
+		SELECT *
+		FROM STUDY
+		WHERE STATE = '0'
+	</select>
+	
+	<select id="studySelectNo"
+		resultType="co.yd.deval.study.service.StudyVO">
+		SELECT MAX(STUDY_NO) AS STUDYNO
+		FROM STUDY
+	</select>
+
+	<insert id="studyInsert"
+		parameterType="co.yd.deval.study.service.StudyVO">
+		<selectKey keyProperty="studyNo" resultType="int"
+			order="BEFORE">
+			SELECT NVL(MAX(STUDY_NO),0)+1 AS "studyNo"
+			FROM STUDY
+		</selectKey>
+		INSERT INTO STUDY (STUDY_NO,
+						LANG1,
+						LOCATION,
+						SUBJECT,
+						UPLOAD_DATE,
+						MAX_RCNT,
+						DEFFICULTY,
+						LEADER_ID,
+						STUDY_SDT,
+						STUDY_EDT,
+						STATE,
+						STUDY_NM,
+						LANG2)
+						
+		VALUES (		#{studyNo}, 
+						#{lang1}, 
+						#{location}, 
+						#{subject},
+						SYSDATE, 
+						#{maxRcnt},
+						#{defficulty}, 
+						#{leaderId},
+						#{studySdt},
+						#{studyEdt}, 
+						'0', 
+						#{studyNm}, 
+						#{lang2})
+	</insert>
+
+	<update id="studyUpdate"
+		parameterType="co.yd.deval.study.service.StudyVO">
+		UPDATE STUDY
+		<set>
+			<if test="lang1 	 != null"> LANG1 =#{lang1},</if>
+			<if test="location   != null"> LOCATION =#{location},</if>
+			<if test="subject    != null"> SUBJECT =#{subject},</if>
+			<if test="uploadDate != null"> UPLOAD_DATE =#{uploadDate},</if>
+			<if test="maxRcnt 	 != null"> MAX_RCNT =#{maxRcnt},</if>
+			<if test="defficulty != null"> DEFFICULTY =#{defficulty},</if>
+			<if test="leaderId 	 != null"> LEADER_ID =#{leaderId},</if>
+			<if test="studySdt   != null"> STUDY_SDT =#{studySdt},</if>
+			<if test="studyEdt   != null"> STUDY_EDT =#{studyEdt},</if>
+			<if test="studyNm   != null"> STUDY_NM =#{studyNm},</if>
+			<if test="lang2   != null"> LANG2 =#{lang2},</if>
+		</set>
+		WHERE STUDY_NO = #{studyNo}
+	</update>
+
+</mapper>
