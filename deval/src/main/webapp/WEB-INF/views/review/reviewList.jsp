@@ -13,7 +13,7 @@
 			<div class="container relative text-center">
 				<div class="row">
 					<div class="col-lg-10 offset-lg-1">
-						<h2 class="hs-line-7 mb-0 wow fadeInUpShort" data-wow-delay=".2s">소스코드</h2>
+						<h2 class="hs-line-7 mb-0 wow fadeInUpShort" data-wow-delay=".2s">소스코드 리뷰</h2>
 					</div>
 				</div>
 			</div>
@@ -24,21 +24,6 @@
 					<div class="row">
 						<div>
 							<form action="#" class="form">
-								<label for="lang">언어</label> 
-								<select id="cqLang" class="input-md round form-control" style="width: 100px">
-									<option>전체</option>
-									<option>JAVA</option>
-									<option>C#</option>
-									<option>C++</option>
-									<option>USA</option>
-								</select>&nbsp;&nbsp;&nbsp;&nbsp; 
-								<label for="type">유형</label> 
-								<select id="cqType" class="input-md round form-control"
-									style="width: 100px">
-									<option>전체</option>
-									<option>공유</option>
-									<option>질문</option>
-								</select>&nbsp;&nbsp;&nbsp;&nbsp; 
 								<input type="text" name="codeSearch" id="codeSearch" 
 								class="input-sm round" placeholder="검색" 
 								style="width: 300px; height: 48px;" pattern="" required />
@@ -59,21 +44,21 @@
 								<th width="50">조회수</th>
 								<th width="50">추천수</th>
 							</tr>
-							<c:forEach items="${codes }" var="code">
-								<tr align="center" onclick="selectOne('${code.cqNo}')">
-									<td>${code.cqNo }</td>
-										<td align="left">[${code.cqLang}-${code.cqType }]${code.title }</td>
-									<td>${code.writer}</td>
-									<td>${code.cqDate}</td>
-									<td>${code.hit}</td>
-									<td>${code.recommend}</td>
+							<c:forEach items="${reviews }" var="review">
+								<tr align="center" onclick="selectOne('${review.cqReplyNo }')">
+									<td>${review.cqReplyNo }</td>
+										<td align="left">${review.title }</td>
+									<td>${review.writer}</td>
+									<td>${review.replyDate}</td>
+									<td>${review.hit}</td>
+									<td>${review.recommend}</td>
 								</tr>
 							</c:forEach>
 						</table>
 						<div align="right">
 							<input class="btn btn-mod btn-round btn-border-w btn-small"
-								type="button" value="글쓰기"
-								onclick="location.href='codeInsertForm.do'">
+								type="button" value="리뷰쓰기"
+								onclick="location.href='reviewInsertForm.do'">
 						</div>
 					</div>
 				</div>
@@ -82,15 +67,15 @@
 
 	</div>
 	<div>
-		<form id="frm" action="codeSelectOne.do" method="post">
+		<form id="frm" action="reviewSelectOne.do" method="post">
 		<input name="${_csrf.parameterName }" value="${_csrf.token}" type="hidden">
-			<input type="hidden" id="cqNo" name="cqNo">
+			<input type="hidden" id="cqReplyNo" name="cqReplyNo">
 		</form>
 	</div>
 </body>
 <script type="text/javascript">
 	function selectOne(id) {
-		frm.cqNo.value = id;
+		frm.cqReplyNo.value = id;
 		frm.submit();
 	}
 </script>

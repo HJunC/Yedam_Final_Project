@@ -40,7 +40,7 @@ public class CodeController {
 		return "code/codeInsertForm";
 	}
 
-	@GetMapping("/codeInsert.do")
+	@PostMapping("/codeInsert.do")
 	public String codeInsert(Model model, CodeVO vo) {
 		int r = codeDAO.codeInsert(vo);
 		if (r != 0) {
@@ -78,6 +78,12 @@ public class CodeController {
 			return "code/codeSelectOne";
 		}
 		return "code/error";
+	}
+	
+	@PostMapping("/reviewList.do")
+	public String reviewList(Model model, CodeVO vo) {
+		
+		return "code/reviewList";
 	}
 
 }

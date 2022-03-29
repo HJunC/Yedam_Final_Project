@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,7 +20,8 @@
 			</div>
 		</section>
 		<section class="page-section bg-dark light-content pt-0">
-			<form action="codeInsert.do" class="form">
+			<form action="codeInsert.do" class="form" method="post">
+			<input name="${_csrf.parameterName }" value="${_csrf.token}" type="hidden">
 				<div class="container relative">
 					<!-- 검색 -->
 					<div class="row">
@@ -38,6 +40,10 @@
 								<option>공유</option>
 								<option>질문</option>
 							</select>&nbsp;&nbsp;&nbsp;&nbsp;
+							<label for="git">GIT URI</label> 
+							<input type="url" size="90" id="gitUri" name="gitUri" 
+								class="input-sm round" placeholder="GIT주소" 
+								style="height: 48px;" required >
 						</div>
 					</div>
 					<br>
@@ -50,8 +56,7 @@
 							<tr>
 								<th style="vertical-align: top;">내 용</th>
 								<td><textarea rows="10" cols="160" id="subject" name="subject"></textarea></td>
-								<%-- <td><input type="hidden" id="writer" name="writer" value="${code.writer }"></td> --%>
-								<td><input type="hidden" id="writer" name="writer" value="popo"></td>
+								<td><input type="hidden" id="writer" name="writer" value="<sec:authentication property="principal.username"/>"></td>
 							</tr>
 						</table>
 						<div align="right">

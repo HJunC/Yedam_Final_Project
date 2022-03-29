@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.yd.deval.review.mapper.ReviewMapper">
+	
+	<select id="reviewSelectList" resultType="co.yd.deval.review.service.ReviewVO">
+		SELECT * 
+		FROM CODE_QUESTION_REPLY
+		WHERE CQ_NO = #{cqNo}
+	</select>
+	
+	<select id="reviewSelectOne" resultType="co.yd.deval.review.service.ReviewVO">
+		SELECT * 
+		FROM CODE_QUESTION_REPLY
+		WHERE CQ_REPLY_NO = #{cqReplyNo}
+	</select>
+	
+	<insert id="reviewInsert" parameterType="co.yd.deval.review.service.ReviewVO">
+		INSERT INTO 
+		CODE_QUESTION_REPLY( CQ_NO
+						   , TITLE
+						   , SUBJECT
+						   , CQ_REPLY_NO
+						   , WRITER
+						   )
+		VALUES (		     #{cqNo}
+						   , #{title}
+						   , #{subject}
+						   , REVIEW_NO_COUNT_SEQ.NEXTVAL
+						   , #{writer}
+			   )
+	</insert>
+	
+	<update id="reviewUpdate" parameterType="co.yd.deval.review.service.ReviewVO">
+		UPDATE CODE_QUESTION_REPLY
+			<set>
+				<if test="title != null">TITLE = #{title},</if>
+				<if test="subject != null">SUBJECT = #{subject},</if>
+			</set>
+		WHERE CQ_REPLY_NO = #{cqReplyNo}
+	</update>
+	
+	<delete id="reviewDelete" parameterType="co.yd.deval.review.service.ReviewVO">
+		DELETE FROM CODE_QUESTION_REPLY
+		WHERE CQ_REPLY_NO = #{cqReplyNo}
+	</delete>
+	
+	<update id="reviewHitUp" parameterType="co.yd.deval.review.service.ReviewVO">
+		UPDATE CODE_QUESTION_REPLY
+		SET HIT = HIT+1
+		WHERE CQ_REPLY_NO = #{cqReplyNo}
+	</update>
+	
+	<update id="reviewRecommendUp" parameterType="co.yd.deval.review.service.ReviewVO">
+		UPDATE CODE_QUESTION_REPLY
+		SET RECOMMEND = RECOMMEND + 1
+		WHERE CQ_REPLY_NO = #{cqReplyNo}
+	</update>
+	
+</mapper>
