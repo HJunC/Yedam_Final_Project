@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!-- Home Section -->
 <section class="page-section bg-dark-alfa-50 bg-scroll" data-background="images/full-width-images/section-bg-19.jpg" id="home">
 	<div class="container relative">
@@ -47,24 +49,30 @@
 		<div class="tab-content tpl-minimal-tabs-cont section-text wow fadeInUpShort" id="myTabContent-1">
 
 			<div class="tab-pane fade show active" id="account-login" role="tabpanel" aria-labelledby="account-login-tab">
-
+				<c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">
+ 				 로그인 에러입니다.<br>
+  				 예외 타입：${SPRING_SECURITY_LAST_EXCEPTION.getClass().name}<br>
+  				 메시지：${SPRING_SECURITY_LAST_EXCEPTION.message}<br>
+					<c:remove var="SPRING_SECURITY_LAST_EXCEPTION" scope="session" />
+				</c:if>
 				<!-- Login Form -->
 				<div class="row">
 					<div class="col-md-6 offset-md-3">
 
-						<form action="login.do" method="post" class="form contact-form">
+						<form action="login" method="post" class="form contact-form">
+						<sec:csrfInput/>
 							<div class="clearfix">
 
 								<!-- Name -->
 								<div class="form-group">
 									<label for="username">아이디</label>
-									<input type="text" name="memberId" id="username" class="input-lg round form-control" placeholder="Enter your Id" pattern=".{3,100}" required aria-required="true">
+									<input type="text" name="username" id="username" class="input-lg round form-control" placeholder="Enter your Id">
 								</div>
 
 								<!-- Password -->
 								<div class="form-group">
 									<label for="password">비밀번호</label>
-									<input type="password" name="memberPassword" id="password" class="input-lg round form-control" placeholder="Enter your password" pattern=".{5,100}" required aria-required="true">
+									<input type="password" name="password" id="password" class="input-lg round form-control" placeholder="Enter your password">
 								</div>
 
 							</div>
@@ -105,19 +113,19 @@
 				<div class="row">
 					<div class="col-md-6 offset-md-3">
 
-						<form action="login.do" method="post" class="form contact-form">
+						<form action="login" method="post" class="form contact-form">
 							<div class="clearfix">
 
 								<!-- Name -->
 								<div class="form-group">
 									<label for="1">아이디</label>
-									<input type="text" name="1" id="1" class="input-lg round form-control" placeholder="Enter your Id" pattern=".{3,100}" required aria-required="true">
+									<input type="text" name="username" id="1" class="input-lg round form-control" placeholder="Enter your Id">
 								</div>
 
 								<!-- Password -->
 								<div class="form-group">
 									<label for="2">비밀번호</label>
-									<input type="password" name="2" id="2" class="input-lg round form-control" placeholder="Enter your password" pattern=".{5,100}" required aria-required="true">
+									<input type="password" name="password" id="2" class="input-lg round form-control" placeholder="Enter your password">
 								</div>
 
 							</div>
