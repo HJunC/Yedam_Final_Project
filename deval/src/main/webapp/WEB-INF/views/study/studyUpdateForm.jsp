@@ -1,87 +1,82 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: admin
-  Date: 2022-03-25
-  Time: 오전 11:53
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
-<c:set var="resources"
-	value="${pageContext.request.contextPath}/resources" />
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+<!DOCTYPE html>
 <html>
+<head>
+<meta charset="UTF-8">
+<title>study/studyUpdateForm.jsp</title>
+</head>
 <body>
-	<div align="center">
-		<h3>스터디 등록</h3>
+<div align="center">
+		<h3>스터디 수정</h3>
 
 		<form id="frm">
 		<sec:csrfInput/>
 			<!-- 스터디명 -->
-			<input type="text" id="studyNm" name="studyNm" value="" size="50" placeholder="스터디명을 입력해주세요">
+			<input type="text" id="studyNm" name="studyNm" value="${study.stduyNm }" size="50" placeholder="스터디명을 입력해주세요">
 			<br><br>
 
 			<!-- 지역선택 -->
-			<select class="input-md round form-control" id="location" name="location">
-				<option>One</option>
-				<option>Two</option>
-				<option>Three</option>
+			<select class="input-md round form-control" id="location" name="location" value="${study.location }">
+				<option <c:if test="${study.location=='One'}">selected </c:if>>One</option>
+				<option <c:if test="${study.location=='Two'}">selected </c:if>>Two</option>
+				<option <c:if test="${study.location=='Three'}">selected </c:if>>Three</option>
 			</select><br><br>
 
 			<!-- 인원 설정 -->
 			<select class="input-md round form-control" id="maxRcnt" name="maxRcnt">
-				<option>1</option>
-				<option>2</option>
-				<option>3</option>
-				<option>4</option>
-				<option>5</option>
+				<option <c:if test="${study.maxRcnt==1}">selected </c:if>>1</option>
+				<option <c:if test="${study.maxRcnt==2}">selected </c:if>>2</option>
+				<option <c:if test="${study.maxRcnt==3}">selected </c:if>>3</option>
+				<option <c:if test="${study.maxRcnt==4}">selected </c:if>>4</option>
+				<option <c:if test="${study.maxRcnt==5}">selected </c:if>>5</option>
 			</select><br><br>
 
 			<!-- 언어선택 -->
 			<label class="checkbox-inline">
-				<input type="checkbox" name="ck_lang" onclick="count_ck(this);" id="lang1" value="C">
+				<input type="checkbox" name="ck_lang" onclick="count_ck(this);" id="lang1" value="C" <c:if test="${study.lang1=='C' or study.lang2=='C'}">checked</c:if>>
 				<span class="small">C</span>
 			</label>
 			<label class="checkbox-inline">
-				<input type="checkbox" name="ck_lang" onclick="count_ck(this);" id="lang2" value="C++">
+				<input type="checkbox" name="ck_lang" onclick="count_ck(this);" id="lang2" value="C++" <c:if test="${study.lang1=='C++' or study.lang2=='C++'}">checked</c:if>>
 				<span class="small">C++</span>
 			</label>
 			<label class="checkbox-inline">
-				<input type="checkbox" name="ck_lang" onclick="count_ck(this);" id="lang3" value="Java">
+				<input type="checkbox" name="ck_lang" onclick="count_ck(this);" id="lang3" value="Java" <c:if test="${study.lang1=='Java' or study.lang2=='Java'}">checked</c:if>>
 				<span class="small">Java</span>
 			</label>
 			<label class="checkbox-inline">
-				<input type="checkbox" name="ck_lang" onclick="count_ck(this);" id="lang4" value="JavaScript">
+				<input type="checkbox" name="ck_lang" onclick="count_ck(this);" id="lang4" value="JavaScript" <c:if test="${study.lang1=='JavaScript' or study.lang2=='JavaScript'}">checked</c:if>>
 				<span class="small">JavaScript</span>
 			</label>
 			<label class="checkbox-inline">
-				<input type="checkbox" name="ck_lang" onclick="count_ck(this);" id="lang4" value="Python">
+				<input type="checkbox" name="ck_lang" onclick="count_ck(this);" id="lang4" value="Python" <c:if test="${study.lang1=='Python' or study.lang2=='Python'}">checked</c:if>>
 				<span class="small">Python</span>
 			</label><br><br>
 
 			<!-- 난이도선택 -->
 			<label class="radio-inline">
-				<input type="radio" name="defficulty" id="lv1" value="상">
+				<input type="radio" name="defficulty" id="lv1" value="상" <c:if test="${study.defficulty=='상'}">checked </c:if>>
 				<span class="small">상</span>
 			</label>
 			<label class="radio-inline">
-				<input type="radio" name="defficulty" id="lv2" value="중">
+				<input type="radio" name="defficulty" id="lv2" value="중" <c:if test="${study.defficulty=='중'}">checked </c:if>>
 				<span class="small">중</span>
 			</label>
 			<label class="radio-inline">
-				<input type="radio" name="defficulty" id="lv3" value="하">
+				<input type="radio" name="defficulty" id="lv3" value="하" <c:if test="${study.defficulty=='하'}">checked </c:if>>
 				<span class="small">하</span>
 			</label><br><br>
 
 			<!-- 시작일자 -->
-			<input type="date" name="studySdt" id="studySdt" class="input-md round form-control">
+			<input type="date" name="studySdt" id="studySdt" class="input-md round form-control" value="${study.studySdt }">
 
 			<!--  종료일자 -->
-			<input type="date" name="studyEdt" id="studyEdt" class="input-md round form-control">
+			<input type="date" name="studyEdt" id="studyEdt" class="input-md round form-control" value="${study.studyEdt }">
 
 			<!-- 내용 -->
-			<textarea rows="20" cols="60" name="subject" id="subject" placeholder="내용을 입력하세요"></textarea>
+			<textarea rows="20" cols="60" name="subject" id="subject" placeholder="내용을 입력하세요" value="${study.subject }"></textarea>
 			<br>
 			
 			<!-- 버튼 -->
@@ -198,6 +193,6 @@
 				return false;
 			}
 		}
-	</script>
-	</body>
+		</script>
+</body>
 </html>

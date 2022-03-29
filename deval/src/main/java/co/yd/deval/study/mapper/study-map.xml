@@ -12,8 +12,9 @@
 	
 	<select id="studySelectNo"
 		resultType="co.yd.deval.study.service.StudyVO">
-		SELECT MAX(STUDY_NO) AS STUDYNO
+		SELECT *
 		FROM STUDY
+		WHERE STUDY_NO = #{studyNo}
 	</select>
 
 	<insert id="studyInsert"
@@ -56,17 +57,17 @@
 		parameterType="co.yd.deval.study.service.StudyVO">
 		UPDATE STUDY
 		<set>
-			<if test="lang1 	 != null"> LANG1 =#{lang1},</if>
-			<if test="location   != null"> LOCATION =#{location},</if>
-			<if test="subject    != null"> SUBJECT =#{subject},</if>
-			<if test="uploadDate != null"> UPLOAD_DATE =#{uploadDate},</if>
-			<if test="maxRcnt 	 != null"> MAX_RCNT =#{maxRcnt},</if>
-			<if test="defficulty != null"> DEFFICULTY =#{defficulty},</if>
-			<if test="leaderId 	 != null"> LEADER_ID =#{leaderId},</if>
-			<if test="studySdt   != null"> STUDY_SDT =#{studySdt},</if>
-			<if test="studyEdt   != null"> STUDY_EDT =#{studyEdt},</if>
-			<if test="studyNm   != null"> STUDY_NM =#{studyNm},</if>
-			<if test="lang2   != null"> LANG2 =#{lang2},</if>
+			<if test="lang1 	 != null and lang1 != ''"> LANG1 =#{lang1},</if>
+			<if test="location   != null and location !=''" > LOCATION =#{location},</if>
+			<if test="subject    != null and subject !=''"> SUBJECT =#{subject},</if>
+			<if test="uploadDate != null and uploadDate !=''"> UPLOAD_DATE =#{uploadDate},</if>
+			<if test="maxRcnt 	 != null and maxRcnt !=''"> MAX_RCNT =#{maxRcnt},</if>
+			<if test="defficulty != null and defficulty !=''"> DEFFICULTY =#{defficulty},</if>
+			<if test="leaderId 	 != null and leaderId !=''"> LEADER_ID =#{leaderId},</if>
+			<if test="studySdt   != null and studySdt !=''"> STUDY_SDT =#{studySdt},</if>
+			<if test="studyEdt   != null and studyEdt !=''"> STUDY_EDT =#{studyEdt},</if>
+			<if test="studyNm    != null and studyNm !=''"> STUDY_NM =#{studyNm},</if>
+			<if test="lang2   	 != null and lang2 !=''"> LANG2 =#{lang2},</if>
 		</set>
 		WHERE STUDY_NO = #{studyNo}
 	</update>

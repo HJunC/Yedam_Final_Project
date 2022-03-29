@@ -4,9 +4,11 @@ import java.sql.Date;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Setter
 @Getter
+@ToString
 public class StudyVO {
 	private int studyNo;
 	private String lang1;
@@ -22,4 +24,6 @@ public class StudyVO {
 	private String studyNm;
 	private String lang2;
 	private String[] ck_lang;
+	
+	
 }
