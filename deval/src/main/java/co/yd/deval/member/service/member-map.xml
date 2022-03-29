@@ -3,38 +3,48 @@
 <mapper namespace="co.yd.deval.member.service.MemberMapper">
 	<resultMap type="co.yd.deval.member.vo.MemberVO" id="memberMap">
 		<id property="memberId" column="member_id"/>
-		<result property="memberPassword" column="member_password"/>
-		<result property="memberPhone" column="member_phone"/>
-		<result property="memberMail" column="member_mail"/>
-		<result property="memberName" column="member_name"/>
-		<result property="memberExp" column="member_exp"/>
-		<result property="memberCash" column="member_cash"/>
-		<result property="memberResume" column="member_resume"/>
-		<result property="memberPhoto" column="member_photo"/>
+		<result property="password" column="password"/>
+		<result property="mail" column="mail"/>
+		<result property="name" column="name"/>
+		<result property="exp" column="exp"/>
+		<result property="cashPt" column="cash_pt"/>
+		<result property="resume" column="resume"/>
+		<result property="profileImg" column="profile_img"/>
+		<result property="role" column="role"/>
 	</resultMap>
 	
 	<select id="memberSelect" resultMap="memberMap">
-		SELECT * 
-		FROM MEMBER
-		WHERE MEMBER_ID = #{memberId}
-		<if test="memberPassword != null">
-		AND MEMBER_PASSWORD = #{memberPassword}
-		</if>
+		SELECT member_id, 
+			   '{noop}'||password as password, 
+			   mail, 
+			   name, 
+			   exp, 
+			   cash_pt, 
+			   profile_img, 
+			   'ROLE_'||role as role
+		FROM   MEMBER
+		WHERE  MEMBER_ID = #{memberId}
 	</select>
 	
 	<insert id="memberInsert" parameterType="co.yd.deval.member.vo.MemberVO">
-		INSERT INTO MEMBER (MEMBER_ID,MEMBER_PASSWORD,MEMBER_PHONE,MEMBER_MAIL,MEMBER_NAME)
-		VALUES      (#{memberId},#{memberPassword},#{memberPhone},#{memberMail},#{memberName})
+		INSERT INTO MEMBER (MEMBER_ID,
+							PASSWORD,
+							MAIL,
+							NAME)
+		VALUES      (#{memberId},
+					 #{password},
+					 #{mail},
+					 #{name})
 	</insert>
 	
 	<update id="memberUpdate" parameterType="co.yd.deval.member.vo.MemberVO">
 		UPDATE MEMBER
 		<set>
-			<if test="memberPassword != null"> MEMBER_PASSWORD = #{memberPassword}, </if>
-			<if test="memberPhone != null"> MEMBER_PHONE = #{memberPhone}, </if>
-			<if test="memberMail != null"> MEMBER_MAIL = #{memberMail}, </if>
-			<if test="memberResume != null"> MEMBER_RESUME = #{memberResume}, </if>
-			<if test="memberPhoto != null"> MEMBER_PHOTO = #{memberPhoto}, </if>
+			<if test="password != null and password != ''"> PASSWORD = #{password}, </if>
+			<if test="mail != null and mail != ''"> MAIL = #{mail}, </if>
+			<if test="name != nulland name != ''"> NAME = #{name}, </if>
+			<if test="resume != null and resume != ''"> RESUME = #{resume}, </if>
+			<if test="profileImg != null and profileImg != ''"> PROFILE_IMG = #{profileImg}, </if>
 		</set>
 		WHERE MEMBER_ID = #{memberId}
 	</update>
@@ -42,18 +52,18 @@
 	<delete id="memberDelete" parameterType="co.yd.deval.member.vo.MemberVO">
 		DELETE FROM MEMBER
 		WHERE  MEMBER_ID = #{memberId}
-		AND    MEMBER_PASSWORD = #{memberPassword}
+		AND    PASSWORD = #{password}
 	</delete>
 	
 	<update id="memberExpUp" parameterType="HashMap">
 		UPDATE MEMBER
-		SET MEMBER_EXP = MEMBER_EXP + #{exp}
+		SET EXP = EXP + #{exp}
 		WHERE MEMBER_ID = #{id}
 	</update>
 	
 	<update id="memberCashUpdate" parameterType="HashMap">
 		UPDATE MEMBER
-		SET MEMBER_CASH = MEMBER_CASH + #{cash}
+		SET CASH_PT = CASH_PT + #{cash}
 		WHERE MEMBER_ID = #{id}
 	</update>
 	

@@ -10,7 +10,7 @@ import co.yd.deval.member.service.MemberService;
 import co.yd.deval.member.vo.MemberVO;
 
 
-@Repository("memberDAO")
+@Repository("memberDao")
 public class MemberServiceImpl implements MemberService {
 	
 	@Autowired
