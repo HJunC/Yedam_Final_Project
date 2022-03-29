@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="co.yd.deval.project.mapper.ProjectTeamMapper">
+
+    <insert id="insertProjectTeam"></insert>
+    <update id="updateProjectTeam"></update>
+    <delete id="deleteProjectTeam"></delete>
+
+    <select id="selectProjectTeamAll" resultType="co.yd.deval.project.service.ProjectTeamVO">
+        SELECT *
+        FROM PROJECT_TEAM
+    </select>
+    <select id="selectProjectTeam" resultType="co.yd.deval.project.service.ProjectTeamVO">
+        SELECT *
+        FROM PROJECT_TEAM
+        WHERE PROJECT_NO = #{projectNo}
+    </select>
+</mapper>

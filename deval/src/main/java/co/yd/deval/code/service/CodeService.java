@@ -2,8 +2,6 @@ package co.yd.deval.code.service;
 
 import java.util.List;
 
-import co.yd.deval.code.vo.CodeVO;
-
 public interface CodeService {
 	
 	List<CodeVO> codeSelectList();

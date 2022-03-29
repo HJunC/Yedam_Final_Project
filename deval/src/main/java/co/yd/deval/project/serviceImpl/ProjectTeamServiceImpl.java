@@ -1,8 +1,9 @@
 package co.yd.deval.project.serviceImpl;
 
-import co.yd.deval.project.service.ProjectTeamMapper;
+import co.yd.deval.project.mapper.ProjectTeamMapper;
 import co.yd.deval.project.service.ProjectTeamService;
-import co.yd.deval.project.vo.ProjectTeamVO;
+import co.yd.deval.project.service.ProjectTeamVO;
+
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

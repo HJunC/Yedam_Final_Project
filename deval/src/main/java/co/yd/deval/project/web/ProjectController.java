@@ -2,7 +2,8 @@ package co.yd.deval.project.web;
 
 import co.yd.deval.HomeController;
 import co.yd.deval.project.service.ProjectService;
-import co.yd.deval.project.vo.ProjectVO;
+import co.yd.deval.project.service.ProjectVO;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;

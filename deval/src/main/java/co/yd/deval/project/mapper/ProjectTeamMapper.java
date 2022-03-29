@@ -1,8 +1,8 @@
-package co.yd.deval.project.service;
-
-import co.yd.deval.project.vo.ProjectTeamVO;
+package co.yd.deval.project.mapper;
 
 import java.util.List;
+
+import co.yd.deval.project.service.ProjectTeamVO;
 
 public interface ProjectTeamMapper {
     List<ProjectTeamVO> selectProjectTeamAll();
