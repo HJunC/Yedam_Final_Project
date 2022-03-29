@@ -5,10 +5,11 @@ import co.yd.deval.project.service.ProjectService;
 import co.yd.deval.project.service.ProjectVO;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Repository("projectDao")
+@Service("projectDao")
 public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectMapper map;
@@ -45,6 +46,11 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public List<ProjectVO> findByLeaderIdAndState(String leaderId, String state) {
         return map.findByLeaderIdAndState(leaderId, state);
+    }
+
+    @Override
+    public List<ProjectVO> searchProject(ProjectVO vo) {
+        return map.searchProject(vo);
     }
 
     @Override

@@ -5,10 +5,11 @@ import co.yd.deval.project.service.ProjectTeamService;
 import co.yd.deval.project.service.ProjectTeamVO;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Repository("projectTeamDao")
+@Service("projectTeamDao")
 public class ProjectTeamServiceImpl implements ProjectTeamService {
 
     private final ProjectTeamMapper map;

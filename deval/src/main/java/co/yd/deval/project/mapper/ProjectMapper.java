@@ -13,6 +13,7 @@ public interface ProjectMapper {
     int deleteProject(ProjectVO vo);
     int updateProject(ProjectVO vo);
 
-    List<ProjectVO> findByLeaderIdAndState(@Param("leaderId") String leaderId, @Param("state") String state);
     int updateHit(ProjectVO vo);
+    List<ProjectVO> findByLeaderIdAndState(@Param("leaderId") String leaderId, @Param("state") String state);
+    List<ProjectVO> searchProject(ProjectVO vo);
 }

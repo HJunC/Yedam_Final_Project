@@ -28,15 +28,30 @@
 <!-- Call Action Section -->
 <section class="small-section bg-dark light-content">
     <div class="container relative">
-        <div class="row wow fadeInUpShort">
-            <div class="col-md-8 offset-md-2 text-center">
-                <h3 class="call-action-1-heading" style="font-size: 30px; color: rgba(255, 255, 255, 0.3);">진행중인 프로젝트가 없습니다</h3>
-                <div class="call-action-1-decription mb-60 mb-sm-30"></div>
-                <div class="local-scroll">
-                    <a href="projectInsertForm.do" class="btn btn-mod btn-w btn-large btn-round">프로젝트 생성하기</a>
+        <c:choose>
+            <c:when test="${userState.isLeader eq 'true'}">
+                <c:forEach items="${myProjectInfo }" var="item">
+                    프로젝트 가지고있음
+                    ${item.projectNo} / 리더 아이디 : ${item.leaderId}
+                </c:forEach>
+            </c:when>
+            <c:when test="${userState.isLeader eq 'false'}">
+                홍길동이 아닙니다.
+            </c:when>
+            <c:otherwise>
+                <div class="row wow fadeInUpShort">
+                    <div class="col-md-8 offset-md-2 text-center">
+                        <h3 class="call-action-1-heading" style="font-size: 30px; color: rgba(255, 255, 255, 0.3);">진행중인 프로젝트가 없습니다</h3>
+                        <div class="call-action-1-decription mb-60 mb-sm-30"></div>
+                        <div class="local-scroll">
+                            <a href="projectInsertForm.do" class="btn btn-mod btn-w btn-large btn-round">프로젝트 생성하기</a>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+            </c:otherwise>
+        </c:choose>
+
+
     </div>
 </section>
 <!-- End Call Action Section -->
@@ -48,7 +63,10 @@
 <!-- Call Action Section -->
 <section class="small-section bg-dark light-content">
     <div class="container relative">
-        ssssss
+        <c:forEach items="${projectList }" var="item">
+            팀 프로젝트 찾기
+            ${item.projectNo} / ${item.state } /리더 아이디 : ${item.leaderId}
+        </c:forEach>
     </div>
 </section>
 <!-- End Call Action Section -->
