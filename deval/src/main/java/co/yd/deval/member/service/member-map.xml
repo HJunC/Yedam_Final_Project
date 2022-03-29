@@ -14,14 +14,27 @@
 	</resultMap>
 	
 	<select id="memberSelect" resultMap="memberMap">
-		SELECT * 
-		FROM MEMBER
-		WHERE MEMBER_ID = #{memberId}
+		SELECT member_id, 
+			   '{noop}'||password as password, 
+			   mail, 
+			   name, 
+			   exp, 
+			   cash_pt, 
+			   profile_img, 
+			   'ROLE_'||role as role
+		FROM   MEMBER
+		WHERE  MEMBER_ID = #{memberId}
 	</select>
 	
 	<insert id="memberInsert" parameterType="co.yd.deval.member.vo.MemberVO">
-		INSERT INTO MEMBER (MEMBER_ID,PASSWORD,MAIL,NAME)
-		VALUES      (#{memberId},#{password},#{mail},#{name})
+		INSERT INTO MEMBER (MEMBER_ID,
+							PASSWORD,
+							MAIL,
+							NAME)
+		VALUES      (#{memberId},
+					 #{password},
+					 #{mail},
+					 #{name})
 	</insert>
 	
 	<update id="memberUpdate" parameterType="co.yd.deval.member.vo.MemberVO">

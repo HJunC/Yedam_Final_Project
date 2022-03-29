@@ -7,10 +7,13 @@
 
 	<security:http pattern="/resources/**" security="none" />
 	<security:http>
-		<security:intercept-url pattern="/WEB-INF/views/**" access="permitAll()" />
-		<security:form-login login-page="/loginForm.do" authentication-success-handler-ref="" default-target-url="/home.do" />
-		<security:logout logout-url="/logout" logout-success-url="/home.do" />
-		<security:csrf disabled="true" />
+		<security:intercept-url pattern="/**" access="permitAll()" />
+		<security:form-login login-page="/loginForm.do" 
+							 login-processing-url="/login" 
+							 default-target-url="/home.do" />
+		<security:logout logout-url="/logout" 
+						 logout-success-url="/home.do" />
+		<security:csrf disabled="false" />
 	</security:http>
 	<security:authentication-manager>
 		<security:authentication-provider>

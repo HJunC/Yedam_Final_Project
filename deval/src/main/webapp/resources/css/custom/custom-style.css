@@ -1,0 +1,9 @@
+.bg-dark-input {
+    background-color: #30363d;
+    border-color: #5e646a !important;
+    color: #fff !important;
+}
+
+.bg-dark-input:focus {
+    color: #111111 !important;
+}
