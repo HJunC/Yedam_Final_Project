@@ -13,5 +13,6 @@ public interface CodeMapper {
 	int codeDelete(CodeVO vo);
 	
 	void codeHitUp(CodeVO vo);
+	void codeRecommendUp(CodeVO vo);
 	
 }

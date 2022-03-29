@@ -1,6 +1,6 @@
 package co.yd.deval.code.vo;
 
-import java.util.Date;
+import java.sql.Date;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -19,5 +19,5 @@ public class CodeVO {
 	private String writer;
 	private String cqType;
 	private String gitUri;
-	
+
 }

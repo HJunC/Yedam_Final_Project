@@ -42,7 +42,7 @@
 						<li class="mn-sub-multi">
 							<a class="mn-group-title">Code</a>
 							<ul>
-								<li><a href="${root}/code/shared.do">코드공유/질문</a></li>
+								<li><a href="${root}/code/codeList.do">소스코드</a></li>
 								<%-- <li><a href="${root}/code/review.do">코드리뷰</a></li> --%>
 								<%-- <li><a href="${root}/code/question.do">질문</a></li> --%>
 								<%-- <li><a href="${root}/code/answer.do">답변</a></li> --%>
