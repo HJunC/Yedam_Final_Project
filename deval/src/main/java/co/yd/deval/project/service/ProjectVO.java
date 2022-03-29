@@ -28,4 +28,5 @@ public class ProjectVO {
     private int hit;
     private int applyRcnt;
     private String leaderId;
+    private String leaderPosition;
 }

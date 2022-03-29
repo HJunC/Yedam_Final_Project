@@ -1,11 +1,13 @@
 package co.yd.deval.project.serviceImpl;
 
 import co.yd.deval.project.mapper.ProjectMapper;
+import co.yd.deval.project.mapper.ProjectTeamMapper;
 import co.yd.deval.project.service.ProjectService;
+import co.yd.deval.project.service.ProjectTeamVO;
 import co.yd.deval.project.service.ProjectVO;
 
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -13,9 +15,11 @@ import java.util.List;
 public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectMapper map;
+    private final ProjectTeamMapper teamMapper;
 
-    public ProjectServiceImpl(ProjectMapper map) {
+    public ProjectServiceImpl(ProjectMapper map, ProjectTeamMapper teamMapper) {
         this.map = map;
+        this.teamMapper = teamMapper;
     }
 
     @Override
@@ -25,12 +29,28 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public ProjectVO selectProject(ProjectVO vo) {
+        map.updateHit(vo);
         return map.selectProject(vo);
     }
 
     @Override
     public int insertProject(ProjectVO vo) {
-        return map.insertProject(vo);
+        vo.setTotalRcnt(
+                vo.getFrontRcnt()
+                + vo.getBackRcnt()
+                + vo.getFullRcnt()
+                + vo.getDesignRcnt()
+                + vo.getPlannerRcnt()
+        );
+        int projectNo = map.insertProject(vo);
+        System.out.println("============================projectNo" + projectNo);
+
+        ProjectTeamVO teamVo = new ProjectTeamVO();
+        teamVo.setProjectNo(projectNo);
+        teamVo.setMemberId(vo.getLeaderId());
+        teamVo.setIsLeader("1");
+        teamVo.setPosition(vo.getLeaderPosition());
+        return teamMapper.insertProjectTeam(teamVo);
     }
 
     @Override
@@ -53,8 +73,4 @@ public class ProjectServiceImpl implements ProjectService {
         return map.searchProject(vo);
     }
 
-    @Override
-    public int updateHit(ProjectVO vo) {
-        return map.updateHit(vo);
-    }
 }

@@ -3,6 +3,10 @@
 <mapper namespace="co.yd.deval.project.mapper.ProjectMapper">
 
     <insert id="insertProject">
+        <selectKey keyProperty="id" resultType="int" order="BEFORE">
+            /*todo 시퀸스값 반환*/
+            select #{projectNo} FROM DUAL
+        </selectKey>
         INSERT INTO PROJECT (PROJECT_NO,
                              PROJECT_NAME,
                              STATE,

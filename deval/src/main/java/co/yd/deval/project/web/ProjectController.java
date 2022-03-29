@@ -12,6 +12,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/project")
@@ -26,7 +27,7 @@ public class ProjectController {
     @GetMapping("/main.do")
     public String projectMain(Model model) {
         List<ProjectVO> myProjectList = projectDao.findByLeaderIdAndState("2222", "1");
-        HashMap<String, String> userState = new HashMap<>();
+        Map<String, String> userState = new HashMap<>();
 
         if (!myProjectList.isEmpty()) {
             // 리더일때
@@ -55,13 +56,6 @@ public class ProjectController {
 
     @PostMapping("/projectInsert.do")
     public String projectInsert(ProjectVO vo) {
-        vo.setTotalRcnt(
-                vo.getFrontRcnt()
-                + vo.getBackRcnt()
-                + vo.getFullRcnt()
-                + vo.getDesignRcnt()
-                + vo.getPlannerRcnt()
-        );
         // todo 로그인 유저 입력
         vo.setLeaderId("hong");
         int result = projectDao.insertProject(vo);

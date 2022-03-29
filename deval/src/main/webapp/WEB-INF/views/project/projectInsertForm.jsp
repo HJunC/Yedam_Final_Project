@@ -48,35 +48,35 @@
                                     <span class="input-group-text bg-dark" style="border-color: #5e646a;">프론트엔드</span>
                                     <input type="number" id="frontRcnt" name="frontRcnt" class="input-lg round form-control bg-dark-input" min="0" max="9" value="0">
                                     <div class="input-group-text bg-dark" style="border-color: #5e646a;">
-                                        <input class="form-check-input mt-0" type="radio" value="front" name="myPosition" checked required>
+                                        <input class="form-check-input mt-0" type="radio" value="FE" name="leaderPosition" checked required>
                                     </div>
                                 </div>
                                 <div class="col input-group me-3">
                                     <span class="input-group-text bg-dark" style="border-color: #5e646a;">백엔드</span>
                                     <input type="number" id="backRcnt" name="backRcnt" class="input-lg round form-control bg-dark-input" min="0" max="9" value="0">
                                     <div class="input-group-text bg-dark" style="border-color: #5e646a;">
-                                        <input class="form-check-input mt-0" type="radio" value="back" name="myPosition" required>
+                                        <input class="form-check-input mt-0" type="radio" value="BE" name="leaderPosition" required>
                                     </div>
                                 </div>
                                 <div class="col input-group me-3">
                                     <span class="input-group-text bg-dark" style="border-color: #5e646a;">풀스택</span>
                                     <input type="number" id="fullRcnt" name="fullRcnt" class="input-lg round form-control bg-dark-input" min="0" max="9" value="0">
                                     <div class="input-group-text bg-dark" style="border-color: #5e646a;">
-                                        <input class="form-check-input mt-0" type="radio" value="full" name="myPosition" required>
+                                        <input class="form-check-input mt-0" type="radio" value="FS" name="leaderPosition" required>
                                     </div>
                                 </div>
                                 <div class="col input-group me-3">
                                     <span class="input-group-text bg-dark" style="border-color: #5e646a;">디자인</span>
                                     <input type="number" id="designRcnt" name="designRcnt" class="input-lg round form-control bg-dark-input" min="0" max="9" value="0">
                                     <div class="input-group-text bg-dark" style="border-color: #5e646a;">
-                                        <input class="form-check-input mt-0" type="radio" value="design" name="myPosition" required>
+                                        <input class="form-check-input mt-0" type="radio" value="DE" name="leaderPosition" required>
                                     </div>
                                 </div>
                                 <div class="col input-group">
                                     <span class="input-group-text bg-dark" style="border-color: #5e646a;">기획</span>
                                     <input type="number" id="plannerRcnt" name="plannerRcnt" class="input-lg round form-control bg-dark-input" min="0" max="9" value="0">
                                     <div class="input-group-text bg-dark" style="border-color: #5e646a;">
-                                        <input class="form-check-input mt-0" type="radio" value="planner" name="myPosition" required>
+                                        <input class="form-check-input mt-0" type="radio" value="PL" name="leaderPosition" required>
                                     </div>
                                 </div>
                             </div>
