@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import co.yd.deval.study.service.StudyService;
 import co.yd.deval.study.service.StudyVO;
@@ -28,7 +29,17 @@ public class StudyController {
     }
 
     @RequestMapping("/insertStudy.do")
+    @ResponseBody
     public String insertStudy(StudyVO vo) {
+    	if(vo.getCk_lang()!=null) {
+    		if(vo.getCk_lang().length>0) {
+    			vo.setLang1(vo.getCk_lang()[0]);
+    		}
+    		if(vo.getCk_lang().length>1) {
+    			vo.setLang2(vo.getCk_lang()[1]);
+    		}
+    	}
+
     	vo.setLeaderId("popo");
     	int n = studyDao.studyInsert(vo);
     	

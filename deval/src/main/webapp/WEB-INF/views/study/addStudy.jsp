@@ -14,6 +14,7 @@
 <body>
 	<div align="center">
 		<h3>스터디 등록</h3>
+		<form id="frm">
 		<input type="text" id="title" name="title" value="" size="50"
 			placeholder="스터디명을 입력해주세요"> <br> <br>
 
@@ -23,7 +24,8 @@
 			<option>One</option>
 			<option>Two</option>
 			<option>Three</option>
-		</select><br><br>
+		</select><br>
+		<br>
 
 		<!-- 인원 설정 -->
 		<select class="input-md round form-control" id="selRcnt"
@@ -33,23 +35,19 @@
 			<option>3</option>
 			<option>4</option>
 			<option>5</option>
-		</select><br><br>
+		</select><br>
+		<br>
 
 		<!-- 언어선택 -->
-		<label class="checkbox-inline">
-			<input type="checkbox" name="ck_lang" id="lang1" value="C"> <span class="small">C</span>
-		</label>
-		
-		<label class="checkbox-inline">
-			<input type="checkbox" name="ck_lang" id="lang2" value="C++"><span class="small">C++</span>
-		</label>
-		
-		<label class="checkbox-inline">
-			<input type="checkbox" name="ck_lang" id="lang3" value="Java"><span class="small">Java</span>
-		</label>
-		
 		<label class="checkbox-inline"> <input type="checkbox"
-			name="ck_lang" id="lang4" value="JavaScript"><span class="small">JavaScript</span>
+			name="ck_lang" id="lang1" value="C"> <span class="small">C</span>
+		</label> <label class="checkbox-inline"> <input type="checkbox"
+			name="ck_lang" id="lang2" value="C++"><span class="small">C++</span>
+		</label> <label class="checkbox-inline"> <input type="checkbox"
+			name="ck_lang" id="lang3" value="Java"><span class="small">Java</span>
+		</label> <label class="checkbox-inline"> <input type="checkbox"
+			name="ck_lang" id="lang4" value="JavaScript"><span
+			class="small">JavaScript</span>
 		</label> <label class="checkbox-inline"> <input type="checkbox"
 			name="ck_lang" id="lang5" value="Node.js"><span class="small">Node.js</span>
 		</label> <label class="checkbox-inline"> <input type="checkbox"
@@ -79,7 +77,7 @@
 			value="등록" onclick="StdAdd()"> <input type="button"
 			id="btnStdEdit" name="btnStdEdit" value="변경" onclick="StdEdit()">
 		<input type="reset" value="취소">
-
+</form>
 	</div>
 </body>
 
@@ -114,7 +112,7 @@
 				console.log("체크박스");
 			}
 		}
-
+		
 		function StdAdd() {
 			//ExceptionStd();
 			console.log("Study Add Start");
@@ -122,27 +120,30 @@
 			$.ajax({
 				url : "insertStudy.do",
 				type : "post",
-				data : {
+				data : $("#frm").serialize(),
+					/* {
 					"studyNm" : $("#title").val(),
 					"lang1" : $('input:checkbox[name="ck_lang"]').val(),
+					"lang1" : $('input:checkbox[name="ck_lang"]').is(":checked").val(),
 					"location" : $("select[name='selArea']").val(),	
 					"subject" :  $("#subject").val(),
 					"maxRcnt" : $("select[name='selRcnt']").val() ,
 					"defficulty" : $('input:radio[name="lv"]').val() ,
+					"defficulty" : $('#lv1').is(':checked').val(),
 					"studySdt" : $("#dtSdt").val(),
 					"studyEdt" : $("#dtEdt").val(),
 					"lang2" : $('input:checkbox[name="ck_lang"]').val()
-				},
+				} */
 				dataType : "text",
 				success : function(result) {
 					console.log("succ", result);
 					if (result != "0") {
+						alert("등록되었습니다.");
 						location.href="studyMain.do";
 					}
 				},
 				error : function(err) {
 					console.log("err", err);
-					location.href="studyMain.do";
 				}
 			});
 		}

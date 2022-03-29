@@ -21,4 +21,5 @@ public class StudyVO {
 	private String state;
 	private String studyNm;
 	private String lang2;
+	private String[] ck_lang;
 }
