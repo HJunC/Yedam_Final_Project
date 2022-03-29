@@ -17,7 +17,7 @@
 		<!-- CSS -->
 		<link rel="stylesheet" href="${resources}/css/bootstrap.min.css">
 		<link rel="stylesheet" href="${resources}/css/template.css">
-		<link rel="stylesheet" href="${resources}/css/custom/team-project-style.css">
+		<link rel="stylesheet" href="${resources}/css/custom/custom-style.css">
 	</head>
 	<body class="appear-animate">
 		<!-- Page Loader -->
