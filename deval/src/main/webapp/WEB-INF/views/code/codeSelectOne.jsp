@@ -39,7 +39,7 @@
 									<th>추천수 : ${code.recommend }</th>
 								</tr>
 								<tr>
-									<th>${code.subject }</th>
+									<th style="vertical-align: top;" height="500px"><br>${code.subject }</th>
 								</tr>
 							</table>
 							<div align="right">
