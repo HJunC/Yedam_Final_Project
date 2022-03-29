@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.yd.deval.mento.service.MentoMapper">
+	<select id="mentoSelectList" parameterType="String" resultType="co.yd.deval.mento.vo.MentoVO">
+		SELECT * FROM MENTO WHERE LANG = #{lang}
+	</select>
+	<select id="mentoSelectOne" resultType="co.yd.deval.mento.vo.MentoVO" parameterType="co.yd.deval.mento.vo.MentoVO">
+		SELECT * FROM MENTO WHERE MENTO_ID = #{mentoId}
+	</select>
+	<insert id="mentoInsert" parameterType="co.yd.deval.mento.vo.MentoVO">
+		insert into mento(mento_id,
+							lang,
+							photo,
+							history,
+							info,
+							price,
+							max_term,
+							service_stt,
+							service_edt)
+		values(				#{mentoId},
+							#{lang},
+							  #{photo},
+							   #{history},
+							    #{info},
+							     #{price},
+							      #{maxTerm},
+							       #{serviceStt},
+							        #{serviceEdt})
+	</insert>
+	<delete id="mentoDelete" parameterType="co.yd.deval.mento.vo.MentoVO">
+	
+	</delete>
+	<update id="mentoUpdate" parameterType="co.yd.deval.mento.vo.MentoVO">
+	
+	</update>
+	
+</mapper>
