@@ -74,7 +74,7 @@
     </update>
 
     <update id="updateHit">
-        UPDATE PROJECT SET HIT = #{hit}
+        UPDATE PROJECT SET HIT = HIT + 1
         WHERE PROJECT_NO = #{projectNo}
     </update>
 

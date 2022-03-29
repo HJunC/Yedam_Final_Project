@@ -1,18 +1,17 @@
 package co.yd.deval.project.web;
 
 import co.yd.deval.project.service.ProjectService;
+import co.yd.deval.project.service.ProjectTeamService;
+import co.yd.deval.project.service.ProjectTeamVO;
 import co.yd.deval.project.service.ProjectVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.sql.Date;
-import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/project")
@@ -26,26 +25,20 @@ public class ProjectController {
 
     @GetMapping("/main.do")
     public String projectMain(Model model) {
-        List<ProjectVO> myProjectList = projectDao.findByLeaderIdAndState("2222", "1");
-        Map<String, String> userState = new HashMap<>();
-
-        if (!myProjectList.isEmpty()) {
-            // 리더일때
-            userState.put("isLeader", "true");
-            model.addAttribute("userState", userState);
-            model.addAttribute("myProjectInfo", myProjectList);
-        } else {
-            userState.put("isLeader", "false");
-            // 팀원일때
-
-            // 속한 프로젝트가 아무것도 없을때
-            ProjectVO searchVO = new ProjectVO();
-            LocalDate now = LocalDate.now();
-            System.out.println("==================================="+Date.valueOf(now));
-            searchVO.setRecruitEdt(Date.valueOf(now));
-            List<ProjectVO> projectList = projectDao.searchProject(searchVO);
-            model.addAttribute("projectList", projectList);
+        String userId = "hong";
+        ProjectVO userProject = projectDao.getNowUserProject(userId);
+        if (userProject != null) {
+            if (userProject.getLeaderId().equals(userId)) {
+                model.addAttribute("isLeader", "true");
+            } else {
+                model.addAttribute("isLeader", "false");
+            }
+            model.addAttribute("userProject", userProject);
         }
+        ProjectVO searchVo = new ProjectVO();
+        //List<ProjectVO> projectList = projectDao.searchMainPageProject(searchVo);
+        List<ProjectVO> projectList = projectDao.selectProjectAll();
+        model.addAttribute("projectList", projectList);
         return "project/projectMain";
     }
 
@@ -68,5 +61,10 @@ public class ProjectController {
         }
     }
 
+    @GetMapping("/projectDetail.do")
+    public String projectDetail(Model model, @RequestParam("no") int projectNo) {
+        model.addAttribute("project", projectDao.selectProject(projectNo));
+        return "project/projectDetail";
+    }
 
 }

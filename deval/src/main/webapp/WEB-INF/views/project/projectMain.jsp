@@ -29,15 +29,18 @@
 <section class="small-section bg-dark light-content">
     <div class="container relative">
         <c:choose>
-            <c:when test="${userState.isLeader eq 'true'}">
-                <c:forEach items="${myProjectInfo }" var="item">
-                    프로젝트 가지고있음
-                    ${item.projectNo} / 리더 아이디 : ${item.leaderId}
-                </c:forEach>
+            <c:when test="${isLeader eq 'true'}">
+                내 프로젝트
+                <a href="projectDetail.do?no=${userProject.projectNo}">
+                    ${userProject.projectNo} / ${userProject.projectName} / 리더 아이디 : ${userProject.leaderId}
+                </a>
             </c:when>
-            <c:when test="${userState.isLeader eq 'false'}">
-                홍길동이 아닙니다.
+
+            <c:when test="${isLeader eq 'false'}">
+                내 프로젝트
+                ${userProject.projectNo} / ${userProject.projectName} / 리더 아이디 : ${userProject.leaderId}
             </c:when>
+
             <c:otherwise>
                 <div class="row wow fadeInUpShort">
                     <div class="col-md-8 offset-md-2 text-center">
@@ -63,9 +66,12 @@
 <!-- Call Action Section -->
 <section class="small-section bg-dark light-content">
     <div class="container relative">
+        팀 프로젝트 찾기
         <c:forEach items="${projectList }" var="item">
-            팀 프로젝트 찾기
-            ${item.projectNo} / ${item.state } /리더 아이디 : ${item.leaderId}
+
+            <a href="projectDetail.do?no=${item.projectNo}">
+                ${item.projectNo} / ${item.projectName} / ${item.state } /리더 아이디 : ${item.leaderId}
+            </a>
         </c:forEach>
     </div>
 </section>

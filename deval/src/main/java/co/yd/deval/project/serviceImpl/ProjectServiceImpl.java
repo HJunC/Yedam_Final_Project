@@ -28,9 +28,9 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public ProjectVO selectProject(ProjectVO vo) {
-        map.updateHit(vo);
-        return map.selectProject(vo);
+    public ProjectVO selectProject(int projectNo) {
+        map.updateHit(projectNo);
+        return map.selectProject(projectNo);
     }
 
     @Override
@@ -61,6 +61,19 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public int updateProject(ProjectVO vo) {
         return map.updateProject(vo);
+    }
+
+    @Override
+    public ProjectVO getNowUserProject(String memberId) {
+        // todo
+        List<ProjectTeamVO> team;
+        List<ProjectVO> userProjectList = map.findByLeaderIdAndState(memberId, "1");
+        return userProjectList.get(0);
+    }
+
+    @Override
+    public List<ProjectVO> searchMainPageProject(ProjectVO vo) {
+        return map.searchProject(vo);
     }
 
     @Override

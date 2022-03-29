@@ -1,4 +1,11 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="resources" value="${pageContext.request.contextPath}/resources"/>
+
 프로젝트 상세화면
+${project.projectNo} / 리더 아이디 : ${project.leaderId}
+
+
 
 (모집중)
 - 프로젝트 신청

@@ -111,6 +111,10 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label for="recruitEdt">프로젝트 모집 마감일</label>
+                            <input type="date" name="recruitEdt" id="recruitEdt" class="input-lg round form-control bg-dark-input" required aria-required="true">
+                        </div>
+                        <div class="form-group">
                             <label for="subject">프로젝트 설명</label>
                             <textarea name="subject" id="subject" class="input-lg round form-control bg-dark-input" required aria-required="true"></textarea>
                         </div>
@@ -131,3 +135,11 @@
     </div>
 </section>
 <!-- End Section -->
+<script src="${resources}/js/moment.min.js"></script>
+<script>
+  var today = new Date();
+  const recruitEdt = document.getElementById("recruitEdt");
+  recruitEdt.setAttribute("value", moment(today).format("YYYY-MM-DD"));
+  recruitEdt.setAttribute("min", moment(today).format("YYYY-MM-DD"));
+  recruitEdt.setAttribute("max", moment(today.setDate(today.getDate() + 30)).format("YYYY-MM-DD"));
+</script>
