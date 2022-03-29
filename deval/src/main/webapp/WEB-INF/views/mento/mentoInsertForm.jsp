@@ -30,11 +30,10 @@
                         <label for="exampleInputFile">
                             사진을 등록해주세요.
                         </label>
+                        <div>
                         <input type="file" id="exampleInputFile" name="exampleInputFile" multiple="multiple"
                             onchange="setThumbnail(event)">
-                        <p class="help-block">
-                            파일첨부 후 사진 미리보기로 확인하세요
-                        </p>
+                       </div>
                     </div>
                     <!-- 자기소개글-->
                     <div class="mb-20 mb-md-10">
@@ -110,8 +109,6 @@
 		reader.onload = function(event){
 			var img = document.getElementById("prev");
 			img.setAttribute("src", event.target.result);
-			img.setAttribute("class", "col-lg-6");
-            img.style.cssText  = 'width:400px;height:400px;';
             img.style.cssText += 'border-radius : 70%;object-fit : cover';
 			document.querySelector("div#image_container").appendChild(img);
 		};
