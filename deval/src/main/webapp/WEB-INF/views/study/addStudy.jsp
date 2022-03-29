@@ -14,7 +14,9 @@
 <body>
 	<div align="center">
 		<h3>스터디 등록</h3>
+
 		<form id="frm">
+
 		<input type="text" id="title" name="title" value="" size="50"
 			placeholder="스터디명을 입력해주세요"> <br> <br>
 
@@ -26,6 +28,8 @@
 			<option>Three</option>
 		</select><br>
 		<br>
+		</select><br><br>
+
 
 		<!-- 인원 설정 -->
 		<select class="input-md round form-control" id="selRcnt"
@@ -48,11 +52,10 @@
 		</label> <label class="checkbox-inline"> <input type="checkbox"
 			name="ck_lang" id="lang4" value="JavaScript"><span
 			class="small">JavaScript</span>
-		</label> <label class="checkbox-inline"> <input type="checkbox"
-			name="ck_lang" id="lang5" value="Node.js"><span class="small">Node.js</span>
-		</label> <label class="checkbox-inline"> <input type="checkbox"
-			name="ck_lang" id="lang6" value="Phython"><span class="small">Phython</span>
-		</label> <br> <br>
+
+		</select><br><br>
+
+	
 
 		<!-- 난이도선택 -->
 		<label class="radio-inline"> <input type="radio" name="lv"
@@ -112,7 +115,7 @@
 				console.log("체크박스");
 			}
 		}
-		
+
 		function StdAdd() {
 			//ExceptionStd();
 			console.log("Study Add Start");
@@ -125,6 +128,9 @@
 					"studyNm" : $("#title").val(),
 					"lang1" : $('input:checkbox[name="ck_lang"]').val(),
 					"lang1" : $('input:checkbox[name="ck_lang"]').is(":checked").val(),
+				data : {
+					"studyNm" : $("#title").val(),
+					"lang1" : $('input:checkbox[name="ck_lang"]').val(),
 					"location" : $("select[name='selArea']").val(),	
 					"subject" :  $("#subject").val(),
 					"maxRcnt" : $("select[name='selRcnt']").val() ,
@@ -134,6 +140,10 @@
 					"studyEdt" : $("#dtEdt").val(),
 					"lang2" : $('input:checkbox[name="ck_lang"]').val()
 				} */
+					"studySdt" : $("#dtSdt").val(),
+					"studyEdt" : $("#dtEdt").val(),
+					"lang2" : $('input:checkbox[name="ck_lang"]').val()
+				},
 				dataType : "text",
 				success : function(result) {
 					console.log("succ", result);
@@ -144,6 +154,7 @@
 				},
 				error : function(err) {
 					console.log("err", err);
+					location.href="studyMain.do";
 				}
 			});
 		}

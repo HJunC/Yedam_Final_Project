@@ -269,7 +269,3 @@
     </div>
 </section>
 <!-- End Section -->                
->>>>>>> 6266cd4 (feat:jdbc log처리)
-=======
-${member.memberId}
->>>>>>> develop
