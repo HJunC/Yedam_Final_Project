@@ -5,10 +5,11 @@ import co.yd.deval.project.service.ProjectRequestService;
 import co.yd.deval.project.service.ProjectRequestVO;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Repository("projectRequestDao")
+@Service("projectRequestDao")
 public class ProjectRequestServiceImpl implements ProjectRequestService {
 
     private final ProjectRequestMapper map;

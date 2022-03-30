@@ -4,11 +4,13 @@ import java.util.List;
 
 public interface ProjectService {
     List<ProjectVO> selectProjectAll();
-    ProjectVO selectProject(ProjectVO vo);
+    ProjectVO selectProject(int projectNo);
     int insertProject(ProjectVO vo);
     int deleteProject(ProjectVO vo);
     int updateProject(ProjectVO vo);
 
+    ProjectVO getNowUserProject(String memberId);
+    List<ProjectVO> searchMainPageProject(ProjectVO vo);
     List<ProjectVO> findByLeaderIdAndState(String leaderId, String state);
-    int updateHit(ProjectVO vo);
+    List<ProjectVO> searchProject(ProjectVO vo);
 }
