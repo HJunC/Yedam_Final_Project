@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <c:set var="resources" value="${pageContext.request.contextPath }/resources"/>
-<link rel="stylesheet" href="${resources}/css/custom/team-project-style.css">+
+<link rel="stylesheet" href="${resources}/css/custom/team-project-style.css">
 <main id="main">    
             
                 <!-- Home Section -->

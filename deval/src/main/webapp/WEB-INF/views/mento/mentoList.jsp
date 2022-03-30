@@ -10,6 +10,7 @@
 </head>
 <c:set var="resources"
 	value="${pageContext.request.contextPath}/resources"/>
+<c:set var="upload" value="/upload"/>
 <body>
  <main id="main">    
             
@@ -64,7 +65,7 @@
                             <div class="col-sm-6 col-md-3 mb-60 mb-xs-40">
                                 <div class="post-prev-img" style="border-radius: 70%;">
                                     <!-- 사진출력 -->
-                                    <a href="#"><img src="${resources }/images/mento/exHong.PNG" alt="" /></a>
+                                    <a href="#"><img src="${upload}/${mento.photo}" alt=".." /></a>
                                 </div>
                                 
                                 <div class="post-prev-title align-center">
@@ -83,8 +84,9 @@
                                </c:forEach>
                             </div>
                         <div>
-                        	<form id="frm2" action="mentoSelectOne.do" method="post">
-                        		<input type="hidden" id="id" name="id">
+                        	<!-- mentoSelect 처리부분 -->
+                        	<form id="frm2" action="mentoSelect.do" method="get">
+                        		<input type="hidden" id="mentoId" name="mentoId">
                         	</form>
                         </div>
                         <!-- Pagination -->
@@ -105,7 +107,7 @@
             </main>
             <script type="text/javascript">
             	function selectMento(id) {
-            		frm2.id.value = id;
+            		frm2.mentoId.value = id;
             		frm2.submit();
             	}
             </script>

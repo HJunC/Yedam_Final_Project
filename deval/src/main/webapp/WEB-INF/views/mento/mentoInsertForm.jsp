@@ -19,8 +19,8 @@
             </div>
             <!-- 값이 들어가는 곳-->
             <!-- mentoInsert Form tag-->
-            <form action="mentoInsert.do" id="frm" method="post">
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+            <form action="mentoInsert.do" id="frm" method="post" enctype="multipart/form-data">
+            <sec:csrfInput/>
                 <div class="row">
                     <!-- 사진 미리보기 div-->
                     <div id="image_container">
@@ -32,8 +32,8 @@
                             사진을 등록해주세요.
                         </label>
                         <div>
-                        <input type="file" id="photo" name="photo" multiple="multiple"
-                            onchange="setThumbnail(event)">
+                        <input type="file" id="photo" name="file"
+                            onchange="setThumbnail(event)"  accept="image/*">
                        </div>
                     </div>
                     <!-- 자기소개글-->
@@ -46,8 +46,8 @@
                 <div class="col-sm-4 mb-40">
                     프로그래밍언어를 골라주세요.
                     <select class="input-md round form-control" style="width: 170px;" id="lang" name="lang">
-                        <option value="c">C</option>
-                        <option value="c++">C++</option>
+                        <option value="C">C</option>
+                        <option value="C++">C++</option>
                         <option value="java">Java</option>
                     </select>
                 </div>
@@ -105,20 +105,37 @@
     </section>
     <script>
         function setThumbnail(event){
-		var reader = new FileReader();
+		//파일체크 부분
+        var pathPoint = photo.value.lastIndexOf('.');
+		var filePoint = photo.value.substring(pathPoint+1,event.length);
+		var type = filePoint.toLowerCase();
+		if(type=='jpg' || type=='jpg' || type=='bmp' || type=='png' || type=="jpeg") {
+			// 썸네일 부분
+			var reader = new FileReader();
+			
+			reader.onload = function(event){
+				var img = document.getElementById("prev");
+				img.setAttribute("src", event.target.result);
+	            img.style.cssText += 'border-radius : 70%;object-fit : cover';
+				document.querySelector("div#image_container").appendChild(img);
+			};
+			
+			reader.readAsDataURL(event.target.files[0]);
+		}else {
+			alert('이미지 파일만 선택할 수 있습니다.');
+			var parent = photo.parentNode;
+			photo.value = "";
+			photo.select();
+			var node = parent.replaceChild(photo.cloneNode(true),photo);
+			return false;
+		}
 		
-		reader.onload = function(event){
-			var img = document.getElementById("prev");
-			img.setAttribute("src", event.target.result);
-            img.style.cssText += 'border-radius : 70%;object-fit : cover';
-			document.querySelector("div#image_container").appendChild(img);
-		};
-		
-		reader.readAsDataURL(event.target.files[0]);
 	}
+        
         function mentoInsert() {
         	var start = frm.serviceStt.value;
         	var end = frm.serviceEdt.value;
+        	//시작시관 종료시간 막아주기
         	if(start == end) {
         		alert('시작시간과 종료시간이 같습니다')
         		frm.serviceStt.focus();
