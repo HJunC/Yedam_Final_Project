@@ -32,18 +32,26 @@
 
     <select id="selectProjectTeamAll" resultType="co.yd.deval.project.service.ProjectTeamVO">
         SELECT *
-        FROM PROJECT_TEAM
+          FROM PROJECT_TEAM
     </select>
+
     <select id="selectProjectTeam" resultType="co.yd.deval.project.service.ProjectTeamVO">
         SELECT *
-        FROM PROJECT_TEAM
-        WHERE PROJECT_NO = #{projectNo}
+          FROM PROJECT_TEAM
+         WHERE PROJECT_NO = #{projectNo}
     </select>
 
     <select id="findByMemberIdAndState" resultType="co.yd.deval.project.service.ProjectTeamVO">
         SELECT *
-         FROM PROJECT
-        WHERE LEADER_ID = #{memberId}
-          AND STATE = #{state}
+          FROM PROJECT_TEAM
+         WHERE MEMBER_ID = #{memberId}
+           AND STATE = #{state}
+    </select>
+
+    <select id="getOngoingProject" resultType="co.yd.deval.project.service.ProjectTeamVO">
+        SELECT *
+          FROM PROJECT_TEAM
+         WHERE MEMBER_ID = #{memberId}
+           AND STATE IN ('0', '1', '2')
     </select>
 </mapper>

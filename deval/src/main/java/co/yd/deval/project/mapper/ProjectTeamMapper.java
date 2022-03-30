@@ -4,6 +4,7 @@ import java.util.List;
 
 import co.yd.deval.project.service.ProjectTeamVO;
 import co.yd.deval.project.service.ProjectVO;
+import org.apache.ibatis.annotations.Param;
 
 public interface ProjectTeamMapper {
     List<ProjectTeamVO> selectProjectTeamAll();
@@ -12,5 +13,6 @@ public interface ProjectTeamMapper {
     int updateProjectTeam(ProjectTeamVO vo);
     int deleteProjectTeam(ProjectTeamVO vo);
 
-    List<ProjectTeamVO> findByMemberIdAndState(String memberId, String state);
+    List<ProjectTeamVO> findByMemberIdAndState(@Param("memberId") String memberId, @Param("state") String state);
+    ProjectTeamVO getOngoingProject(String memberId);
 }

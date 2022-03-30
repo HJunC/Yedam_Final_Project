@@ -30,16 +30,11 @@
 <section class="small-section bg-dark light-content">
     <div class="container relative">
         <c:choose>
-            <c:when test="${isLeader eq 'true'}">
-                내 프로젝트
-                <a href="projectDetail.do?no=${userProject.projectNo}">
-                    ${userProject.projectNo} / ${userProject.projectName} / 리더 아이디 : ${userProject.leaderId}
-                </a>
-            </c:when>
-
-            <c:when test="${isLeader eq 'false'}">
-                내 프로젝트
+            <c:when test="${not empty userProject}">
+            <h3>내 프로젝트</h3>
+            <a href="projectDetail.do?no=${userProject.projectNo}">
                 ${userProject.projectNo} / ${userProject.projectName} / 리더 아이디 : ${userProject.leaderId}
+            </a>
             </c:when>
 
             <c:otherwise>
@@ -55,6 +50,9 @@
             </c:otherwise>
         </c:choose>
 
+        <c:if test="${isLeader eq 'true'}">
+            나는 리더
+        </c:if>
 
     </div>
 </section>
@@ -77,7 +75,7 @@
 <!-- Call Action Section -->
 <section class="small-section bg-dark light-content">
     <div class="container relative">
-        <h4>팀 프로젝트 찾기</h4>
+        <h3>팀 프로젝트 찾기</h3>
         <div class="list-group project-list">
 
             <c:forEach items="${projectList }" var="item">
