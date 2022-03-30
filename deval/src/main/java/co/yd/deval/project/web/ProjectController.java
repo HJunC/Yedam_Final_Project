@@ -67,4 +67,9 @@ public class ProjectController {
         return "project/projectDetail";
     }
 
+    @GetMapping("/projectSearch.do")
+    public String projectSearch(Model model, ProjectVO vo) {
+        return "project/projectSearch";
+    }
+
 }
