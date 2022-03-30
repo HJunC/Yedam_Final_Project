@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import co.yd.deval.code.service.CodeMapper;
+import co.yd.deval.code.mapper.CodeMapper;
 import co.yd.deval.code.service.CodeService;
-import co.yd.deval.code.vo.CodeVO;
+import co.yd.deval.code.service.CodeVO;
 
 @Repository("codeDAO")
 public class CodeServiceImpl implements CodeService {

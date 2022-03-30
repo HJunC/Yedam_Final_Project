@@ -48,35 +48,35 @@
                                     <span class="input-group-text bg-dark" style="border-color: #5e646a;">프론트엔드</span>
                                     <input type="number" id="frontRcnt" name="frontRcnt" class="input-lg round form-control bg-dark-input" min="0" max="9" value="0">
                                     <div class="input-group-text bg-dark" style="border-color: #5e646a;">
-                                        <input class="form-check-input mt-0" type="radio" value="front" name="myPosition" checked required>
+                                        <input class="form-check-input mt-0" type="radio" value="FE" name="leaderPosition" checked required>
                                     </div>
                                 </div>
                                 <div class="col input-group me-3">
                                     <span class="input-group-text bg-dark" style="border-color: #5e646a;">백엔드</span>
                                     <input type="number" id="backRcnt" name="backRcnt" class="input-lg round form-control bg-dark-input" min="0" max="9" value="0">
                                     <div class="input-group-text bg-dark" style="border-color: #5e646a;">
-                                        <input class="form-check-input mt-0" type="radio" value="back" name="myPosition" required>
+                                        <input class="form-check-input mt-0" type="radio" value="BE" name="leaderPosition" required>
                                     </div>
                                 </div>
                                 <div class="col input-group me-3">
                                     <span class="input-group-text bg-dark" style="border-color: #5e646a;">풀스택</span>
                                     <input type="number" id="fullRcnt" name="fullRcnt" class="input-lg round form-control bg-dark-input" min="0" max="9" value="0">
                                     <div class="input-group-text bg-dark" style="border-color: #5e646a;">
-                                        <input class="form-check-input mt-0" type="radio" value="full" name="myPosition" required>
+                                        <input class="form-check-input mt-0" type="radio" value="FS" name="leaderPosition" required>
                                     </div>
                                 </div>
                                 <div class="col input-group me-3">
                                     <span class="input-group-text bg-dark" style="border-color: #5e646a;">디자인</span>
                                     <input type="number" id="designRcnt" name="designRcnt" class="input-lg round form-control bg-dark-input" min="0" max="9" value="0">
                                     <div class="input-group-text bg-dark" style="border-color: #5e646a;">
-                                        <input class="form-check-input mt-0" type="radio" value="design" name="myPosition" required>
+                                        <input class="form-check-input mt-0" type="radio" value="DE" name="leaderPosition" required>
                                     </div>
                                 </div>
                                 <div class="col input-group">
                                     <span class="input-group-text bg-dark" style="border-color: #5e646a;">기획</span>
                                     <input type="number" id="plannerRcnt" name="plannerRcnt" class="input-lg round form-control bg-dark-input" min="0" max="9" value="0">
                                     <div class="input-group-text bg-dark" style="border-color: #5e646a;">
-                                        <input class="form-check-input mt-0" type="radio" value="planner" name="myPosition" required>
+                                        <input class="form-check-input mt-0" type="radio" value="PL" name="leaderPosition" required>
                                     </div>
                                 </div>
                             </div>
@@ -111,6 +111,10 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label for="recruitEdt">프로젝트 모집 마감일</label>
+                            <input type="date" name="recruitEdt" id="recruitEdt" class="input-lg round form-control bg-dark-input" required aria-required="true">
+                        </div>
+                        <div class="form-group">
                             <label for="subject">프로젝트 설명</label>
                             <textarea name="subject" id="subject" class="input-lg round form-control bg-dark-input" required aria-required="true"></textarea>
                         </div>
@@ -131,3 +135,11 @@
     </div>
 </section>
 <!-- End Section -->
+<script src="${resources}/js/moment.min.js"></script>
+<script>
+  var today = new Date();
+  const recruitEdt = document.getElementById("recruitEdt");
+  recruitEdt.setAttribute("value", moment(today).format("YYYY-MM-DD"));
+  recruitEdt.setAttribute("min", moment(today).format("YYYY-MM-DD"));
+  recruitEdt.setAttribute("max", moment(today.setDate(today.getDate() + 30)).format("YYYY-MM-DD"));
+</script>

@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="co.yd.deval.study.service.StudyMapper">
+<mapper namespace="co.yd.deval.study.mapper.StudyMapper">
 
 
 	<select id="studySelectAll"
-		resultType="co.yd.deval.study.vo.StudyVO">
+		resultType="co.yd.deval.study.service.StudyVO">
 		SELECT *
 		FROM STUDY
 		WHERE STATE = '0'
 	</select>
 	
 	<select id="studySelectNo"
-		resultType="co.yd.deval.study.vo.StudyVO">
+		resultType="co.yd.deval.study.service.StudyVO">
 		SELECT MAX(STUDY_NO) AS STUDYNO
 		FROM STUDY
 	</select>
 
 	<insert id="studyInsert"
-		parameterType="co.yd.deval.study.vo.StudyVO">
+		parameterType="co.yd.deval.study.service.StudyVO">
 		<selectKey keyProperty="studyNo" resultType="int"
 			order="BEFORE">
 			SELECT NVL(MAX(STUDY_NO),0)+1 AS "studyNo"
@@ -44,7 +44,7 @@
 						SYSDATE, 
 						#{maxRcnt},
 						#{defficulty}, 
-						#{leaderId}, 
+						#{leaderId},
 						#{studySdt},
 						#{studyEdt}, 
 						'0', 
@@ -53,7 +53,7 @@
 	</insert>
 
 	<update id="studyUpdate"
-		parameterType="co.yd.deval.study.vo.StudyVO">
+		parameterType="co.yd.deval.study.service.StudyVO">
 		UPDATE STUDY
 		<set>
 			<if test="lang1 	 != null"> LANG1 =#{lang1},</if>
