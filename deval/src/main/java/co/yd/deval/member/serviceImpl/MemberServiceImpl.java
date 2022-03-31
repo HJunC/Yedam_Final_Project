@@ -20,25 +20,21 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Override
 	public MemberVO memberSelect(MemberVO vo) {
-		// TODO Auto-generated method stub
 		return map.memberSelect(vo);
 	}
 
 	@Override
 	public int memberInsert(MemberVO vo) {
-		// TODO Auto-generated method stub
 		return map.memberInsert(vo);
 	}
 
 	@Override
 	public int memberUpdate(MemberVO vo) {
-		// TODO Auto-generated method stub
 		return map.memberUpdate(vo);
 	}
 
 	@Override
 	public int memberDelete(MemberVO vo) {
-		// TODO Auto-generated method stub
 		return map.memberDelete(vo);
 	}
 	
@@ -50,13 +46,11 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Override
 	public int memberExpUp(HashMap<String, Object> exp) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int memberCashUpdate(HashMap<String, Object> cash) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 

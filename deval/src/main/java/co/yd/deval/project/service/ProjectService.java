@@ -9,7 +9,7 @@ public interface ProjectService {
     int deleteProject(ProjectVO vo);
     int updateProject(ProjectVO vo);
 
-    ProjectVO getNowUserProject(String memberId);
+    ProjectVO getOngoingProject(String memberId);
     List<ProjectVO> searchMainPageProject(ProjectVO vo);
     List<ProjectVO> findByLeaderIdAndState(String leaderId, String state);
     List<ProjectVO> searchProject(ProjectVO vo);
