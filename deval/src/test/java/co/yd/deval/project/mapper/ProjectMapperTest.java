@@ -18,18 +18,24 @@ import java.util.List;
 @PropertySource("classpath:/config/db.properties")
 public class ProjectMapperTest {
 
-    @Autowired
-    ProjectMapper mapper;
+    @Autowired ProjectMapper mapper;
+    @Autowired ProjectTeamMapper teamMapper;
+    @Autowired ProjectRequestMapper requestMapper;
 
     @Test
     public void getListWithPaging() {
         Criteria cri = new Criteria();
-        cri.setPageNum(3);
+        cri.setPageNum(1);
         cri.setAmount(10);
 
         List<ProjectVO> list = mapper.getListWithPaging(cri);
 
-        list.forEach(item -> System.out.println(item.getProjectNo()));
+        list.forEach(item -> System.out.println("=========================================" + item));
+
+    }
+
+    @Test
+    public void getProject() {
 
     }
 }

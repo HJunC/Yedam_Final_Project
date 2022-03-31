@@ -1,36 +1,38 @@
 package co.yd.deval.project.serviceImpl;
 
 import co.yd.deval.project.mapper.ProjectMapper;
+import co.yd.deval.project.mapper.ProjectRequestMapper;
 import co.yd.deval.project.mapper.ProjectTeamMapper;
 import co.yd.deval.project.service.ProjectService;
 import co.yd.deval.project.service.ProjectTeamVO;
 import co.yd.deval.project.service.ProjectVO;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service("projectDao")
 public class ProjectServiceImpl implements ProjectService {
 
-    private final ProjectMapper map;
+    private final ProjectMapper mapper;
     private final ProjectTeamMapper teamMapper;
+    private final ProjectRequestMapper requestMapper;
 
-    public ProjectServiceImpl(ProjectMapper map, ProjectTeamMapper teamMapper) {
-        this.map = map;
+    public ProjectServiceImpl(ProjectMapper mapper, ProjectTeamMapper teamMapper, ProjectRequestMapper requestMapper) {
+        this.mapper = mapper;
         this.teamMapper = teamMapper;
+        this.requestMapper = requestMapper;
     }
 
     @Override
     public List<ProjectVO> selectProjectAll() {
-        return map.selectProjectAll();
+        return mapper.selectProjectAll();
     }
 
     @Override
     public ProjectVO selectProject(int projectNo) {
-        map.updateHit(projectNo);
-        return map.selectProject(projectNo);
+        mapper.updateHit(projectNo);
+        return mapper.selectProject(projectNo);
     }
 
     @Override
@@ -42,8 +44,7 @@ public class ProjectServiceImpl implements ProjectService {
                 + vo.getDesignRcnt()
                 + vo.getPlannerRcnt()
         );
-        // todo 시퀸스값 반환 구현
-        int projectNo = map.insertProject(vo);
+        int projectNo = mapper.insertProject(vo);
 
         ProjectTeamVO teamVo = new ProjectTeamVO();
         teamVo.setProjectNo(projectNo);
@@ -56,12 +57,12 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public int deleteProject(ProjectVO vo) {
-        return map.deleteProject(vo);
+        return mapper.deleteProject(vo);
     }
 
     @Override
     public int updateProject(ProjectVO vo) {
-        return map.updateProject(vo);
+        return mapper.updateProject(vo);
     }
 
     @Override
@@ -70,23 +71,23 @@ public class ProjectServiceImpl implements ProjectService {
         if (ongoingProject == null) {
             return null;
         } else {
-            return map.selectProject(ongoingProject.getProjectNo());
+            return mapper.selectProject(ongoingProject.getProjectNo());
         }
     }
 
     @Override
     public List<ProjectVO> searchMainPageProject(ProjectVO vo) {
-        return map.searchMainPageProject(vo);
+        return mapper.searchMainPageProject(vo);
     }
 
     @Override
     public List<ProjectVO> findByLeaderIdAndState(String leaderId, String state) {
-        return map.findByLeaderIdAndState(leaderId, state);
+        return mapper.findByLeaderIdAndState(leaderId, state);
     }
 
     @Override
     public List<ProjectVO> searchProject(ProjectVO vo) {
-        return map.searchProject(vo);
+        return mapper.searchProject(vo);
     }
 
 }

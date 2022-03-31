@@ -1,9 +1,6 @@
 package co.yd.deval.project.web;
 
-import co.yd.deval.project.service.ProjectService;
-import co.yd.deval.project.service.ProjectTeamService;
-import co.yd.deval.project.service.ProjectTeamVO;
-import co.yd.deval.project.service.ProjectVO;
+import co.yd.deval.project.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -68,7 +65,8 @@ public class ProjectController {
 
     @GetMapping("/projectDetail.do")
     public String projectDetail(Model model, @RequestParam("no") int projectNo) {
-        model.addAttribute("project", projectDao.selectProject(projectNo));
+        ProjectVO vo = projectDao.selectProject(projectNo);
+        model.addAttribute("project", vo);
         return "project/projectDetail";
     }
 

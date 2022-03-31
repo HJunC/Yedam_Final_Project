@@ -110,15 +110,15 @@
             <if test="recruitEdt != null">AND RECRUIT_EDT <![CDATA[ <= ]]> #{recruitEdt}</if>
             <if test="subject != null">AND SUBJECT = #{subject}</if>
             <if test="lang != null">AND LANG LIKE '%'||#lang#||'%'</if>
-            <if test="totalRcnt != null">AND TOTAL_RCNT = #{totalRcnt}</if>
+            <if test="totalRcnt != 0">AND TOTAL_RCNT = #{totalRcnt}</if>
             <if test="projectSdt != null">AND PROJECT_SDT = #{projectSdt}</if>
-            <if test="frontRcnt != null">AND FRONT_RCNT >= #{frontRcnt}</if>
-            <if test="backRcnt != null">AND BACK_RCNT >= #{backRcnt}</if>
-            <if test="designRcnt != null">AND DESIGN_RCNT >= #{designRcnt}</if>
+            <if test="frontRcnt != 0">AND FRONT_RCNT >= #{frontRcnt}</if>
+            <if test="backRcnt != 0">AND BACK_RCNT >= #{backRcnt}</if>
+            <if test="designRcnt != 0">AND DESIGN_RCNT >= #{designRcnt}</if>
             <if test="projectEdt != null">AND PROJECT_EDT <![CDATA[ <= ]]> #{projectEdt}</if>
-            <if test="fullRcnt != null">AND FULL_RCNT >= #{fullRcnt}</if>
-            <if test="plannerRcnt != null">AND PLANNER_RCNT >= #{plannerRcnt}</if>
-            <if test="projectTerm != null">AND PROJECT_TERM = #{projectTerm}</if>
+            <if test="fullRcnt != 0">AND FULL_RCNT >= #{fullRcnt}</if>
+            <if test="plannerRcnt != 0">AND PLANNER_RCNT >= #{plannerRcnt}</if>
+            <if test="projectTerm != 0">AND PROJECT_TERM = #{projectTerm}</if>
         </where>
     </select>
 
@@ -128,22 +128,38 @@
               FROM DEVAL.PROJECT t
              WHERE STATE = '1'
                AND RECRUIT_EDT >= sysdate - 1
-            <if test="lang != null">AND LANG LIKE '%'||#lang#||'%'</if>
-            <if test="projectName != null">AND PROJECT_NAME LIKE '%'||#projectName#||'%'</if>
-            <if test="process != null">AND PROCESS = #{process}</if>
-
-            <if test="totalRcnt != 0">AND TOTAL_RCNT = #{totalRcnt}</if>
-
-            <if test="frontRcnt != 0">AND FRONT_RCNT >= #{frontRcnt}</if>
-            <if test="backRcnt != 0">AND BACK_RCNT >= #{backRcnt}</if>
-            <if test="designRcnt != 0">AND DESIGN_RCNT >= #{designRcnt}</if>
-            <if test="fullRcnt != 0">AND FULL_RCNT >= #{fullRcnt}</if>
-            <if test="plannerRcnt != 0">AND PLANNER_RCNT >= #{plannerRcnt}</if>
-
-            <if test="projectTerm != 0">AND PROJECT_TERM BETWEEN 0 AND #{projectTerm}</if>
-            ORDER BY RECRUIT_EDT
-        ) WHERE ROWNUM <![CDATA[ <= ]]> 1
+        <if test="lang != null">AND LANG LIKE '%'||#lang#||'%'</if>
+               AND FRONT_RCNT > 0
+                OR BACK_RCNT > 0
+                OR DESIGN_RCNT > 0
+                OR FULL_RCNT > 0
+                OR PLANNER_RCNT > 0
+             ORDER BY dbms_random.value
+        ) WHERE ROWNUM <![CDATA[ <= ]]> 10
     </select>
+
+<!--    <select id="searchMainPageProject" resultType="co.yd.deval.project.service.ProjectVO">
+        SELECT * FROM (
+        SELECT t.*
+        FROM DEVAL.PROJECT t
+        WHERE STATE = '1'
+        AND RECRUIT_EDT >= sysdate - 1
+        <if test="lang != null">AND LANG LIKE '%'||#lang#||'%'</if>
+        <if test="projectName != null">AND PROJECT_NAME LIKE '%'||#projectName#||'%'</if>
+        <if test="process != null">AND PROCESS = #{process}</if>
+
+        <if test="totalRcnt != 0">AND TOTAL_RCNT = #{totalRcnt}</if>
+
+        <if test="frontRcnt != 0">AND FRONT_RCNT >= #{frontRcnt}</if>
+        <if test="backRcnt != 0">AND BACK_RCNT >= #{backRcnt}</if>
+        <if test="designRcnt != 0">AND DESIGN_RCNT >= #{designRcnt}</if>
+        <if test="fullRcnt != 0">AND FULL_RCNT >= #{fullRcnt}</if>
+        <if test="plannerRcnt != 0">AND PLANNER_RCNT >= #{plannerRcnt}</if>
+
+        <if test="projectTerm != 0">AND PROJECT_TERM BETWEEN 0 AND #{projectTerm}</if>
+        ORDER BY RECRUIT_EDT
+        ) WHERE ROWNUM <![CDATA[ <= ]]> 10
+    </select>-->
 
     <select id="getListWithPaging" resultType="co.yd.deval.project.service.ProjectVO">
         <![CDATA[
@@ -154,5 +170,10 @@
         )
         WHERE rn > (#{pageNum} - 1) * #{amount}
         ]]>
+    </select>
+    <select id="getProject" resultType="co.yd.deval.project.service.ProjectInfoDTO">
+        SELECT *
+          FROM PROJECT
+         WHERE PROJECT_NO = #{projectNo}
     </select>
 </mapper>

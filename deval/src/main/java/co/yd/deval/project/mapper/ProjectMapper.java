@@ -1,6 +1,7 @@
 package co.yd.deval.project.mapper;
 
 import co.yd.deval.common.Criteria;
+import co.yd.deval.project.service.ProjectInfoDTO;
 import org.apache.ibatis.annotations.Param;
 
 import co.yd.deval.project.service.ProjectVO;
@@ -20,4 +21,5 @@ public interface ProjectMapper {
     List<ProjectVO> searchMainPageProject(ProjectVO vo);
     List<ProjectVO> getListWithPaging(Criteria cri);
 
+    ProjectInfoDTO getProject(int projectNo);
 }

@@ -6,10 +6,11 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
-public class ProjectVO {
+public class ProjectInfoDTO {
     private int projectNo;
     private String projectName;
     private String state;
@@ -44,4 +45,6 @@ public class ProjectVO {
     private int applyRcnt;
     private String leaderId;
     private String leaderPosition;
+
+    private List<ProjectTeamVO> projectTeam;
 }
