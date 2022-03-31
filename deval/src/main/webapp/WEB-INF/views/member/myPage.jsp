@@ -112,54 +112,74 @@
 					<h2>정보 수정</h2>
 					<hr>
 					<div>
-						<table class="table">
-							<tr>
-								<th>아이디</th>
-								<td colspan="5">
-									<input id="memberId" name="memberId" class="form-control" readonly="readonly" type="text" value="${member.memberId}">
-								</td>
-							</tr>
-							<tr>
-								<th>이메일</th>
-								<td colspan="3">
-									<input class="form-control" type="email" id="mail" name="mail" value="${member.mail}">
-								</td>
-								<th>이름</th>
-								<td>
-									<input class="form-control" type="text" id="name" name="name" value="${member.name}">
-								</td>
-							</tr>
-							<tr>
-								<th>비밀번호</th>
-								<td colspan="4">
-									<input type="password" class="form-control" id="pwd" name="password">
-								</td>
-								<td colspan="1"></td>
-							</tr>
-							<tr>
-								<th>비밀번호 확인</th>
-								<td colspan="4">
-									<input type="password" class="form-control" id="pwdCheck">
-								</td>
-								<td colspan="1"></td>
-							</tr>
-							<tr>
-								<th id="pwdChk" colspan="6"></th>
-							</tr>
-							<tr>
-								<th>이력서</th>
-								<td colspan="5">
-									<c:if test="${empty member.resume}">
-									등록된 이력서가 없습니다.
-									</c:if>
-									<c:if test="${not empty member.resume}">
-									${member.resume}
-									</c:if>
-								</td>
-							</tr>
-						</table>
+						<form id="infoUpdFrm" action="" method="post">
+							<table class="table">
+								<tr>
+									<th>아이디</th>
+									<td colspan="5">
+										<input id="memberId" name="memberId" class="form-control" readonly="readonly" type="text" value="${member.memberId}">
+									</td>
+								</tr>
+								<tr>
+									<th>이메일</th>
+									<td colspan="3">
+										<input class="form-control" type="email" id="mail" name="mail" value="${member.mail}">
+									</td>
+									<th>이름</th>
+									<td>
+										<input class="form-control" type="text" id="name" name="name" value="${member.name}">
+									</td>
+								</tr>
+								<tr>
+									<th>비밀번호</th>
+									<td colspan="4">
+										<input type="password" class="form-control" id="pwd" name="password">
+									</td>
+									<td colspan="1"></td>
+								</tr>
+								<tr>
+									<th>비밀번호 확인</th>
+									<td colspan="4">
+										<input type="password" class="form-control" id="pwdCheck">
+									</td>
+									<td colspan="1"></td>
+								</tr>
+								<tr>
+									<th id="pwdChk" colspan="6"></th>
+								</tr>
+								<tr>
+									<th>이력서</th>
+									<td colspan="5">
+										<c:if test="${empty member.resume}">
+											<input type="file" name="file" id="resumeFile">
+										</c:if>
+										<c:if test="${not empty member.resume}">
+											<input type="file" name="file" id="resumeFile">
+										</c:if>
+									</td>
+								</tr>
+								<tr>
+									<th>프로필 사진 변경</th>
+									<td colspan="5">
+										<input type="file" name="imgFile" id="profileImg">
+									</td>
+								</tr>
+							</table>
+							<input type="submit" class="btn btn-primary" value="수정">
+							<input type="reset" class="btn btn-danger" value="취소">
+						</form>
 					</div>
 				</div>
+			
+				<!-- 나의 이력정보를 보여주는 div -->
+				<div id="career_box" class="border border-white" style="height:1000px">
+					<h2>나의 이력</h2>
+					<hr>
+					<div>
+						
+					</div>
+				</div>
+				
 			</div>                                    
         
             <div class="col-md-4 col-lg-3 mt-10">
@@ -197,6 +217,8 @@
 </section>
 <!-- End Section -->                
 <script>
+	
+	// div들 display에 관한 기능들
 	$('#myInfo').on('click',function(){
 						$('#tag').children().css('display','block')
 						$('#info_box').children().css('display','none');
@@ -210,15 +232,29 @@
 						$('#tag').children().css('display','none');
 						$('#info_box').children().css('display','none');
 					});
-	
+	// myInfo 하위의 메뉴들이 보여줄 div들의 display에 관한 기능들
 	$('#info_update').on('click',function(){
 							$('#info_box').children().css('display','none');
 							$('#info_update_box').css('display','block');
 						})
+	$('#my_career').on('click',function(){
+		                  $('#info_box').children().css('display','none');
+		                  $('#career_box').css('display','block');
+					   });
 	
+	$('#offer_record').on('click',function(){
+							$('#info_box').children().css('display','none');
+						  })
+	
+	
+	// 비밀번호 변경시 입력한 비밀번호가 비밀번호 확인에 입력한 비밀번호와 일치하는지 확인하는 function					
 	$('#pwdCheck').on('change',function(){
 		if($('#pwd').val() == $('#pwdCheck').val()){
+			$('#pwdChk').text('');
 			$('#pwdChk').text('비밀번호가 일치합니다').css('color','green');
+		} else {
+			$('#pwdChk').text('');
+			$('#pwdChk').text('비밀번호가 일치하지 않습니다.').css('color','red');
 		}
 	});
 </script>
