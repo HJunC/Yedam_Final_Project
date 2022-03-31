@@ -1,4 +1,4 @@
-package co.yd.deval.project.vo;
+package co.yd.deval.project.service;
 
 import lombok.Data;
 

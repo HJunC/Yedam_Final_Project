@@ -13,20 +13,14 @@
 							 default-target-url="/home.do" />
 		<security:logout logout-url="/logout" 
 						 logout-success-url="/home.do" />
-		<security:csrf disabled="false" />
+		<security:csrf disabled="true" />
 	</security:http>
 	<security:authentication-manager>
-		<security:authentication-provider>
-			<security:jdbc-user-service 
-				data-source-ref="dataSource"
-				users-by-username-query="select MEMBER_ID,'{noop}'||PASSWORD,1
-										 from   MEMBER
-										 where  MEMBER_ID = ?"
-				authorities-by-username-query="select MEMBER_ID,'ROLE_'||upper(ROLE)
-											   from   MEMBER
-											   where  MEMBER_ID = ?"
-			/>
+		<security:authentication-provider user-service-ref="mds">
+			
 		</security:authentication-provider>
 	</security:authentication-manager>
-
+	
+	<bean class="co.yd.deval.member.serviceImpl.MemberDetailService" id="mds"></bean>
+	
 </beans>

@@ -1,4 +1,4 @@
-package co.yd.deval.member.vo;
+package co.yd.deval.member.service;
 
 import java.util.ArrayList;
 import java.util.Collection;

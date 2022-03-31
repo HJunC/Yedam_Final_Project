@@ -5,23 +5,23 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import co.yd.deval.member.service.MemberService;
-import co.yd.deval.member.vo.MemberVO;
+import co.yd.deval.member.mapper.MemberMapper;
+import co.yd.deval.member.service.MemberVO;
+
+
 
 public class MemberDetailService implements UserDetailsService {
 
 	@Autowired
-	private MemberService memberDao;
+	private MemberMapper map;
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		MemberVO vo = new MemberVO();
-		vo.setMemberId(username);
-		vo = memberDao.memberSelect(vo);
-		if(vo == null) {
+		MemberVO mvo = map.memberLogin(username);
+		if(mvo == null) {
 			throw new UsernameNotFoundException("user not found");
 		}
-		return vo;
+		return mvo;
 	}
 
 }

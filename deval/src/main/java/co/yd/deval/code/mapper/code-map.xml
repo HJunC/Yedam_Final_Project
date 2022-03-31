@@ -1,20 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.yd.deval.code.mapper.CodeMapper">
-	<resultMap type="co.yd.deval.code.service.CodeVO" id="codeResultMap">
-		<id property="cqNo" column="cq_no" />
-		<result property="cqLang" column="cq_lang" />
-		<result property="title" column="title" />
-		<result property="subject" column="subject" />
-		<result property="cqDate" column="cq_date" />
-		<result property="hit" column="hit" />
-		<result property="recommend" column="recommend" />
-		<result property="writer" column="writer" />
-		<result property="cqType" column="cq_type" />
-		<result property="gitUri" column="git_uri" />
-	</resultMap>
-	
-	<select id="codeSelectList" resultMap="codeResultMap">
+
+	<select id="codeSelectList" resultType="co.yd.deval.code.service.CodeVO">
+
 		SELECT CQ_NO
 			 , CQ_LANG
 			 , TITLE
@@ -29,7 +18,7 @@
 		ORDER BY CQ_NO DESC
 	</select>
 	
-	<select id="codeSelectOne" resultMap="codeResultMap">
+	<select id="codeSelectOne" resultType="co.yd.deval.code.service.CodeVO">
 		SELECT *
 		FROM CODE_QUESTION
 		WHERE CQ_NO = #{cqNo}

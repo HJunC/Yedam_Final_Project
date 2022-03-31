@@ -1,31 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="co.yd.deval.project.service.ProjectMapper">
-
-    <resultMap id="projectResultMap" type="co.yd.deval.project.vo.ProjectVO">
-        <id property="projectNo" column="project_no" />
-        <result property="projectName" column="project_name"/>
-        <result property="state" column="state"/>
-        <result property="process" column="process"/>
-        <result property="recruitSdt" column="recruit_sdt"/>
-        <result property="recruitEdt" column="recruit_edt"/>
-        <result property="subject" column="subject"/>
-        <result property="lang" column="lang"/>
-        <result property="totalRcnt" column="total_rcnt"/>
-        <result property="projectSdt" column="project_sdt"/>
-        <result property="frontRcnt" column="front_rcnt"/>
-        <result property="backRcnt" column="back_rcnt"/>
-        <result property="designRcnt" column="design_rcnt"/>
-        <result property="projectEdt" column="project_edt"/>
-        <result property="fullRcnt" column="full_rcnt"/>
-        <result property="plannerRcnt" column="planner_rcnt"/>
-        <result property="projectTerm" column="project_term"/>
-        <result property="hit" column="hit"/>
-        <result property="applyRcnt" column="apply_rcnt"/>
-        <result property="leaderId" column="leader_id"/>
-    </resultMap>
+<mapper namespace="co.yd.deval.project.mapper.ProjectMapper">
 
     <insert id="insertProject">
+        <selectKey keyProperty="id" resultType="int" order="BEFORE">
+            /*todo 시퀸스값 반환*/
+            select #{projectNo} FROM DUAL
+        </selectKey>
         INSERT INTO PROJECT (PROJECT_NO,
                              PROJECT_NAME,
                              STATE,
@@ -93,7 +74,7 @@
     </update>
 
     <update id="updateHit">
-        UPDATE PROJECT SET HIT = #{hit}
+        UPDATE PROJECT SET HIT = HIT + 1
         WHERE PROJECT_NO = #{projectNo}
     </update>
 
@@ -102,21 +83,43 @@
         WHERE PROJECT_NO = #{projectNo}
     </delete>
 
-    <select id="selectProjectAll" resultMap="projectResultMap">
+    <select id="selectProjectAll" resultType="co.yd.deval.project.service.ProjectVO">
         SELECT *
           FROM PROJECT
     </select>
 
-    <select id="selectProject" resultMap="projectResultMap">
+    <select id="selectProject" resultType="co.yd.deval.project.service.ProjectVO">
         SELECT *
           FROM PROJECT
          WHERE PROJECT_NO = #{projectNo}
     </select>
 
-    <select id="findByLeaderIdAndState" resultMap="projectResultMap">
+    <select id="findByLeaderIdAndState" resultType="co.yd.deval.project.service.ProjectVO">
         SELECT *
           FROM PROJECT
          WHERE LEADER_ID = #{leaderId}
            AND STATE = #{state}
+    </select>
+
+    <select id="searchProject" resultType="co.yd.deval.project.service.ProjectVO">
+        SELECT *
+          FROM PROJECT
+        <where>
+            <if test="projectName != null">AND PROJECT_NAME LIKE '%'||#projectName#||'%'</if>
+            <if test="state != null">AND STATE = #{state}</if>
+            <if test="process != null">AND PROCESS = #{process}</if>
+            <if test="recruitEdt != null">AND RECRUIT_EDT <![CDATA[ <= ]]> #{recruitEdt}</if>
+            <if test="subject != null">AND SUBJECT = #{subject}</if>
+            <if test="lang != null">AND LANG LIKE '%'||#lang#||'%'</if>
+            <if test="totalRcnt != null">AND TOTAL_RCNT = #{totalRcnt}</if>
+            <if test="projectSdt != null">AND PROJECT_SDT = #{projectSdt}</if>
+            <if test="frontRcnt != null">AND FRONT_RCNT >= #{frontRcnt}</if>
+            <if test="backRcnt != null">AND BACK_RCNT >= #{backRcnt}</if>
+            <if test="designRcnt != null">AND DESIGN_RCNT >= #{designRcnt}</if>
+            <if test="projectEdt != null">AND PROJECT_EDT <![CDATA[ <= ]]> #{projectEdt}</if>
+            <if test="fullRcnt != null">AND FULL_RCNT >= #{fullRcnt}</if>
+            <if test="plannerRcnt != null">AND PLANNER_RCNT >= #{plannerRcnt}</if>
+            <if test="projectTerm != null">AND PROJECT_TERM = #{projectTerm}</if>
+        </where>
     </select>
 </mapper>

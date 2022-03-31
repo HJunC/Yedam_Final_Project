@@ -5,9 +5,11 @@ import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import co.yd.deval.member.service.MemberMapper;
+import co.yd.deval.member.mapper.MemberMapper;
 import co.yd.deval.member.service.MemberService;
-import co.yd.deval.member.vo.MemberVO;
+import co.yd.deval.member.service.MemberVO;
+
+
 
 
 @Repository("memberDao")
@@ -39,7 +41,13 @@ public class MemberServiceImpl implements MemberService {
 		// TODO Auto-generated method stub
 		return map.memberDelete(vo);
 	}
-
+	
+	@Override
+	public MemberVO memberLogin(String id) {
+		System.out.println(id+"======================");
+		return map.memberLogin(id);
+	}
+	
 	@Override
 	public int memberExpUp(HashMap<String, Object> exp) {
 		// TODO Auto-generated method stub

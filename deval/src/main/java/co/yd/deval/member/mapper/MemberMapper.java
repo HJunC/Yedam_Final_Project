@@ -1,8 +1,8 @@
-package co.yd.deval.member.service;
+package co.yd.deval.member.mapper;
 
 import java.util.HashMap;
 
-import co.yd.deval.member.vo.MemberVO;
+import co.yd.deval.member.service.MemberVO;
 
 public interface MemberMapper {
 	MemberVO memberSelect(MemberVO vo);
@@ -10,7 +10,7 @@ public interface MemberMapper {
 	int memberUpdate(MemberVO vo);
 	int memberDelete(MemberVO vo);
 	
-	
+	MemberVO memberLogin(String id);
 	int memberExpUp(HashMap<String, Object> exp);
 	int memberCashUpdate(HashMap<String, Object> cash);
 }
