@@ -126,14 +126,13 @@
 					<li>
 						<a href="#" class="mn-has-sub">내 정보 <i class="mn-has-sub-icon"></i></a>
 						<ul class="mn-sub">
-						<sec:authorize access="hasRole('USER')">
+						<sec:authorize access="hasAnyRole('USER','ADMIN')">
 							<li><a href="${root}/myPage.do">마이페이지</a></li>						
 						</sec:authorize>
 						<sec:authorize access="hasRole('COMPANY')">
 							<li><a href="${root}/coPage.do">회사페이지</a></li>
 						</sec:authorize>
-							<li>
-								<form action="logout" method="post">
+							<li><form action="${root}/logout" method="post">
 									<sec:csrfInput/>
 									<button type="submit">로그아웃</button>
 								</form>

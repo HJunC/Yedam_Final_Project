@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.yd.deval.member.mapper.MemberMapper">
-
+	
 	<select id="memberSelect" resultType="co.yd.deval.member.service.MemberVO">
-		SELECT member_id, 
-			   '{noop}'||password as password, 
-			   mail, 
-			   name, 
-			   exp, 
-			   cash_pt, 
-			   profile_img, 
-			   'ROLE_'||role as role
+		SELECT *
 		FROM   MEMBER
 		WHERE  MEMBER_ID = #{memberId}
+	</select>
+	
+	<select id="memberLogin" resultType="co.yd.deval.member.service.MemberVO">
+		SELECT MEMBER_ID, 
+			   '{noop}'||PASSWORD AS PASSWORD, 
+			   MAIL, 
+			   NAME, 
+			   EXP, 
+			   CASH_PT, 
+			   PROFILE_IMG, 
+			   'ROLE_'||UPPER(ROLE) AS ROLE
+		FROM   MEMBER
+		WHERE  MEMBER_ID = #{id}
 	</select>
 	
 	<insert id="memberInsert" parameterType="co.yd.deval.member.service.MemberVO">

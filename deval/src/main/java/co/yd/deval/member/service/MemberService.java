@@ -8,6 +8,7 @@ public interface MemberService {
 	int memberUpdate(MemberVO vo);
 	int memberDelete(MemberVO vo);
 	
+	MemberVO memberLogin(String id);	
 	int memberExpUp(HashMap<String, Object> exp);
 	int memberCashUpdate(HashMap<String, Object> cash);
 }
