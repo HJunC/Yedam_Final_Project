@@ -45,84 +45,133 @@
                                     </div>
                                 </div>
                                 
-                                <hr class="mt-0 mb-30 white" /> 
-                                
                                 <div class="gray mb-30">
                                     ${mento.info }
                                 </div>
                                 
                                 <hr class="mt-0 mb-30 white" /> 
-                                
+                                <!-- 기간정하는 구간 -->
                                 <div class="mb-30">
                                     <form method="post" action="#" class="form">
-                                        <input type="number" class="input-lg round" min="1" max="100" value="1" />
-                                        <a href="#" class="btn btn-mod btn-w btn-large btn-round">서비스신청</a> 
+                                    <div class="mb-20 mb-md-10">
+                                    	<div>원하는 시간대를 정해주세요</div>
+                                    	<div>
+                                        <select class="form-control input-sm round" style="width: 150px">
+                                            <option>One</option>
+                                            <option>Two</option>
+                                            <option>Three</option>
+                                        </select>
+                                        </div>
+                                    </div>
+                                    <hr class="mt-0 mb-30 white" /> 
+                                       <div class="mb-20 mb-md-10">
+                                    	<div>원하는 기간를 정해주세요</div>
+                                    	<div>
+                                        <select class="form-control input-sm round" style="width: 150px">
+                                            <option>One</option>
+                                            <option>Two</option>
+                                            <option>Three</option>
+                                        </select>
+                                        </div>
+                                    </div>
+                                    <hr class="mt-0 mb-30 white" />
+                                        <button type="submit" class="btn btn-mod btn-w btn-large btn-round">서비스신청</button> 
                                     </form>
                                 </div>
-                                
+                                <!-- 기간정하는구간 끝 -->
                                 <hr class="mt-0 mb-30" /> 
-                                
-                                <div class="gray small">
-                                    <div>SKU: 2134</div>
-                                    <div>Category: <a href=""> Polo shirts</a></div>
-                                    <div>Tags: <a href="">polo shirt</a>, <a href="">men</a></div>
-                                </div>
                                 
                             </div>
                             <!-- End Product Description -->
                             
                             <!-- Features -->
                             <div class="col-sm-4 col-md-3 mb-xs-40">
-                                
-                                <!-- Features Item -->
-                                <div class="alt-service-wrap">
-                                    <div class="alt-service-item">
-                                        <div class="alt-service-icon">
-                                            <i class="far fa-paper-plane"></i>
-                                        </div>
-                                        <h3 class="alt-services-title">Free Shipping</h3>
-                                        <div class="gray">Vivamus neque orci, ultricies blandit ultricies vel, semper.</div>
-                                    </div>
-                                </div>
-                                <!-- End Features Item -->
-                                
-                                <!-- Features Item -->
-                                <div class="alt-service-wrap">
-                                    <div class="alt-service-item">
-                                        <div class="alt-service-icon">
-                                            <i class="far fa-clock"></i>
-                                        </div>
-                                        <h3 class="alt-services-title">14 days moneyback</h3>
-                                        <div class="gray">Vivamus neque orci, ultricies blandit ultricies vel, semper.</div>
-                                    </div>
-                                </div>
-                                <!-- End Features Item -->
-                                
-                                <!-- Features Item -->
-                                <div class="alt-service-wrap">
-                                    <div class="alt-service-item">
-                                        <div class="alt-service-icon">
-                                            <i class="fa fa-gift"></i>
-                                        </div>
-                                        <h3 class="alt-services-title">100% Original</h3>
-                                        <div class="gray">Vivamus neque orci, ultricies blandit ultricies vel, semper.</div>
-                                    </div>
-                                </div>
-                                <!-- End Features Item -->
-                                    
-                                    
-                                
+									<!-- chart div -->                		
+				                    <div id="chart"></div>
                             </div>
                             <!-- End Features -->
+							<hr class="mt-0 mb-30 white" /> 
                             
                         </div>
                         <!-- End Product Content -->
-                        
-                        
-                   
                 		</c:if>
                     </div>
                 </section>
+                
+     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        // Load the Visualization API and the corechart package.
+        google.charts.load('current', {
+            'packages': ['corechart']
+        });
 
+        // Set a callback to run when the Google Visualization API is loaded.
+        google.charts.setOnLoadCallback(drawChart);
+
+        
+        function drawChart() {
+
+            // Create the data table.
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', '부서명');
+            data.addColumn('number', '평균만족도');
+
+            //Ajax 호출
+            let chartData = [];
+            $.ajax({
+                    url: "mentoServChart.do",
+                    dataType: "json",
+                    data: {"id":"${mento.mentoId}"},
+                    async: false
+                })
+                .done(function (item) {
+                    chartData.push(["전체평균",item.all]);
+                    chartData.push(["멘토평균",item.one]);
+                });
+            data.addRows(chartData);
+            // Set chart options
+            var options = {
+                'title': '만족도',
+                'width': 500,
+                'height': 600,
+                'titleTextStyle': {
+                    color: "white",               // color 'red' or '#cc00cc'
+                    fontName: "Courier New",    // 'Times New Roman'
+                    fontSize: 25,               // 12, 18
+                    bold: true,                 // true or false
+                    italic: true                // true of false
+                },
+                'backgroundColor' : {
+                	fill: 'black'
+                },
+                'chartArea' : {
+                    backgroundColor: {
+                      fill: '#FFFAF0',
+                      fillOpacity: 0.8
+                    },
+                },
+                'vAxis' : {
+                    minValue: 0,
+                    max: 5,
+                    tisks : [0,1,2,3,4,5],
+                    textStyle : {
+                    	color : 'white'
+                    }
+                  },
+                  'hAxis' : {
+                	  textStyle : {
+                		  color : 'white'
+                	  }
+                  }
+            };
+
+            // Instantiate and draw our chart, passing in some options.
+            var chart = new google.visualization.ColumnChart(document.getElementById('chart'));
+            chart.draw(data, options);
+
+        } // end of function drawChart()
+    </script>
 </body>
 </html>

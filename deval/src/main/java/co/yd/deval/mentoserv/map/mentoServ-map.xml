@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.yd.deval.mentoserv.map.MentoServMapper">
+	<select id="mentoServList" parameterType="co.yd.deval.mentoserv.service.MentoServVO">
+		SELECT * 
+		FROM MENTO_SERVICE
+	</select>
+	<select id="mentoServSelect" resultType="co.yd.deval.mentoserv.service.MentoServVO" parameterType="co.yd.deval.mentoserv.service.MentoServVO">
+		SELECT * 
+		FROM MENTO_SERVICE 
+		WHERE MENTO_ID = #{mentoId}
+	</select>
+	<insert id="mentoServInsert" parameterType="co.yd.deval.mentoserv.service.MentoServVO">
+		INSERT INTO MENTO_SERVICE(MENTO_SERVICE_NO,
+								  MENTO_ID,
+								  MENTI_ID,
+								  SERVICE_TERM,
+								  START_TM,
+								  END_TM,
+								  START_DATE,
+								  END_DATE,
+								  MENTI_INFO)
+		VALUES					 (MENTO_SERVICE_SEQ.NEXTVAL,
+								  #{mentoId},
+								  #{menti_id},
+								  #{serviceTerm},
+								  #{startTm},
+								  #{endTm},
+								  #{startDate},
+								  #{endDate},
+								  #{mentiInfo})	  
+		
+	</insert>
+	<update id="mentoServUpdate" parameterType="co.yd.deval.mentoserv.service.MentoServVO">
+	
+	</update>
+	<delete id="mentoServDelete" parameterType="co.yd.deval.mentoserv.service.MentoServVO">
+		DELETE FROM MENTO_SERVICE
+		WHERE MENTO_SERVICE_NO = ${mentoServiceNo}
+	</delete>
+	
+	<select id="allSatisAvg" resultType="double">
+		SELECT TRUNC(AVG(STSFDG),1) 
+		FROM MENTO_SERVICE
+	</select>
+	<select id="oneSatisAvg" resultType="double" parameterType="String">
+		SELECT TRUNC(AVG(STSFDG),1) 
+		FROM MENTO_SERVICE
+		WHERE MENTO_ID = #{id}
+	</select>
+	
+</mapper>
