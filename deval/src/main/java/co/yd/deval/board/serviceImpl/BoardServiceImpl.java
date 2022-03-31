@@ -1,13 +1,18 @@
-package co.yd.deval.board.web;
+package co.yd.deval.board.serviceImpl;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import co.yd.deval.board.mapper.BoardMapper;
+import co.yd.deval.board.service.BoardService;
+import co.yd.deval.board.service.BoardVO;
+
 @Service("boardDao")
 public class BoardServiceImpl implements BoardService {
-
+	 
+	
 	@Autowired
 	private BoardMapper map;
 	
@@ -37,9 +42,17 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public BoardVO selectBoardById(String Id) {
-		// TODO Auto-generated method stub
-		return null;
+	public void boardHitUp(BoardVO vo) {
+		map.boardHitUp(vo);
+		
 	}
 
+	@Override
+	public void boardRecUp(BoardVO vo) {
+		map.boardRecUp(vo);
+	}
+	
+
+
+	
 }

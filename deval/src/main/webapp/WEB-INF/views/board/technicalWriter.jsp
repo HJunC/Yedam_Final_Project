@@ -17,10 +17,10 @@
 <section class="page-section bg-dark light-content">
 <div align="center">
 <div class= "input-md round form-control">
- <h1 class="blog-page-title">write .</h1>
+ <h1 class="blog-page-title">technical write .</h1>
 
 		<!-- Form -->
-		<form action="writePost.do" method="post">
+		<form action="noticetechnicalPost.do" method="post">
 				<div class= "input-md round form-control">
 			<h3><label for="title">title</label></h3> 
 			<input type="text" id="title" name="title" required="required" 

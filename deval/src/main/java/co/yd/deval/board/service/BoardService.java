@@ -1,15 +1,17 @@
-package co.yd.deval.board.web;
+package co.yd.deval.board.service;
 
 import java.util.List;
 
-public interface BoardMapper {
-
+public interface BoardService {
 	List<BoardVO> boardSelectList();
 	BoardVO boardSelect(BoardVO vo);
 	int boardInsert(BoardVO vo);
 	int boardUpdate(BoardVO vo);
 	int boardDelete (BoardVO vo);
-	BoardVO selectBoardById(String Id);
+
 	
+	void boardHitUp(BoardVO vo);
+	void boardRecUp(BoardVO vo);
+ 
 
 }
