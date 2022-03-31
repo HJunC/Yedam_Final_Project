@@ -13,7 +13,7 @@
 							 default-target-url="/home.do" />
 		<security:logout logout-url="/logout" 
 						 logout-success-url="/home.do" />
-		<security:csrf disabled="false" />
+		<security:csrf disabled="true" />
 	</security:http>
 	<security:authentication-manager>
 		<security:authentication-provider>

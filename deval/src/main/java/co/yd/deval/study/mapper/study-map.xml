@@ -12,9 +12,11 @@
 	
 	<select id="studySelectNo"
 		resultType="co.yd.deval.study.service.StudyVO">
+
 		SELECT *
 		FROM STUDY
 		WHERE STUDY_NO = #{studyNo}
+
 	</select>
 
 	<insert id="studyInsert"

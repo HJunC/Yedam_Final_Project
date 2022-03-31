@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import co.yd.deval.member.service.MemberService;
-import co.yd.deval.member.vo.MemberVO;
+import co.yd.deval.member.service.MemberVO;
 
 public class MemberDetailService implements UserDetailsService {
 

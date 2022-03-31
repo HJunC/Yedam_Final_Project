@@ -1,19 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="co.yd.deval.member.service.MemberMapper">
-	<resultMap type="co.yd.deval.member.vo.MemberVO" id="memberMap">
-		<id property="memberId" column="member_id"/>
-		<result property="password" column="password"/>
-		<result property="mail" column="mail"/>
-		<result property="name" column="name"/>
-		<result property="exp" column="exp"/>
-		<result property="cashPt" column="cash_pt"/>
-		<result property="resume" column="resume"/>
-		<result property="profileImg" column="profile_img"/>
-		<result property="role" column="role"/>
-	</resultMap>
-	
-	<select id="memberSelect" resultMap="memberMap">
+<mapper namespace="co.yd.deval.member.mapper.MemberMapper">
+
+	<select id="memberSelect" resultType="co.yd.deval.member.service.MemberVO">
 		SELECT member_id, 
 			   '{noop}'||password as password, 
 			   mail, 
@@ -26,7 +15,7 @@
 		WHERE  MEMBER_ID = #{memberId}
 	</select>
 	
-	<insert id="memberInsert" parameterType="co.yd.deval.member.vo.MemberVO">
+	<insert id="memberInsert" parameterType="co.yd.deval.member.service.MemberVO">
 		INSERT INTO MEMBER (MEMBER_ID,
 							PASSWORD,
 							MAIL,
@@ -37,7 +26,7 @@
 					 #{name})
 	</insert>
 	
-	<update id="memberUpdate" parameterType="co.yd.deval.member.vo.MemberVO">
+	<update id="memberUpdate" parameterType="co.yd.deval.member.service.MemberVO">
 		UPDATE MEMBER
 		<set>
 			<if test="password != null and password != ''"> PASSWORD = #{password}, </if>
@@ -49,7 +38,7 @@
 		WHERE MEMBER_ID = #{memberId}
 	</update>
 	
-	<delete id="memberDelete" parameterType="co.yd.deval.member.vo.MemberVO">
+	<delete id="memberDelete" parameterType="co.yd.deval.member.service.MemberVO">
 		DELETE FROM MEMBER
 		WHERE  MEMBER_ID = #{memberId}
 		AND    PASSWORD = #{password}

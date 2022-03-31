@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import co.yd.deval.member.service.MemberService;
-import co.yd.deval.member.vo.MemberVO;
+import co.yd.deval.member.service.MemberVO;
 
 @Controller
 public class MemberController {

@@ -5,9 +5,9 @@ import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import co.yd.deval.member.service.MemberMapper;
+import co.yd.deval.member.mapper.MemberMapper;
 import co.yd.deval.member.service.MemberService;
-import co.yd.deval.member.vo.MemberVO;
+import co.yd.deval.member.service.MemberVO;
 
 
 @Repository("memberDao")

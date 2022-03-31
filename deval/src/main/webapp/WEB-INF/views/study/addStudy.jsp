@@ -16,6 +16,7 @@
 	<div align="center">
 		<h3>스터디 등록</h3>
 
+
 		<form id="frm">
 		<sec:csrfInput/>
 			<!-- 스터디명 -->
@@ -37,6 +38,7 @@
 				<option>4</option>
 				<option>5</option>
 			</select><br><br>
+
 
 			<!-- 언어선택 -->
 			<label class="checkbox-inline">
@@ -77,6 +79,7 @@
 			<!-- 시작일자 -->
 			<input type="date" name="studySdt" id="studySdt" class="input-md round form-control">
 
+
 			<!--  종료일자 -->
 			<input type="date" name="studyEdt" id="studyEdt" class="input-md round form-control">
 
@@ -89,6 +92,7 @@
 			<!-- <input type="button" id="btnStdEdit" name="btnStdEdit" value="변경" onclick="StdEdit()"> -->
 			<input type="reset" value="취소">
 		</form>
+
 	</div>
 
 	<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
@@ -132,7 +136,12 @@
 				url : "insertStudy.do",
 				type : "post",
 				data : $("#frm").serialize(),
-					/* 
+
+					/* {
+					"studyNm" : $("#title").val(),
+					"lang1" : $('input:checkbox[name="ck_lang"]').val(),
+					"lang1" : $('input:checkbox[name="ck_lang"]').is(":checked").val(),
+
 				data : {
 					"studyNm" : $("#title").val(),
 					"lang1" : $('input:checkbox[name="ck_lang"]').val(),
@@ -141,6 +150,12 @@
 					"maxRcnt" : $("select[name='selRcnt']").val() ,
 					"defficulty" : $('input:radio[name="lv"]').val() ,
 					"defficulty" : $('#lv1').is(':checked').val(),
+
+					"studySdt" : $("#dtSdt").val(),
+					"studyEdt" : $("#dtEdt").val(),
+					"lang2" : $('input:checkbox[name="ck_lang"]').val()
+				} */
+
 					"studySdt" : $("#dtSdt").val(),
 					"studyEdt" : $("#dtEdt").val(),
 					"lang2" : $('input:checkbox[name="ck_lang"]').val()

@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <c:set var="resources" value="${pageContext.request.contextPath }/resources"/>
-<link rel="stylesheet" href="${resources}/css/custom/team-project-style.css">+
+<link rel="stylesheet" href="${resources}/css/custom/team-project-style.css">
 <main id="main">    
             
                 <!-- Home Section -->
@@ -140,13 +141,14 @@
                 <div>
                 	<h3 class="mb-30">배우고 싶은 프로그래밍 언어가 있으신가요?</h3>
                 </div>
-                      <form method="post" action="#" id="form-1" class="form">
+                      <form method="post" action="mentoList.do" id="frm" class="frm">
+                      <sec:csrfInput/>
                                     <div class="mb-20 mb-md-10">
-                                        <select class="input-md round form-control" style="width:200px">
-                                            <option>C</option>
+                                        <select class="input-md round form-control" style="width:200px" id="lang" name="lang">
+                                            <option value="C">C</option>
                                             <option>C++</option>
                                             <option>C#</option>
-                                            <option>Java</option>
+                                            <option value="Java">Java</option>
                                             <option>Python</option>
                                             <option>Visual Basic</option>
                                             <option>JavaScript</option>
@@ -156,7 +158,7 @@
                                             <option>Ruby</option>
                                         </select>
                                     </div>
-                       <a href="mentoList.do" class="btn btn-mod btn-w btn-medium btn-round me-md-1" style="background-color:#00D8FF">언어 선택</a>
+                       <button type="submit" class="btn btn-mod btn-w btn-medium btn-round me-md-1" style="background-color:#00D8FF">언어 선택</button>
                       </form>
                  </div>
                 

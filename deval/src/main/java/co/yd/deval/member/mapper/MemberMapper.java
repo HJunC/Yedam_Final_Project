@@ -1,8 +1,8 @@
-package co.yd.deval.member.service;
+package co.yd.deval.member.mapper;
 
 import java.util.HashMap;
 
-import co.yd.deval.member.vo.MemberVO;
+import co.yd.deval.member.service.MemberVO;
 
 public interface MemberMapper {
 	MemberVO memberSelect(MemberVO vo);

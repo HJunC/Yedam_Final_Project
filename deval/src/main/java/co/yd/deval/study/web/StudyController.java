@@ -32,7 +32,7 @@ public class StudyController {
     @RequestMapping("/insertStudy.do")
     @ResponseBody
     public String insertStudy(StudyVO vo) {
-    	
+
     	if(vo.getCk_lang()!=null) {
     		if(vo.getCk_lang().length>0) {
     			vo.setLang1(vo.getCk_lang()[0]);
@@ -41,7 +41,7 @@ public class StudyController {
     			vo.setLang2(vo.getCk_lang()[1]);
     		}
     	}
-    	
+
     	vo.setLeaderId("popo");
     	int n = studyDao.studyInsert(vo);
     	return Integer.toString(n);
