@@ -42,14 +42,15 @@ public class ProjectServiceImpl implements ProjectService {
                 + vo.getDesignRcnt()
                 + vo.getPlannerRcnt()
         );
+        // todo 시퀸스값 반환 구현
         int projectNo = map.insertProject(vo);
-        System.out.println("============================projectNo" + projectNo);
 
         ProjectTeamVO teamVo = new ProjectTeamVO();
         teamVo.setProjectNo(projectNo);
         teamVo.setMemberId(vo.getLeaderId());
-        teamVo.setIsLeader("1");
+        teamVo.setIsLeader("1"); // true
         teamVo.setPosition(vo.getLeaderPosition());
+        teamVo.setState("0"); // 팀장 대기
         return teamMapper.insertProjectTeam(teamVo);
     }
 
@@ -64,11 +65,13 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public ProjectVO getNowUserProject(String memberId) {
-        // todo
-        List<ProjectTeamVO> team;
-        List<ProjectVO> userProjectList = map.findByLeaderIdAndState(memberId, "1");
-        return userProjectList.get(0);
+    public ProjectVO getOngoingProject(String memberId) {
+        ProjectTeamVO ongoingProject = teamMapper.getOngoingProject(memberId); // 진행중인 프로젝트
+        if (ongoingProject == null) {
+            return null;
+        } else {
+            return map.selectProject(ongoingProject.getProjectNo());
+        }
     }
 
     @Override

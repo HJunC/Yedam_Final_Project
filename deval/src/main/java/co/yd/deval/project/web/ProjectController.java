@@ -17,6 +17,8 @@ import java.util.List;
 @RequestMapping("/project")
 public class ProjectController {
 
+    // todo 로그인 유저 입력
+    private static final String USER_ID = "test9";
     private final ProjectService projectDao;
 
     public ProjectController(ProjectService projectDao) {
@@ -25,18 +27,23 @@ public class ProjectController {
 
     @GetMapping("/main.do")
     public String projectMain(Model model) {
-        String userId = "hong";
-        ProjectVO userProject = projectDao.getNowUserProject(userId);
+        ProjectVO userProject = projectDao.getOngoingProject(USER_ID);
         if (userProject != null) {
-            if (userProject.getLeaderId().equals(userId)) {
+            if (userProject.getLeaderId().equals(USER_ID)) {
                 model.addAttribute("isLeader", "true");
             } else {
                 model.addAttribute("isLeader", "false");
             }
             model.addAttribute("userProject", userProject);
+        } else {
+            // todo 지원 여부
+
+            if (true) {
+                model.addAttribute("isRecruit", "true");
+            }
         }
-        ProjectVO searchVo = new ProjectVO();
-        //List<ProjectVO> projectList = projectDao.searchMainPageProject(searchVo);
+        // todo 검토중 -> 신청버튼 X 생성버튼 X
+
         List<ProjectVO> projectList = projectDao.selectProjectAll();
         model.addAttribute("projectList", projectList);
         return "project/projectMain";
@@ -49,8 +56,7 @@ public class ProjectController {
 
     @PostMapping("/projectInsert.do")
     public String projectInsert(ProjectVO vo) {
-        // todo 로그인 유저 입력
-        vo.setLeaderId("hong");
+        vo.setLeaderId(USER_ID);
         int result = projectDao.insertProject(vo);
         if (result != 0) {
             System.out.println(vo);

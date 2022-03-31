@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <c:set var="resources" value="${pageContext.request.contextPath}/resources"/>
 
 <!-- Home Section -->
@@ -34,6 +35,7 @@
             <div>
 
                 <form class="form contact-form" action="projectInsert.do" method="post">
+                    <sec:csrfInput />
                     <div class="clearfix">
 
                         <div class="form-group">
