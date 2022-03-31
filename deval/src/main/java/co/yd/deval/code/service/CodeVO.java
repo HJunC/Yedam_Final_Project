@@ -1,4 +1,4 @@
-package co.yd.deval.code.vo;
+package co.yd.deval.code.service;
 
 import java.sql.Date;
 

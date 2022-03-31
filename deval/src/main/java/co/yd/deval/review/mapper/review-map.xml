@@ -11,7 +11,10 @@
 	<select id="reviewSelectOne" resultType="co.yd.deval.review.service.ReviewVO">
 		SELECT * 
 		FROM CODE_QUESTION_REPLY
-		WHERE CQ_REPLY_NO = #{cqReplyNo}
+		WHERE CQ_NO = #{cqNo}
+		<if test="cqReplyNo != null">
+		AND CQ_REPLY_NO = #{cqReplyNo}
+		</if>
 	</select>
 	
 	<insert id="reviewInsert" parameterType="co.yd.deval.review.service.ReviewVO">

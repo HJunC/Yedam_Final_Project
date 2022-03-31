@@ -56,9 +56,13 @@
 							</c:forEach>
 						</table>
 						<div align="right">
+						<form id="frm" method="post">
+							<input name="${_csrf.parameterName }" value="${_csrf.token}" type="hidden">
+							<input type="hidden" id="cqReplyNo" name="cqReplyNo">
+							<input type="hidden" id="cqNo" name="cqNo" value="${review.cqNo }">
 							<input class="btn btn-mod btn-round btn-border-w btn-small"
-								type="button" value="리뷰쓰기"
-								onclick="location.href='reviewInsertForm.do'">
+								type="button" value="리뷰쓰기" onclick="reviewInput()">
+						</form>
 						</div>
 					</div>
 				</div>
@@ -66,16 +70,16 @@
 		<br>
 
 	</div>
-	<div>
-		<form id="frm" action="reviewSelectOne.do" method="post">
-		<input name="${_csrf.parameterName }" value="${_csrf.token}" type="hidden">
-			<input type="hidden" id="cqReplyNo" name="cqReplyNo">
-		</form>
-	</div>
 </body>
 <script type="text/javascript">
 	function selectOne(id) {
+		frm.action = "reviewSelectOne.do";
 		frm.cqReplyNo.value = id;
+		frm.submit();
+	}
+	
+	function reviewInput() {
+		frm.action = "reviewInsertForm.do";
 		frm.submit();
 	}
 </script>

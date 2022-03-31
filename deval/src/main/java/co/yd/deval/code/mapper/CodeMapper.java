@@ -1,8 +1,8 @@
-package co.yd.deval.code.service;
+package co.yd.deval.code.mapper;
 
 import java.util.List;
 
-import co.yd.deval.code.vo.CodeVO;
+import co.yd.deval.code.service.CodeVO;
 
 public interface CodeMapper {
 	

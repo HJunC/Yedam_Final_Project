@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import co.yd.deval.code.service.CodeService;
-import co.yd.deval.code.vo.CodeVO;
+import co.yd.deval.code.service.CodeVO;
 import oracle.jdbc.proxy.annotation.Post;
 
 @Controller
