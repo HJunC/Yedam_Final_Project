@@ -3,6 +3,10 @@
 <mapper namespace="co.yd.deval.project.mapper.ProjectMapper">
 
     <insert id="insertProject">
+        <selectKey keyProperty="id" resultType="int" order="BEFORE">
+            /*todo 시퀸스값 반환*/
+            select #{projectNo} FROM DUAL
+        </selectKey>
         INSERT INTO PROJECT (PROJECT_NO,
                              PROJECT_NAME,
                              STATE,
@@ -70,7 +74,7 @@
     </update>
 
     <update id="updateHit">
-        UPDATE PROJECT SET HIT = #{hit}
+        UPDATE PROJECT SET HIT = HIT + 1
         WHERE PROJECT_NO = #{projectNo}
     </update>
 
@@ -95,5 +99,27 @@
           FROM PROJECT
          WHERE LEADER_ID = #{leaderId}
            AND STATE = #{state}
+    </select>
+
+    <select id="searchProject" resultType="co.yd.deval.project.service.ProjectVO">
+        SELECT *
+          FROM PROJECT
+        <where>
+            <if test="projectName != null">AND PROJECT_NAME LIKE '%'||#projectName#||'%'</if>
+            <if test="state != null">AND STATE = #{state}</if>
+            <if test="process != null">AND PROCESS = #{process}</if>
+            <if test="recruitEdt != null">AND RECRUIT_EDT <![CDATA[ <= ]]> #{recruitEdt}</if>
+            <if test="subject != null">AND SUBJECT = #{subject}</if>
+            <if test="lang != null">AND LANG LIKE '%'||#lang#||'%'</if>
+            <if test="totalRcnt != null">AND TOTAL_RCNT = #{totalRcnt}</if>
+            <if test="projectSdt != null">AND PROJECT_SDT = #{projectSdt}</if>
+            <if test="frontRcnt != null">AND FRONT_RCNT >= #{frontRcnt}</if>
+            <if test="backRcnt != null">AND BACK_RCNT >= #{backRcnt}</if>
+            <if test="designRcnt != null">AND DESIGN_RCNT >= #{designRcnt}</if>
+            <if test="projectEdt != null">AND PROJECT_EDT <![CDATA[ <= ]]> #{projectEdt}</if>
+            <if test="fullRcnt != null">AND FULL_RCNT >= #{fullRcnt}</if>
+            <if test="plannerRcnt != null">AND PLANNER_RCNT >= #{plannerRcnt}</if>
+            <if test="projectTerm != null">AND PROJECT_TERM = #{projectTerm}</if>
+        </where>
     </select>
 </mapper>

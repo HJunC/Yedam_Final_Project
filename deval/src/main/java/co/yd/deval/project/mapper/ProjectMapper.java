@@ -8,11 +8,12 @@ import java.util.List;
 
 public interface ProjectMapper {
     List<ProjectVO> selectProjectAll();
-    ProjectVO selectProject(ProjectVO vo);
+    ProjectVO selectProject(int projectNo);
     int insertProject(ProjectVO vo);
     int deleteProject(ProjectVO vo);
     int updateProject(ProjectVO vo);
 
+    int updateHit(int projectNo);
     List<ProjectVO> findByLeaderIdAndState(@Param("leaderId") String leaderId, @Param("state") String state);
-    int updateHit(ProjectVO vo);
+    List<ProjectVO> searchProject(ProjectVO vo);
 }

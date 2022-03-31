@@ -115,13 +115,13 @@
 
 				<!-- Divider -->
 				<li><a>&nbsp;</a></li>
-				<li><a>&nbsp;</a></li>
 				<!-- End Divider -->
 				
 				<sec:authorize access="isAnonymous()">
 					<li><a href="${root}/loginForm.do" class="mn-has-sub">로그인</a></li>
 					<li><a href="${root}/signUpForm.do" class="mn-has-sub">회원가입</a></li>
 				</sec:authorize>
+
 				<sec:authorize access="isAuthenticated()">
 					<li>
 						<a href="#" class="mn-has-sub">내 정보 <i class="mn-has-sub-icon"></i></a>
@@ -130,7 +130,7 @@
 							<li><a href="${root}/myPage.do">마이페이지</a></li>						
 						</sec:authorize>
 						<sec:authorize access="hasRole('COMPANY')">
-							<li><a href="${root}/coPage.do">회사페이지</a></li>						
+							<li><a href="${root}/coPage.do">회사페이지</a></li>
 						</sec:authorize>
 							<li><form action="${root}/logout" method="post">
 									<sec:csrfInput/>
