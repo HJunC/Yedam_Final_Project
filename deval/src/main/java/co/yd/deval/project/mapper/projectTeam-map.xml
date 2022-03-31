@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="co.yd.deval.project.mapper.ProjectTeamMapper">
+
+    <insert id="insertProjectTeam">
+        INSERT INTO PROJECT_TEAM (POSITION,
+                                  MEMBER_ID,
+                                  ISLEADER,
+                                  PROJECT_NO,
+                                  STATE)
+        VALUES (#{position},
+                #{memberId},
+                #{isLeader},
+                #{projectNo},
+                #{state})
+    </insert>
+    <update id="updateProjectTeam">
+        UPDATE PROJECT_TEAM
+        <set>
+            <if test="position != null">POSITION = #{position},</if>
+            <if test="memberId != null">MEMBER_ID = #{memberId},</if>
+            <if test="isLeader != null">ISLEADER = #{isLeader},</if>
+            <if test="projectNo != null">PROJECT_NO = #{projectNo},</if>
+            <if test="state != null">STATE = #{state},</if>
+        </set>
+        WHERE PROJECT_NO = #{projectNo}
+    </update>
+    <delete id="deleteProjectTeam">
+        DELETE FROM PROJECT_TEAM
+        WHERE PROJECT_NO = #{projectNo}
+    </delete>
+
+    <select id="selectProjectTeamAll" resultType="co.yd.deval.project.service.ProjectTeamVO">
+        SELECT *
+        FROM PROJECT_TEAM
+    </select>
+    <select id="selectProjectTeam" resultType="co.yd.deval.project.service.ProjectTeamVO">
+        SELECT *
+        FROM PROJECT_TEAM
+        WHERE PROJECT_NO = #{projectNo}
+    </select>
+
+    <select id="findByMemberIdAndState" resultType="co.yd.deval.project.service.ProjectTeamVO">
+        SELECT *
+         FROM PROJECT
+        WHERE LEADER_ID = #{memberId}
+          AND STATE = #{state}
+    </select>
+</mapper>

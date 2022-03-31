@@ -13,12 +13,12 @@
 		<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
 		<!-- Favicons -->
 		<link rel="shortcut icon" href="${resources}/images/favicon.png">
-
+<script src="${resources}/js/jquery-3.5.1.min.js"></script>
 		<!-- CSS -->
 		<link rel="stylesheet" href="${resources}/css/bootstrap.min.css">
 		<link rel="stylesheet" href="${resources}/css/template.css">
-		<link rel="stylesheet" href="${resources}/css/custom/team-project-style.css">
-	</head>
+		<link rel="stylesheet" href="${resources}/css/custom/custom-style.css">
+</head>
 	<body class="appear-animate">
 		<!-- Page Loader -->
 		<div class="page-loader dark">
@@ -38,7 +38,7 @@
 			<tiles:insertAttribute name="footer"/>
 		</div>
 		<!-- JS -->
-		<script src="${resources}/js/jquery-3.5.1.min.js"></script>
+		
 		<script src="${resources}/js/jquery.easing.1.3.js"></script>
 		<script src="${resources}/js/bootstrap.bundle.min.js"></script>
 		<script src="${resources}/js/SmoothScroll.js"></script>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="co.yd.deval.project.mapper.ProjectMapper">
+
+    <insert id="insertProject">
+        <selectKey keyProperty="id" resultType="int" order="BEFORE">
+            /*todo 시퀸스값 반환*/
+            select #{projectNo} FROM DUAL
+        </selectKey>
+        INSERT INTO PROJECT (PROJECT_NO,
+                             PROJECT_NAME,
+                             STATE,
+                             PROCESS,
+                             RECRUIT_SDT,
+                             RECRUIT_EDT,
+                             SUBJECT,
+                             LANG,
+                             TOTAL_RCNT,
+                             PROJECT_SDT,
+                             FRONT_RCNT,
+                             BACK_RCNT,
+                             DESIGN_RCNT,
+                             PROJECT_EDT,
+                             FULL_RCNT,
+                             PLANNER_RCNT,
+                             PROJECT_TERM,
+                             HIT,
+                             APPLY_RCNT,
+                             LEADER_ID)
+        VALUES (#{projectNo},
+                #{projectName},
+                #{state},
+                #{process},
+                sysdate,
+                #{recruitEdt},
+                #{subject},
+                #{lang},
+                #{totalRcnt},
+                #{projectSdt},
+                #{frontRcnt},
+                #{backRcnt},
+                #{designRcnt},
+                #{projectEdt},
+                #{fullRcnt},
+                #{plannerRcnt},
+                #{projectTerm},
+                0,
+                0,
+                #{leaderId});
+    </insert>
+
+    <update id="updateProject">
+        UPDATE PROJECT
+        <set>
+            <if test="projectName != null">PROJECT_NAME = #{projectName},</if>
+            <if test="state != null">STATE = #{state},</if>
+            <if test="process != null">PROCESS = #{process},</if>
+            <if test="recruitEdt != null">RECRUIT_EDT = #{recruitEdt},</if>
+            <if test="subject != null">SUBJECT = #{subject},</if>
+            <if test="lang != null">LANG = #{lang},</if>
+            <if test="totalRcnt != null">TOTAL_RCNT = #{totalRcnt},</if>
+            <if test="projectSdt != null">PROJECT_SDT = #{projectSdt},</if>
+            <if test="frontRcnt != null">FRONT_RCNT = #{frontRcnt},</if>
+            <if test="backRcnt != null">BACK_RCNT = #{backRcnt},</if>
+            <if test="designRcnt != null">DESIGN_RCNT = #{designRcnt},</if>
+            <if test="projectEdt != null">PROJECT_EDT = #{projectEdt},</if>
+            <if test="fullRcnt != null">FULL_RCNT = #{fullRcnt},</if>
+            <if test="plannerRcnt != null">PLANNER_RCNT = #{plannerRcnt},</if>
+            <if test="projectTerm != null">PROJECT_TERM = #{projectTerm},</if>
+            <if test="applyRcnt != null">APPLY_RCNT = #{applyRcnt},</if>
+            <if test="leaderId != null">LEADER_ID = #{leaderId},</if>
+        </set>
+        WHERE PROJECT_NO = #{projectNo}
+    </update>
+
+    <update id="updateHit">
+        UPDATE PROJECT SET HIT = HIT + 1
+        WHERE PROJECT_NO = #{projectNo}
+    </update>
+
+    <delete id="deleteProject">
+        DELETE FROM PROJECT
+        WHERE PROJECT_NO = #{projectNo}
+    </delete>
+
+    <select id="selectProjectAll" resultType="co.yd.deval.project.service.ProjectVO">
+        SELECT *
+          FROM PROJECT
+    </select>
+
+    <select id="selectProject" resultType="co.yd.deval.project.service.ProjectVO">
+        SELECT *
+          FROM PROJECT
+         WHERE PROJECT_NO = #{projectNo}
+    </select>
+
+    <select id="findByLeaderIdAndState" resultType="co.yd.deval.project.service.ProjectVO">
+        SELECT *
+          FROM PROJECT
+         WHERE LEADER_ID = #{leaderId}
+           AND STATE = #{state}
+    </select>
+
+    <select id="searchProject" resultType="co.yd.deval.project.service.ProjectVO">
+        SELECT *
+          FROM PROJECT
+        <where>
+            <if test="projectName != null">AND PROJECT_NAME LIKE '%'||#projectName#||'%'</if>
+            <if test="state != null">AND STATE = #{state}</if>
+            <if test="process != null">AND PROCESS = #{process}</if>
+            <if test="recruitEdt != null">AND RECRUIT_EDT <![CDATA[ <= ]]> #{recruitEdt}</if>
+            <if test="subject != null">AND SUBJECT = #{subject}</if>
+            <if test="lang != null">AND LANG LIKE '%'||#lang#||'%'</if>
+            <if test="totalRcnt != null">AND TOTAL_RCNT = #{totalRcnt}</if>
+            <if test="projectSdt != null">AND PROJECT_SDT = #{projectSdt}</if>
+            <if test="frontRcnt != null">AND FRONT_RCNT >= #{frontRcnt}</if>
+            <if test="backRcnt != null">AND BACK_RCNT >= #{backRcnt}</if>
+            <if test="designRcnt != null">AND DESIGN_RCNT >= #{designRcnt}</if>
+            <if test="projectEdt != null">AND PROJECT_EDT <![CDATA[ <= ]]> #{projectEdt}</if>
+            <if test="fullRcnt != null">AND FULL_RCNT >= #{fullRcnt}</if>
+            <if test="plannerRcnt != null">AND PLANNER_RCNT >= #{plannerRcnt}</if>
+            <if test="projectTerm != null">AND PROJECT_TERM = #{projectTerm}</if>
+        </where>
+    </select>
+</mapper>

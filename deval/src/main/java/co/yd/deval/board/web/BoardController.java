@@ -17,14 +17,14 @@ public class BoardController {
 	@Autowired
 	private BoardService boardDao;
 		
-		   //ÀÚÀ¯°Ô½ÃÆÇ°¡±â
+	//ï¿½ï¿½ï¿½ï¿½ï¿½Ô½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½
 	@GetMapping("/free.do")
     public String free(Model model) {
 		model.addAttribute("boardList",boardDao.boardSelectList());
 		return "board/free";
 	}
 		 
-	//ÀÚÀ¯°Ô½Ã±Û ±Ûµî·ÏÇÏ±â
+	//ï¿½ï¿½ï¿½ï¿½ï¿½Ô½Ã±ï¿½ ï¿½Ûµï¿½ï¿½ï¿½Ï±ï¿½
 	@GetMapping("/write.do")
 	public String write() {
 		return "board/write";
@@ -40,7 +40,7 @@ public class BoardController {
     } 
 
 	
-	//°øÁö»çÇ×°Ô½ÃÆÇ ¤¡ ¤¿±â
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×°Ô½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@GetMapping("/notice.do")
 	public String notice(Model model) {
 		model.addAttribute("noticeList",boardDao.boardSelectList());
