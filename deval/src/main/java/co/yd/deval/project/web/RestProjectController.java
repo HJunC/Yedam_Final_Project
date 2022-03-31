@@ -4,11 +4,10 @@ import co.yd.deval.project.mapper.ProjectMapper;
 import co.yd.deval.project.mapper.ProjectRequestMapper;
 import co.yd.deval.project.mapper.ProjectTeamMapper;
 import co.yd.deval.project.service.*;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import java.lang.annotation.Target;
 import java.util.List;
 
 @RestController
@@ -16,18 +15,9 @@ import java.util.List;
 public class RestProjectController {
 
     private final ProjectService projectDao;
-    final
-    ProjectMapper mapper;
-    final
-    ProjectTeamMapper teamMapper;
-    final
-    ProjectRequestMapper requestMapper;
 
-    public RestProjectController(ProjectService projectDao, ProjectTeamMapper teamMapper, ProjectRequestMapper requestMapper, ProjectMapper mapper) {
+    public RestProjectController(ProjectService projectDao) {
         this.projectDao = projectDao;
-        this.teamMapper = teamMapper;
-        this.requestMapper = requestMapper;
-        this.mapper = mapper;
     }
 
     @GetMapping("/api/searchProject")
@@ -37,10 +27,23 @@ public class RestProjectController {
 
     @GetMapping("/api/detailProject")
     public ProjectInfoDTO detailProject(@RequestParam("no") int projectNo) {
-        ProjectInfoDTO dto = mapper.getProject(projectNo);
-        ProjectTeamVO searchTeamVo = new ProjectTeamVO();
-        searchTeamVo.setProjectNo(projectNo);
-        dto.setProjectTeam(teamMapper.selectProjectTeam(searchTeamVo));
-        return dto;
+        return projectDao.getProjectInfo(projectNo);
     }
+
+    @PostMapping("/api/request")
+    public ResponseEntity<String> request(ProjectRequestVO vo) {
+        // todo 참가 요청
+        return ResponseEntity.ok("success");
+    }
+
+    @PostMapping("/api/requestDelete")
+    public ResponseEntity<String> requestDelete(ProjectRequestVO vo) {
+        // todo 참가 취소
+        return ResponseEntity.ok("success");
+    }
+
+    // todo 프로젝트 삭제 요청
+
+    // todo 프로젝트 진행 요청
+
 }

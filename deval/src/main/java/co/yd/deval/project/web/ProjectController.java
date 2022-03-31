@@ -50,8 +50,8 @@ public class ProjectController {
         return "project/projectInsertForm";
     }
 
-    @PostMapping("/projectInsert.do")
-    public String projectInsert(ProjectVO vo) {
+    @PostMapping("/addProject.do")
+    public String addProject(ProjectVO vo) {
         vo.setLeaderId(USER_ID);
         int result = projectDao.insertProject(vo);
         if (result != 0) {
@@ -63,15 +63,25 @@ public class ProjectController {
         }
     }
 
+    @PostMapping("/deleteProject.do")
+    public String deleteProject() {
+        // todo 프로젝트 삭제
+        return "redirect:main.do";
+    }
+
     @GetMapping("/projectDetail.do")
     public String projectDetail(Model model, @RequestParam("no") int projectNo) {
-        ProjectVO vo = projectDao.selectProject(projectNo);
-        model.addAttribute("project", vo);
+        ProjectInfoDTO dto = projectDao.getProjectInfo(projectNo);
+        model.addAttribute("project", dto);
+        model.addAttribute("team", dto.getProjectTeam());
         return "project/projectDetail";
     }
 
     @GetMapping("/projectSearch.do")
     public String projectSearch(Model model, ProjectVO vo) {
+        // todo 프로젝트 검색
+        List<ProjectVO> projectList = projectDao.searchProject(vo);
+        model.addAttribute("projectList", projectList);
         return "project/projectSearch";
     }
 

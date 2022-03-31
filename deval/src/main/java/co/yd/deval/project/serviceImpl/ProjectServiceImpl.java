@@ -3,6 +3,7 @@ package co.yd.deval.project.serviceImpl;
 import co.yd.deval.project.mapper.ProjectMapper;
 import co.yd.deval.project.mapper.ProjectRequestMapper;
 import co.yd.deval.project.mapper.ProjectTeamMapper;
+import co.yd.deval.project.service.ProjectInfoDTO;
 import co.yd.deval.project.service.ProjectService;
 import co.yd.deval.project.service.ProjectTeamVO;
 import co.yd.deval.project.service.ProjectVO;
@@ -31,7 +32,6 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public ProjectVO selectProject(int projectNo) {
-        mapper.updateHit(projectNo);
         return mapper.selectProject(projectNo);
     }
 
@@ -88,6 +88,16 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public List<ProjectVO> searchProject(ProjectVO vo) {
         return mapper.searchProject(vo);
+    }
+
+    @Override
+    public ProjectInfoDTO getProjectInfo(int projectNo) {
+        mapper.updateHit(projectNo);
+        ProjectInfoDTO dto = mapper.getProject(projectNo);
+        ProjectTeamVO searchTeamVo = new ProjectTeamVO();
+        searchTeamVo.setProjectNo(projectNo);
+        dto.setProjectTeam(teamMapper.selectProjectTeam(searchTeamVo));
+        return dto;
     }
 
 }

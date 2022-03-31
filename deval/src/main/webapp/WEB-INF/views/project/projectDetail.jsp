@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <c:set var="resources" value="${pageContext.request.contextPath}/resources"/>
 
 <!-- Home Section -->
@@ -77,66 +78,21 @@
                 <!-- Comments -->
                 <div class="mb-80 mb-xs-40">
 
-                    <h4 class="blog-page-title">팀원 <small class="number">(2)</small></h4>
+                    <h4 class="blog-page-title">팀원 <small class="number">(${fn:length(team)})</small></h4>
 
                     <ul class="media-list comment-list clearlist">
-
-                        <!-- Comment Item -->
-                        <li class="media comment-item">
-
-                            <a class="float-start" href="#"><img class="media-object comment-avatar" src="${resources}/images/user-avatar.png" alt="" width="50" height="50"></a>
-
-                            <div class="media-body">
-
-                                <div class="comment-item-data">
-                                    <div class="comment-author">
-                                        <a href="#">John Doe</a>
+                        <c:forEach items="${team }" var="item">
+                            <!-- Comment Item -->
+                            <li class="media comment-item">
+                                <a class="float-start" href="#"><img class="media-object comment-avatar" src="${resources}/images/user-avatar.png" alt="" width="50" height="50"></a>
+                                <div class="media-body">
+                                    <div class="comment-item-data">
+                                        <div class="comment-author">${item.memberId}</div>${item.position}
                                     </div>
-                                    Feb 9 2021 at 10:23
                                 </div>
-
-                            </div>
-
-                        </li>
-                        <!-- End Comment Item -->
-
-                        <!-- Comment Item -->
-                        <li class="media comment-item">
-
-                            <a class="float-start" href="#"><img class="media-object comment-avatar" src="${resources}/images/user-avatar.png" alt=""></a>
-
-                            <div class="media-body">
-
-                                <div class="comment-item-data">
-                                    <div class="comment-author">
-                                        <a href="#">Emma Johnson</a>
-                                    </div>
-                                    Feb 9 2021 at 10:37
-                                </div>
-
-                            </div>
-
-                        </li>
-                        <!-- End Comment Item -->
-
-                        <!-- Comment Item -->
-                        <li class="media comment-item">
-
-                            <a class="float-start" href="#"><img class="media-object comment-avatar" src="${resources}/images/user-avatar.png" alt=""></a>
-
-                            <div class="media-body">
-
-                                <div class="comment-item-data">
-                                    <div class="comment-author">
-                                        <a href="#">John Doe</a>
-                                    </div>
-                                    Feb 9 2021 at 10:3
-                                </div>
-
-                            </div>
-
-                        </li>
-                        <!-- End Comment Item -->
+                            </li>
+                            <!-- End Comment Item -->
+                        </c:forEach>
 
                     </ul>
 
