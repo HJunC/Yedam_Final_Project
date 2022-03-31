@@ -2,11 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="co.yd.deval.project.mapper.ProjectMapper">
 
-    <insert id="insertProject">
-        <selectKey keyProperty="id" resultType="int" order="BEFORE">
-            select #{projectNo} FROM DUAL
-        </selectKey>
-        INSERT INTO PROJECT (PROJECT_NO,
+    <insert id="insertProject" parameterType="co.yd.deval.project.service.ProjectVO" useGeneratedKeys="false">
+        INSERT INTO PROJECT (PROJECT_NO_COUNT_SEQ.nextval,
                              PROJECT_NAME,
                              STATE,
                              PROCESS,
@@ -46,9 +43,12 @@
                 0,
                 0,
                 #{leaderId});
+        <selectKey keyProperty="PROJECT_NO" resultType="int" order="AFTER">
+            select PROJECT_NO_COUNT_SEQ.currval FROM DUAL
+        </selectKey>
     </insert>
 
-    <update id="updateProject">
+    <update id="updateProject" parameterType="co.yd.deval.project.service.ProjectVO">
         UPDATE PROJECT
         <set>
             <if test="projectName != null">PROJECT_NAME = #{projectName},</if>
@@ -72,12 +72,12 @@
         WHERE PROJECT_NO = #{projectNo}
     </update>
 
-    <update id="updateHit">
+    <update id="updateHit" parameterType="co.yd.deval.project.service.ProjectVO">
         UPDATE PROJECT SET HIT = HIT + 1
         WHERE PROJECT_NO = #{projectNo}
     </update>
 
-    <delete id="deleteProject">
+    <delete id="deleteProject" parameterType="co.yd.deval.project.service.ProjectVO">
         DELETE FROM PROJECT
         WHERE PROJECT_NO = #{projectNo}
     </delete>
@@ -120,5 +120,39 @@
             <if test="plannerRcnt != null">AND PLANNER_RCNT >= #{plannerRcnt}</if>
             <if test="projectTerm != null">AND PROJECT_TERM = #{projectTerm}</if>
         </where>
+    </select>
+
+    <select id="searchMainPageProject" resultType="co.yd.deval.project.service.ProjectVO">
+        SELECT * FROM (
+            SELECT t.*
+              FROM DEVAL.PROJECT t
+             WHERE STATE = '1'
+               AND RECRUIT_EDT >= sysdate - 1
+            <if test="lang != null">AND LANG LIKE '%'||#lang#||'%'</if>
+            <if test="projectName != null">AND PROJECT_NAME LIKE '%'||#projectName#||'%'</if>
+            <if test="process != null">AND PROCESS = #{process}</if>
+
+            <if test="totalRcnt != 0">AND TOTAL_RCNT = #{totalRcnt}</if>
+
+            <if test="frontRcnt != 0">AND FRONT_RCNT >= #{frontRcnt}</if>
+            <if test="backRcnt != 0">AND BACK_RCNT >= #{backRcnt}</if>
+            <if test="designRcnt != 0">AND DESIGN_RCNT >= #{designRcnt}</if>
+            <if test="fullRcnt != 0">AND FULL_RCNT >= #{fullRcnt}</if>
+            <if test="plannerRcnt != 0">AND PLANNER_RCNT >= #{plannerRcnt}</if>
+
+            <if test="projectTerm != 0">AND PROJECT_TERM BETWEEN 0 AND #{projectTerm}</if>
+            ORDER BY RECRUIT_EDT
+        ) WHERE ROWNUM <![CDATA[ <= ]]> 1
+    </select>
+
+    <select id="getListWithPaging" resultType="co.yd.deval.project.service.ProjectVO">
+        <![CDATA[
+        SELECT * FROM (
+            SELECT ROWNUM rn, t.*
+              FROM PROJECT t
+             WHERE rownum <= #{pageNum} * #{amount}
+        )
+        WHERE rn > (#{pageNum} - 1) * #{amount}
+        ]]>
     </select>
 </mapper>

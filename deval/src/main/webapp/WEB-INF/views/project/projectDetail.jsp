@@ -198,112 +198,116 @@
             <!-- Sidebar -->
             <div class="col-md-4 col-lg-3 offset-lg-1 mt-10">
 
-                <!-- Widget -->
-                <div class="widget">
+                <div>
 
-                    <h3 class="widget-title">언어</h3>
+                    <!-- 언어 -->
+                    <div class="widget">
 
-                    <div class="widget-body">
-                        <div class="tags">
-                            <a href="">Java</a>
-                            <a href="">Portfolio</a>
-                            <a href="">Digital</a>
-                            <a href="">Branding</a>
-                            <a href="">Theme</a>
-                            <a href="">Clean</a>
-                            <a href="">UI & UX</a>
-                            <a href="">Love</a>
+                        <h3 class="widget-title">언어</h3>
+
+                        <div class="widget-body">
+                            <div class="tags">
+                                <a href="">Java</a>
+                                <a href="">Portfolio</a>
+                                <a href="">Digital</a>
+                                <a href="">Branding</a>
+                                <a href="">Theme</a>
+                                <a href="">Clean</a>
+                                <a href="">UI & UX</a>
+                                <a href="">Love</a>
+                            </div>
                         </div>
+
                     </div>
+                    <!-- End Widget -->
+
+                    <!-- 포지션 -->
+                    <div class="widget">
+
+                        <h3 class="widget-title">포지션</h3>
+
+                        <div class="widget-body">
+                            <ul class="clearlist widget-menu">
+                                <li>
+                                    <a href="#" title="">프론트엔드 개발자</a>
+                                    <small>
+                                        - ${project.frontRcnt}
+                                    </small>
+                                </li>
+                                <li>
+                                    <a href="#" title="">백엔드 개발자</a>
+                                    <small>
+                                        - ${project.backRcnt}
+                                    </small>
+                                </li>
+                                <li>
+                                    <a href="#" title="">풀스택 개발자</a>
+                                    <small>
+                                        - ${project.fullRcnt}
+                                    </small>
+                                </li>
+                                <li>
+                                    <a href="#" title="">디자이너</a>
+                                    <small>
+                                        - ${project.designRcnt}
+                                    </small>
+                                </li>
+                                <li>
+                                    <a href="#" title="">기획자</a>
+                                    <small>
+                                        - ${project.plannerRcnt}
+                                    </small>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <!-- End Widget -->
+
+                    <!-- 기간 -->
+                    <div class="widget">
+
+                        <h3 class="widget-title">프로젝트 진행 기간 (${project.projectTerm}일)</h3>
+
+                        <div class="widget-body">
+                            <ul class="clearlist widget-menu">
+                                <li>
+                                    <div class="form-group">
+                                        시작일<input type="date" class="input-lg round form-control bg-dark-input" value="${project.projectSdt}">
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        종료일<input type="date" class="input-lg round form-control bg-dark-input" value="${project.projectEdt}">
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <!-- End Widget -->
+
+                    <!-- 진행 방식 -->
+                    <div class="widget">
+
+                        <h3 class="widget-title">프로젝트 진행 방식</h3>
+
+                        <div class="widget-body">
+                            <c:if test="${project.process eq 'ON'}">
+                                <p>온라인</p>
+                            </c:if>
+                            <c:if test="${project.process eq 'OFF'}">
+                                <p>오프라인</p>
+                            </c:if>
+                            <c:if test="${project.process eq 'ONOFF'}">
+                                <p>온/오프라인</p>
+                            </c:if>
+                        </div>
+
+                    </div>
+                    <!-- End Widget -->
 
                 </div>
-                <!-- End Widget -->
-
-                <!-- Widget -->
-                <div class="widget">
-
-                    <h3 class="widget-title">포지션</h3>
-
-                    <div class="widget-body">
-                        <ul class="clearlist widget-menu">
-                            <li>
-                                <a href="#" title="">프론트엔드 개발자</a>
-                                <small>
-                                    - ${project.frontRcnt}
-                                </small>
-                            </li>
-                            <li>
-                                <a href="#" title="">백엔드 개발자</a>
-                                <small>
-                                    - ${project.backRcnt}
-                                </small>
-                            </li>
-                            <li>
-                                <a href="#" title="">풀스택 개발자</a>
-                                <small>
-                                    - ${project.fullRcnt}
-                                </small>
-                            </li>
-                            <li>
-                                <a href="#" title="">디자이너</a>
-                                <small>
-                                    - ${project.designRcnt}
-                                </small>
-                            </li>
-                            <li>
-                                <a href="#" title="">기획자</a>
-                                <small>
-                                    - ${project.plannerRcnt}
-                                </small>
-                            </li>
-                        </ul>
-                    </div>
-
-                </div>
-                <!-- End Widget -->
-
-                <!-- Widget -->
-                <div class="widget">
-
-                    <h3 class="widget-title">프로젝트 진행 기간 (${project.projectTerm}일)</h3>
-
-                    <div class="widget-body">
-                        <ul class="clearlist widget-menu">
-                            <li>
-                                <div class="form-group">
-                                    시작일<input type="date" class="input-lg round form-control bg-dark-input" value="${project.projectSdt}">
-                                </div>
-                            </li>
-                            <li>
-                                <div class="form-group">
-                                    종료일<input type="date" class="input-lg round form-control bg-dark-input" value="${project.projectEdt}">
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-
-                </div>
-                <!-- End Widget -->
-
-                <!-- Widget -->
-                <div class="widget">
-
-                    <h3 class="widget-title">프로젝트 진행 방식</h3>
-
-                    <div class="widget-body">
-                        <c:if test="${project.process eq 'ON'}">
-                            <p>온라인</p>
-                        </c:if>
-                        <c:if test="${project.process eq 'OFF'}">
-                            <p>오프라인</p>
-                        </c:if>
-                        <c:if test="${project.process eq 'ONOFF'}">
-                            <p>온/오프라인</p>
-                        </c:if>
-                    </div>
-
-                </div>
-                <!-- End Widget -->
 
             </div>
             <!-- End Sidebar -->

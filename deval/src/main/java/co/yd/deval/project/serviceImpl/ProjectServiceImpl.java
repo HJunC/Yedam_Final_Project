@@ -76,7 +76,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public List<ProjectVO> searchMainPageProject(ProjectVO vo) {
-        return map.searchProject(vo);
+        return map.searchMainPageProject(vo);
     }
 
     @Override

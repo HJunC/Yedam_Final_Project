@@ -18,7 +18,7 @@ import java.util.List;
 public class ProjectController {
 
     // todo 로그인 유저 입력
-    private static final String USER_ID = "test9";
+    private static final String USER_ID = "hong";
     private final ProjectService projectDao;
 
     public ProjectController(ProjectService projectDao) {
@@ -37,14 +37,13 @@ public class ProjectController {
             model.addAttribute("userProject", userProject);
         } else {
             // todo 지원 여부
-
             if (true) {
                 model.addAttribute("isRecruit", "true");
             }
         }
         // todo 검토중 -> 신청버튼 X 생성버튼 X
-
-        List<ProjectVO> projectList = projectDao.selectProjectAll();
+        ProjectVO searchVO = new ProjectVO();
+        List<ProjectVO> projectList = projectDao.searchMainPageProject(searchVO);
         model.addAttribute("projectList", projectList);
         return "project/projectMain";
     }

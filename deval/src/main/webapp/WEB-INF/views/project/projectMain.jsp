@@ -75,31 +75,31 @@
 <!-- Call Action Section -->
 <section class="small-section bg-dark light-content">
     <div class="container relative">
-        <h3>팀 프로젝트 찾기</h3>
+        <div>
+            <h3 class="me-4" style="display: inline-block;">팀 프로젝트 찾기</h3>
+            <a href="projectSearch.do" class="btn btn-mod btn-border-w btn-round btn-small">프로젝트 더보기</a>
+        </div>
         <div class="list-group project-list">
 
             <c:forEach items="${projectList }" var="item">
                 <a href="projectDetail.do?no=${item.projectNo}" class="list-group-item d-flex justify-content-between align-items-start" aria-current="true">
-                <div class="ms-2 me-auto">
-                    <div class="fw-bold">${item.projectName}</div>
-                    모집일
-                    <fmt:formatDate value="${item.recruitSdt}" type="both" pattern="yyyy-MM-dd"/>
-                    ~
-                    <fmt:formatDate value="${item.recruitEdt}" type="both" pattern="yyyy-MM-dd"/>
-                </div>
-                <c:if test="item.frontRcnt > 0">
-
-                </c:if>
-                <span class="badge me-1 ${item.frontRcnt > 0 ? 'bg-primary' : 'bg-dark'}">프론트엔드 ${item.frontRcnt}</span>
-                <span class="badge me-1 ${item.backRcnt > 0 ? 'bg-primary' : 'bg-dark'}">백엔드 ${item.backRcnt}</span>
-                <span class="badge me-1 ${item.fullRcnt > 0 ? 'bg-primary' : 'bg-dark'}">풀스택 ${item.fullRcnt}</span>
-                <span class="badge me-1 ${item.designRcnt > 0 ? 'bg-primary' : 'bg-dark'}">디자인 ${item.designRcnt}</span>
-                <span class="badge me-1 ${item.plannerRcnt > 0 ? 'bg-primary' : 'bg-dark'}">기획 ${item.plannerRcnt}</span>
-            </a>
-
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold">${item.projectName}</div>
+                        모집일
+                        <fmt:formatDate value="${item.recruitSdt}" type="both" pattern="yyyy-MM-dd"/>
+                        ~
+                        <fmt:formatDate value="${item.recruitEdt}" type="both" pattern="yyyy-MM-dd"/>
+                    </div>
+                    <span class="badge me-1 ${item.frontRcnt > 0 ? 'bg-primary' : 'bg-dark'}">프론트엔드 ${item.frontRcnt}</span>
+                    <span class="badge me-1 ${item.backRcnt > 0 ? 'bg-primary' : 'bg-dark'}">백엔드 ${item.backRcnt}</span>
+                    <span class="badge me-1 ${item.fullRcnt > 0 ? 'bg-primary' : 'bg-dark'}">풀스택 ${item.fullRcnt}</span>
+                    <span class="badge me-1 ${item.designRcnt > 0 ? 'bg-primary' : 'bg-dark'}">디자인 ${item.designRcnt}</span>
+                    <span class="badge me-1 ${item.plannerRcnt > 0 ? 'bg-primary' : 'bg-dark'}">기획 ${item.plannerRcnt}</span>
+                </a>
             </c:forEach>
 
         </div>
+
     </div>
 </section>
 <!-- End Call Action Section -->
@@ -230,6 +230,14 @@
 </section>
 <!-- End Testimonials Section -->
 
+<script src="${resources}/js/moment.min.js"></script>
+<script src="${resources}/js/moment-with-locales.min.js"></script>
 <script>
+  // 작성시간
+  moment.locale('ko');
+  function createAtKr(date) {
+    return moment(date).fromNow();
+  }
+
 
 </script>
