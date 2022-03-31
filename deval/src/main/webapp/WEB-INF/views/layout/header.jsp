@@ -4,6 +4,7 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <c:set var="resources" value="${pageContext.request.contextPath}/resources"/>
 <c:set var="root" value="${pageContext.request.contextPath}"/>
+
 <!-- Navigation panel -->
 <style>
 .inner-nav ul li .mn-sub li form button{

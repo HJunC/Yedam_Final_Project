@@ -20,26 +20,11 @@
 			</div>
 		</section>
 		<section class="page-section bg-dark light-content pt-0">
-			<form action="codeInsert.do" class="form" method="post">
+			<form id="frm" name="frm" class="form" method="post">
 			<input name="${_csrf.parameterName }" value="${_csrf.token}" type="hidden">
 				<div class="container relative">
-					<!-- 검색 -->
 					<div class="row">
 						<div align="left">&nbsp;&nbsp;&nbsp;&nbsp;
-							<label for="lang">언어</label> 
-							<select id="cqLang" name="cqLang" class="input-md round form-control" style="width: 100px">
-								<option>전체</option>
-								<option>JAVA</option>
-								<option>C#</option>
-								<option>C++</option>
-								<option>USA</option>
-							</select>&nbsp;&nbsp;&nbsp;&nbsp; 
-							<label for="type">유형</label> 
-							<select id="cqType" name="cqType" class="input-md round form-control" style="width: 100px">
-								<option>전체</option>
-								<option>공유</option>
-								<option>질문</option>
-							</select>&nbsp;&nbsp;&nbsp;&nbsp;
 							<label for="git">GIT URI</label> 
 							<input type="url" size="90" id="gitUri" name="gitUri" 
 								class="input-sm round" placeholder="GIT주소" 
@@ -52,6 +37,7 @@
 							<tr>
 								<th>제 목</th>
 								<td><input size="122" id="title" name="title"></td>
+								<td><input type="hidden" id="cqNo" name="cqNo" value="${review.cqNo }"></td>
 							</tr>
 							<tr>
 								<th style="vertical-align: top;">내 용</th>
@@ -60,9 +46,10 @@
 							</tr>
 						</table>
 						<div align="right">
-							<input class="btn btn-mod btn-round btn-border-w btn-small" type="submit" value="등록"> 
+							<input class="btn btn-mod btn-round btn-border-w btn-small" 
+								type="button" value="등록" onclick="inputFnc('I')">
 							<input class="btn btn-mod btn-round btn-border-w btn-small"
-								type="button" value="목록" onclick="location.href='codeList.do'">
+								type="button" value="취소" onclick="inputFnc('C')">
 						</div>
 					</div>
 				</div>
@@ -71,4 +58,15 @@
 		<br>
 	</div>
 </body>
+<script type="text/javascript">
+	function inputFnc(str){
+		if(str == "I"){
+			 frm.action = "reviewInsert.do";
+			 frm.submit();
+		} else if (str == "C") {
+			frm.action = "reviewSelectList.do";
+			frm.submit();
+		}
+	}
+</script>
 </html>
