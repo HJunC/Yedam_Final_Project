@@ -1,8 +1,8 @@
-package co.yd.deval.mento.service;
+package co.yd.deval.mento.mapper;
 
 import java.util.List;
 
-import co.yd.deval.mento.vo.MentoVO;
+import co.yd.deval.mento.service.MentoVO;
 
 public interface MentoMapper {
 	List<MentoVO> mentoSelectList(String lang);

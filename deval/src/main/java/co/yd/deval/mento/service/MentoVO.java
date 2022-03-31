@@ -1,4 +1,4 @@
-package co.yd.deval.mento.vo;
+package co.yd.deval.mento.service;
 
 
 import lombok.Getter;

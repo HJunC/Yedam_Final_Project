@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import co.yd.deval.mento.service.MentoMapper;
+import co.yd.deval.mento.mapper.MentoMapper;
 import co.yd.deval.mento.service.MentoService;
-import co.yd.deval.mento.vo.MentoVO;
+import co.yd.deval.mento.service.MentoVO;
 
 @Repository("mentoDAO")
 public class MentoServiceImpl implements MentoService{

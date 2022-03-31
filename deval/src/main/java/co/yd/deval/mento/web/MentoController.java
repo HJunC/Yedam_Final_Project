@@ -18,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import co.yd.deval.member.service.MemberService;
 import co.yd.deval.mento.service.MentoService;
-import co.yd.deval.mento.vo.MentoVO;
+import co.yd.deval.mento.service.MentoVO;
 
 @Controller
 @RequestMapping("/mento")

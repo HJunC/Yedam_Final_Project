@@ -2,8 +2,6 @@ package co.yd.deval.mento.service;
 
 import java.util.List;
 
-import co.yd.deval.mento.vo.MentoVO;
-
 public interface MentoService {
 	List<MentoVO> mentoSelectList(String lang);
 	MentoVO mentoSelectOne(MentoVO vo);
