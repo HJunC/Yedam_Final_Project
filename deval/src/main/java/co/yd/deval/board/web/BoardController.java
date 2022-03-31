@@ -17,14 +17,14 @@ public class BoardController {
 	@Autowired
 	private BoardService boardDao;
 		
-	//�����Խ��ǰ���
+	//占쏙옙占쏙옙占쌉쏙옙占실곤옙占쏙옙
 	@GetMapping("/free.do")
     public String free(Model model) {
 		model.addAttribute("boardList",boardDao.boardSelectList());
 		return "board/free";
 	}
 		 
-	//�����Խñ� �۵���ϱ�
+	//占쏙옙占쏙옙占쌉시깍옙 占쌜듸옙占쏙옙歐占�
 	@GetMapping("/write.do")
 	public String write() {
 		return "board/write";
@@ -40,7 +40,7 @@ public class BoardController {
     } 
 
 	
-	//�������װԽ��� �� ����
+	//占쏙옙占쏙옙占쏙옙占쌓게쏙옙占쏙옙 占쏙옙 占쏙옙占쏙옙
 	@GetMapping("/notice.do")
 	public String notice(Model model) {
 		model.addAttribute("noticeList",boardDao.boardSelectList());
@@ -66,12 +66,26 @@ public class BoardController {
 	    
 	    @GetMapping("/technical.do")
 	    public String technical(Model model) {
-			model.addAttribute("technicalList",boardDao.boardSelectList());
+			model.addAttribute("technicList",boardDao.boardSelectList());
 			return "board/technical";
 		}
 	    
+
+		  @GetMapping("/technicWriter.do")
+		    public String technicWriter() {
+				return "board/technicWriter";
+		}
+		  
 	    
-	    
+		  @PostMapping("/technicWriterPost.do")
+			public String technicWriter(BoardVO vo) {
+		    	System.out.println(vo);
+		    	vo.setBoardTypeNo(1);
+		    	boardDao.boardInsert(vo);
+			    return "redirect:technic.do";
+		    } 
+		
+		    
 	    
 	    
     @PostMapping("/boardSelect.do")
