@@ -44,7 +44,8 @@ public class MemberController {
 		UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		MemberVO vo = new MemberVO();
 		vo.setMemberId(user.getUsername());
-		model.addAttribute("member",memberDao.memberSelect(vo));
+		vo = memberDao.memberSelect(vo);
+		model.addAttribute("member",vo);
 		return "member/myPage";
 	}
 

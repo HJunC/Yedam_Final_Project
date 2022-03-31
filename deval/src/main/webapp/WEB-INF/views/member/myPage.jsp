@@ -64,28 +64,7 @@
 							<tr>
 								<th>등급</th>
 								<td>
-									<c:if test="${member.role == 'admin'}">
-										admin
-									</c:if>
-									<c:if test="${member.role != 'admin'}">
-										<c:choose>
-											<c:when test="${member.exp >= 10000 }">
-												principal
-											</c:when>
-											<c:when test="${member.exp >= 5000 }">
-												senior
-											</c:when>
-											<c:when test="${member.exp >= 1000 }">
-												middle
-											</c:when>
-											<c:when test="${member.exp >= 100 }">
-												junior
-											</c:when>
-											<c:otherwise>
-												beginner
-											</c:otherwise>
-										</c:choose>
-									</c:if>
+									${member.tier}
 								</td>
 								<th>경험치</th>
 								<td>${member.exp}</td>
@@ -108,7 +87,7 @@
 				</div>
 			
 				<!-- 나의 정보를 수정하는 div -->
-				<div id="info_update_box" class="border border-white" style="height:1000px">
+				<div id="info_update_box" class="border border-white" style="height:1000px;display:none">
 					<h2>정보 수정</h2>
 					<hr>
 					<div>
@@ -172,14 +151,69 @@
 				</div>
 			
 				<!-- 나의 이력정보를 보여주는 div -->
-				<div id="career_box" class="border border-white" style="height:1000px">
+				<div id="career_box" class="border border-white" style="height:1000px;display:none">
 					<h2>나의 이력</h2>
 					<hr>
 					<div>
+						<div>
+						<h3>나의 프로젝트 이력</h3>
+						<c:if test="${empty projects}">
+							모집 생성 후 완료한 프로젝트 이력이 없습니다.
+						</c:if>
+						<c:if test="${not empty projects}">
+							<c:forEach items="${projects}" var="project">
+							
+							</c:forEach>
+						</c:if>
+						</div>
 						
+						<div>
+						<h3>나의 스터디 이력</h3>
+						<c:if test="${empty studies}">
+							모집 생성 후 완료한 스터디 이력이 없습니다.
+						</c:if>
+						<c:if test="${not empty studies}">
+							<c:forEach items="${studies}" var="study">
+							
+							</c:forEach>
+						</c:if>
+						</div>						
 					</div>
 				</div>
 				
+				<!-- 구인 신청 이력을 보여주는 div -->
+				<div id="offer_rec" class="border border-white" style="height:1000px;display:none">
+					<h2>구인 신청 이력</h2>
+					<hr>
+					<div>
+						<div>
+						<c:if test="${empty offers}">
+							구인 신청 이력이 없습니다.
+						</c:if>
+						<c:if test="${not empty offers}">
+							<c:forEach items="${offers}" var="offer">
+							
+							</c:forEach>
+						</c:if>
+						</div>					
+					</div>
+				</div>
+
+				<div id="project_box" class="border border-white" style="height:1000px">
+					<h2>프로젝트 목록</h2>
+					<hr>
+					
+				</div>
+				
+				<div id="study_box" class="border border-white" style="height:1000px;display:none">
+					<h2>스터디 목록</h2>
+					<hr>
+					<div>
+									
+					</div>
+				</div>
+				
+								
 			</div>                                    
         
             <div class="col-md-4 col-lg-3 mt-10">
@@ -227,10 +261,12 @@
 	$('#myProject').on('click',function(){
 						$('#tag').children().css('display','none');
 						$('#info_box').children().css('display','none');
+						$('#project_box').css('display','block');
 					   });
 	$('#myStudy').on('click',function(){
 						$('#tag').children().css('display','none');
 						$('#info_box').children().css('display','none');
+						$('#study_box').css('display','block');
 					});
 	// myInfo 하위의 메뉴들이 보여줄 div들의 display에 관한 기능들
 	$('#info_update').on('click',function(){
@@ -244,6 +280,7 @@
 	
 	$('#offer_record').on('click',function(){
 							$('#info_box').children().css('display','none');
+							$('#offer_rec').css('display','block');
 						  })
 	
 	
