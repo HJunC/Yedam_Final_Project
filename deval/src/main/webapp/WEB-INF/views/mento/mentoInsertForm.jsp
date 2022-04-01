@@ -62,12 +62,18 @@
                     </select>
                 </div>
                 <div class="col-sm-4 mb-40">
-                    기간설정
+                    기간설정<br>
+                    최대날자
                     <select class="input-md round form-control" style="width: 170px;" id="maxTerm" name="maxTerm">
-                        <option value="1일">1일</option>
-                        <option value="3일">3일</option>
-                        <option value="1주일">1주일</option>
-                        <option value="1달">1달</option>
+                        <c:forEach var="i" begin="1" end="13">
+	                        <option value="${i}일">${i}일</option>
+                        </c:forEach>
+                    </select>
+                    최대 주
+                    <select class="input-md round form-control" style="width: 170px;" id="maxTerm" name="maxTerm">
+                        <c:forEach var="i" begin="2" end="7">
+	                        <option value="${i}주">${i}주</option>
+                        </c:forEach>
                     </select>
                 </div>
             </div>
@@ -79,11 +85,13 @@
                 </div>
                 <div class="col-sm-4 mb-40">
                     시작시간
-                    <select class="input-md round form-control" style="width: 170px;" id="serviceStt" name="serviceStt">
-                        <option value="13:00">13:00</option>
-                        <option value="14:00">14:00</option>
-                        <option value="15:00">15:00</option>
-                        <option value="16:00">16:00</option>
+                    <select class="input-md round form-control" style="width: 170px;" id="serviceStt" name="serviceStt" onchange="endTime(this)">
+                    	<c:forEach var="i" begin="0" end="9">
+                        <option value="0${i}:00">0${i}:00</option>
+                        </c:forEach>
+                        <c:forEach var="i" begin="10" end="23">
+                        <option value="${i}:00">${i}:00</option>
+                        </c:forEach>
                     </select>
                 </div>
                 <div class="col-sm-4 mb-40">
@@ -142,6 +150,29 @@
         		return;
         	}
         	frm.submit();
+        }
+        // 종료시간 미니멈 set
+        function endTime(target) {
+        	var targetTime = target.value;
+        	var sTime = targetTime.substr(0,2);
+        	console.log(sTime);
+        	var startTime = parseInt(sTime);
+        	console.log(startTime+1);
+        	var timeGap = 24 - startTime;
+        	console.log(timeGap);
+        	var selectId = document.getElementById('serviceEdt');
+        	for(var i = startTime; i<24; i++) {
+        		console.log(i);
+        		if(i < 10) {
+        			var option = document.createElement('option');
+        			option.value = '0' + i + ':00';
+        			option.innerText = '0' + i + ':00';
+        		}else {
+        			option.value = i + ':00';
+        			option.innerText = i + ':00';
+        		}
+	        		selectId.appendChild(option);
+        	}
         }
     </script>
 </body>

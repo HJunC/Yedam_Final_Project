@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +11,8 @@
 </head>
 <c:set var="upload" value="/upload"/>
 <c:set var="resources" value="${pageContext.request.contextPath }/resources"/>
+<c:set var="stT" value="${mento.serviceStt }"/>
+<c:set var="edT" value="${mento.serviceEdt }"/>
 <link rel="stylesheet" href="${resources}/css/custom/team-project-style.css">
 <body>
  <section class="page-section bg-dark light-content">
@@ -17,7 +20,7 @@
                     <c:if test="${!empty mento }">
                         <!-- Product Content -->
                         <div class="row mb-60 mb-xs-30">
-                            
+                            <div><h1>${stT } : ${edT } : ${fn:substring(stT,0,2)} : ${mento.serviceEdt }</h1></div>
                             <!-- Product Images -->
                             <div class="col-md-4 mb-md-30">
                                 
@@ -56,10 +59,15 @@
                                     <div class="mb-20 mb-md-10">
                                     	<div>원하는 시간대를 정해주세요</div>
                                     	<div>
-                                        <select class="form-control input-sm round" style="width: 150px">
-                                            <option>One</option>
-                                            <option>Two</option>
-                                            <option>Three</option>
+                                    	<!-- 시간 가져오기 -->
+                                        <select class="form-control input-sm round" style="width: 150px" onchange="selectTime(this)">
+                                        	<option>시작시간</option>
+                                    	<c:forEach var="i" begin="${fn:substring(stT,0,2)}" end="${fn:substring(edT,0,2)-1}">
+                                            <option value="${i}"><c:out value="${i}"/>:00</option>
+                                        </c:forEach>
+                                        </select>
+                                        <select class="form-control input-sm round" style="width: 150px" id="endTime">
+                                        	<option>종료시간</option>
                                         </select>
                                         </div>
                                     </div>
@@ -68,9 +76,7 @@
                                     	<div>원하는 기간를 정해주세요</div>
                                     	<div>
                                         <select class="form-control input-sm round" style="width: 150px">
-                                            <option>One</option>
-                                            <option>Two</option>
-                                            <option>Three</option>
+                                            <option>${mento.maxTerm }</option>
                                         </select>
                                         </div>
                                     </div>
@@ -172,6 +178,23 @@
             chart.draw(data, options);
 
         } // end of function drawChart()
+        
+        // 기간과 시간 계산 펑션
+        function selectTime(target) {
+        	// 몇 시간인지 구하기.
+        	var endTime = ${fn:substring(edT,0,2)};
+        	// 시작시간값 가져오기
+        	var startTime = parseInt(target.value);
+        	// select 찾아서 값넣어주기
+        	var timeSelect = document.getElementById('endTime');
+        	$('#endTime').empty()
+       		for(var i=startTime+1; i<endTime+1; i++) {
+		        var option = document.createElement('option');
+				option.value = i + ':00';
+				option.innerText = i + ':00';
+       			timeSelect.appendChild(option);
+       		}
+        }
     </script>
 </body>
 </html>

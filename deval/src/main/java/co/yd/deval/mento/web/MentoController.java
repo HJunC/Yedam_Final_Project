@@ -4,9 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import co.yd.deval.member.service.MemberService;
+import co.yd.deval.member.service.MemberVO;
 import co.yd.deval.mento.service.MentoService;
 import co.yd.deval.mento.service.MentoVO;
 
@@ -51,8 +51,8 @@ public class MentoController {
     
     @PostMapping("/mentoInsert.do")
     public String mentoInsert(MentoVO mento, MultipartFile file) {
-	//	MemberVO user = (MemberVO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	mento.setMentoId("hong");
+		MemberVO user = (MemberVO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	mento.setMentoId(user.getUsername());
     	String originalName = file.getOriginalFilename();
     	String fileType = originalName.substring(originalName.lastIndexOf(".") + 1, originalName.length());
     	String fileName = UUID.randomUUID().toString() + "." + fileType;

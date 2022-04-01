@@ -141,7 +141,7 @@
                 <div>
                 	<h3 class="mb-30">배우고 싶은 프로그래밍 언어가 있으신가요?</h3>
                 </div>
-                      <form method="post" action="mentoList.do" id="frm" class="frm">
+                      <form action="mentoList.do" id="frm" class="frm">
                       <sec:csrfInput/>
                                     <div class="mb-20 mb-md-10">
                                         <select class="input-md round form-control" style="width:200px" id="lang" name="lang">
