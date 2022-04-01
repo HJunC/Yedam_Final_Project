@@ -1,4 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="resources" value="${pageContext.request.contextPath}/resources"/>
 <!-- Home Section -->
 <section class="small-section bg-dark-alfa-50 bg-scroll light-content" data-background="images/full-width-images/section-bg-19.jpg" id="home">
     <div class="container relative pt-70">
@@ -42,7 +45,33 @@
             <!-- Content -->
             <div class="col-md-8 offset-lg-1 mb-sm-80 order-first order-md-last">
 
-                리스트
+                <div class="list-group project-list">
+
+                    <c:forEach items="${projectList }" var="item">
+                        <a href="projectDetail.do?no=${item.projectNo}" class="list-group-item d-flex justify-content-between align-items-start" aria-current="true">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold">${item.projectName}</div>
+                                모집일
+                                <fmt:formatDate value="${item.recruitSdt}" type="both" pattern="yyyy-MM-dd"/>
+                                ~
+                                <fmt:formatDate value="${item.recruitEdt}" type="both" pattern="yyyy-MM-dd"/>
+                            </div>
+                            <span class="badge me-1 ${item.frontRcnt > 0 ? 'bg-primary' : 'bg-dark'}">프론트엔드 ${item.frontRcnt}</span>
+                            <span class="badge me-1 ${item.backRcnt > 0 ? 'bg-primary' : 'bg-dark'}">백엔드 ${item.backRcnt}</span>
+                            <span class="badge me-1 ${item.fullRcnt > 0 ? 'bg-primary' : 'bg-dark'}">풀스택 ${item.fullRcnt}</span>
+                            <span class="badge me-1 ${item.designRcnt > 0 ? 'bg-primary' : 'bg-dark'}">디자인 ${item.designRcnt}</span>
+                            <span class="badge me-1 ${item.plannerRcnt > 0 ? 'bg-primary' : 'bg-dark'}">기획 ${item.plannerRcnt}</span>
+                        </a>
+                    </c:forEach>
+
+                </div>
+                ${pageMaker.startPage}
+                ${pageMaker.endPage}
+                ${pageMaker.prev}
+                ${pageMaker.next}
+                ${pageMaker.total}
+                ${pageMaker.cri.pageNum}
+                ${pageMaker.cri.amount}
 
                 <!-- Pagination -->
                 <div class="pagination">
@@ -62,19 +91,18 @@
             <!-- Sidebar -->
             <div class="col-md-4 col-lg-3 mt-10">
 
-                <div style="position: sticky; top: 100px">
+                <form class="form" style="position: sticky; top: 100px" method="get">
 
                     <!-- Search Widget -->
                     <div class="widget">
                         <h3 class="widget-title">프로젝트 명</h3>
-                        <form class="form">
-                            <div class="search-wrap">
-                                <button class="search-button animate" type="submit" title="Start Search">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                                <input type="text" class="form-control search-field round" placeholder="Search...">
-                            </div>
-                        </form>
+
+                        <div class="search-wrap">
+                            <button class="search-button animate" type="submit" title="Start Search">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            <input type="text" class="form-control search-field round" name="projectName" placeholder="Search..." >
+                        </div>
                     </div>
                     <!-- End Search Widget -->
 
@@ -143,8 +171,9 @@
 
                     </div>
                     <!-- End Widget -->
-
-                </div>
+                    <input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
+                    <input type="hidden" name="pageNum" value="${pageMaker.cri.amount}">
+                </form>
 
             </div>
             <!-- End Sidebar -->

@@ -77,7 +77,7 @@
     <div class="container relative">
         <div>
             <h3 class="me-4" style="display: inline-block;">팀 프로젝트 찾기</h3>
-            <a href="projectSearch.do" class="btn btn-mod btn-border-w btn-round btn-small">프로젝트 더보기</a>
+            <a href="search?pageNum=1&amount=10" class="btn btn-mod btn-border-w btn-round btn-small">프로젝트 더보기</a>
         </div>
         <div class="list-group project-list">
 

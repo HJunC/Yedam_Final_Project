@@ -11,8 +11,10 @@ public interface ProjectService {
 
     ProjectVO getOngoingProject(String memberId); // 로그인 유저의 프로젝트 정보
     List<ProjectVO> searchMainPageProject(ProjectVO vo); // 메인화면 프로젝트 구성
-    List<ProjectVO> findByLeaderIdAndState(String leaderId, String state);
-    List<ProjectVO> searchProject(ProjectVO vo); // 검색 서비스
 
     ProjectInfoDTO getProjectInfo(int projectNo); // 프로젝트 상세정보 (projectDetail.jsp)
+
+    // 검색 페이징 처리
+    List<ProjectVO> getListWithPaging(ProjectVO vo);
+    int getTotalCount(ProjectVO vo);
 }
