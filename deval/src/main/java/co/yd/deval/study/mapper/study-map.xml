@@ -8,11 +8,11 @@
 		SELECT *
 		FROM STUDY
 		WHERE STATE = '0'
+		ORDER BY STUDY_NO DESC
 	</select>
 	
 	<select id="studySelectNo"
 		resultType="co.yd.deval.study.service.StudyVO">
-
 		SELECT *
 		FROM STUDY
 		WHERE STUDY_NO = #{studyNo}
@@ -60,16 +60,15 @@
 		UPDATE STUDY
 		<set>
 			<if test="lang1 	 != null and lang1 != ''"> LANG1 =#{lang1},</if>
-			<if test="location   != null and location !=''" > LOCATION =#{location},</if>
-			<if test="subject    != null and subject !=''"> SUBJECT =#{subject},</if>
-			<if test="uploadDate != null and uploadDate !=''"> UPLOAD_DATE =#{uploadDate},</if>
-			<if test="maxRcnt 	 != null and maxRcnt !=''"> MAX_RCNT =#{maxRcnt},</if>
-			<if test="defficulty != null and defficulty !=''"> DEFFICULTY =#{defficulty},</if>
-			<if test="leaderId 	 != null and leaderId !=''"> LEADER_ID =#{leaderId},</if>
-			<if test="studySdt   != null and studySdt !=''"> STUDY_SDT =#{studySdt},</if>
-			<if test="studyEdt   != null and studyEdt !=''"> STUDY_EDT =#{studyEdt},</if>
-			<if test="studyNm    != null and studyNm !=''"> STUDY_NM =#{studyNm},</if>
-			<if test="lang2   	 != null and lang2 !=''"> LANG2 =#{lang2},</if>
+			<if test="location   != null and lang1 != ''" > LOCATION =#{location},</if>
+			<if test="subject    != null and lang1 != ''"> SUBJECT =#{subject},</if>
+			<if test="maxRcnt 	 != null and lang1 != ''"> MAX_RCNT =#{maxRcnt},</if>
+			<if test="defficulty != null and lang1 != ''"> DEFFICULTY =#{defficulty},</if>
+			<if test="leaderId 	 != null and lang1 != ''"> LEADER_ID =#{leaderId},</if>
+			<if test="studySdt   != null and lang1 != ''"> STUDY_SDT =#{studySdt},</if>
+			<if test="studyEdt   != null and lang1 != ''"> STUDY_EDT =#{studyEdt},</if>
+			<if test="studyNm    != null and lang1 != ''"> STUDY_NM =#{studyNm},</if>
+			<if test="lang2   	 != null and lang1 != ''"> LANG2 =#{lang2},</if>
 		</set>
 		WHERE STUDY_NO = #{studyNo}
 	</update>

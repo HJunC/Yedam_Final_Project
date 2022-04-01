@@ -39,9 +39,9 @@
 				<option>5</option>
 			</select><br><br>
 
-
 			<!-- 언어선택 -->
-			<label class="checkbox-inline">
+			<div id="langSelect"></div>
+			<!-- <label class="checkbox-inline">
 				<input type="checkbox" name="ck_lang" onclick="count_ck(this);" id="lang1" value="C">
 				<span class="small">C</span>
 			</label>
@@ -60,7 +60,7 @@
 			<label class="checkbox-inline">
 				<input type="checkbox" name="ck_lang" onclick="count_ck(this);" id="lang4" value="Python">
 				<span class="small">Python</span>
-			</label><br><br>
+			</label><br> -->
 
 			<!-- 난이도선택 -->
 			<label class="radio-inline">
@@ -97,7 +97,21 @@
 
 	<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 	<script src="${resources}/js/study/common.js"></script>
-
+	
+	<!-- 언어선택 Languages.js 불러오기 -->
+	<script src="${resources}/js/common/Languages.js"></script>
+	<script type="text/javascript">
+	Language.forEach((item, index) => {
+		console.log(item);
+		var str =
+				'<label class="checkbox-inline">'+
+				'<input type="checkbox" name="ck_lang" onclick="count_ck(this);" id="lang"' + index + ' value="' + item + '">'+
+				'<span class="small">' + item + '</span>'+
+				'</label><br><br>';
+		$("#langSelect").append(str);
+	})
+	</script>
+	
 	<script type="text/javascript">
 		$(document).ready(function(){
 			console.log("Study Start");
@@ -119,13 +133,6 @@
 		 
 		    return Math.floor(interval / (1000*60*60*24));
 		}
-		
-	/* 	function ExceptionStd() {
-			// 등록 및 변경 시 필수값을 입력하였는지 예외처리
-			if(Checked($("input:checkbox[name=ck_lang]:checked"))){
-				console.log("체크박스");
-			}
-		} */
 
 		// 스터디 등록
 		function StdAdd() {
@@ -136,35 +143,11 @@
 				url : "insertStudy.do",
 				type : "post",
 				data : $("#frm").serialize(),
-
-					/* {
-					"studyNm" : $("#title").val(),
-					"lang1" : $('input:checkbox[name="ck_lang"]').val(),
-					"lang1" : $('input:checkbox[name="ck_lang"]').is(":checked").val(),
-
-				data : {
-					"studyNm" : $("#title").val(),
-					"lang1" : $('input:checkbox[name="ck_lang"]').val(),
-					"location" : $("select[name='location']").val(),	
-					"subject" :  $("#subject").val(),
-					"maxRcnt" : $("select[name='selRcnt']").val() ,
-					"defficulty" : $('input:radio[name="lv"]').val() ,
-					"defficulty" : $('#lv1').is(':checked').val(),
-
-					"studySdt" : $("#dtSdt").val(),
-					"studyEdt" : $("#dtEdt").val(),
-					"lang2" : $('input:checkbox[name="ck_lang"]').val()
-				} */
-
-					"studySdt" : $("#dtSdt").val(),
-					"studyEdt" : $("#dtEdt").val(),
-					"lang2" : $('input:checkbox[name="ck_lang"]').val()
-				},*/
 				dataType : "text",
 				success : function(result) {
 					console.log("succ", result);
 					if (result != "0") {
-						alert("등록되었습니다.");
+						alert("스터디 등록이 되었습니다");
 						location.href="studyMain.do";
 					}
 				},
@@ -175,26 +158,6 @@
 			});
 		}
 		
-		//스터디 수정
-	/* 	function StdEdit() {
-			$.ajax({
-				url : "editStudy.do",
-				type : "post",
-				data : {
-					"key" : $("#key").val(),
-					"val" : $("#val").val()
-				},
-				dataType : "text",
-				success : function(result) {
-					if (result > 0) {
-						console.log(result);
-					}
-				},
-				error : function(err) {
-					console.log(err);
-				}
-			});
-		} */
 		
 		//언어 체크박스 - 2개만 체크되게 하기
 		function count_ck(obj){

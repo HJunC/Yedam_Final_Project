@@ -81,6 +81,10 @@
          </c:otherwise>
       </c:choose><br><br>
       <div>
+      신청모달
+      <input type="text" name="내용폼" value="${info.내용}">
+      
+      
       	 <form action="studyUpdateForm.do" method="post">
       	 <sec:csrfInput/>
 	         <button type="button" onclick="location.href='studyList.do'">목록</button>

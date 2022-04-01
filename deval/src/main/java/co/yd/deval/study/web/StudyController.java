@@ -47,6 +47,22 @@ public class StudyController {
     	return Integer.toString(n);
     }
     
+    @RequestMapping("/studyUpdateForm.do")
+    public String studyUpdateForm(StudyVO vo, Model model) {
+    	model.addAttribute("study", studyDao.studySelectNo(vo));
+    	return "study/studyUpdateForm";
+    }
+    
+    @PostMapping("/editStudy.do")
+    public String editStudy(StudyVO vo) {
+    	int n = studyDao.studyUpdate(vo);
+    	if (n != 0) {
+			/* return "redirect:studySelect.do?studyNo="+vo.getStudyNo(); -> get방식 */ 
+    		return "redirect:studyList.do";
+    	}
+		return "study/studyError";
+    }
+    
     @RequestMapping("/studyList.do")
     public String studyList(Model model) {
     	model.addAttribute("study", studyDao.studySelectAll());
@@ -55,6 +71,8 @@ public class StudyController {
     
     @PostMapping("/studySelect.do")
     public String studySelect(StudyVO vo, Model model) {
+    	StudyInfoVO ivo = infoDao.getInfo(memberid);
+    	model.addAttribute("info",ivo);
     	
     	vo = studyDao.studySelectNo(vo);
     	if(vo != null) {
@@ -65,5 +83,6 @@ public class StudyController {
     		return "study/studytesterr";
     	}
     }
+   
 
 }
