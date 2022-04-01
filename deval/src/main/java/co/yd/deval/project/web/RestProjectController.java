@@ -10,6 +10,15 @@ import org.springframework.web.bind.annotation.*;
 import java.lang.annotation.Target;
 import java.util.List;
 
+/**
+* @package : co.yd.deval.project.web
+* @name : RestProjectController.java
+* @date : 2022-04-01 오후 3:09
+* @author : ByungHo Park
+* @version : 1.0.0
+* @modifyed : ByungHo Park
+**/
+
 @RestController
 @RequestMapping("/project")
 public class RestProjectController {
@@ -18,11 +27,6 @@ public class RestProjectController {
 
     public RestProjectController(ProjectService projectDao) {
         this.projectDao = projectDao;
-    }
-
-    @GetMapping("/api/searchProject")
-    public List<ProjectVO> searchApi(ProjectVO vo) {
-        return projectDao.searchProject(vo);
     }
 
     @GetMapping("/api/detailProject")

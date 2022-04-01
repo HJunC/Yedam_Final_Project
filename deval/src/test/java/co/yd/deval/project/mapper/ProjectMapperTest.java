@@ -1,6 +1,7 @@
 package co.yd.deval.project.mapper;
 
 import co.yd.deval.common.Criteria;
+import co.yd.deval.common.PageDTO;
 import co.yd.deval.project.service.ProjectVO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +12,15 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.List;
+
+/**
+* @package : co.yd.deval.project.mapper
+* @name : ProjectMapperTest.java
+* @date : 2022-04-01 오후 3:08
+* @author : ByungHo Park
+* @version : 1.0.0
+* @modifyed : ByungHo Park
+**/
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -28,7 +38,11 @@ public class ProjectMapperTest {
         cri.setPageNum(1);
         cri.setAmount(10);
 
-        List<ProjectVO> list = mapper.getListWithPaging(cri);
+        ProjectVO vo = new ProjectVO();
+        vo.setProjectName("부동산");
+        vo.setCriteria(cri);
+        List<ProjectVO> list = mapper.getListWithPaging(vo);
+        System.out.println(new PageDTO(cri, mapper.getTotalCount(vo)));
 
         list.forEach(item -> System.out.println("=========================================" + item));
 

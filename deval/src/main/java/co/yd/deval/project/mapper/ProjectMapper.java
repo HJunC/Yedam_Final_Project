@@ -19,7 +19,10 @@ public interface ProjectMapper {
     List<ProjectVO> findByLeaderIdAndState(@Param("leaderId") String leaderId, @Param("state") String state);
     List<ProjectVO> searchProject(ProjectVO vo);
     List<ProjectVO> searchMainPageProject(ProjectVO vo);
-    List<ProjectVO> getListWithPaging(Criteria cri);
 
     ProjectInfoDTO getProject(int projectNo);
+
+    // 검색 페이징 처리
+    List<ProjectVO> getListWithPaging(ProjectVO vo);
+    int getTotalCount(ProjectVO vo);
 }

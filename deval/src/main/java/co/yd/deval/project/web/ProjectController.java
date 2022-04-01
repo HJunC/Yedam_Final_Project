@@ -1,5 +1,7 @@
 package co.yd.deval.project.web;
 
+import co.yd.deval.common.Criteria;
+import co.yd.deval.common.PageDTO;
 import co.yd.deval.project.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +11,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+
+/**
+* @package : co.yd.deval.project.web
+* @name : ProjectController.java
+* @date : 2022-04-01 오후 3:04
+* @author : ByungHo
+* @version : 1.0.0
+* @modifyed : ByungHo
+**/
 
 @Controller
 @RequestMapping("/project")
@@ -77,11 +88,15 @@ public class ProjectController {
         return "project/projectDetail";
     }
 
-    @GetMapping("/projectSearch.do")
-    public String projectSearch(Model model, ProjectVO vo) {
+    @GetMapping("/search")
+    public String projectSearch(Model model, ProjectVO vo, Criteria cri) {
         // todo 프로젝트 검색
-        List<ProjectVO> projectList = projectDao.searchProject(vo);
+        vo.setCriteria(cri);
+        List<ProjectVO> projectList = projectDao.getListWithPaging(vo);
+        System.out.println(cri.getAmount());
+        System.out.println(cri.getPageNum());
         model.addAttribute("projectList", projectList);
+        model.addAttribute("pageMaker", new PageDTO(cri, projectDao.getTotalCount(vo)));
         return "project/projectSearch";
     }
 

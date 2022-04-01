@@ -1,5 +1,7 @@
 package co.yd.deval.project.service;
 
+import co.yd.deval.common.Criteria;
+import co.yd.deval.common.PageDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -43,5 +45,9 @@ public class ProjectVO {
     private int hit;
     private int applyRcnt;
     private String leaderId;
+
+    // 테이블에 없는 데이터
     private String leaderPosition;
+    private int rn;
+    private Criteria criteria;
 }

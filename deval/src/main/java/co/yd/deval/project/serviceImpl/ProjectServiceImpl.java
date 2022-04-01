@@ -12,6 +12,15 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+* @package : co.yd.deval.project.serviceImpl
+* @name : ProjectServiceImpl.java
+* @date : 2022-04-01 오후 3:09
+* @author : ByungHo Park
+* @version : 1.0.0
+* @modifyed : ByungHo Park
+**/
+
 @Service("projectDao")
 public class ProjectServiceImpl implements ProjectService {
 
@@ -81,16 +90,6 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<ProjectVO> findByLeaderIdAndState(String leaderId, String state) {
-        return mapper.findByLeaderIdAndState(leaderId, state);
-    }
-
-    @Override
-    public List<ProjectVO> searchProject(ProjectVO vo) {
-        return mapper.searchProject(vo);
-    }
-
-    @Override
     public ProjectInfoDTO getProjectInfo(int projectNo) {
         mapper.updateHit(projectNo);
         ProjectInfoDTO dto = mapper.getProject(projectNo);
@@ -98,6 +97,16 @@ public class ProjectServiceImpl implements ProjectService {
         searchTeamVo.setProjectNo(projectNo);
         dto.setProjectTeam(teamMapper.selectProjectTeam(searchTeamVo));
         return dto;
+    }
+
+    @Override
+    public List<ProjectVO> getListWithPaging(ProjectVO vo) {
+        return mapper.getListWithPaging(vo);
+    }
+
+    @Override
+    public int getTotalCount(ProjectVO vo) {
+        return mapper.getTotalCount(vo);
     }
 
 }
