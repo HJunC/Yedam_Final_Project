@@ -121,4 +121,20 @@
             <if test="projectTerm != null">AND PROJECT_TERM = #{projectTerm}</if>
         </where>
     </select>
+    
+    <select id="findProjectByLeaderId" resultType="co.yd.deval.project.service.ProjectVO">
+    	SELECT *
+    	FROM   PROJECT
+    	WHERE  LEADER_ID IN (SELECT LEADER_ID
+    	                     FROM   PROJECT
+    	                     WHERE  LEADER_ID = #{id})
+    </select>
+    
+    <select id="findProejctByNo" resultType="co.yd.deval.project.service.ProjectVO">
+    	select  *
+    	from    project
+    	where   project_no in (select  project_no
+    	                      from     project_team
+    	                      where    member_id = #{id})
+    </select>
 </mapper>
