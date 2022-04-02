@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.yd.deval.study.mapper.StudyMapper">
-
-
+	<!-- Study List  -->
 	<select id="studySelectAll"
 		resultType="co.yd.deval.study.service.StudyVO">
 		SELECT *
@@ -52,6 +51,7 @@
 						#{studyEdt}, 
 						'0', 
 						#{studyNm}, 
+						
 						#{lang2})
 	</insert>
 
@@ -59,18 +59,55 @@
 		parameterType="co.yd.deval.study.service.StudyVO">
 		UPDATE STUDY
 		<set>
-			<if test="lang1 	 != null and lang1 != ''"> LANG1 =#{lang1},</if>
-			<if test="location   != null and lang1 != ''" > LOCATION =#{location},</if>
-			<if test="subject    != null and lang1 != ''"> SUBJECT =#{subject},</if>
-			<if test="maxRcnt 	 != null and lang1 != ''"> MAX_RCNT =#{maxRcnt},</if>
-			<if test="defficulty != null and lang1 != ''"> DEFFICULTY =#{defficulty},</if>
-			<if test="leaderId 	 != null and lang1 != ''"> LEADER_ID =#{leaderId},</if>
-			<if test="studySdt   != null and lang1 != ''"> STUDY_SDT =#{studySdt},</if>
-			<if test="studyEdt   != null and lang1 != ''"> STUDY_EDT =#{studyEdt},</if>
-			<if test="studyNm    != null and lang1 != ''"> STUDY_NM =#{studyNm},</if>
-			<if test="lang2   	 != null and lang1 != ''"> LANG2 =#{lang2},</if>
+			<if test="lang1 	 != null and lang1    	!= ''"> LANG1 	   =#{lang1},</if>
+			<if test="location   != null and location 	!= ''"> LOCATION   =#{location},</if>
+			<if test="subject    != null and subject 	!= ''"> SUBJECT    =#{subject},</if>
+			<if test="maxRcnt 	 != null and maxRcnt  	!= ''"> MAX_RCNT   =#{maxRcnt},</if>
+			<if test="defficulty != null and defficulty != ''"> DEFFICULTY =#{defficulty},</if>
+			<if test="leaderId 	 != null and leaderId 	!= ''"> LEADER_ID  =#{leaderId},</if>
+			<if test="studySdt   != null and studySdt 	!= ''"> STUDY_SDT  =#{studySdt},</if>
+			<if test="studyEdt   != null and studyEdt 	!= ''"> STUDY_EDT  =#{studyEdt},</if>
+			<if test="studyNm    != null and studyNm 	!= ''"> STUDY_NM   =#{studyNm},</if>
+			<if test="lang2   	 != null and lang2 		!= ''"> LANG2      =#{lang2},</if>
 		</set>
 		WHERE STUDY_NO = #{studyNo}
 	</update>
+	
+	<!-- Study User Info (Modal)-->
+	<select id="studySelectUser"
+		resultType="co.yd.deval.study.service.StudyInfoVO">
+		SELECT *
+		FROM STUDY_INFO
+		WHERE MEMBER_ID = #{memberId}
+	</select>
 
+	<insert id="studyUserInsert"
+		parameterType="co.yd.deval.study.service.StudyInfoVO">
+		INSERT INTO STUDY_INFO ( COLLEGE
+								, CAREER
+								, LICENSE
+								, PRESENT
+								, MEMBER_ID
+								)
+						
+						VALUES (  #{college} 
+								, #{career} 
+								, #{license} 
+								, #{present}
+								, #{memberId}
+		 						)
+	</insert>
+	
+	<update id="studyUserUpdate"
+		parameterType="co.yd.deval.study.service.StudyInfoVO">
+		UPDATE STUDY_INFO
+		<set>
+			<if test="college != null and college != ''"> COLLEGE =#{college},</if>
+			<if test="career  != null and career  != ''"> CAREER  =#{career },</if>
+														  LICENSE =#{license},
+			<if test="present != null and present != ''"> PRESENT =#{present},</if>
+		</set>
+		WHERE MEMBER_ID = #{memberId}
+	</update>
+	
 </mapper>

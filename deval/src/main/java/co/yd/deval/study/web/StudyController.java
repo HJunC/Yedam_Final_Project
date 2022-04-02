@@ -1,6 +1,11 @@
 package co.yd.deval.study.web;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import co.yd.deval.member.service.MemberVO;
+import co.yd.deval.study.service.StudyInfoVO;
 import co.yd.deval.study.service.StudyService;
 import co.yd.deval.study.service.StudyVO;
 
@@ -71,8 +78,9 @@ public class StudyController {
     
     @PostMapping("/studySelect.do")
     public String studySelect(StudyVO vo, Model model) {
-    	StudyInfoVO ivo = infoDao.getInfo(memberid);
-    	model.addAttribute("info",ivo);
+		/*
+		 * StudyInfoVO ivo = infoDao.getInfo(memberid); model.addAttribute("info",ivo);
+		 */
     	
     	vo = studyDao.studySelectNo(vo);
     	if(vo != null) {
@@ -84,5 +92,35 @@ public class StudyController {
     	}
     }
    
+    // Study User Info
+    @RequestMapping("/studyUser.do")
+    @ResponseBody
+    public StudyInfoVO studySelectUser(StudyInfoVO vo, Model model) {
+    	UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	// UserDetails에 id를 추가 필요
+    	// user.getUsername() 이 아닌 user.getUserid() 로 변경
+    	vo.setMemberId(user.getUsername());
 
+    	return studyDao.studySelectUser(vo);
+    }
+    
+    @RequestMapping("/studyUserEdit.do")
+    @ResponseBody
+    public String studyUserEdit(StudyInfoVO vo) {
+    	int n = 1;
+    	UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	// UserDetails에 id를 추가 필요
+    	// user.getUsername() 이 아닌 user.getUserid() 로 변경
+    	vo.setMemberId(user.getUsername());
+    	
+    	StudyInfoVO existUser = studyDao.studySelectUser(vo);
+    	
+    	if(existUser != null) {
+    		n = studyDao.studyUserUpdate(vo);
+    	} else {
+    		n = studyDao.studyUserInsert(vo);
+    	}
+
+    	return Integer.toString(n);
+    }
 }
