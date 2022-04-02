@@ -35,7 +35,6 @@ public class StudyServiceImpl implements StudyService {
 	public List<StudyVO> studySelectAll() {
 		return map.studySelectAll();
 	}
-
 	
 	
 	//모달창 정보

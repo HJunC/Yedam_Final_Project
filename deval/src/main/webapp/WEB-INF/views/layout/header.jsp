@@ -103,8 +103,8 @@
                   	<ul>
                      <li><a href="${root}/study/studyList.do">스터디 검색</a></li>
                      <li><a href="${root}/study/addStudy.do">스터디 등록</a></li>
-                     <li><a href="#">신청자 정보</a></li>
-                     <li><a href="#">그룹원 정보</a></li>
+                     <li><a href="${root}/study/studyReq.do">신청자 정보</a></li>
+                     <li><a href="${root}/study/studyMember.do">그룹원 정보</a></li>
                   </ul>
                   </li>   
                </ul>

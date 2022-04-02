@@ -8,46 +8,24 @@
 <title>StudySelect.jsp</title>
 </head>
 <body>
-<!-- Home Section -->
-		<section class="home-section bg-dark light-content" id="home">
-			<div class="container min-height-100vh d-flex align-items-center pt-100 pb-100">
-				<div class="split-background d-none d-lg-block d-xl-block"></div>
-
-	<!-- Hero Content -->
-		<div class="home-content text-start">
-			<div class="row">
-
-				<div class="col-lg-5 d-flex align-items-center mb-md-60">
-					<div>
-						<h1 class="hs-line-10 uppercase mb-30 mb-xs-10 wow fadeInUpShort"
-							data-wow-delay=".1s">STUDY</h1>
-						<h2 class="hs-line-7 mb-60 mb-xs-40 wow fadeInUpShort"
-							data-wow-delay=".2s">
-							Developer Study<span class="sr-only">Challenge, Passion, cooperation</span>
-							<span data-period="2800" data-type='[ "Challenge", "Passion", "cooperation"]' class="typewrite" aria-hidden="true">
-							<span class="wrap"></span></span>
-						</h2>
-						<div class="local-scroll wow fadeInUpShort" data-wow-delay=".3s">
-							<a href="addStudy.do" class="btn btn-mod btn-w btn-medium btn-round mx-md-1">스터디등록</a>
-							<a href="studyList.do" class="btn btn-mod btn-w btn-medium btn-round mx-md-1">스터디 목록</a>
-						</div>
-					</div>
-				</div>
-				<div class="split-image col-lg-6 offset-lg-1 d-flex align-items-center parallax" data-offset="20">
-					<img src="${resources }/images/studyimg/study_img2.jpg" alt="Add Image Description Here" class="wow fadeScaleIn" />
-				</div>
-			</div>
-		</div>
-		<!-- End Hero Content -->
-			<!-- Scroll Down -->
-				<div class="local-scroll scroll-down-wrap wow fadeInUpShort"
-					data-wow-offset="0">
-					<a href="#about" class="scroll-down"><i class="scroll-down-icon"></i>
-					<span class="sr-only">Scroll to the next section</span></a>
-				</div>
-		<!-- End Scroll Down -->
-		</div>
-	</section>
+<!-- Title -->
+                <section class="small-section bg-dark-alfa-50" data-background="images/full-width-images/section-bg-19.jpg">
+                    <div class="container relative">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="wow fadeInUpShort" data-wow-delay=".1s">
+                                    <h1 class="hs-line-7 mb-20 mb-xs-10">STUDY</h1>
+                                </div>
+                                <div class="wow fadeInUpShort" data-wow-delay=".2s">
+                                    <p class="hs-line-6 opacity-075 mb-20 mb-xs-0">
+                                         스터디 상세글
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- End Title -->
 <div align="center">
       <div>
          <h1>게시글 상세내용</h1>

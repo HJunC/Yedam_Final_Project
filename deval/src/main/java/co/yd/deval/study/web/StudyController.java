@@ -1,8 +1,5 @@
 package co.yd.deval.study.web;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,11 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import co.yd.deval.member.service.MemberVO;
 import co.yd.deval.study.service.StudyInfoVO;
 import co.yd.deval.study.service.StudyService;
 import co.yd.deval.study.service.StudyVO;
-
 
 @Controller
 @RequestMapping("/study")
@@ -26,20 +21,24 @@ public class StudyController {
 	@Autowired
 	private StudyService studyDao;
 	
+	/* STUDY */
+	// 스터디 메인
     @GetMapping("/studyMain.do")
     public String main() {
         return "study/studyMain";
     }
     
+    // 스터디 등록폼 호출
     @GetMapping("/addStudy.do")
     public String addStudy() {
         return "study/addStudy";
     }
 
+    // 스터디 등록 기능
     @RequestMapping("/insertStudy.do")
     @ResponseBody
     public String insertStudy(StudyVO vo) {
-
+    	// 언어 2개 체크
     	if(vo.getCk_lang()!=null) {
     		if(vo.getCk_lang().length>0) {
     			vo.setLang1(vo.getCk_lang()[0]);
@@ -49,17 +48,19 @@ public class StudyController {
     		}
     	}
 
-    	vo.setLeaderId("popo");
+    	vo.setLeaderId("popo");	/* MemberID로 바꾸기 */
     	int n = studyDao.studyInsert(vo);
     	return Integer.toString(n);
     }
     
+    // 스터디 변경폼 호출
     @RequestMapping("/studyUpdateForm.do")
     public String studyUpdateForm(StudyVO vo, Model model) {
     	model.addAttribute("study", studyDao.studySelectNo(vo));
     	return "study/studyUpdateForm";
     }
     
+    // 스터디 변경기능
     @PostMapping("/editStudy.do")
     public String editStudy(StudyVO vo) {
     	int n = studyDao.studyUpdate(vo);
@@ -70,19 +71,17 @@ public class StudyController {
 		return "study/studyError";
     }
     
+    // 스터디 검색 찾기 -> 전체목록
     @RequestMapping("/studyList.do")
     public String studyList(Model model) {
     	model.addAttribute("study", studyDao.studySelectAll());
     	return "study/studyList";
     }
     
+    // 스터디 상세글
     @PostMapping("/studySelect.do")
     public String studySelect(StudyVO vo, Model model) {
-		/*
-		 * StudyInfoVO ivo = infoDao.getInfo(memberid); model.addAttribute("info",ivo);
-		 */
-    	
-    	vo = studyDao.studySelectNo(vo);
+		vo = studyDao.studySelectNo(vo);
     	if(vo != null) {
     		model.addAttribute("study", vo);
     		return "study/studySelect";
@@ -92,7 +91,7 @@ public class StudyController {
     	}
     }
    
-    // Study User Info
+    /* Study User Info */
     @RequestMapping("/studyUser.do")
     @ResponseBody
     public StudyInfoVO studySelectUser(StudyInfoVO vo, Model model) {
@@ -122,5 +121,18 @@ public class StudyController {
     	}
 
     	return Integer.toString(n);
+    }
+    
+    /* STUDY Req & Group Members*/
+    @RequestMapping("/studyReq.do")
+    public String studyReq(Model model) {
+    	//model.addAllAttributes("", );
+    	return "study/studyReq";
+    }
+    
+    @RequestMapping("/studyMember.do")
+    public String studyMember(Model model) {
+    	//model.addAllAttributes("", );
+    	return "study/studyMember";
     }
 }

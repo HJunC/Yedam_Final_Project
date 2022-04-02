@@ -70,7 +70,9 @@
 	</section>
 		<!-- End Promo Section -->
 	
-		<hr class="mt-0 mb-0 white" />
+		<!-- Divider -->
+           <hr class="mt-0 mb-0 white" />
+        <!-- End Divider -->
 		
 	  <!-- Process Section -->
                 <section class="page-section bg-dark light-content">
