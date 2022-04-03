@@ -81,6 +81,7 @@
                     <h4 class="blog-page-title">팀원 <small class="number">(${fn:length(team)})</small></h4>
 
                     <ul class="media-list comment-list clearlist">
+
                         <c:forEach items="${team }" var="item">
                             <!-- Comment Item -->
                             <li class="media comment-item">
