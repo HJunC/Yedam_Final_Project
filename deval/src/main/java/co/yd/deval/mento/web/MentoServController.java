@@ -1,6 +1,5 @@
-package co.yd.deval.mentoserv.web;
+package co.yd.deval.mento.web;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import co.yd.deval.mentoserv.service.MentoServService;
+import co.yd.deval.mento.service.MentoServService;
 
 @Controller
 @RequestMapping("/mento")
@@ -33,6 +32,12 @@ public class MentoServController {
 		satis.put("one", value2);
 		
 		return satis;
+	}
+	
+	@GetMapping("/mentiCheck.do")
+	public String mentiCheck() {
+		
+		return "mento/mentiCheck";
 	}
 	
 }

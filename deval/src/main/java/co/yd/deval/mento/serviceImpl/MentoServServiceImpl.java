@@ -1,13 +1,13 @@
-package co.yd.deval.mentoserv.serviceImpl;
+package co.yd.deval.mento.serviceImpl;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import co.yd.deval.mentoserv.map.MentoServMapper;
-import co.yd.deval.mentoserv.service.MentoServService;
-import co.yd.deval.mentoserv.service.MentoServVO;
+import co.yd.deval.mento.mapper.MentoServMapper;
+import co.yd.deval.mento.service.MentoServService;
+import co.yd.deval.mento.service.MentoServVO;
 
 @Repository("mentoServDAO")
 public class MentoServServiceImpl implements MentoServService {

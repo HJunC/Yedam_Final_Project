@@ -1,8 +1,8 @@
-package co.yd.deval.mentoserv.map;
+package co.yd.deval.mento.mapper;
 
 import java.util.List;
 
-import co.yd.deval.mentoserv.service.MentoServVO;
+import co.yd.deval.mento.service.MentoServVO;
 
 public interface MentoServMapper {
 		//전체만족도
