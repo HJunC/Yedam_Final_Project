@@ -9,7 +9,7 @@ public interface MentoServService {
 	double oneSatisAvg(String id);
 	
 	//CRUD
-	List<MentoServVO> mentoServList();
+	List<MentoServVO> mentoServList(String mentoId, int state);
 	MentoServVO mentoServSelect(MentoServVO vo);
 	int mentoServInsert(MentoServVO vo);
 	int mentoServUpdate(MentoServVO vo);

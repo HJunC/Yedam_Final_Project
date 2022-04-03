@@ -10,7 +10,7 @@ public interface MentoServMapper {
 		//단일만족도
 		double oneSatisAvg(String id);
 		//CRUD
-		List<MentoServVO> mentoServList();
+		List<MentoServVO> mentoServList(String mentoId, int state);
 		MentoServVO mentoServSelect();
 		int mentoServInsert(MentoServVO vo);
 		int mentoServUpdate(MentoServVO vo);

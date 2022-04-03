@@ -25,8 +25,8 @@ public class MentoServServiceImpl implements MentoServService {
 	}
 
 	@Override
-	public List<MentoServVO> mentoServList() {
-		return map.mentoServList();
+	public List<MentoServVO> mentoServList(String mentoId, int state) {
+		return map.mentoServList(mentoId, state);
 	}
 
 	@Override

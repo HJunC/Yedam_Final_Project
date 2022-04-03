@@ -4,6 +4,8 @@
 	<select id="mentoServList" parameterType="co.yd.deval.mento.service.MentoServVO">
 		SELECT * 
 		FROM MENTO_SERVICE
+		WHERE MENTO_ID = #{mentoId}
+		AND STATE = 0
 	</select>
 	<select id="mentoServSelect" resultType="co.yd.deval.mento.service.MentoServVO" parameterType="co.yd.deval.mento.service.MentoServVO">
 		SELECT * 

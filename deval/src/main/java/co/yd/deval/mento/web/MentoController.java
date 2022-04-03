@@ -53,6 +53,7 @@ public class MentoController {
     public String mentoInsert(MentoVO mento, MultipartFile file) {
 		MemberVO user = (MemberVO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     	mento.setMentoId(user.getUsername());
+    	System.out.println(file.getOriginalFilename()+ "==========");
     	String originalName = file.getOriginalFilename();
     	String fileType = originalName.substring(originalName.lastIndexOf(".") + 1, originalName.length());
     	String fileName = UUID.randomUUID().toString() + "." + fileType;
@@ -72,6 +73,10 @@ public class MentoController {
     
     @GetMapping("/mentoSelect.do")
     public String mentoSelect(Model model, MentoVO vo) {
+    	//추가
+		MemberVO user = (MemberVO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		model.addAttribute("member", memberDao.memberInsert(user));
+		
     	model.addAttribute("mento", mentoDAO.mentoSelectOne(vo));
     	return "mento/mentoSelect";
     }
