@@ -1,6 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,12 +39,7 @@
 					<h1 class="hs-line-7 mb-40 mb-xs-20">Notice.</h1>
 				</div>
 
-
-				<div id="view_btn_top" style="height: 40px;"></div>
-
-			</div>
-
-		<div class="container">
+<div class="container">
 				<!-- Content Column -->
 				<div class="table-responsive">
 					<form role="form">
@@ -58,15 +53,14 @@
 									<th>R EC O M M E N D</th>
 									<th>D A T E</th>
 								</tr>
-				<c:forEach items="${noticeList}" var="list2">
-							
-					<tr class="active" onclick="noticeSelect(${list2.boardNo})" >
+ 			<c:forEach items="${noticeList}" var="list2">
+									<tr class="active" onclick="noticeSelect(${list2.boardNo})">
 									<th>${list2.boardNo}</th>
 									<th>${list2.hit}</th>
 									<th>${list2.writer}</th>
 									<th>${list2.title}</th>
 									<th>${list2.recommend}</th>
-									<th>${list2.boardDate}</th>
+									<th><fmt:formatDate  pattern="yyyy-MM-dd" value="${list2.boardDate}"/></th>
 								</tr>
 								</c:forEach>
 							</thead>
@@ -74,7 +68,8 @@
 					</form>
 				</div>
 			</div>
-			<div class="row mb-100 mb-md100">
+
+ 	<div class="row mb-100 mb-md100">
 				<a href="write.do" class="btn btn-mod btn-w btn-medium btn-round">Write.</a>
 				<div class="mb-30 mb-md-20">
 
@@ -101,19 +96,20 @@
 				</div>
 			</div>
 		</div>
-	</section>
-	<form action="boardSelect.do" method="post" id="boardSS">
 
-		<input type="hidden" name="boardNo" id="boardSe" />
+	</section>
+
+	<form action="noticeSelect.do" method="post" id="boardSS2">
+
+		<input type="hidden" name="boardNo" id="boardSe2" />
 
 	</form>
 	<script>
 
 
-function freeSelect(e){
-boardSS.boardSe.value= e;
-boardSS.submit();   
-   
+function noticeSelect(n){
+boardSS2.boardSe2.value= n;
+boardSS2.submit();   
 }
 
 </script>

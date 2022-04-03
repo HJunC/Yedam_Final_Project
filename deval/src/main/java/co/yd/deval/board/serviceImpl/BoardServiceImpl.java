@@ -17,8 +17,8 @@ public class BoardServiceImpl implements BoardService {
 	private BoardMapper map;
 	
 	@Override
-	public List<BoardVO> boardSelectList() {
-		return map.boardSelectList();
+	public List<BoardVO> boardSelectList(int b) {
+		return map.boardSelectList(b);
 	}
 
 	@Override
@@ -50,6 +50,11 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public void boardRecUp(BoardVO vo) {
 		map.boardRecUp(vo);
+	}
+	
+	@Override
+	public void commentInsert(BoardVO vo) {
+		map.commentInsert(vo);
 	}
 	
 

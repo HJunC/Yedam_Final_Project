@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -66,7 +67,8 @@
 									<th>${list3.writer}</th>
 									<th>${list3.title}</th>
 									<th>${list3.recommend}</th>
-									<th>${list3.boardDate}</th>
+																		<th><fmt:formatDate  pattern="yyyy-MM-dd" value="${list3.boardDate}"/></th>
+
 								</tr>
 								</c:forEach>
 							</thead>
@@ -76,10 +78,8 @@
 			</div>
 			<div class="row mb-100 mb-md100">
 				<a href="write.do" class="btn btn-mod btn-w btn-medium btn-round">Write.</a>
-				<div class="mb-30 mb-md-20">
 
 
-					<div class="clearfix mt-40">
 						<a href="#" class="blog-item-more left"> <i
 							class="fa fa-chevron-left"></i>Prev
 						</a> <a href="#" class="blog-item-more right"> <i
@@ -97,22 +97,18 @@
 							<li><a href="../gnu4_tips?&amp;page=9">9</a></li>
 							<li><a href="../gnu4_tips?&amp;page=10">10</a></li>
 						</ul>
-					</div>
-				</div>
-			</div>
+			
+	<form action="technicSelect.do" method="post" id="boardSS3">
+ <input type="hidden" name="boardNo" id="boardSe3" />
+	</form>
+		</div>
 		</div>
 	</section>
-	<form action="boardSelect.do" method="post" id="boardSS">
+	 <script>
 
-		<input type="hidden" name="boardNo" id="boardSe" />
-
-	</form>
-	<script>
-
-
-function freeSelect(e){
-boardSS.boardSe.value= e;
-boardSS.submit();   
+function technicSelect(t){
+boardSS3.boardSe3.value= t;
+boardSS3.submit();   
    
 }
 

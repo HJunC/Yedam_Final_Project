@@ -5,6 +5,8 @@
 <select id="boardSelectList" resultType="co.yd.deval.board.service.BoardVO">
 select *
 from board
+where board_type_no = #{b}
+
 </select>
 
  
@@ -37,15 +39,18 @@ values(
 
 
 
+
+
 <!-- 수정 -->
 <update id="boardUpdate" parameterType="co.yd.deval.board.service.BoardVO" >
-<set>
-update board 
-<if test= "title !=null">   title=#{title},</if>
-<if test= "subject!=null">   subject=#{subject},</if>
-<if test= "category!=null">   category=#{category},</if>
-where board_no=#{boardNo}
-</set>
+
+	update board
+	<set>
+		<if test= "title !=null">   title=#{title},</if>
+		<if test= "subject!=null">   subject=#{subject},</if>
+		<if test= "category!=null">   category=#{category},</if>
+	</set>
+	where board_no=#{boardNo}
 </update>
 
 

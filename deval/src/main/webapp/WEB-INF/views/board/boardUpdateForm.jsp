@@ -10,18 +10,6 @@
 <meta name="author" content="https://themeforest.net/user/bestlooker/portfolio">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>write here</title>
-<style>
-	table{
-		/* border: 1px white solid; */
-	}
-	tr{
-		border: 1px;
-		line-height: 50px;
-	}
-	td{
-		width: 250px;
-	}
-</style>
 </head>
 <body>
 
@@ -29,20 +17,20 @@
 <div align="center" class="container">
 <div class="col-md-6 mb-md-20">
  <h1 class="blog-page-title">detail .</h1>		
- <form action="boardUpdateForm.do" method="post">
+ <form action="boardUpdate.do" method="post">
 <table>
 			 <tr>
 				<td>글번호</td>
-				<td><input type="hidden" value="${board.boardNo}" name="boardNo" id="boardNo">${board.boardNo}</td>
+				<td><input type="hidden" value="${board.boardNo}" name="boardNo" id="boardNo" readonly>${board.boardNo}</td>
+			
 			 </tr>
-
 				<tr>
 				<td>Title</td>
-				<td><input type="hidden" value="${board.title}" name="title" id="title">${board.title}</td>
+				<td><input type="text" value="${board.title}" name="title" id="title"></td>
 			 </tr>
 				 <tr>
 				<td>Subject</td>
-				<td><input type="hidden" value="${board.subject}" name="subject" id="subject">${board.subject}</td>
+				<td><textarea rows="5" cols="30" name="subject" id="subject">${board.subject}</textarea>
 				 </tr>
 				 
 				  <tr>
@@ -60,6 +48,7 @@
 				<td><input type="hidden" value="${board.hit}" name="hit" id="hit">${board.hit}</td>
                  </tr>
    </table>
+   
    <button type="submit" class="btn btn-mod btn-g btn-small btn-square">수정</button>
   		
 </form>
@@ -71,7 +60,7 @@
 <c:if test = "${board.boardTypeNo == 1}" > 
  <a href="free.do" class="btn btn-mod btn-g btn-small btn-square">목록으로</a></c:if>
  	<br>
-  		 <button class="btn btn-mod btn-g btn-small btn-square" onclick="location.href='boardDelete.do?boardNo=${board.boardNo}'">삭제</button>
+  		 
 
 <c:if test = "${board.boardTypeNo == 2}" > 
  <a href="notice.do" class="btn btn-mod btn-g btn-small btn-square">목록으로</a></c:if>
@@ -81,17 +70,10 @@
  <a href="technical.do" class="btn btn-mod btn-g btn-small btn-square">목록으로</a></c:if>
  	
 </div>
-  						<br><br><h4 class="blog-page-title">Leave a comment .</h4>
-					<textarea name="comment" id="comment"
-						class="input-md round form-control" rows="6"
-						placeholder="Enter your comment" maxlength="400"></textarea>
 
 
-  		
  </div>
  </div>
- 
  </section>
- 
 </body>
 </html>

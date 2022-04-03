@@ -1,65 +1,45 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Rhythm</title>
 <meta name="description"
-	content="Rhythm &mdash; One & Multi Page Creative Template">
-
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-<meta name="author"
-	content="https://themeforest.net/user/bestlooker/portfolio">
+   content="Rhythm &mdash; One & Multi Page Creative Template">
+<meta name="author" content="https://themeforest.net/user/bestlooker/portfolio">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-<link rel="shortcut icon" href="images/favicon.png">
-
-<!-- CSS -->
-<link rel="stylesheet" href="css/bootstrap.rtl.min.css">
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/style-responsive.css">
-<link rel="stylesheet" href="css/vertical-rhythm.min.css">
-<link rel="stylesheet" href="css/magnific-popup.css">
-<link rel="stylesheet" href="css/owl.carousel.css">
-<link rel="stylesheet" href="css/animate.min.css">
-<link rel="stylesheet" href="css/splitting.css">
+<title>write here</title>
 </head>
-
 <body>
-
-	<section class="small-section bg-dark-alfa-50 bg-scroll light-content"
-		data-background="images/full-width-images/section-bg-19.jpg" id="home">
-		<div class="container relative pt-80">
-			<div class="row">
-
-				<div class="wow fadeInUpShort" data-wow-delay=".1s">
-					<h1 class="hs-line-7 mb-40 mb-xs-20">free~~~</h1>
-				</div>
-
-
-				<div id="view_btn_top" style="height: 40px;"></div>
-
-			</div>
-
-			<div class="container">
-				<!-- Content Column -->
-				<div class="table-responsive">
-					<form role="form">
-						<table class="table table-striped">
-							<thead>
-								<tr class="active">
-									<th>No .</th>
-									<th>H I T</th>
-									<th>I D</th>
-									<th>T I T L E</th>
-									<th>R EC O M M E N D</th>
-									<th>D A T E</th>
-								</tr>
-
-								<c:forEach items="${boardList}" var="list">
+<section class="page-section bg-dark light-content">
+<div align="center">
+ <h1 class="blog-page-title">free .</h1>
+	
+	            <div class="table_list table_list_2 mt10">
+	                <table class="table_center th_type">
+		                <colgroup>
+			                <col style="width:20%">
+			                <col style="width:*">
+			                <col style="width:9%">
+			                <col style="width:12%">
+			                <col style="width:11%">
+			                <col style="width:11%">
+		                </colgroup>
+		                
+	                <thead>
+	                <tr>
+	                    <th scope="col">번 호</th>
+	                    <th scope="col">제 목</th>
+	                    <th scope="col">작 성 자</th>
+	                    <th scope="col">조 회</th>
+	                    <th scope="col">추 천 수</th>
+	                    <th scope="col">등 록 일 </th>
+	                </tr>
+	                
+	
+	<c:forEach items="${boardList}" var="list">
 
 									<tr class="active" onclick="freeSelect(${list.boardNo})">
 										<th>${list.boardNo}</th>
@@ -67,19 +47,16 @@
 										<th>${list.writer}</th>
 										<th>${list.title}</th>
 										<th>${list.recommend}</th>
-										<th>${list.boardDate}</th>
+										 <th><fmt:formatDate  pattern="yyyy-MM-dd" value="${list.boardDate}"/></th>
 									</tr>
 								</c:forEach>
 							</thead>
 						</table>
-					</form>
 				</div>
 			</div>
 			<div class="row mb-100 mb-md100">
 				<a href="write.do" class="btn btn-mod btn-w btn-medium btn-round">Write.</a>
 				<div class="mb-30 mb-md-20">
-
-
 					<div class="clearfix mt-40">
 						<a href="#" class="blog-item-more left"> <i
 							class="fa fa-chevron-left"></i>Prev
@@ -99,9 +76,9 @@
 							<li><a href="../gnu4_tips?&amp;page=10">10</a></li>
 						</ul>
 					</div>
-				</div>
-			</div>
+					</div>
 		</div>
+		
 	</section>
 	<form action="boardSelect.do" method="post" id="boardSS">
 
