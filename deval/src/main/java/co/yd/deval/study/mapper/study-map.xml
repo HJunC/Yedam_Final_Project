@@ -74,4 +74,17 @@
 		WHERE STUDY_NO = #{studyNo}
 	</update>
 
+	<select id="findStudyImLeader" resultType="co.yd.deval.study.service.StudyVO">
+		select  *
+		from    study
+		where   leader_id = #{id}
+	</select>
+	
+	<select id="findStudyByNo" resultType="co.yd.deval.study.service.StudyVO">
+		select  *
+		from    study
+		where   study_no in (select  study_no
+						     from    study_view
+						     where   member_id = #{id})
+	</select>
 </mapper>

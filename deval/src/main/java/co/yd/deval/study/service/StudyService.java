@@ -9,4 +9,6 @@ public interface StudyService {
 	int studyInsert(StudyVO vo);
 	int studyUpdate(StudyVO vo);
 
+	List<StudyVO> findStudyImLeader(String id);
+	List<StudyVO> findStudyByNo(String id);
 }

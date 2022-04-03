@@ -35,4 +35,14 @@ public class StudyServiceImpl implements StudyService {
 		return map.studySelectAll();
 	}
 
+	@Override
+	public List<StudyVO> findStudyImLeader(String id) {
+		return map.findStudyImLeader(id);
+	}
+
+	@Override
+	public List<StudyVO> findStudyByNo(String id) {
+		return map.findStudyByNo(id);
+	}
+
 }

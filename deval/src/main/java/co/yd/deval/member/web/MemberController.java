@@ -11,12 +11,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import co.yd.deval.member.service.MemberService;
 import co.yd.deval.member.service.MemberVO;
+import co.yd.deval.project.service.ProjectService;
+import co.yd.deval.study.service.StudyService;
 
 @Controller
 public class MemberController {
 	
 	@Autowired
 	private MemberService memberDao;
+	@Autowired
+	private ProjectService projectDao;
+	@Autowired
+	private StudyService studyDao;
 	
 	
 	@RequestMapping("/loginForm.do")
@@ -44,6 +50,10 @@ public class MemberController {
 	public String myPage(Model model, @AuthenticationPrincipal UserDetails user) {
 		MemberVO vo = (MemberVO) user;
 		model.addAttribute("member",vo);
+		model.addAttribute("myProjects",projectDao.findProjectImLeader(vo.getMemberId()));
+		model.addAttribute("myStudies",studyDao.findStudyImLeader(vo.getMemberId()));
+		model.addAttribute("projects",projectDao.findProjectByNo(vo.getMemberId()));
+		model.addAttribute("studies",studyDao.findStudyByNo(vo.getMemberId()));
 		return "member/myPage";
 	}
 

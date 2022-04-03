@@ -13,4 +13,7 @@ public interface ProjectService {
     List<ProjectVO> searchMainPageProject(ProjectVO vo);
     List<ProjectVO> findByLeaderIdAndState(String leaderId, String state);
     List<ProjectVO> searchProject(ProjectVO vo);
+    
+    List<ProjectVO> findProjectImLeader(String id);
+    List<ProjectVO> findProjectByNo(String id);
 }

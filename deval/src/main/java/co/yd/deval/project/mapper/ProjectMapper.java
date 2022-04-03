@@ -16,4 +16,7 @@ public interface ProjectMapper {
     int updateHit(int projectNo);
     List<ProjectVO> findByLeaderIdAndState(@Param("leaderId") String leaderId, @Param("state") String state);
     List<ProjectVO> searchProject(ProjectVO vo);
+    
+    List<ProjectVO> findProjectImLeader(String id);
+    List<ProjectVO> findProjectByNo(String id);
 }

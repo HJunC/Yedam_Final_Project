@@ -89,4 +89,14 @@ public class ProjectServiceImpl implements ProjectService {
         return map.searchProject(vo);
     }
 
+	@Override
+	public List<ProjectVO> findProjectImLeader(String id) {
+		return map.findProjectImLeader(id);
+	}
+
+	@Override
+	public List<ProjectVO> findProjectByNo(String id) {
+		return map.findProjectByNo(id);
+	}
+
 }
