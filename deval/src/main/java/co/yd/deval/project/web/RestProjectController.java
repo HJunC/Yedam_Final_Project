@@ -1,14 +1,10 @@
 package co.yd.deval.project.web;
 
-import co.yd.deval.project.mapper.ProjectMapper;
-import co.yd.deval.project.mapper.ProjectRequestMapper;
-import co.yd.deval.project.mapper.ProjectTeamMapper;
 import co.yd.deval.project.service.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.annotation.Target;
-import java.util.List;
+import java.security.Principal;
 
 /**
 * @package : co.yd.deval.project.web
@@ -20,34 +16,71 @@ import java.util.List;
 **/
 
 @RestController
-@RequestMapping("/project")
+@RequestMapping("/api/project")
 public class RestProjectController {
 
-    private final ProjectService projectDao;
+    private final ProjectService projectService;
+    private final ProjectRequestService projectRequestService;
 
-    public RestProjectController(ProjectService projectDao) {
-        this.projectDao = projectDao;
+    public RestProjectController(ProjectService projectService, ProjectRequestService projectRequestService) {
+        this.projectService = projectService;
+        this.projectRequestService = projectRequestService;
     }
 
-    @GetMapping("/api/detailProject")
+    @GetMapping("/detail")
     public ProjectInfoDTO detailProject(@RequestParam("no") int projectNo) {
-        return projectDao.getProjectInfo(projectNo);
+        return projectService.getProjectInfo(projectNo);
     }
 
-    @PostMapping("/api/request")
-    public ResponseEntity<String> request(ProjectRequestVO vo) {
-        // todo 참가 요청
-        return ResponseEntity.ok("success");
+    /***
+     * 프로젝트 참가 요청
+     * @param ProjectRequestVO
+     * @return ProjectRequestVO
+     */
+    @PostMapping("/request")
+    public ResponseEntity<ProjectRequestVO> request(ProjectRequestVO vo, Principal principal) {
+        if (principal != null) {
+            projectRequestService.insertProjectRequest(vo);
+            return ResponseEntity.ok().body(vo);
+        } else {
+            return ResponseEntity.badRequest().body(null);
+        }
     }
 
-    @PostMapping("/api/requestDelete")
-    public ResponseEntity<String> requestDelete(ProjectRequestVO vo) {
-        // todo 참가 취소
-        return ResponseEntity.ok("success");
+    /***
+     * 프로젝트 참가 요청 삭제
+     * @param ProjectRequestVO
+     * @return ProjectRequestVO
+     */
+    @PostMapping("/requestDelete")
+    public ResponseEntity<ProjectRequestVO> requestDelete(ProjectRequestVO vo, Principal principal) {
+        if (principal != null) {
+            projectRequestService.deleteProjectRequest(vo);
+            return ResponseEntity.ok().body(vo);
+        } else {
+            return ResponseEntity.badRequest().body(null);
+        }
     }
 
-    // todo 프로젝트 삭제 요청
+    @PostMapping("/delete")
+    public ResponseEntity<ProjectVO> deleteProject(ProjectVO vo, Principal principal) {
+        if (principal.getName().equals(vo.getLeaderId())) {
+            projectService.deleteProject(vo);
+            return ResponseEntity.ok().body(vo);
+        } else {
+            return ResponseEntity.badRequest().body(null);
+        }
 
-    // todo 프로젝트 진행 요청
+    }
+
+    @PostMapping("/update")
+    public ResponseEntity<String> progressProject(ProjectVO vo, Principal principal) {
+        if (principal.getName().equals(vo.getLeaderId())) {
+            // projectNo, 업데이트 내용
+            return ResponseEntity.ok().body("success");
+        } else {
+            return ResponseEntity.badRequest().body("fail");
+        }
+    }
 
 }

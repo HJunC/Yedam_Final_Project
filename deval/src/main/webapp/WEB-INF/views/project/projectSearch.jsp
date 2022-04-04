@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="form"   uri="http://www.springframework.org/tags/form" %>
 <c:set var="resources" value="${pageContext.request.contextPath}/resources"/>
 <!-- Home Section -->
 <section class="small-section bg-dark-alfa-50 bg-scroll light-content" data-background="images/full-width-images/section-bg-19.jpg" id="home">
@@ -35,6 +36,18 @@
     .widget {
         margin-bottom: 24px;
     }
+    .tags label {
+        display: inline-block;
+        margin: 0 2px 8px 0;
+        padding: 5px 7px 6px 7px;
+        border: 1px solid #ddd;
+        color: #555;
+        font-size: 15px;
+        text-decoration: none;
+        border-radius: 3px;
+        -webkit-transition: all 0.27s cubic-bezier(0.000, 0.000, 0.580, 1.000);
+        transition: all 0.27s cubic-bezier(0.000, 0.000, 0.580, 1.000);
+    }
 </style>
 <!-- Section -->
 <section class="page-section bg-dark light-content" style="overflow: initial;">
@@ -65,23 +78,10 @@
                     </c:forEach>
 
                 </div>
-                ${pageMaker.startPage}
-                ${pageMaker.endPage}
-                ${pageMaker.prev}
-                ${pageMaker.next}
-                ${pageMaker.total}
-                ${pageMaker.cri.pageNum}
-                ${pageMaker.cri.amount}
 
                 <!-- Pagination -->
                 <div class="pagination">
-                    <a href=""><i class="fa fa-chevron-left"></i></a>
-                    <a href="" class="active">1</a>
-                    <a href="">2</a>
-                    <a href="">3</a>
-                    <a class="no-active">...</a>
-                    <a href="">9</a>
-                    <a href=""><i class="fa fa-chevron-right"></i></a>
+                    <ul class="pagination" id="pagination"></ul>
                 </div>
                 <!-- End Pagination -->
 
@@ -91,7 +91,7 @@
             <!-- Sidebar -->
             <div class="col-md-4 col-lg-3 mt-10">
 
-                <form class="form" style="position: sticky; top: 100px" method="get">
+                <form class="form" id="searchForm" action="/project/search" style="position: sticky; top: 100px" method="get">
 
                     <!-- Search Widget -->
                     <div class="widget">
@@ -101,7 +101,7 @@
                             <button class="search-button animate" type="submit" title="Start Search">
                                 <i class="fa fa-search"></i>
                             </button>
-                            <input type="text" class="form-control search-field round" name="projectName" placeholder="Search..." >
+                            <input type="text" class="form-control search-field round" name="projectName" placeholder="Search..." value="<c:out value='${search.projectName}'/>">
                         </div>
                     </div>
                     <!-- End Search Widget -->
@@ -111,18 +111,21 @@
 
                         <h3 class="widget-title">언어</h3>
 
+                        <script src="${resources}/js/common/Languages.js"></script>
+
                         <div class="widget-body">
-                            <div class="tags">
-                                <a href="">Portfolio</a>
-                                <a href="">Digital</a>
-                                <a href="">Branding</a>
-                                <a href="">Theme</a>
-                                <a href="">Clean</a>
-                                <a href="">UI & UX</a>
-                                <a href="">Love</a>
-                            </div>
+                            <div class="tags" id="languages"></div>
                         </div>
 
+                        <script>
+                          var languages = $("#languages");
+                          var str;
+                          Language.forEach((item, index) => {
+                            str += '<input type="checkbox" class="btn-check" id="btncheck'+index+'" autocomplete="off">';
+                            str += '<label class="btn btn-outline-primary" for="btncheck'+index+'">' + item + '</label>';
+                          })
+                          languages.append(str)
+                        </script>
                     </div>
                     <!-- End Widget -->
 
@@ -150,7 +153,7 @@
                         <h3 class="widget-title">프로젝트 기간</h3>
 
                         <div class="widget-body">
-                            <input type="number" class="input-lg round form-control bg-dark-input">
+                            <input type="number" name="projectTerm" class="input-lg round form-control bg-dark-input" value="<c:out value='${search.projectTerm}'/>">
                         </div>
 
                     </div>
@@ -172,7 +175,7 @@
                     </div>
                     <!-- End Widget -->
                     <input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
-                    <input type="hidden" name="pageNum" value="${pageMaker.cri.amount}">
+                    <input type="hidden" name="amount" value="${pageMaker.cri.amount}">
                 </form>
 
             </div>
@@ -183,3 +186,32 @@
     </div>
 </section>
 <!-- End Section -->
+
+<script src="${resources}/js/common/jQueryPage.js"></script>
+
+<script>
+    var total = ${pageMaker.total}
+    var current = ${pageMaker.cri.pageNum}
+
+    window.pagObj = $('#pagination').twbsPagination({
+      totalPages: total,
+      startPage: current,
+      visiblePages: 5, // 최대로 보여줄 페이지
+      prev: "<i class='fa fa-chevron-left'></i>", // Previous Button Label
+      next: "<i class='fa fa-chevron-right'></i>", // Next Button Label
+      first: '«', // First Button Label
+      last: '»', // Last Button Label
+      onPageClick: function (event, page) { // Page Click event
+        console.info("current page : " + page);
+      } }).on('page', function (event, page) {
+      searchDateList(page);
+    });
+
+  function searchDateList(page) {
+    var searchForm = $("#searchForm");
+    console.log(page);
+    searchForm.find("input[name='pageNum']").val(page);
+    searchForm.submit();
+  }
+
+</script>

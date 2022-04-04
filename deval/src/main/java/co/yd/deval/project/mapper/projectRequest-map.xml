@@ -9,7 +9,7 @@
                                      MEMBER_ID,
                                      REQUEST_DT,
                                      PROJECT_NO)
-        VALUES (default,
+        VALUES ('1',
                 #{subject},
                 #{position},
                 #{memberId},

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
 import java.util.List;
 
 /**
@@ -25,45 +26,61 @@ import java.util.List;
 @RequestMapping("/project")
 public class ProjectController {
 
-    // todo 로그인 유저 입력
-    private static final String USER_ID = "hong";
     private final ProjectService projectDao;
 
     public ProjectController(ProjectService projectDao) {
         this.projectDao = projectDao;
     }
 
+    /***
+     * 프로젝트 메인화면
+     * @param model
+     * @param principal
+     * @return project/projectMain.jsp
+     */
     @GetMapping("/main.do")
-    public String projectMain(Model model) {
-        ProjectVO userProject = projectDao.getOngoingProject(USER_ID);
-        if (userProject != null) {
-            if (userProject.getLeaderId().equals(USER_ID)) {
-                model.addAttribute("isLeader", "true");
+    public String projectMain(Model model, Principal principal) {
+        if (principal != null) {
+            ProjectVO userProject = projectDao.getOngoingProject(principal.getName());
+            if (userProject != null) {
+                if (userProject.getLeaderId().equals(principal.getName())) {
+                    model.addAttribute("isLeader", "true");
+                } else {
+                    model.addAttribute("isLeader", "false");
+                }
+                model.addAttribute("userProject", userProject);
             } else {
-                model.addAttribute("isLeader", "false");
-            }
-            model.addAttribute("userProject", userProject);
-        } else {
-            // todo 지원 여부
-            if (true) {
-                model.addAttribute("isRecruit", "true");
+                // todo 지원 여부
+                if (true) {
+                    model.addAttribute("isRecruit", "true");
+                }
             }
         }
-        // todo 검토중 -> 신청버튼 X 생성버튼 X
+
         ProjectVO searchVO = new ProjectVO();
         List<ProjectVO> projectList = projectDao.searchMainPageProject(searchVO);
         model.addAttribute("projectList", projectList);
         return "project/projectMain";
     }
 
+    /***
+     * 프로젝트 추가화면 이동
+     * @return project/projectInsertForm.jsp
+     */
     @GetMapping("/projectInsertForm.do")
     public String projectInsertForm() {
         return "project/projectInsertForm";
     }
 
+    /***
+     * 프로젝트 추가
+     * @param vo
+     * @param principal
+     * @return redirect:main.do
+     */
     @PostMapping("/addProject.do")
-    public String addProject(ProjectVO vo) {
-        vo.setLeaderId(USER_ID);
+    public String addProject(ProjectVO vo, Principal principal) {
+        vo.setLeaderId(principal.getName());
         int result = projectDao.insertProject(vo);
         if (result != 0) {
             System.out.println(vo);
@@ -74,28 +91,54 @@ public class ProjectController {
         }
     }
 
+    /***
+     * 프로젝트 삭제
+     * @param vo
+     * @param principal
+     * @return redirect:main.do
+     */
     @PostMapping("/deleteProject.do")
-    public String deleteProject() {
-        // todo 프로젝트 삭제
+    public String deleteProject(ProjectVO vo, Principal principal) {
+        if (principal != null) {
+            if(principal.getName().equals(vo.getLeaderId())) {
+                int result = projectDao.deleteProject(vo);
+            }
+        }
         return "redirect:main.do";
     }
 
+    /***
+     * 프로젝트 상세화면
+     * @param model
+     * @param projectNo
+     * @return project/projectDetail.jsp
+     */
     @GetMapping("/projectDetail.do")
     public String projectDetail(Model model, @RequestParam("no") int projectNo) {
         ProjectInfoDTO dto = projectDao.getProjectInfo(projectNo);
         model.addAttribute("project", dto);
         model.addAttribute("team", dto.getProjectTeam());
+
+
+
         return "project/projectDetail";
     }
 
+    /***
+     * 프로젝트 검색
+     * @param model
+     * @param vo
+     * @param cri
+     * @return project/projectSearch.jsp
+     */
     @GetMapping("/search")
     public String projectSearch(Model model, ProjectVO vo, Criteria cri) {
-        // todo 프로젝트 검색
         vo.setCriteria(cri);
         List<ProjectVO> projectList = projectDao.getListWithPaging(vo);
-        System.out.println(cri.getAmount());
-        System.out.println(cri.getPageNum());
+        PageDTO pageDTO = new PageDTO(cri, projectDao.getTotalCount(vo));
+
         model.addAttribute("projectList", projectList);
+        model.addAttribute("search", vo);
         model.addAttribute("pageMaker", new PageDTO(cri, projectDao.getTotalCount(vo)));
         return "project/projectSearch";
     }

@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <c:set var="resources" value="${pageContext.request.contextPath}/resources"/>
 
 <!-- Home Section -->
@@ -107,34 +108,50 @@
                     <h4 class="blog-page-title">참가 신청</h4>
 
                     <!-- Form -->
-                    <form method="post" action="#" id="form" class="form">
-
-                        <div class="row mb-30 mb-md-20">
-
-                            <div class="col-md-6 mb-md-20">
-                                <!-- Name -->
-                                <label for="name">Name *</label>
-                                <input type="text" name="name" id="name" class="input-md round form-control" placeholder="Enter your name" maxlength="100" required aria-required="true">
-                            </div>
-
-                            <div class="col-md-6">
-                                <!-- Email -->
-                                <label for="email">Email *</label>
-                                <input type="email" name="email" id="email" class="input-md round form-control" placeholder="Enter your email" maxlength="100" required aria-required="true">
-                            </div>
-
-                        </div>
-
+                    <form id="addRequestForm" class="form">
+                        <input type="hidden" name="projectNo" value="${project.projectNo}">
+                        <input type="hidden" name="memberId" value="<sec:authentication property="principal.username"/>">
                         <div class="mb-30 mb-md-20">
                             <!-- Website -->
-                            <label for="website">Website</label>
-                            <input type="text" name="website" id="website" class="input-md round form-control" placeholder="Enter your website" maxlength="100">
+                            <label for="website">포지션</label>
+                            <div class="row">
+                                <div class="col input-group me-3">
+                                    <span class="input-group-text bg-dark" style="border-color: #5e646a;">프론트엔드</span>
+                                    <div class="input-group-text bg-dark" style="border-color: #5e646a;">
+                                        <input class="form-check-input mt-0" type="radio" value="FE" name="position" required>
+                                    </div>
+                                </div>
+                                <div class="col input-group me-3">
+                                    <span class="input-group-text bg-dark" style="border-color: #5e646a;">백엔드</span>
+                                    <div class="input-group-text bg-dark" style="border-color: #5e646a;">
+                                        <input class="form-check-input mt-0" type="radio" value="BE" name="position" required>
+                                    </div>
+                                </div>
+                                <div class="col input-group me-3">
+                                    <span class="input-group-text bg-dark" style="border-color: #5e646a;">풀스택</span>
+                                    <div class="input-group-text bg-dark" style="border-color: #5e646a;">
+                                        <input class="form-check-input mt-0" type="radio" value="FS" name="position" required>
+                                    </div>
+                                </div>
+                                <div class="col input-group me-3">
+                                    <span class="input-group-text bg-dark" style="border-color: #5e646a;">디자인</span>
+                                    <div class="input-group-text bg-dark" style="border-color: #5e646a;">
+                                        <input class="form-check-input mt-0" type="radio" value="DE" name="position" required>
+                                    </div>
+                                </div>
+                                <div class="col input-group">
+                                    <span class="input-group-text bg-dark" style="border-color: #5e646a;">기획</span>
+                                    <div class="input-group-text bg-dark" style="border-color: #5e646a;">
+                                        <input class="form-check-input mt-0" type="radio" value="PL" name="position" required>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
-                        <!-- Comment -->
+                        <!-- subject -->
                         <div class="mb-30 mb-md-20">
-                            <label for="comment">Comment</label>
-                            <textarea name="comment" id="comment" class="input-md round form-control" rows="6" placeholder="Enter your comment" maxlength="400"></textarea>
+                            <label for="subject">지원내용</label>
+                            <textarea name="subject" id="subject" class="input-md round form-control" rows="6" placeholder="본인을 소개해주세요 😀" maxlength="400"></textarea>
                         </div>
 
                         <!-- Send Button -->
@@ -289,6 +306,20 @@
 
   var today = new Date();
   today = moment(today).format("YYYY-MM-DD");
+
+  function addRequest() {
+    $.ajax({
+      url: "/api/project/request",
+      data: $("#addRequestForm").serialize(),
+      dataType: "json",
+      success: function(data) {
+        console.log(data);
+      },
+      error: function (error) {
+        console.log(error);
+      }
+    })
+  }
 
 </script>
 
