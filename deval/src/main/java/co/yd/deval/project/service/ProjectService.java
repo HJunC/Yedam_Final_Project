@@ -5,7 +5,14 @@ import java.util.List;
 public interface ProjectService {
     List<ProjectVO> selectProjectAll();
     ProjectVO selectProject(int projectNo);
+
+    /***
+     * 프로젝트 추가
+     * @param vo 프로젝트 vo
+     * @return projectNo
+     */
     int insertProject(ProjectVO vo);
+
     int deleteProject(ProjectVO vo);
     int updateProject(ProjectVO vo);
 

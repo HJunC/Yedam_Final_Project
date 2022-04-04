@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <c:set var="resources" value="${pageContext.request.contextPath}/resources"/>
 
 <!-- Home Section -->
@@ -25,7 +26,12 @@
 </section>
 <!-- End Home Section -->
 
-
+<style>
+    .input-info {
+        font-size: 14px;
+        color: #c0c0c0;
+    }
+</style>
 <!-- Section -->
 <section class="page-section bg-dark light-content">
     <div class="container">
@@ -34,49 +40,53 @@
         <div class="row">
             <div>
 
-                <form class="form contact-form" action="projectInsert.do" method="post">
+                <form class="form contact-form" id="insertForm">
                     <sec:csrfInput />
+                    <input type="hidden" name="leaderId" value="${sec.username()}">
                     <div class="clearfix">
 
                         <div class="form-group">
                             <label for="projectName">프로젝트 명</label>
+                            <p class="input-info">최소6자, 최대 40자, 공백, 특수문자 불가능</p>
                             <input type="text" name="projectName" id="projectName" class="input-lg round form-control bg-dark-input" placeholder="Enter username" pattern=".{3,100}" required aria-required="true">
                         </div>
 
                         <div class="form-group">
-                            <label>포지션 인원 (본인 포함)</label>
-                            <div class="row">
+                            <label>포지션 인원 / 총 <span id="totalCount"></span>명</label>
+                            <p class="input-info">본인을 포함한 인원수를 넣어주세요. 최대 15명</p>
+                            <input type="hidden" id="totalRcnt" name="totalRcnt" value="0" min="0" max="15">
+                            <div class="row" id="positionCountBox">
                                 <div class="col input-group me-3">
                                     <span class="input-group-text bg-dark" style="border-color: #5e646a;">프론트엔드</span>
-                                    <input type="number" id="frontRcnt" name="frontRcnt" class="input-lg round form-control bg-dark-input" min="0" max="9" value="0">
+                                    <input type="number" id="frontRcnt" name="frontRcnt" class="input-lg round form-control bg-dark-input" min="0" max="7" value="0" >
                                     <div class="input-group-text bg-dark" style="border-color: #5e646a;">
                                         <input class="form-check-input mt-0" type="radio" value="FE" name="leaderPosition" checked required>
                                     </div>
                                 </div>
                                 <div class="col input-group me-3">
                                     <span class="input-group-text bg-dark" style="border-color: #5e646a;">백엔드</span>
-                                    <input type="number" id="backRcnt" name="backRcnt" class="input-lg round form-control bg-dark-input" min="0" max="9" value="0">
+                                    <input type="number" id="backRcnt" name="backRcnt" class="input-lg round form-control bg-dark-input" min="0" max="7" value="0" >
                                     <div class="input-group-text bg-dark" style="border-color: #5e646a;">
                                         <input class="form-check-input mt-0" type="radio" value="BE" name="leaderPosition" required>
                                     </div>
                                 </div>
                                 <div class="col input-group me-3">
                                     <span class="input-group-text bg-dark" style="border-color: #5e646a;">풀스택</span>
-                                    <input type="number" id="fullRcnt" name="fullRcnt" class="input-lg round form-control bg-dark-input" min="0" max="9" value="0">
+                                    <input type="number" id="fullRcnt" name="fullRcnt" class="input-lg round form-control bg-dark-input" min="0" max="7" value="0" >
                                     <div class="input-group-text bg-dark" style="border-color: #5e646a;">
                                         <input class="form-check-input mt-0" type="radio" value="FS" name="leaderPosition" required>
                                     </div>
                                 </div>
                                 <div class="col input-group me-3">
                                     <span class="input-group-text bg-dark" style="border-color: #5e646a;">디자인</span>
-                                    <input type="number" id="designRcnt" name="designRcnt" class="input-lg round form-control bg-dark-input" min="0" max="9" value="0">
+                                    <input type="number" id="designRcnt" name="designRcnt" class="input-lg round form-control bg-dark-input" min="0" max="7" value="0" >
                                     <div class="input-group-text bg-dark" style="border-color: #5e646a;">
                                         <input class="form-check-input mt-0" type="radio" value="DE" name="leaderPosition" required>
                                     </div>
                                 </div>
                                 <div class="col input-group">
                                     <span class="input-group-text bg-dark" style="border-color: #5e646a;">기획</span>
-                                    <input type="number" id="plannerRcnt" name="plannerRcnt" class="input-lg round form-control bg-dark-input" min="0" max="9" value="0">
+                                    <input type="number" id="plannerRcnt" name="plannerRcnt" class="input-lg round form-control bg-dark-input" min="0" max="7" value="0" >
                                     <div class="input-group-text bg-dark" style="border-color: #5e646a;">
                                         <input class="form-check-input mt-0" type="radio" value="PL" name="leaderPosition" required>
                                     </div>
@@ -86,6 +96,7 @@
 
                         <div class="form-group">
                             <label for="projectTerm">프로젝트 기간</label>
+                            <p class="input-info">최소3일, 최대 365일</p>
                             <input type="number" name="projectTerm" id="projectTerm" class="input-lg round form-control bg-dark-input" required aria-required="true" min="0" max="365" value="3">
                         </div>
                         <div class="form-group">
@@ -114,6 +125,7 @@
                         </div>
                         <div class="form-group">
                             <label for="recruitEdt">프로젝트 모집 마감일</label>
+                            <p class="input-info">1일 ~ 15일</p>
                             <input type="date" name="recruitEdt" id="recruitEdt" class="input-lg round form-control bg-dark-input" required aria-required="true">
                         </div>
                         <div class="form-group">
@@ -143,5 +155,35 @@
   const recruitEdt = document.getElementById("recruitEdt");
   recruitEdt.setAttribute("value", moment(today).format("YYYY-MM-DD"));
   recruitEdt.setAttribute("min", moment(today).format("YYYY-MM-DD"));
-  recruitEdt.setAttribute("max", moment(today.setDate(today.getDate() + 30)).format("YYYY-MM-DD"));
+  recruitEdt.setAttribute("max", moment(today.setDate(today.getDate() + 15)).format("YYYY-MM-DD")); // 프로젝트 모집 최대 마감일
+
+  document.getElementById("positionCountBox").addEventListener("change", handlePositionCount);
+
+  function handlePositionCount(e) {
+    var f = parseInt($("#frontRcnt").val());
+    var b = parseInt($("#backRcnt").val());
+    var u = parseInt($("#fullRcnt").val());
+    var d = parseInt($("#designRcnt").val());
+    var p = parseInt($("#plannerRcnt").val());
+    var total = f+b+u+d+p;
+    $("#totalCount").html(total);
+  }
+
+  function handleInsert() {
+    var data = $("#insertForm").serializeObject();
+
+    $.ajax({
+      action: "post",
+      url: "../api/project/insert",
+      data: data,
+      dataType: "json",
+      success: function(result) {
+        console.log(result);
+      },
+      error: function(e) {
+        alert(e);
+      }
+    })
+  }
+
 </script>

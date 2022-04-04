@@ -26,10 +26,12 @@ import java.util.List;
 @RequestMapping("/project")
 public class ProjectController {
 
-    private final ProjectService projectDao;
+    private final ProjectService projectService;
+    private final ProjectRequestService projectRequestService;
 
-    public ProjectController(ProjectService projectDao) {
-        this.projectDao = projectDao;
+    public ProjectController(ProjectService projectService, ProjectRequestService projectRequestService) {
+        this.projectService = projectService;
+        this.projectRequestService = projectRequestService;
     }
 
     /***
@@ -41,71 +43,80 @@ public class ProjectController {
     @GetMapping("/main.do")
     public String projectMain(Model model, Principal principal) {
         if (principal != null) {
-            ProjectVO userProject = projectDao.getOngoingProject(principal.getName());
+            ProjectVO userProject = projectService.getOngoingProject(principal.getName());
+            // 진행중인 프로젝트가 있을 때
             if (userProject != null) {
                 if (userProject.getLeaderId().equals(principal.getName())) {
-                    model.addAttribute("isLeader", "true");
+                    model.addAttribute("isLeader", true);
                 } else {
-                    model.addAttribute("isLeader", "false");
+                    model.addAttribute("isLeader", false);
                 }
                 model.addAttribute("userProject", userProject);
             } else {
-                // todo 지원 여부
-                if (true) {
-                    model.addAttribute("isRecruit", "true");
+                ProjectRequestVO rvo = new ProjectRequestVO();
+                rvo.setMemberId(principal.getName());
+                rvo.setState("1"); // 검토중
+                List<ProjectRequestVO> requestList = projectRequestService.selectProjectRequest(rvo);
+                // 검토중인 요청이 있을 떄
+                if (!requestList.isEmpty()) {
+                    model.addAttribute("userRequestProject", requestList);
+                    model.addAttribute("isRecruit", true);
                 }
             }
         }
 
         ProjectVO searchVO = new ProjectVO();
-        List<ProjectVO> projectList = projectDao.searchMainPageProject(searchVO);
+        List<ProjectVO> projectList = projectService.searchMainPageProject(searchVO);
         model.addAttribute("projectList", projectList);
         return "project/projectMain";
     }
 
     /***
      * 프로젝트 추가화면 이동
+     * @param principal 로그인 유저정보
      * @return project/projectInsertForm.jsp
      */
     @GetMapping("/projectInsertForm.do")
-    public String projectInsertForm() {
-        return "project/projectInsertForm";
+    public String projectInsertForm(Principal principal) {
+        if (principal != null) {
+            // todo 프로젝트 진행여부 체크
+            return "project/projectInsertForm";
+        } else {
+            return "redirect:../loginForm.do";
+        }
     }
 
     /***
-     * 프로젝트 추가
-     * @param vo
-     * @param principal
+     * 프로젝트 생성
+     * @param vo 프로젝트 vo
+     * @param principal 로그인 유저정보
      * @return redirect:main.do
      */
-    @PostMapping("/addProject.do")
+    /*@PostMapping("/insertProject.do")
     public String addProject(ProjectVO vo, Principal principal) {
-        vo.setLeaderId(principal.getName());
-        int result = projectDao.insertProject(vo);
-        if (result != 0) {
-            System.out.println(vo);
-            return "redirect:main.do";
-        } else {
-            System.out.println("error");
-            return "redirect:main.do";
+        if (principal != null) {
+            System.out.println("============================================"+vo);
+            vo.setLeaderId(principal.getName());
+            int result = projectService.insertProject(vo);
         }
-    }
+        return "redirect:main.do";
+    }*/
 
     /***
      * 프로젝트 삭제
-     * @param vo
-     * @param principal
+     * @param vo 프로젝트 vo
+     * @param principal 로그인 유저정보
      * @return redirect:main.do
      */
-    @PostMapping("/deleteProject.do")
+    /*@PostMapping("/deleteProject.do")
     public String deleteProject(ProjectVO vo, Principal principal) {
-        if (principal != null) {
-            if(principal.getName().equals(vo.getLeaderId())) {
-                int result = projectDao.deleteProject(vo);
-            }
+        if (principal.getName().equals(vo.getLeaderId())) {
+            projectService.deleteProject(vo);
+            return "redirect:main.do";
+        } else {
+            return "redirect:main.do";
         }
-        return "redirect:main.do";
-    }
+    }*/
 
     /***
      * 프로젝트 상세화면
@@ -115,31 +126,28 @@ public class ProjectController {
      */
     @GetMapping("/projectDetail.do")
     public String projectDetail(Model model, @RequestParam("no") int projectNo) {
-        ProjectInfoDTO dto = projectDao.getProjectInfo(projectNo);
+        ProjectInfoDTO dto = projectService.getProjectInfo(projectNo);
         model.addAttribute("project", dto);
         model.addAttribute("team", dto.getProjectTeam());
-
-
-
         return "project/projectDetail";
     }
 
     /***
      * 프로젝트 검색
      * @param model
-     * @param vo
+     * @param vo 프로젝트 객체
      * @param cri
      * @return project/projectSearch.jsp
      */
     @GetMapping("/search")
     public String projectSearch(Model model, ProjectVO vo, Criteria cri) {
         vo.setCriteria(cri);
-        List<ProjectVO> projectList = projectDao.getListWithPaging(vo);
-        PageDTO pageDTO = new PageDTO(cri, projectDao.getTotalCount(vo));
+        List<ProjectVO> projectList = projectService.getListWithPaging(vo);
+        PageDTO pageDTO = new PageDTO(cri, projectService.getTotalCount(vo));
 
         model.addAttribute("projectList", projectList);
         model.addAttribute("search", vo);
-        model.addAttribute("pageMaker", new PageDTO(cri, projectDao.getTotalCount(vo)));
+        model.addAttribute("pageMaker", new PageDTO(cri, projectService.getTotalCount(vo)));
         return "project/projectSearch";
     }
 

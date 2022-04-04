@@ -119,12 +119,12 @@
 
                         <script>
                           var languages = $("#languages");
-                          var str;
-                          Language.forEach((item, index) => {
-                            str += '<input type="checkbox" class="btn-check" id="btncheck'+index+'" autocomplete="off">';
-                            str += '<label class="btn btn-outline-primary" for="btncheck'+index+'">' + item + '</label>';
+                          var checkBox = "";
+                          mostUsed.forEach((item, index) => {
+                            checkBox += '<input type="checkbox" class="btn-check" id="btncheck'+index+'" autocomplete="off">';
+                            checkBox += '<label class="btn btn-outline-primary" for="btncheck'+index+'">' + item + '</label>';
                           })
-                          languages.append(str)
+                          languages.append(checkBox);
                         </script>
                     </div>
                     <!-- End Widget -->

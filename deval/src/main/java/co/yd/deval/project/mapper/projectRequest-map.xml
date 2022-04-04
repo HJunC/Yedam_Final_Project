@@ -44,5 +44,6 @@
           FROM PROJECT_REQUEST
          WHERE PROJECT_NO = #{projectNo}
            AND MEMBER_ID = #{memberId}
+        <if test="state != 0">AND STATE = #{state}</if>
     </select>
 </mapper>

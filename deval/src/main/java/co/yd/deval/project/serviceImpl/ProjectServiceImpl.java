@@ -21,7 +21,7 @@ import java.util.List;
 * @modifyed : ByungHo Park
 **/
 
-@Service("projectDao")
+@Service("projectService")
 public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectMapper mapper;
@@ -46,13 +46,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public int insertProject(ProjectVO vo) {
-        vo.setTotalRcnt(
-                vo.getFrontRcnt()
-                + vo.getBackRcnt()
-                + vo.getFullRcnt()
-                + vo.getDesignRcnt()
-                + vo.getPlannerRcnt()
-        );
+        System.out.println("============================================service"+vo);
         int projectNo = mapper.insertProject(vo);
 
         ProjectTeamVO teamVo = new ProjectTeamVO();
@@ -61,7 +55,7 @@ public class ProjectServiceImpl implements ProjectService {
         teamVo.setIsLeader("1"); // true
         teamVo.setPosition(vo.getLeaderPosition());
         teamVo.setState("0"); // 팀장 대기
-        return teamMapper.insertProjectTeam(teamVo);
+        return (teamMapper.insertProjectTeam(teamVo) == 1) ? projectNo : 0;
     }
 
     @Override

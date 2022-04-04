@@ -101,70 +101,70 @@
                 </div>
                 <!-- End Comments -->
 
+                <sec:authorize access="isAuthenticated()">
+                    <!-- Add Comment -->
+                    <div class="mb-80 mb-xs-40">
 
-                <!-- Add Comment -->
-                <div class="mb-80 mb-xs-40">
+                        <h4 class="blog-page-title">참가 신청</h4>
 
-                    <h4 class="blog-page-title">참가 신청</h4>
-
-                    <!-- Form -->
-                    <form id="addRequestForm" class="form">
-                        <input type="hidden" name="projectNo" value="${project.projectNo}">
-                        <input type="hidden" name="memberId" value="<sec:authentication property="principal.username"/>">
-                        <div class="mb-30 mb-md-20">
-                            <!-- Website -->
-                            <label for="website">포지션</label>
-                            <div class="row">
-                                <div class="col input-group me-3">
-                                    <span class="input-group-text bg-dark" style="border-color: #5e646a;">프론트엔드</span>
-                                    <div class="input-group-text bg-dark" style="border-color: #5e646a;">
-                                        <input class="form-check-input mt-0" type="radio" value="FE" name="position" required>
+                        <!-- Form -->
+                        <form id="addRequestForm" class="form">
+                            <input type="hidden" name="projectNo" value="${project.projectNo}">
+                            <input type="hidden" name="memberId" value="<sec:authentication property="principal.username"/>">
+                            <div class="mb-30 mb-md-20">
+                                <!-- Website -->
+                                <label for="website">포지션</label>
+                                <div class="row">
+                                    <div class="col input-group me-3">
+                                        <span class="input-group-text bg-dark" style="border-color: #5e646a;">프론트엔드</span>
+                                        <div class="input-group-text bg-dark" style="border-color: #5e646a;">
+                                            <input class="form-check-input mt-0" type="radio" value="FE" name="position" required>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col input-group me-3">
-                                    <span class="input-group-text bg-dark" style="border-color: #5e646a;">백엔드</span>
-                                    <div class="input-group-text bg-dark" style="border-color: #5e646a;">
-                                        <input class="form-check-input mt-0" type="radio" value="BE" name="position" required>
+                                    <div class="col input-group me-3">
+                                        <span class="input-group-text bg-dark" style="border-color: #5e646a;">백엔드</span>
+                                        <div class="input-group-text bg-dark" style="border-color: #5e646a;">
+                                            <input class="form-check-input mt-0" type="radio" value="BE" name="position" required>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col input-group me-3">
-                                    <span class="input-group-text bg-dark" style="border-color: #5e646a;">풀스택</span>
-                                    <div class="input-group-text bg-dark" style="border-color: #5e646a;">
-                                        <input class="form-check-input mt-0" type="radio" value="FS" name="position" required>
+                                    <div class="col input-group me-3">
+                                        <span class="input-group-text bg-dark" style="border-color: #5e646a;">풀스택</span>
+                                        <div class="input-group-text bg-dark" style="border-color: #5e646a;">
+                                            <input class="form-check-input mt-0" type="radio" value="FS" name="position" required>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col input-group me-3">
-                                    <span class="input-group-text bg-dark" style="border-color: #5e646a;">디자인</span>
-                                    <div class="input-group-text bg-dark" style="border-color: #5e646a;">
-                                        <input class="form-check-input mt-0" type="radio" value="DE" name="position" required>
+                                    <div class="col input-group me-3">
+                                        <span class="input-group-text bg-dark" style="border-color: #5e646a;">디자인</span>
+                                        <div class="input-group-text bg-dark" style="border-color: #5e646a;">
+                                            <input class="form-check-input mt-0" type="radio" value="DE" name="position" required>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col input-group">
-                                    <span class="input-group-text bg-dark" style="border-color: #5e646a;">기획</span>
-                                    <div class="input-group-text bg-dark" style="border-color: #5e646a;">
-                                        <input class="form-check-input mt-0" type="radio" value="PL" name="position" required>
+                                    <div class="col input-group">
+                                        <span class="input-group-text bg-dark" style="border-color: #5e646a;">기획</span>
+                                        <div class="input-group-text bg-dark" style="border-color: #5e646a;">
+                                            <input class="form-check-input mt-0" type="radio" value="PL" name="position" required>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- subject -->
-                        <div class="mb-30 mb-md-20">
-                            <label for="subject">지원내용</label>
-                            <textarea name="subject" id="subject" class="input-md round form-control" rows="6" placeholder="본인을 소개해주세요 😀" maxlength="400"></textarea>
-                        </div>
+                            <!-- subject -->
+                            <div class="mb-30 mb-md-20">
+                                <label for="subject">지원내용</label>
+                                <textarea name="subject" id="subject" class="input-md round form-control" rows="6" placeholder="본인을 소개해주세요 😀" maxlength="400"></textarea>
+                            </div>
 
-                        <!-- Send Button -->
-                        <button type="submit" class="btn btn-mod btn-w btn-medium btn-round">
-                            신청하기
-                        </button>
+                            <!-- Send Button -->
+                            <button type="submit" class="btn btn-mod btn-w btn-medium btn-round">
+                                신청하기
+                            </button>
 
-                    </form>
-                    <!-- End Form -->
+                        </form>
+                        <!-- End Form -->
 
-                </div>
-                <!-- End Add Comment -->
-
+                    </div>
+                    <!-- End Add Comment -->
+                </sec:authorize>
 
             </div>
             <!-- End Content -->

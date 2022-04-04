@@ -34,7 +34,8 @@ public class RestProjectController {
 
     /***
      * 프로젝트 참가 요청
-     * @param ProjectRequestVO
+     * @param vo 프로젝트 요청 vo
+     * @param principal 로그인 유저정보
      * @return ProjectRequestVO
      */
     @PostMapping("/request")
@@ -43,13 +44,14 @@ public class RestProjectController {
             projectRequestService.insertProjectRequest(vo);
             return ResponseEntity.ok().body(vo);
         } else {
-            return ResponseEntity.badRequest().body(null);
+            return ResponseEntity.badRequest().body(vo);
         }
     }
 
     /***
      * 프로젝트 참가 요청 삭제
-     * @param ProjectRequestVO
+     * @param vo 프로젝트 요청 vo
+     * @param principal 로그인 유저정보
      * @return ProjectRequestVO
      */
     @PostMapping("/requestDelete")
@@ -58,28 +60,55 @@ public class RestProjectController {
             projectRequestService.deleteProjectRequest(vo);
             return ResponseEntity.ok().body(vo);
         } else {
-            return ResponseEntity.badRequest().body(null);
+            return ResponseEntity.badRequest().body(vo);
         }
     }
 
+    /***
+     * 프로젝트 생성
+     * @param vo 프로젝트 vo
+     * @param principal 로그인 유저정보
+     * @return redirect:main.do
+     */
+    @PostMapping("/insert")
+    public ResponseEntity<ProjectVO> addProject(ProjectVO vo, Principal principal) {
+        if (principal.getName().equals(vo.getLeaderId())) {
+            int projectNo = projectService.insertProject(vo);
+            vo.setProjectNo(projectNo);
+            return ResponseEntity.ok().body(vo);
+        }
+        return ResponseEntity.badRequest().body(vo);
+    }
+
+    /***
+     * 프로젝트 삭제
+     * @param vo 프로젝트 vo
+     * @param principal 로그인 유저정보
+     * @return
+     */
     @PostMapping("/delete")
     public ResponseEntity<ProjectVO> deleteProject(ProjectVO vo, Principal principal) {
         if (principal.getName().equals(vo.getLeaderId())) {
             projectService.deleteProject(vo);
             return ResponseEntity.ok().body(vo);
         } else {
-            return ResponseEntity.badRequest().body(null);
+            return ResponseEntity.badRequest().body(vo);
         }
-
     }
 
+    /***
+     * 프로젝트 업데이트
+     * @param vo 프로젝트 vo
+     * @param principal 로그인 유저정보
+     * @return
+     */
     @PostMapping("/update")
-    public ResponseEntity<String> progressProject(ProjectVO vo, Principal principal) {
+    public ResponseEntity<ProjectVO> progressProject(ProjectVO vo, Principal principal) {
         if (principal.getName().equals(vo.getLeaderId())) {
             // projectNo, 업데이트 내용
-            return ResponseEntity.ok().body("success");
+            return ResponseEntity.ok().body(vo);
         } else {
-            return ResponseEntity.badRequest().body("fail");
+            return ResponseEntity.badRequest().body(vo);
         }
     }
 
