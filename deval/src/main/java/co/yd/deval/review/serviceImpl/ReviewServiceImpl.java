@@ -50,4 +50,9 @@ public class ReviewServiceImpl implements ReviewService {
 		map.reviewRecommendUp(vo);
 	}
 
+	@Override
+	public ReviewVO cqNoSelect(ReviewVO vo) {
+		return map.cqNoSelect(vo);
+	}
+
 }

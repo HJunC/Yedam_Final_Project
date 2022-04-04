@@ -65,7 +65,7 @@
 								<li><a href="${root}/board/free.do">자유게시판</a></li>
 								<li><a href="${root}/board/notice.do">공지사항</a></li>
 								<li><a href="${root}/board/technical.do">최신기술</a></li>
-								<li><a href="${root}/board/usedDeal.do">중고거래</a></li>
+								<li><a href="${root}/trade/tradeList.do">중고거래</a></li>
 							</ul>
 						</li>
 						<li class="mn-sub-multi">
