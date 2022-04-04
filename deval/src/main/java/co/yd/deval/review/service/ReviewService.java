@@ -10,6 +10,8 @@ public interface ReviewService {
 	int reviewUpdate(ReviewVO vo);
 	int reviewDelete(ReviewVO vo);
 	
+	ReviewVO cqNoSelect(ReviewVO vo);
+	
 	void reviewHitUp(ReviewVO vo);
 	void reviewRecommendUp(ReviewVO vo);
 	

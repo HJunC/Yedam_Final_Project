@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.yd.deval.trade.mapper.TradeMapper">
+
+	<select id="tradeList" resultType="co.yd.deval.trade.service.TradeVO">
+		SELECT *
+		FROM TRADE
+		ORDER BY TRADE_NO DESC
+	</select>
+	
+	<select id="tradeSelectOne" resultType="co.yd.deval.trade.service.TradeVO">
+		SELECT *
+		FROM TRADE
+		WHERE TRADE_NO = #{tradeNo}
+	</select>
+	
+	<insert id="tradeInsert" parameterType="co.yd.deval.trade.service.TradeVO">
+		INSERT INTO
+		TRADE(  TRADE_NO
+			  , TITLE
+			  , SUBJECT
+			  , PRICE
+			  , HIT
+			  , WRITER
+			  , TRADE_ITEM
+			  , TRADE_TYPE
+			 )
+		VALUES( BOARD_NO_COUNT_SEQ.NEXTVAL
+			  , #{title}
+			  , #{subject}
+			  , #{price}
+			  , #{hit}
+			  , #{writer}
+			  , #{tradeItem}
+			  , #{tradeType}
+			  )
+	</insert>
+	
+	<update id="tradeUpdate" parameterType="co.yd.deval.trade.service.TradeVO">
+		UPDATE TRADE
+		<set>
+			<if test="title != null">TITLE = #{title},</if>
+			<if test="subject != null">SUBJECT = #{subject},</if>
+			<if test="price != null">PRICE = #{price},</if>
+			<if test="tradeItem != null">TRADE_ITEM = #{tradeItem},</if>
+			<if test="tradeType != null">TRADE_TYPE = #{tradeType},</if>
+		</set>
+		WHERE TRADE_NO = #{tradeNo}
+	</update>
+	
+	<delete id="tradeDelete" parameterType="co.yd.deval.trade.service.TradeVO">
+		DELETE FROM TRADE
+		WHERE TRADE_NO = #{tradeNo}
+	</delete>
+	
+	<update id="tradeHitUp" parameterType="co.yd.deval.trade.service.TradeVO">
+		UPDATE TRADE
+		SET HIT = HIT + 1
+		WHERE TRADE_NO = #{tradeNo}
+	</update>
+
+</mapper>
