@@ -48,25 +48,25 @@
                                     </div>
                                 </div>
                                 
-                                <div class="gray mb-30">
+                                <div class="gray mb-30" >
                                     ${mento.info }
                                 </div>
                                 
                                 <hr class="mt-0 mb-30 white" /> 
                                 <!-- 기간정하는 구간 -->
                                 <div class="mb-30">
-                                    <form method="post" action="#" class="form">
+                                    <form method="post" action="mentoServInsert.do" class="form" id="frm">
                                     <div class="mb-20 mb-md-10">
                                     	<div>원하는 시간대를 정해주세요</div>
                                     	<div>
                                     	<!-- 시간 가져오기 -->
-                                        <select class="form-control input-sm round" style="width: 150px" onchange="selectTime(this)" name="serviceStt">
+                                        <select class="form-control input-sm round" style="width: 150px" onchange="selectTime(this)" id="serviceStt" name="serviceStt">
                                         	<option>시작시간</option>
                                     	<c:forEach var="i" begin="${fn:substring(stT,0,2)}" end="${fn:substring(edT,0,2)-1}">
                                             <option value="${i}"><c:out value="${i}"/>:00</option>
                                         </c:forEach>
                                         </select>
-                                        <select class="form-control input-sm round" style="width: 150px" id="endTime" name="serviceEdt">
+                                        <select class="form-control input-sm round" style="width: 150px" id="serviceEdt" name="serviceEdt">
                                         	<option>종료시간</option>
                                         </select>
                                         </div>
@@ -85,7 +85,7 @@
                                         </div>
                                     </div>
                                     <hr class="mt-0 mb-30 white" />
-                                        <button type="submit" class="btn btn-mod btn-w btn-large btn-round">서비스신청</button> 
+                                        <button type="button" onclick="mentiCheck()"class="btn btn-mod btn-w btn-large btn-round">서비스신청</button> 
                                     </form>
                                 </div>
                                 <!-- 기간정하는구간 끝 -->
@@ -198,6 +198,11 @@
 				option.innerText = i + ':00';
        			timeSelect.appendChild(option);
        		}
+        }
+        
+        //신청정보 보내기
+        function mentiCheck() {
+        	
         }
     </script>
 </body>

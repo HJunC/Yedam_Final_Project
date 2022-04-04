@@ -139,7 +139,7 @@
 		}
 		
 	}
-        
+        // --- 값 컨트롤러로 넘겨주기
         function mentoInsert() {
         	var start = frm.serviceStt.value;
         	var end = frm.serviceEdt.value;
@@ -153,21 +153,22 @@
         }
         // 종료시간 미니멈 set
         function endTime(target) {
+        	// 클릭한 값들고오기
         	var targetTime = target.value;
+        	
         	var sTime = targetTime.substr(0,2);
-        	console.log(sTime);
         	var startTime = parseInt(sTime);
-        	console.log(startTime+1);
         	var timeGap = 24 - startTime;
-        	console.log(timeGap);
         	var selectId = document.getElementById('serviceEdt');
-        	for(var i = startTime; i<24; i++) {
-        		console.log(i);
+        	// 시작시간 다시 클릭했을떄 새로 만들기
+        	$('#serviceEdt').empty();
+        	//종료시간 만들기
+        	for(var i = startTime+1; i<=24; i++) {
+	        	var option = document.createElement('option');
         		if(i < 10) {
-        			var option = document.createElement('option');
         			option.value = '0' + i + ':00';
         			option.innerText = '0' + i + ':00';
-        		}else {
+        		}else if(i > 9) {
         			option.value = i + ':00';
         			option.innerText = i + ':00';
         		}

@@ -1,4 +1,4 @@
-package co.yd.deval.mentoserv.service;
+package co.yd.deval.mento.service;
 
 import java.sql.Date;
 

@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="co.yd.deval.mentoserv.map.MentoServMapper">
-	<select id="mentoServList" parameterType="co.yd.deval.mentoserv.service.MentoServVO">
+<mapper namespace="co.yd.deval.mento.map.MentoServMapper">
+	<select id="mentoServList" parameterType="co.yd.deval.mento.service.MentoServVO">
 		SELECT * 
 		FROM MENTO_SERVICE
+		WHERE MENTO_ID = #{mentoId}
+		AND STATE = 0
 	</select>
-	<select id="mentoServSelect" resultType="co.yd.deval.mentoserv.service.MentoServVO" parameterType="co.yd.deval.mentoserv.service.MentoServVO">
+	<select id="mentoServSelect" resultType="co.yd.deval.mento.service.MentoServVO" parameterType="co.yd.deval.mento.service.MentoServVO">
 		SELECT * 
 		FROM MENTO_SERVICE 
 		WHERE MENTO_ID = #{mentoId}
 	</select>
-	<insert id="mentoServInsert" parameterType="co.yd.deval.mentoserv.service.MentoServVO">
+	<insert id="mentoServInsert" parameterType="co.yd.deval.mento.service.MentoServVO">
 		INSERT INTO MENTO_SERVICE(MENTO_SERVICE_NO,
 								  MENTO_ID,
 								  MENTI_ID,
@@ -31,10 +33,10 @@
 								  #{mentiInfo})	  
 		
 	</insert>
-	<update id="mentoServUpdate" parameterType="co.yd.deval.mentoserv.service.MentoServVO">
+	<update id="mentoServUpdate" parameterType="co.yd.deval.mento.service.MentoServVO">
 	
 	</update>
-	<delete id="mentoServDelete" parameterType="co.yd.deval.mentoserv.service.MentoServVO">
+	<delete id="mentoServDelete" parameterType="co.yd.deval.mento.service.MentoServVO">
 		DELETE FROM MENTO_SERVICE
 		WHERE MENTO_SERVICE_NO = ${mentoServiceNo}
 	</delete>
