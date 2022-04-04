@@ -60,13 +60,13 @@
                                     	<div>원하는 시간대를 정해주세요</div>
                                     	<div>
                                     	<!-- 시간 가져오기 -->
-                                        <select class="form-control input-sm round" style="width: 150px" onchange="selectTime(this)">
+                                        <select class="form-control input-sm round" style="width: 150px" onchange="selectTime(this)" name="serviceStt">
                                         	<option>시작시간</option>
                                     	<c:forEach var="i" begin="${fn:substring(stT,0,2)}" end="${fn:substring(edT,0,2)-1}">
                                             <option value="${i}"><c:out value="${i}"/>:00</option>
                                         </c:forEach>
                                         </select>
-                                        <select class="form-control input-sm round" style="width: 150px" id="endTime">
+                                        <select class="form-control input-sm round" style="width: 150px" id="endTime" name="serviceEdt">
                                         	<option>종료시간</option>
                                         </select>
                                         </div>
@@ -75,8 +75,12 @@
                                        <div class="mb-20 mb-md-10">
                                     	<div>원하는 기간를 정해주세요</div>
                                     	<div>
-                                        <select class="form-control input-sm round" style="width: 150px">
+                                        <select class="form-control input-sm round" style="width: 150px" name="maxTerm">
                                             <option>${mento.maxTerm }</option>
+                                            <c:if test="${!empty mento.maxTerm2 }">
+                                            <option>${mento.maxTerm2 }</option>
+                                            </c:if>
+                                            <option>${mento.maxTerm3 }</option>
                                         </select>
                                         </div>
                                     </div>
