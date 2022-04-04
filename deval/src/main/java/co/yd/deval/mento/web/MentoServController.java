@@ -32,6 +32,8 @@ public class MentoServController {
 		Map<String,Object> satis = new HashMap<String,Object>();
 		Double value = mentoServDAO.allSatisAvg();
 		Double value2 = mentoServDAO.oneSatisAvg(id);
+		System.out.println(value + "00000000000000000000");
+		System.out.println(value2 + "000000000000000000000");
 		
 		satis.put("all", value);
 		satis.put("one", value2);

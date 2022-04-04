@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="co.yd.deval.mento.map.MentoServMapper">
+<mapper namespace="co.yd.deval.mento.mapper.MentoServMapper">
 	<select id="mentoServList" parameterType="co.yd.deval.mento.service.MentoServVO">
 		SELECT * 
 		FROM MENTO_SERVICE
@@ -50,5 +50,7 @@
 		FROM MENTO_SERVICE
 		WHERE MENTO_ID = #{id}
 	</select>
-	
+	<select id="serviceCount" resultType="int">
+		SELECT COUNT(*) FROM MENTO_SERVICE
+	</select>
 </mapper>

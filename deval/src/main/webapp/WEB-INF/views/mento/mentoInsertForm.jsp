@@ -9,6 +9,7 @@
 <meta charset="UTF-8">
 <title>mentoInsertForm</title>
 </head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="${resources }/css/custom/team-project-style.css">
 <body>
 	<section class="page-section bg-dark light-content">
@@ -48,7 +49,17 @@
                     <select class="input-md round form-control" style="width: 170px;" id="lang" name="lang">
                         <option value="C">C</option>
                         <option value="C++">C++</option>
-                        <option value="java">Java</option>
+                        <option value="Java">Java</option>
+                        <option value="Python">Python</option>
+                        <option value="C#">C#</option>
+                        <option value="Visual Basic">Visual Basic</option>
+                        <option value="JavaScript">JavaScript</option>
+                        <option value="PHP">"PHP"</option>
+                        <option value="SQL">SQL</option>
+                        <option value="R">R</option>
+                        <option value="Ruby">Ruby</option>
+                        <option value="Assembly language">Assembly language</option>
+                        <option value="Go">Go</option>
                     </select>
                 </div>
                 <div class="col-sm-4 mb-40">
@@ -63,18 +74,40 @@
                 </div>
                 <div class="col-sm-4 mb-40">
                     기간설정<br>
-                    최대날자
-                    <select class="input-md round form-control" style="width: 170px;" id="maxTerm" name="maxTerm">
+                    <input type="radio" name="choiceRadio" class="radio-value" id="dayDate">
+                    일별로 정하기
+                    <select class="input-md round form-control" style="width: 170px;" id="termDay" name="termDay">
                         <c:forEach var="i" begin="1" end="13">
 	                        <option value="${i}일">${i}일</option>
                         </c:forEach>
                     </select>
-                    최대 주
-                    <select class="input-md round form-control" style="width: 170px;" id="maxTerm" name="maxTerm">
+                    <input type="radio" name="choiceRadio" class="radio-value" id="dayWeek">
+                    주별로 정하기
+                    <select class="input-md round form-control" style="width: 170px;" id="termWeek" name="termWeek">
                         <c:forEach var="i" begin="2" end="7">
 	                        <option value="${i}주">${i}주</option>
                         </c:forEach>
                     </select>
+                   	<input type="radio" name="choiceRadio" class="radio-value" id="dayMonth">
+                   	달별로 정하기
+                   	<select class="input-md round form-control" style="width: 170px;" id="termMonth" name="termMonth">
+                        <c:forEach var="i" begin="2" end="6">
+	                        <option value="${i}달">${i}달</option>
+                        </c:forEach>
+                    </select>
+                    <!-- 모달창 띄우기 -->
+                       	<a href="#test-modal" class="btn btn-mod btn-w btn-medium round mt-10 lightbox-gallery-5 mfp-inline">기간정하기</a>
+                                <div id="test-modal" class="mfp-hide">
+                                    <p>
+                                        선택하신 기간이 확실합니까?
+                                    </p>
+                                    <div class="col-sm-6 col-md-3 col-lg-3 mb-40">
+                                    <div class="mb-10">
+				                        <button type="button" class="btn btn-mod btn-w btn-round btn-small"  onclick="changeTerm()" id="modalSelect">예</button>
+				                        <button type="button" class="btn btn-mod btn-w btn-round btn-small" style="color:red" onclick="closeModal()">취소</button>
+                                	</div>
+                                	</div>
+                                </div>
                 </div>
             </div>
             <div class="row">
@@ -97,10 +130,7 @@
                 <div class="col-sm-4 mb-40">
                     종료시간
                     <select class="input-md round form-control" style="width: 170px;" id="serviceEdt" name="serviceEdt">
-                        <option value="13:00">13:00</option>
-                        <option value="14:00">14:00</option>
-                        <option value="15:00">15:00</option>
-                        <option value="16:00">16:00</option>
+                        <option value="01:00">01:00</option>
                     </select>
                 </div>
             </div>
@@ -175,6 +205,37 @@
 	        		selectId.appendChild(option);
         	}
         }
+        //radio button 이용 term 값 변경하기
+       function changeTerm() {
+        	var dayDate = document.getElementById('dayDate');
+        	var dayWeek = document.getElementById('dayWeek');
+        	var dayMonth = document.getElementById('dayMonth');
+        	
+        	var termDay = document.getElementById('termDay');
+        	var termWeek = document.getElementById('termWeek');
+        	var termMonth = document.getElementById('termMonth');
+        	var check = $('input:radio[name=choiceRadio]').is(':checked');
+        	if(check == true) {
+	        	if(dayDate.checked) {
+	        		termWeek.disabled = 'true';	
+	        		termMonth.disabled = 'true';
+	        	}else if(dayWeek.checked) {
+	        		termMonth.disabled = 'true';
+	        		termDay.disabled = 'true';
+	        	}else if(dayMonth.checked) {
+	        		termDay.disabled = 'true';	
+	        		termWeek.disabled = 'true';
+	        	}
+	        	$.magnificPopup.close();
+        }	
+        else {
+        	alert('기간체크를 해주세요!');
+        	}
+        }
+        function closeModal() {
+        	$.magnificPopup.close();
+        }
+        
     </script>
 </body>
 </html>

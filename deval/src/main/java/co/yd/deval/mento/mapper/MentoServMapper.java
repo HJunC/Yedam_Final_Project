@@ -15,4 +15,7 @@ public interface MentoServMapper {
 		int mentoServInsert(MentoServVO vo);
 		int mentoServUpdate(MentoServVO vo);
 		int mentoServDelete(MentoServVO vo);
+		
+		//전체값 조회
+		int serviceCount();
 }

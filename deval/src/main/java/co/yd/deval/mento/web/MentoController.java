@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import co.yd.deval.member.service.MemberService;
 import co.yd.deval.member.service.MemberVO;
+import co.yd.deval.mento.service.MentoServService;
 import co.yd.deval.mento.service.MentoService;
 import co.yd.deval.mento.service.MentoVO;
 
@@ -30,11 +31,19 @@ public class MentoController {
 	private MemberService memberDao;
 	
 	@Autowired
+	private MentoServService mentoServDAO;
+	
+	@Autowired
 	private String uploadPath;
 	
     @GetMapping("/main.do")
-    public String main() {
-        return "mento/mentoMain";
+    public String main(Model model) {
+    	model.addAttribute("mentoCount", mentoDAO.mentoCount());
+    	model.addAttribute("langCount", mentoDAO.kindOfLang());
+    	model.addAttribute("choice", mentoDAO.kindOfAll());
+    	model.addAttribute("servCount", mentoServDAO.serviceCount());
+    	model.addAttribute("stisfied", mentoServDAO.allSatisAvg());
+    	return "mento/mentoMain";
     }
     
     @RequestMapping("/mentoList.do")
@@ -74,8 +83,11 @@ public class MentoController {
     @GetMapping("/mentoSelect.do")
     public String mentoSelect(Model model, MentoVO vo) {
     	//추가
-		MemberVO user = (MemberVO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		model.addAttribute("member", memberDao.memberInsert(user));
+		/*
+		 * MemberVO user = (MemberVO)
+		 * SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		 * model.addAttribute("member", memberDao.memberInsert(user));
+		 */
 		
     	model.addAttribute("mento", mentoDAO.mentoSelectOne(vo));
     	return "mento/mentoSelect";

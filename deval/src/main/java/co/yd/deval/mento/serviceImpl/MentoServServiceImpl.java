@@ -49,4 +49,9 @@ public class MentoServServiceImpl implements MentoServService {
 		return map.mentoServDelete(vo);
 	}
 
+	@Override
+	public int serviceCount() {
+		return map.serviceCount();
+	}
+
 }

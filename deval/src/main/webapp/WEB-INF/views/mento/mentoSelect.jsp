@@ -13,6 +13,7 @@
 <c:set var="resources" value="${pageContext.request.contextPath }/resources"/>
 <c:set var="stT" value="${mento.serviceStt }"/>
 <c:set var="edT" value="${mento.serviceEdt }"/>
+<c:set var="day" value="${fn:length(${mento.termDay}"/>
 <link rel="stylesheet" href="${resources}/css/custom/team-project-style.css">
 <body>
  <section class="page-section bg-dark light-content">
@@ -20,7 +21,7 @@
                     <c:if test="${!empty mento }">
                         <!-- Product Content -->
                         <div class="row mb-60 mb-xs-30">
-                            <div><h1>${stT } : ${edT } : ${fn:substring(stT,0,2)} : ${mento.serviceEdt }</h1></div>
+                            <div><h1>${mento.termDay} :: ${mento.termWeek} :: ${mento.termMonth}</h1></div>
                             <!-- Product Images -->
                             <div class="col-md-4 mb-md-30">
                                 
@@ -76,11 +77,19 @@
                                     	<div>원하는 기간를 정해주세요</div>
                                     	<div>
                                         <select class="form-control input-sm round" style="width: 150px" name="maxTerm">
-                                            <option>${mento.maxTerm }</option>
-                                            <c:if test="${!empty mento.maxTerm2 }">
-                                            <option>${mento.maxTerm2 }</option>
+                                        	<c:if test="${!empty mento.termDay }">
+                                        		<c:if test="${}"></c:if>
+                                            	<c:forEach var="i" begin="1" end="${fn:substring(${mento.termDay,0,1}">
+                                            		<option value="${i}일">${i}일</option>
+                                            	</c:forEach>
+                                            	<option>${mento.maxTerm }</option>
                                             </c:if>
-                                            <option>${mento.maxTerm3 }</option>
+                                            <c:if test="${!empty mento.termWeek}">
+                                            	<option>${mento.termWeek }</option>
+                                            </c:if>
+                                            <c:if test="${!empty mento.termMonth}">
+                                            	<option>${mento.maxTerm3 }</option>
+                                            </c:if>
                                         </select>
                                         </div>
                                     </div>
