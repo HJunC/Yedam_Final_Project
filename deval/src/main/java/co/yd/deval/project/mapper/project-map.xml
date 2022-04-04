@@ -129,10 +129,19 @@
     </select>
     
     <select id="findProjectByNo" resultType="co.yd.deval.project.service.ProjectVO">
-    	select  *
-    	from    project
-    	where   project_no in (select  project_no
-    	                       from    project_team
-    	                       where   member_id = #{id})
+    	SELECT  *
+    	FROM    PROJECT
+    	WHERE   PROJECT_NO IN (SELECT  PROJECT_NO
+    	                       FROM    PROJECT_TEAM
+    	                       WHERE   MEMBER_ID = #{id})
+    </select>
+    
+    <select id="findWaitingProject" resultType="co.yd.deval.project.service.ProjectVO">
+    	SELECT  *
+    	FROM    PROJECT
+    	WHERE   PROJECT_NO IN (SELECT  PROJECT_NO
+    						   FROM    PROJECT_REQUEST
+    						   WHERE   MEMBER_ID = #{id}
+    						   AND     STATE = 1)
     </select>
 </mapper>

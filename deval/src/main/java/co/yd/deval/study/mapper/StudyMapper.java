@@ -13,4 +13,5 @@ public interface StudyMapper {
 	
 	List<StudyVO> findStudyImLeader(String id);
 	List<StudyVO> findStudyByNo(String id);
+	List<StudyVO> findWaitingStudy(String id);
 }

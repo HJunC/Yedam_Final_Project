@@ -45,4 +45,9 @@ public class StudyServiceImpl implements StudyService {
 		return map.findStudyByNo(id);
 	}
 
+	@Override
+	public List<StudyVO> findWaitingStudy(String id) {
+		return map.findWaitingStudy(id);
+	}
+
 }

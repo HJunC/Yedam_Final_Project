@@ -1,5 +1,7 @@
 package co.yd.deval.member.web;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -47,13 +49,18 @@ public class MemberController {
 	}
 
 	@GetMapping("/myPage.do")
-	public String myPage(Model model, @AuthenticationPrincipal UserDetails user) {
-		MemberVO vo = (MemberVO) user;
-		model.addAttribute("member",vo);
+	public String myPage(Model model, Principal user,@AuthenticationPrincipal UserDetails user1) {
+		MemberVO vo1 = (MemberVO) user1;
+		
+		MemberVO vo = new MemberVO();
+		vo.setMemberId(user.getName());
+		model.addAttribute("member",memberDao.memberSelect(vo));
 		model.addAttribute("myProjects",projectDao.findProjectImLeader(vo.getMemberId()));
 		model.addAttribute("myStudies",studyDao.findStudyImLeader(vo.getMemberId()));
 		model.addAttribute("projects",projectDao.findProjectByNo(vo.getMemberId()));
+		model.addAttribute("waitProjects",projectDao.findWaitingProject(vo.getMemberId()));
 		model.addAttribute("studies",studyDao.findStudyByNo(vo.getMemberId()));
+		model.addAttribute("waitStudies",studyDao.findWaitingStudy(vo.getMemberId()));
 		return "member/myPage";
 	}
 

@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <c:set var="resources" value="${pageContext.request.contextPath}/resources"/>
 
 <style>
@@ -150,30 +151,45 @@
 					</div>
 				</div>
 			
-				<!-- 나의 이력정보를 보여주는 div -->
+				<!-- 내가 만든 스터디,프로젝트 중 완료된 것들의 목록을 보여주는 div -->
 				<div id="career_box" class="border border-white" style="height:1000px;display:none">
 					<h2>나의 이력</h2>
-					<hr>
+					<hr class="border border-white">
 					<div>
 						<div>
 						<h3>나의 프로젝트 이력</h3>
-						<c:if test="${empty projects}">
+						<hr class="border border-white">
+						<c:if test="${empty myProjects}">
 							모집 생성 후 완료한 프로젝트 이력이 없습니다.
 						</c:if>
-						<c:if test="${not empty projects}">
-							<c:forEach items="${projects}" var="project">
-							
-							</c:forEach>
-						</c:if>
+						<table class="table">
+							<tr>
+								<th>프로젝트 이름</th>
+								<th>프로젝트 기간</th>
+								<th>프로젝트 시작일</th>
+								<th>프로젝트 종료일</th>
+							</tr>
+							<c:if test="${not empty myProjects}">
+								<c:forEach items="${myProjects}" var="project">
+									<c:if test="${project.state == 4}">
+									<td>${project.projectName}</td>
+									<td>${project.projectTerm}</td>
+									<td><fmt:formatDate value="${project.projectSdt}"/></td>
+									<td><fmt:formatDate value="${project.projectEdt}"/></td>
+								</c:if>
+								</c:forEach>
+							</c:if>
+						</table>
 						</div>
 						
 						<div>
 						<h3>나의 스터디 이력</h3>
-						<c:if test="${empty studies}">
+						<hr class="border border-white">
+						<c:if test="${empty myStudies}">
 							모집 생성 후 완료한 스터디 이력이 없습니다.
 						</c:if>
-						<c:if test="${not empty studies}">
-							<c:forEach items="${studies}" var="study">
+						<c:if test="${not empty mystudies}">
+							<c:forEach items="${myStudies}" var="study">
 							
 							</c:forEach>
 						</c:if>
@@ -198,19 +214,179 @@
 						</div>					
 					</div>
 				</div>
-
+				
+				<!-- 모집,신청,진행,완료된 프로젝트의 목록을 보여주는 div -->
 				<div id="project_box" class="border border-white" style="height:1000px">
 					<h2>프로젝트 목록</h2>
-					<hr>
-					
+					<hr class="border border-white">
+					<h3>대기중인 프로젝트</h3>
+					<table class="table">
+						<tr>
+							<th>프로젝트 이름</th>
+							<th>프로젝트 기간</th>
+							<th>프로젝트 시작일</th>
+							<th>프로젝트 종료일</th>
+							<th>상태</th>
+						</tr>
+						<tr>
+							<c:forEach items="${waitProjects}" var="project">
+									<td>${project.projectName}</td>
+									<td>${project.projectTerm}</td>
+									<td><fmt:formatDate value="${project.projectSdt}"/></td>
+									<td><fmt:formatDate value="${project.projectEdt}"/></td>
+									<td>수락 대기중</td>
+							</c:forEach>
+						</tr>
+						<tr>
+							<c:forEach items="${myProjects}" var="project">
+									<c:if test="${project.state == 1}">
+									<td>${project.projectName}</td>
+									<td>${project.projectTerm}</td>
+									<td><fmt:formatDate value="${project.projectSdt}"/></td>
+									<td><fmt:formatDate value="${project.projectEdt}"/></td>
+									<td>모집중</td>
+								</c:if>
+							</c:forEach>
+						</tr>
+						<tr>
+							<c:forEach items="${myProjects}" var="project">
+									<c:if test="${project.state == 2}">
+									<td>${project.projectName}</td>
+									<td>${project.projectTerm}</td>
+									<td><fmt:formatDate value="${project.projectSdt}"/></td>
+									<td><fmt:formatDate value="${project.projectEdt}"/></td>
+									<td>시작대기중</td>
+								</c:if>
+							</c:forEach>
+						</tr>
+					</table>
+					<hr class="border border-white">
+					<h3>진행중인 프로젝트</h3>
+					<table class="table">
+						<tr>
+							<th>프로젝트 이름</th>
+							<th>프로젝트 기간</th>
+							<th>프로젝트 시작일</th>
+							<th>프로젝트 종료일</th>
+						</tr>
+						<tr>
+							<c:forEach items="${projects}" var="project">
+								<c:if test="${project.state == 3}">
+									<td>${project.projectName}</td>
+									<td>${project.projectTerm}</td>
+									<td><fmt:formatDate value="${project.projectSdt}"/></td>
+									<td><fmt:formatDate value="${project.projectEdt}"/></td>
+								</c:if>
+							</c:forEach>
+						</tr>
+					</table>
+					<hr class="border border-white">
+					<h3>종료된 프로젝트</h3>
+					<table class="table">
+						<tr>
+							<th>프로젝트 이름</th>
+							<th>프로젝트 기간</th>
+							<th>프로젝트 시작일</th>
+							<th>프로젝트 종료일</th>
+						</tr>
+						<tr>
+							<c:forEach items="${projects}" var="project">
+								<c:if test="${project.state == 4}">
+									<td>${project.projectName}</td>
+									<td>${project.projectTerm}</td>
+									<td><fmt:formatDate value="${project.projectSdt}"/></td>
+									<td><fmt:formatDate value="${project.projectEdt}"/></td>
+								</c:if>
+							</c:forEach>
+						</tr>
+					</table>				
 				</div>
 				
+				<!-- 모집,신청,진행,완료된 스터디의목록을 보여주는 div -->
 				<div id="study_box" class="border border-white" style="height:1000px;display:none">
 					<h2>스터디 목록</h2>
-					<hr>
-					<div>
-									
-					</div>
+					<hr class="border border-white">
+					<h3>대기중인 스터디</h3>
+					<table class="table">
+						<tr>
+							<th>스터디 이름</th>
+							<th>스터디 장소</th>
+							<th>스터디 시작일</th>
+							<th>스터디 종료일</th>
+							<th>상태</th>
+						</tr>
+						<tr>
+							<c:forEach items="${waitStudies}" var="study">
+									<td>${study.studyNm}</td>
+									<td>${study.location}</td>
+									<td><fmt:formatDate value="${study.studySdt}"/></td>
+									<td><fmt:formatDate value="${study.studyEdt}"/></td>
+									<td>수락 대기중</td>
+							</c:forEach>
+						</tr>
+						<tr>
+							<c:forEach items="${myStudies}" var="study">
+									<c:if test="${study.state == 1}">
+									<td>${study.studyNm}</td>
+									<td>${study.location}</td>
+									<td><fmt:formatDate value="${study.studySdt}"/></td>
+									<td><fmt:formatDate value="${study.studyEdt}"/></td>
+									<td>모집중</td>
+								</c:if>
+							</c:forEach>
+						</tr>
+						<tr>
+							<c:forEach items="${myProjects}" var="project">
+									<c:if test="${project.state == 2}">
+									<td>${study.studyNm}</td>
+									<td>${study.location}</td>
+									<td><fmt:formatDate value="${study.studySdt}"/></td>
+									<td><fmt:formatDate value="${study.studyEdt}"/></td>
+									<td>시작대기중</td>
+								</c:if>
+							</c:forEach>
+						</tr>
+					</table>
+					<hr class="border border-white">
+					<h3>진행중인 스터디</h3>
+					<table class="table">
+						<tr>
+							<th>스터디 이름</th>
+							<th>스터디 장소</th>
+							<th>스터디 시작일</th>
+							<th>스터디 종료일</th>
+						</tr>
+						<tr>
+							<c:forEach items="${studies}" var="study">
+								<c:if test="${studies.state == 3}">
+									<td>${study.studyNm}</td>
+									<td>${study.location}</td>
+									<td><fmt:formatDate value="${study.studySdt}"/></td>
+									<td><fmt:formatDate value="${study.studyEdt}"/></td>
+								</c:if>
+							</c:forEach>
+						</tr>
+					</table>
+					<hr class="border border-white">
+					<h3>종료된 스터디</h3>
+					<table class="table">
+						<tr>
+							<th>스터디 이름</th>
+							<th>스터디 장소</th>
+							<th>스터디 시작일</th>
+							<th>스터디 종료일</th>
+						</tr>
+						<tr>
+							<c:forEach items="${studies}" var="study">
+								<c:if test="${study.state == 4}">
+									<td>${study.studyNm}</td>
+									<td>${study.location}</td>
+									<td><fmt:formatDate value="${study.studySdt}"/></td>
+									<td><fmt:formatDate value="${study.studyEdt}"/></td>
+								</c:if>
+							</c:forEach>
+						</tr>
+					</table>	
 				</div>
 				
 								

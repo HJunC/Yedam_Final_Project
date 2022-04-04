@@ -19,4 +19,5 @@ public interface ProjectMapper {
     
     List<ProjectVO> findProjectImLeader(String id);
     List<ProjectVO> findProjectByNo(String id);
+    List<ProjectVO> findWaitingProject(String id);
 }

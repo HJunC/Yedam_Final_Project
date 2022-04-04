@@ -29,7 +29,7 @@
 
             <!-- Hero Content -->
             <div class="home-content">
-                <h1 class="hs-line-4 mb-30 mb-xs-10 owl-animate-1">Get the new experience with</h1>
+                <h1 class="hs-line-4 mb-30 mb-xs-10 owl-animate-1">Get the new experience with${member.memberId}</h1>
                 <h2 class="hs-line-7 mb-60 mb-xs-20 owl-animate-2 owl-delay-500">Creative Design Agency</h2>
                 <div class="local-scroll mb-20 mb-xs-0 owl-animate-3 owl-delay-750">
                     <a href="#about" class="btn btn-mod btn-w btn-medium btn-round mx-md-1">See More</a>

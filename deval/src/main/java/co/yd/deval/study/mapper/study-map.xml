@@ -84,7 +84,16 @@
 		select  *
 		from    study
 		where   study_no in (select  study_no
-						     from    study_view
+						     from    study_team
 						     where   member_id = #{id})
+	</select>
+	
+	<select id="findWaitingStudy" resultType="co.yd.deval.study.service.StudyVO">
+		select  *
+		from    study
+		where   study_no in (select  study_no
+						     from    study_request
+						     where   member_id     = #{id}
+						     and     state         = 0)
 	</select>
 </mapper>

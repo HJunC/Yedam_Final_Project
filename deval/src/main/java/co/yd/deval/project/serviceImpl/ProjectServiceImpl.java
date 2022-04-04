@@ -99,4 +99,9 @@ public class ProjectServiceImpl implements ProjectService {
 		return map.findProjectByNo(id);
 	}
 
+	@Override
+	public List<ProjectVO> findWaitingProject(String id) {
+		return map.findWaitingProject(id);
+	}
+
 }
