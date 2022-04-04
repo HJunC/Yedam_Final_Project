@@ -79,7 +79,7 @@
 			padding: 0 !important;
 			max-width: 630px !important;
 		}
-		</style>
+		</style> 
 
 		<div id="mod_myinfo" class="mfp-hide">
 			<form id="frm_modal" name="frm_modal">
@@ -133,7 +133,7 @@
 					</div>
 					<div class="py-3 pb-4 border-bottom">
 						<button class="btn btn-primary mr-3" id="btn_md_save"> Save </button>
-						<input type="reset" class="btn border button" value="Reset"></button>
+						<input type="reset" class="btn border button" value="Reset">
 					</div>
 					<div class="d-sm-flex align-items-center pt-3" id="deactivate">
 						<div>
@@ -203,8 +203,8 @@
 				</div>
 			</form>
 		</div>
-	</div>
 	<!-- End Modal -->
+	</div>
 	
 
 	<!-- Pagination 페이징처리 시작-->

@@ -109,4 +109,36 @@
 		WHERE MEMBER_ID = #{memberId}
 	</update>
 	
+	<!-- Study Req & Team -->
+	
+	<select id="studyReqSelectAll" resultType="co.yd.deval.study.service.StudyReqVO" parameterType="co.yd.deval.study.service.StudyReqVO">
+		SELECT *
+		FROM STUDY_REQUEST
+	</select>
+	
+	<insert id="studyTeamMemberInsert" parameterType="co.yd.deval.study.service.StudyReqVO">
+		INSERT INTO STUDY_REQUEST (   STUDY_NO
+									, STATE
+									, MEMBER_ID
+									, COLLEGE
+									, CAREER
+									, LICENSE
+									, ISLEADER
+									, PRESENT
+									, PROFILE_IMG
+								   )
+								   
+						   VALUES (  #{studyNo}
+						   		   , #{state}
+						   		   , #{memberId}
+						   		   , #{college}
+						   		   , #{career}
+						   		   , #{license}
+						   		   , #{isLeader}
+						   		   , #{present}
+						   		   , #{profileImg}
+						   		   )								   
+		
+	</insert>
+	
 </mapper>

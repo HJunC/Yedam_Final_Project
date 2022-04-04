@@ -1,14 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<c:set var="resources" value="${pageContext.request.contextPath}/resources" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>StudySelect.jsp</title>
+<title>StudySelect.jsp</title> 
+<link rel="stylesheet" href="${resources}/css/custom/study_modal_style.css">
 </head>
 <body>
-<!-- Title -->
+				<!-- Title -->
                 <section class="small-section bg-dark-alfa-50" data-background="images/full-width-images/section-bg-19.jpg">
                     <div class="container relative">
                         <div class="row">
@@ -30,7 +32,7 @@
       <div>
          <h1>게시글 상세내용</h1>
       </div>
-      <sec:csrfInput/>
+      
       <c:choose>
          <c:when test="${empty study.studyNo}">
             <h1>선택한 게시글이 존재하지 않습니다.</h1>
@@ -59,19 +61,160 @@
          </c:otherwise>
       </c:choose><br><br>
       <div>
-      신청모달
-      <input type="text" name="내용폼" value="${info.내용}">
-      
-      
       	 <form action="studyUpdateForm.do" method="post">
       	 <sec:csrfInput/>
 	         <button type="button" onclick="location.href='studyList.do'">목록</button>
-	       	 <button type="button" onclick="">신청</button>
 	         <button type="button" onclick="">문의</button>
 	         <button type="submit">수정</button>
-	         
 	         <input type="hidden" name="studyNo" value="${study.studyNo }">
          </form>
+      </div>
+      
+      		<!-- Modal Start -->
+		<button onclick="MyInfoModal()" id="joinBtn" class="btn btn-mod btn-w btn-medium round mt-10  mfp-inline">참가</button>
+		<style>
+		.mfp-content {
+			border: 1px solid #ddd;
+			border-radius: 15px;
+			padding: 0 !important;
+			max-width: 630px !important;
+		}
+		</style>
+
+		<div id="mod_myinfo" class="mfp-hide">
+			<form id="frm_modal" name="frm_modal">
+				<div class="wrapper bg-white mt-sm-5" id="test-modal">
+					<h4 class="pb-4 border-bottom">MY INFO</h4>
+					<div class="d-flex align-items-start py-3 border-bottom">
+						<img src="https://images.pexels.com/photos/1037995/pexels-photo-1037995.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" class="img" alt="">
+						<div class="pl-sm-4 pl-2 ms-4" id="img-section">
+							<b>#STUDY</b>
+							<h3 style="margin: 0" id="memberId"></h3>
+							<input type="hidden" name="sno" value="${study.studyNo }">
+						</div>
+					</div>
+					<div class="py-2">
+						<div class="row py-2">
+							<div class="col-md-6">
+								<textarea class="bg-light form-control" rows="10" cols="40"
+									name="present" id="present" placeholder="소개 내용을 입력하세요" readonly="readonly"></textarea>
+							</div>
+							<div class="col-md-6 pt-md-0 pt-3">
+								<textarea class="bg-light form-control" rows="10" cols="40"
+									name="license" id="license" placeholder="자격증 (선택사항)" readonly="readonly"></textarea>
+							</div>
+						</div>
+					</div>
+					<div class="row py-2">
+						<div class="col-md-6" >
+							<label for="college">학력</label> <select name="college"
+								id="college" class="bg-light" >
+								<option value="none1" selected>비공개</option>
+								<option value="underhigh">고등학교 졸업 이하</option>
+								<option value="high">고등학교 졸업</option>
+								<option value="unimiddle">대학 졸업 (2,3년제)</option>
+								<option value="uni">대학 졸업(4년제)</option>
+								<option value="unisuksa">대학원 석사 졸업</option>
+								<option value="uniparksa">대학원 박사 졸업</option>
+							</select>
+						</div>
+						<div class="col-md-6 pt-md-0 pt-3" id="career">
+							<label for="career">경력</label>
+							<div class="arrow">
+								<select name="career" id="career" class="bg-light">
+									<option value="none2" selected>비공개</option>
+									<option value="career1">1년 미만</option>
+									<option value="career2">1년~2년</option>
+									<option value="career3">3년~4년</option>
+									<option value="career4">5년~7년</option>
+									<option value="career5">10년 이상</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="py-3 pb-4 border-bottom">
+						<button class="btn btn-primary mr-3" id="btn_md_req"> 신청 </button>
+					</div>
+					<div class="d-sm-flex align-items-center pt-3" id="deactivate">
+						<div>
+							<b>Please enter your information</b>
+							<p>원활한 스터디 참가를 위해서 정보를 입력해주세요</p>
+						</div>
+						<br>
+      
+      				<!-- 신청 Onclick 함수 -> 모달 창 기능 구현 -->
+				      <script type="text/javascript">
+				      	function MyInfoModal() {
+				      		console.log("-- My Info Modal Onclick Evn Start --")
+								
+								/* 유저 정보 저장된 값 가져오기 */
+								$.ajax({
+									url : "studyUser.do",
+									type : "post",
+									data : $("#frm_modal").serialize(),
+									dataType : "json",
+									success : function(result) {
+											if(result){
+												$("#memberId").text(result.memberId);
+												$("#present").val(result.present);
+												$("#license").val(result.license);
+												$("#career option[value='"+ result.career  + "']").attr('selected','selected');
+												$("#college option[value='"+ result.college + "']").attr('selected','selected');
+										
+												$.magnificPopup.open({
+													  items: {
+													    src: '#mod_myinfo'
+													  }
+													
+													});
+											}
+										},
+									error : function(err) {
+										    console.log("error", err);
+											alert('참가 신청을 원하시면, 스터디 검색란에서 내 정보를 입력해주세요.');
+											history.back();
+										}
+								});
+				      		
+				      		// 모달 창 클릭시 OPEN
+							/* $('#mod_open').on('click', function (e) { 
+								console.log("-- Study User Info Modal Open --");
+							}); */
+							
+							/* 스터디 신청 보내기 */
+							$('#btn_md_req').on('click', function (e) {
+								console.log("-- Study Req Start --");
+								
+								$.ajax({
+									url : "studyReq.do",
+									type : "post",
+									data : $("#frm_modal").serialize(),
+									dataType : "text",
+									success : function(result) {
+										console.log("succ", result);
+										if (result != "0") {
+											alert("스터디 참가 신청을하였습니다.");
+										}
+									},
+									error : function(err) {
+										console.log("error", err);
+									}
+								});
+								console.log("-- Study Req End --")
+							});
+				      	}
+				      	
+				      	// 글쓴이는 자기글에 참여할수없는 기능
+				      	var user = '<sec:authentication property="principal.memberId"/>';
+				      	var writer = '${study.leaderId}';
+				      	if(user == writer){
+				      		$('#joinBtn').attr('disabled',true);
+				      	}
+				      	
+      				</script>
+      			</div>
+      		</div>
+      	</form>
       </div>
    </div>
 </body>

@@ -172,7 +172,6 @@
 			});
 		}
 		
-		
 		//언어 체크박스 - 2개만 체크되게 하기
 		function count_ck(obj){
 			var chkbox = document.getElementsByName("ck_lang");

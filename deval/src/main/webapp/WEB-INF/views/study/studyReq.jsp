@@ -27,5 +27,35 @@
                     </div>
                 </section>
                 <!-- End Title -->
+                <!-- Study Req Member -->
+                <div align="center">
+		<table style="width: 100%;">
+			<thead>
+				<tr class="row100 head">
+					<th>스터디팀번호</th>
+					<th>신청자</th>
+					<th>학력</th>
+					<th>경력</th>
+					<th>자격증</th>
+					<th>소개</th>
+					<th>승인여부</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<c:forEach items="${study}" var="std">
+					<tr> <%-- tr 안에 onclick="studySearch('${std.studyNo }')" --%>
+						<td>${std.studyNo }</td>
+						<td>${std.memberId }</td>
+						<td>${std.college }</td>
+						<td>${std.career }</td>
+						<td>${std.license }</td>
+						<td>${std.present }</td>
+						<td>${std.state }</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+	</div>	
 </body>
 </html>

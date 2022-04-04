@@ -1,7 +1,11 @@
 package co.yd.deval.study.web;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,7 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import co.yd.deval.member.service.MemberVO;
 import co.yd.deval.study.service.StudyInfoVO;
+import co.yd.deval.study.service.StudyReqVO;
 import co.yd.deval.study.service.StudyService;
 import co.yd.deval.study.service.StudyVO;
 
@@ -37,7 +43,7 @@ public class StudyController {
     // 스터디 등록 기능
     @RequestMapping("/insertStudy.do")
     @ResponseBody
-    public String insertStudy(StudyVO vo) {
+    public String insertStudy(StudyVO vo, Principal user) {
     	// 언어 2개 체크
     	if(vo.getCk_lang()!=null) {
     		if(vo.getCk_lang().length>0) {
@@ -48,7 +54,7 @@ public class StudyController {
     		}
     	}
 
-    	vo.setLeaderId("popo");	/* MemberID로 바꾸기 */
+    	vo.setLeaderId(user.getName());
     	int n = studyDao.studyInsert(vo);
     	return Integer.toString(n);
     }
@@ -91,13 +97,11 @@ public class StudyController {
     	}
     }
    
-    /* Study User Info */
+    /* Study Modal User Info */
     @RequestMapping("/studyUser.do")
     @ResponseBody
     public StudyInfoVO studySelectUser(StudyInfoVO vo, Model model) {
     	UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	// UserDetails에 id를 추가 필요
-    	// user.getUsername() 이 아닌 user.getUserid() 로 변경
     	vo.setMemberId(user.getUsername());
 
     	return studyDao.studySelectUser(vo);
@@ -105,12 +109,10 @@ public class StudyController {
     
     @RequestMapping("/studyUserEdit.do")
     @ResponseBody
-    public String studyUserEdit(StudyInfoVO vo) {
+    public String studyUserEdit(StudyInfoVO vo, @AuthenticationPrincipal User user) {
     	int n = 1;
-    	UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	// UserDetails에 id를 추가 필요
-    	// user.getUsername() 이 아닌 user.getUserid() 로 변경
-    	vo.setMemberId(user.getUsername());
+    	
+    	vo.setMemberId(user.getUsername()); //userName = id
     	
     	StudyInfoVO existUser = studyDao.studySelectUser(vo);
     	
@@ -121,6 +123,15 @@ public class StudyController {
     	}
 
     	return Integer.toString(n);
+    }
+    
+    @RequestMapping("/studyReqInsert.do")
+    @ResponseBody
+    public String studyReqInsert(int sno, StudyReqVO vo, @AuthenticationPrincipal UserDetails user) {
+    	MemberVO membervo = (MemberVO) user; //아이디, 사진(프사)
+    	Study
+    	
+    	return
     }
     
     /* STUDY Req & Group Members*/

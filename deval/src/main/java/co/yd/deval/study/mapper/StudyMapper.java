@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import co.yd.deval.study.service.StudyInfoVO;
+import co.yd.deval.study.service.StudyReqVO;
 import co.yd.deval.study.service.StudyVO;
 
 public interface StudyMapper {
@@ -19,4 +20,11 @@ public interface StudyMapper {
 	StudyInfoVO studySelectUser(StudyInfoVO vo);
 	int studyUserInsert(StudyInfoVO vo);
 	int studyUserUpdate(StudyInfoVO vo);
+	
+	// 스터디 참가
+	List<StudyReqVO> studyReqSelectAll();
+	//StudyReqVO studyTeam(StudyReqVO vo);
+	int studyTeamMemberInsert(StudyReqVO vo);
+	int studyTeamMemberUpdate(StudyReqVO vo);
+	int studyTeamMemberDelete(StudyReqVO vo);
 }
