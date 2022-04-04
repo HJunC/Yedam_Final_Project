@@ -110,7 +110,7 @@
 			</section>
 		<br>
 	</div>
-	<%@ include file="../comment/comment2.jsp" %>
+	<%@ include file="../comment/comment.jsp" %>
 </body>
 <script type="text/javascript">
 	function codeUpdate(str) {

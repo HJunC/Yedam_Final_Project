@@ -1,5 +1,7 @@
 package co.yd.deval.code.web;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,14 +30,15 @@ public class CodeController {
 		return "code/codeList";
 	}
 
-	@PostMapping("/codeSelectOne.do")
-	public String codeSelectOne(Model model, CodeVO vo) {
+	@GetMapping("/codeSelectOne.do")
+	public String codeSelectOne(Model model, CodeVO vo, Principal principal) {
 		vo = codeDAO.codeSelectOne(vo);
 		if (vo != null) {
 			model.addAttribute("code", vo);
 			CommentVO cmVo = new CommentVO();
 			cmVo.setBoardNo(vo.getCqNo());
 			model.addAttribute("comments", commentDAO.commentSelectList(cmVo));
+			model.addAttribute("username", principal.getName());
 			model.addAttribute("bno", vo.getCqNo());
 			codeDAO.codeHitUp(vo);
 			return "code/codeSelectOne";
