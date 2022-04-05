@@ -16,6 +16,8 @@ import co.yd.deval.member.service.MemberVO;
 import co.yd.deval.project.service.ProjectService;
 import co.yd.deval.study.service.StudyService;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 public class MemberController {
 	
@@ -28,7 +30,9 @@ public class MemberController {
 	
 	
 	@RequestMapping("/loginForm.do")
-	public String loginForm() {
+	public String loginForm(HttpServletRequest request) {
+		String referer = (String) request.getHeader("REFERER");
+		System.out.println(referer);
 		return "member/loginForm";
 	}
 	

@@ -20,18 +20,9 @@
 			</div>
 		</section>
 		<section class="page-section bg-dark light-content pt-0">
-			<form id="frm" name="frm" class="form" method="post">
+			<form id="frm" name="frm" class="form">
 			<input name="${_csrf.parameterName }" value="${_csrf.token}" type="hidden">
 				<div class="container relative">
-					<div class="row">
-						<div align="left">&nbsp;&nbsp;&nbsp;&nbsp;
-							<label for="git">GIT URI</label> 
-							<input type="url" size="90" id="gitUri" name="gitUri" 
-								class="input-sm round" placeholder="GIT주소" 
-								style="height: 48px;" required >
-						</div>
-					</div>
-					<br>
 					<div class="table-responsive">
 						<table class="table shopping-cart-table">
 							<tr>
@@ -49,7 +40,7 @@
 							<input class="btn btn-mod btn-round btn-border-w btn-small" 
 								type="button" value="등록" onclick="inputFnc('I')">
 							<input class="btn btn-mod btn-round btn-border-w btn-small"
-								type="button" value="취소" onclick="inputFnc('C')">
+								type="button" value="취소" onclick="location.href='reviewSelectList.do?cqNo=${review.cqNo}'">
 						</div>
 					</div>
 				</div>
@@ -61,12 +52,10 @@
 <script type="text/javascript">
 	function inputFnc(str){
 		if(str == "I"){
+			 frm.method = "post";
 			 frm.action = "reviewInsert.do";
 			 frm.submit();
-		} else if (str == "C") {
-			frm.action = "reviewSelectList.do";
-			frm.submit();
-		}
+		} 
 	}
 </script>
 </html>

@@ -65,7 +65,7 @@
 								<li><a href="${root}/board/free.do">자유게시판</a></li>
 								<li><a href="${root}/board/notice.do">공지사항</a></li>
 								<li><a href="${root}/board/technical.do">최신기술</a></li>
-								<li><a href="${root}/board/usedDeal.do">중고거래</a></li>
+								<li><a href="${root}/trade/tradeList.do">중고거래</a></li>
 							</ul>
 						</li>
 						<li class="mn-sub-multi">
@@ -103,8 +103,8 @@
                   	<ul>
                      <li><a href="${root}/study/studyList.do">스터디 검색</a></li>
                      <li><a href="${root}/study/addStudy.do">스터디 등록</a></li>
-                     <li><a href="#">신청자 정보</a></li>
-                     <li><a href="#">그룹원 정보</a></li>
+                     <li><a href="${root}/study/studyReq.do">신청자 정보</a></li>
+                     <li><a href="${root}/study/studyMember.do">그룹원 정보</a></li>
                   </ul>
                   </li>   
                </ul>

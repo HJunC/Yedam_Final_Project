@@ -2,17 +2,47 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="co.yd.deval.project.mapper.ProjectRequestMapper">
 
-    <insert id="insertProjectRequest"></insert>
-    <update id="updateProjectRequest"></update>
-    <delete id="deleteProjectRequest"></delete>
+    <insert id="insertProjectRequest">
+        INSERT INTO PROJECT_REQUEST (STATE,
+                                     SUBJECT,
+                                     POSITION,
+                                     MEMBER_ID,
+                                     REQUEST_DT,
+                                     PROJECT_NO)
+        VALUES ('1',
+                #{subject},
+                #{position},
+                #{memberId},
+                default,
+                #{projectNo})
+    </insert>
 
-    <select id="selectProjectRequestAll" resultType="co.yd.deval.project.service.ProjectRequestVO">
-        SELECT *
-        FROM PROJECT_REQUEST
-    </select>
+    <update id="updateProjectRequest">
+        UPDATE PROJECT_REQUEST
+        <set>
+            <if test="state != null">STATE = #{state},</if>
+            <if test="subject != null">SUBJECT = #{subject},</if>
+            <if test="position != null">POSITION = #{position},</if>
+            <if test="memberId != null">MEMBER_ID = #{memberId},</if>
+            <if test="requestDt != null">REQUEST_DT = #{requestDt},</if>
+        </set>
+        WHERE PROJECT_NO = #{projectNo}
+          AND MEMBER_ID = #{memberId}
+    </update>
+
+    <delete id="deleteProjectRequest">
+        DELETE FROM PROJECT_REQUEST
+         WHERE PROJECT_NO = #{projectNo}
+        <if test="memberId != null">AND MEMBER_ID = #{memberId}</if>
+    </delete>
+
     <select id="selectProjectRequest" resultType="co.yd.deval.project.service.ProjectRequestVO">
         SELECT *
-        FROM PROJECT_REQUEST
-        WHERE PROJECT_NO = #{projectNo}
+          FROM PROJECT_REQUEST
+        <where>
+            <if test="projectNo != 0">PROJECT_NO = #{projectNo}</if>
+            <if test="memberId != null">AND MEMBER_ID = #{memberId}</if>
+            <if test="state != null">AND STATE = #{state}</if>
+        </where>
     </select>
 </mapper>

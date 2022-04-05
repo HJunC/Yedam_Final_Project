@@ -82,7 +82,7 @@
 
 	</div>
 	<div>
-		<form id="frm" action="codeSelectOne.do" method="post">
+		<form id="frm" action="codeSelectOne.do" method="get">
 		<input name="${_csrf.parameterName }" value="${_csrf.token}" type="hidden">
 			<input type="hidden" id="cqNo" name="cqNo">
 		</form>
