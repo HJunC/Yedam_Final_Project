@@ -62,3 +62,48 @@
 
 </div>
 <!-- End Fullwidth Slider -->
+<section class="page-section bg-dark light-content">
+    <div class="container relative">
+        <div class="row">
+
+            <!-- Col -->
+
+            <div class="col-sm-6 mb-40">
+
+                <div class="text">
+                    <h5>자유게시판</h5>
+                    <ul>
+                        <li>어서오세여</li>
+                        <li>어서오세여</li>
+                        <li>어서오세여</li>
+                        <li>어서오세여</li>
+                        <li>어서오세여</li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- End Col -->
+
+            <!-- Col -->
+
+            <div class="col-sm-6 mb-40">
+
+                <div class="text">
+                    <h5>One Half</h5>
+                    <ul>
+                        <li>어서오세여</li>
+                        <li>어서오세여</li>
+                        <li>어서오세여</li>
+                        <li>어서오세여</li>
+                        <li>어서오세여</li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- End Col -->
+
+        </div>
+    </div>
+</section>

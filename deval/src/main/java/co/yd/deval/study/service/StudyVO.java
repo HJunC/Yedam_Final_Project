@@ -11,6 +11,7 @@ import lombok.ToString;
 @Getter
 @ToString
 public class StudyVO {
+	
 	private int studyNo;
 	private String lang1;
 	private String location;
@@ -25,5 +26,4 @@ public class StudyVO {
 	private String studyNm;
 	private String lang2;
 	private String[] ck_lang;
-
 }

@@ -1,12 +1,14 @@
 package co.yd.deval.project.service;
 
 public enum ProjectStateEnum {
-    RECRUITING(1),
-    COMPLETION_RECRUITMENT(2),
-    PROJECT_PROGRESS(3),
-    COMPLETED(4),
-    STOP_PROJECT(9);
+    P1("없음"),
+    P2("지원중"),
+    P3("대기팀원"),
+    P4("진행중팀원"),
+    P5("대기팀장"),
+    P6("진행중팀장"),
+    ;
 
-    ProjectStateEnum(int i) {
+    ProjectStateEnum(String val) {
     }
 }
