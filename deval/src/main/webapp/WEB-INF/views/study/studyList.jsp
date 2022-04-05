@@ -104,29 +104,29 @@
 							</div>
 						</div>
 					</div>
-					<div class="row py-2">
-						<div class="col-md-6">
+						<div class="row py-2">
+						<div class="col-md-6" >
 							<label for="college">학력</label> <select name="college"
-								id="college" class="bg-light">
-								<option value="none1" selected>비공개</option>
-								<option value="underhigh">고등학교 졸업 이하</option>
-								<option value="high">고등학교 졸업</option>
-								<option value="unimiddle">대학 졸업 (2,3년제)</option>
-								<option value="uni">대학 졸업(4년제)</option>
-								<option value="unisuksa">대학원 석사 졸업</option>
-								<option value="uniparksa">대학원 박사 졸업</option>
+								id="college" class="bg-light" >
+								<option value="비공개" selected>비공개</option>
+								<option value="고등학교 졸업 이하">고등학교 졸업 이하</option>
+								<option value="고등학교 졸업">고등학교 졸업</option>
+								<option value="대학 졸업 (2,3년제)">대학 졸업 (2,3년제)</option>
+								<option value="대학 졸업(4년제)">대학 졸업(4년제)</option>
+								<option value="대학원 석사 졸업">대학원 석사 졸업</option>
+								<option value="대학원 박사 졸업">대학원 박사 졸업</option>
 							</select>
 						</div>
 						<div class="col-md-6 pt-md-0 pt-3" id="career">
 							<label for="career">경력</label>
 							<div class="arrow">
 								<select name="career" id="career" class="bg-light">
-									<option value="none2" selected>비공개</option>
-									<option value="career1">1년 미만</option>
-									<option value="career2">1년~2년</option>
-									<option value="career3">3년~4년</option>
-									<option value="career4">5년~7년</option>
-									<option value="career5">10년 이상</option>
+									<option value="비공개" selected>비공개</option>
+									<option value="1년 미만">1년 미만</option>
+									<option value="1년~2년">1년~2년</option>
+									<option value="3년~4년">3년~4년</option>
+									<option value="5년~7년">5년~7년</option>
+									<option value="10년 이상">10년 이상</option>
 								</select>
 							</div>
 						</div>

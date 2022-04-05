@@ -70,7 +70,7 @@
          </form>
       </div>
       
-      		<!-- Modal Start -->
+		<!-- Modal Start -->
 		<button onclick="MyInfoModal()" id="joinBtn" class="btn btn-mod btn-w btn-medium round mt-10  mfp-inline">참가</button>
 		<style>
 		.mfp-content {
@@ -109,31 +109,31 @@
 						<div class="col-md-6" >
 							<label for="college">학력</label> <select name="college"
 								id="college" class="bg-light" >
-								<option value="none1" selected>비공개</option>
-								<option value="underhigh">고등학교 졸업 이하</option>
-								<option value="high">고등학교 졸업</option>
-								<option value="unimiddle">대학 졸업 (2,3년제)</option>
-								<option value="uni">대학 졸업(4년제)</option>
-								<option value="unisuksa">대학원 석사 졸업</option>
-								<option value="uniparksa">대학원 박사 졸업</option>
+								<option value="비공개" selected>비공개</option>
+								<option value="고등학교 졸업 이하">고등학교 졸업 이하</option>
+								<option value="고등학교 졸업">고등학교 졸업</option>
+								<option value="대학 졸업 (2,3년제)">대학 졸업 (2,3년제)</option>
+								<option value="대학 졸업(4년제)">대학 졸업(4년제)</option>
+								<option value="대학원 석사 졸업">대학원 석사 졸업</option>
+								<option value="대학원 박사 졸업">대학원 박사 졸업</option>
 							</select>
 						</div>
 						<div class="col-md-6 pt-md-0 pt-3" id="career">
 							<label for="career">경력</label>
 							<div class="arrow">
 								<select name="career" id="career" class="bg-light">
-									<option value="none2" selected>비공개</option>
-									<option value="career1">1년 미만</option>
-									<option value="career2">1년~2년</option>
-									<option value="career3">3년~4년</option>
-									<option value="career4">5년~7년</option>
-									<option value="career5">10년 이상</option>
+									<option value="비공개" selected>비공개</option>
+									<option value="1년 미만">1년 미만</option>
+									<option value="1년~2년">1년~2년</option>
+									<option value="3년~4년">3년~4년</option>
+									<option value="5년~7년">5년~7년</option>
+									<option value="10년 이상">10년 이상</option>
 								</select>
 							</div>
 						</div>
 					</div>
 					<div class="py-3 pb-4 border-bottom">
-						<button class="btn btn-primary mr-3" id="btn_md_req"> 신청 </button>
+						<button type="button" class="btn btn-primary mr-3" id="btn_md_req"> 신청 </button>
 					</div>
 					<div class="d-sm-flex align-items-center pt-3" id="deactivate">
 						<div>
@@ -142,19 +142,19 @@
 						</div>
 						<br>
       
-      				<!-- 신청 Onclick 함수 -> 모달 창 기능 구현 -->
 				      <script type="text/javascript">
+				      
 				      	function MyInfoModal() {
 				      		console.log("-- My Info Modal Onclick Evn Start --")
-								
+							
 								/* 유저 정보 저장된 값 가져오기 */
 								$.ajax({
 									url : "studyUser.do",
 									type : "post",
 									data : $("#frm_modal").serialize(),
 									dataType : "json",
-									success : function(result) {
-											if(result){
+									success : function (result) {
+											if (result){
 												$("#memberId").text(result.memberId);
 												$("#present").val(result.present);
 												$("#license").val(result.license);
@@ -177,31 +177,35 @@
 								});
 				      		
 				      		// 모달 창 클릭시 OPEN
-							/* $('#mod_open').on('click', function (e) { 
+							/*  $('#mod_open').on('click', function (e) { 
 								console.log("-- Study User Info Modal Open --");
-							}); */
+							});  */
 							
 							/* 스터디 신청 보내기 */
-							$('#btn_md_req').on('click', function (e) {
-								console.log("-- Study Req Start --");
-								
-								$.ajax({
-									url : "studyReq.do",
-									type : "post",
-									data : $("#frm_modal").serialize(),
-									dataType : "text",
-									success : function(result) {
-										console.log("succ", result);
-										if (result != "0") {
-											alert("스터디 참가 신청을하였습니다.");
+				      		 $('#btn_md_req').on('click', function (e) {
+									console.log("-- Study Req Start --");
+									
+									$.ajax({
+										url : "studyReqInsert.do",
+										type : "post",
+										data : $("#frm_modal").serialize(),
+										dataType : "text",
+										success : function(result) {
+											console.log(result);
+											 if (result.state != null || result.state != '0' ) {
+												
+												alert("스터디 참가 신청을하였습니다.");
+												location.href = "studyMain.do";
+												
+											} 
+										},
+										error : function(err) {
+											console.log("error", err);
 										}
-									},
-									error : function(err) {
-										console.log("error", err);
-									}
+									});
+									console.log("-- Study Req End --")
 								});
-								console.log("-- Study Req End --")
-							});
+				      	
 				      	}
 				      	
 				      	// 글쓴이는 자기글에 참여할수없는 기능
@@ -210,7 +214,6 @@
 				      	if(user == writer){
 				      		$('#joinBtn').attr('disabled',true);
 				      	}
-				      	
       				</script>
       			</div>
       		</div>

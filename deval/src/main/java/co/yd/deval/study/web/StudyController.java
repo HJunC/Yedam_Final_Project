@@ -3,6 +3,7 @@ package co.yd.deval.study.web;
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import co.yd.deval.member.service.MemberService;
 import co.yd.deval.member.service.MemberVO;
 import co.yd.deval.study.service.StudyInfoVO;
 import co.yd.deval.study.service.StudyReqVO;
@@ -26,6 +28,9 @@ public class StudyController {
 	
 	@Autowired
 	private StudyService studyDao;
+	
+	@Autowired
+	private MemberService memberDao;
 	
 	/* STUDY */
 	// 스터디 메인
@@ -109,10 +114,10 @@ public class StudyController {
     
     @RequestMapping("/studyUserEdit.do")
     @ResponseBody
-    public String studyUserEdit(StudyInfoVO vo, @AuthenticationPrincipal User user) {
+    public String studyUserEdit(StudyInfoVO vo, Principal principal) {
     	int n = 1;
     	
-    	vo.setMemberId(user.getUsername()); //userName = id
+    	vo.setMemberId(principal.getName()); //userName = id
     	
     	StudyInfoVO existUser = studyDao.studySelectUser(vo);
     	
@@ -125,25 +130,47 @@ public class StudyController {
     	return Integer.toString(n);
     }
     
-    @RequestMapping("/studyReqInsert.do")
+    
+    /* Study Request */
+    
+    @PostMapping("/studyReqInsert.do")
     @ResponseBody
-    public String studyReqInsert(int sno, StudyReqVO vo, @AuthenticationPrincipal UserDetails user) {
-    	MemberVO membervo = (MemberVO) user; //아이디, 사진(프사)
-    	Study
+    public ResponseEntity<StudyReqVO> studyReqInsert(int sno, StudyReqVO rvo, Principal principal) {
+    	MemberVO membervo =new MemberVO(); //아이디, 프사
+    	membervo.setMemberId(principal.getName());
+    	membervo = memberDao.memberSelect(membervo);
     	
-    	return
+    	rvo.setStudyNo(sno);
+    	rvo.setMemberId(membervo.getMemberId()); //멤버 아이디
+    	rvo.setCollege(rvo.getCollege());
+    	rvo.setCareer(rvo.getCareer());
+    	rvo.setLicense(rvo.getLicense());
+    	rvo.setPresent(rvo.getPresent());
+    	rvo.setProfileImg(membervo.getProfileImg()); //프사
+    	
+    	int r = studyDao.studyTeamMemberInsert(rvo);
+    	
+    	return ResponseEntity.ok().body(rvo);
     }
     
-    /* STUDY Req & Group Members*/
+    @RequestMapping("/studyReqDel.do")
+    @ResponseBody
+    public ResponseEntity<Integer> studyReqDel(StudyReqVO vo) {
+    	
+    	int n = studyDao.studyTeamMemberDelete(vo);
+    	
+    	return ResponseEntity.ok().body(n);
+    }
+    
     @RequestMapping("/studyReq.do")
     public String studyReq(Model model) {
-    	//model.addAllAttributes("", );
+    	model.addAttribute("study", studyDao.studyReqSelectAll());
     	return "study/studyReq";
     }
     
     @RequestMapping("/studyMember.do")
     public String studyMember(Model model) {
-    	//model.addAllAttributes("", );
+    	//model.addAttribute("", );
     	return "study/studyMember";
-    }
+    } 
 }

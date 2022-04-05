@@ -118,27 +118,31 @@
 	
 	<insert id="studyTeamMemberInsert" parameterType="co.yd.deval.study.service.StudyReqVO">
 		INSERT INTO STUDY_REQUEST (   STUDY_NO
-									, STATE
 									, MEMBER_ID
 									, COLLEGE
 									, CAREER
 									, LICENSE
-									, ISLEADER
 									, PRESENT
 									, PROFILE_IMG
 								   )
 								   
 						   VALUES (  #{studyNo}
-						   		   , #{state}
 						   		   , #{memberId}
 						   		   , #{college}
 						   		   , #{career}
 						   		   , #{license}
-						   		   , #{isLeader}
 						   		   , #{present}
 						   		   , #{profileImg}
 						   		   )								   
 		
 	</insert>
+	
+	<delete id="studyTeamMemberDelete" parameterType="co.yd.deval.study.service.StudyReqVO">
+		DELETE
+		FROM STUDY_REQUEST
+		WHERE MEMBER_ID = #{memberId}
+		AND
+		STUDY_NO = #{studyNo}
+	</delete>
 	
 </mapper>
