@@ -4,6 +4,8 @@ import co.yd.deval.project.service.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,12 +43,22 @@ public class RestProjectController {
      * @return ProjectRequestVO
      */
     @PostMapping("/request")
-    public ResponseEntity<ProjectRequestVO> request(ProjectRequestVO vo, Principal principal) {
+    public ResponseEntity<Map<String, Object>> request(ProjectRequestVO vo, Principal principal, HttpServletRequest request) {
+        Map<String, Object> returnBody = new HashMap<>();
+        HttpSession session = request.getSession();
         if (principal != null) {
-            projectRequestService.insertProjectRequest(vo);
-            return ResponseEntity.ok().body(vo);
+            int result = projectRequestService.insertProjectRequest(vo);
+            if (result == 0) {
+                returnBody.put("result", "fail");
+                returnBody.put("errorMessage", "입력 실패하였습니다.");
+                return ResponseEntity.badRequest().body(returnBody);
+            }
+            returnBody.put("result", "success");
+            session.setAttribute("userProjectState", "지원중");
+            return ResponseEntity.ok().body(returnBody);
         } else {
-            return ResponseEntity.badRequest().body(vo);
+            returnBody.put("errorMessage", "잘못된 접근입니다.");
+            return ResponseEntity.badRequest().body(returnBody);
         }
     }
 
@@ -77,15 +89,16 @@ public class RestProjectController {
         Map<String, Object> returnBody = new HashMap<>();
         if (principal.getName().equals(vo.getLeaderId())) {
             if (projectService.getOngoingProject(principal.getName()) == null) {
-                int projectNo = projectService.insertProject(vo);
-                vo.setProjectNo(projectNo);
-                returnBody.put("data", vo);
+                projectService.insertProject(vo);
+                returnBody.put("result", "success");
                 return ResponseEntity.ok().body(returnBody);
             } else {
-                returnBody.put("error", "이미 프로젝트가 존재합니다.");
+                returnBody.put("result", "fail");
+                returnBody.put("errorMessage", "이미 프로젝트가 존재합니다.");
             }
         } else {
-            returnBody.put("error", "잘못된 접근입니다.");
+            returnBody.put("result", "fail");
+            returnBody.put("errorMessage", "잘못된 접근입니다.");
         }
         return ResponseEntity.badRequest().body(returnBody);
     }

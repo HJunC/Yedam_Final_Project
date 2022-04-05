@@ -13,6 +13,14 @@
 
             <div class="col-md-8">
                 <div class="wow fadeInUpShort" data-wow-delay=".1s">
+                <c:choose>
+                    <c:when test="${project.state eq '1'}"><p class="badge bg-info text-dark">모집중</p></c:when>
+                    <c:when test="${project.state eq '2'}"><p class="badge bg-info text-dark">모집완료</p></c:when>
+                    <c:when test="${project.state eq '3'}"><p class="badge bg-info text-dark">진행</p></c:when>
+                    <c:when test="${project.state eq '4'}"><p class="badge bg-info text-dark">완료</p></c:when>
+                    <c:when test="${project.state eq '8'}"><p class="badge bg-info text-dark">모집기간 지남</p></c:when>
+                    <c:when test="${project.state eq '9'}"><p class="badge bg-info text-dark">취소</p></c:when>
+                </c:choose>
                     <h2 class="hs-line-7 mb-40 mb-xs-20" style="font-size: 52px;">${project.projectName}</h2>
                 </div>
                 <div class="wow fadeInUpShort" data-wow-delay=".2s">
@@ -155,7 +163,7 @@
                             </div>
 
                             <!-- Send Button -->
-                            <button type="submit" class="btn btn-mod btn-w btn-medium btn-round">
+                            <button type="button" class="btn btn-mod btn-w btn-medium btn-round" onclick="addRequest()">
                                 신청하기
                             </button>
 
@@ -322,14 +330,3 @@
   }
 
 </script>
-
-(모집중)
-- 프로젝트 신청
-- 프로젝트 삭제 (작성자)
-
-(진행중)
-- 프로젝트 마감일 수정
-- 프로젝트 삭제 (프로젝트 마감일 < 오늘날짜)
-
-(완료)
-- 프로젝트 공유하기 (공유X)

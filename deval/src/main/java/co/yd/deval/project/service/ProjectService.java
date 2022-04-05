@@ -16,10 +16,15 @@ public interface ProjectService {
     int deleteProject(ProjectVO vo);
     int updateProject(ProjectVO vo);
 
-    ProjectVO getOngoingProject(String memberId); // 로그인 유저의 프로젝트 정보
+    ProjectTeamVO getOngoingProject(String memberId); // 로그인 유저의 프로젝트 정보
     List<ProjectVO> searchMainPageProject(ProjectVO vo); // 메인화면 프로젝트 구성
 
-    ProjectInfoDTO getProjectInfo(int projectNo); // 프로젝트 상세정보 (projectDetail.jsp)
+    /***
+     * 프로젝트 팀원 포함한 정보
+     * @param projectNo 프로젝트 번호
+     * @return ProjectInfoDTO
+     */
+    ProjectInfoDTO getProjectInfo(int projectNo);
 
     // 검색 페이징 처리
     List<ProjectVO> getListWithPaging(ProjectVO vo);

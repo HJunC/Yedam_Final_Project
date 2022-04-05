@@ -16,6 +16,7 @@
                 default,
                 #{projectNo})
     </insert>
+
     <update id="updateProjectRequest">
         UPDATE PROJECT_REQUEST
         <set>
@@ -28,22 +29,20 @@
         WHERE PROJECT_NO = #{projectNo}
           AND MEMBER_ID = #{memberId}
     </update>
+
     <delete id="deleteProjectRequest">
         DELETE FROM PROJECT_REQUEST
          WHERE PROJECT_NO = #{projectNo}
         <if test="memberId != null">AND MEMBER_ID = #{memberId}</if>
     </delete>
 
-    <select id="selectProjectRequestAll" resultType="co.yd.deval.project.service.ProjectRequestVO">
-        SELECT *
-          FROM PROJECT_REQUEST
-    </select>
-
     <select id="selectProjectRequest" resultType="co.yd.deval.project.service.ProjectRequestVO">
         SELECT *
           FROM PROJECT_REQUEST
-         WHERE PROJECT_NO = #{projectNo}
-           AND MEMBER_ID = #{memberId}
-        <if test="state != 0">AND STATE = #{state}</if>
+        <where>
+            <if test="projectNo != 0">PROJECT_NO = #{projectNo}</if>
+            <if test="memberId != null">AND MEMBER_ID = #{memberId}</if>
+            <if test="state != null">AND STATE = #{state}</if>
+        </where>
     </select>
 </mapper>

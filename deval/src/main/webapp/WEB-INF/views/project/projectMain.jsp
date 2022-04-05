@@ -16,6 +16,7 @@
                 <div class="wow fadeInUpShort" data-wow-delay=".2s">
                     <p class="hs-line-6 opacity-075 mb-20 mb-xs-0">
                         딱 맞는 사람과 함께 개발 프로젝트를 진행해보세요
+                        ${sessionScope.userProjectState }
                     </p>
                 </div>
             </div>
@@ -50,18 +51,45 @@
             </c:otherwise>
         </c:choose>
 
-        <c:if test="${sessionScope.userProjectState eq 'P5'}">
+        <c:if test="${sessionScope.userProjectState eq '대기팀장' || sessionScope.userProjectState eq '진행중 팀장'}">
             나는 리더
         </c:if>
 
-        <c:if test="${sessionScope.userProjectState eq 'P2'}">
-            <c:forEach items="${userRequestProject }" var="item">
+        <c:if test="${sessionScope.userProjectState eq '대기팀장'}">
+            <h4>지원자</h4>
+            <c:choose>
+                <c:when test="${not empty requestList}">
+                    <c:forEach items="${requestList}" var="item">
+                        <p>
+                        ${item.projectNo } /
+                        ${item.memberId } /
+                        ${item.state } /
+                        ${item.subject } /
+                        ${item.position } /
+                        ${item.requestDt }
+                        <button type="button" class="btn btn-mod btn-w btn-medium btn-round">수락</button>
+                        <button type="button" class="btn btn-mod btn-w btn-medium btn-round">거절</button>
+                        </p>
+                    </c:forEach>
+                </c:when>
+
+                <c:otherwise>
+                    <h3 class="call-action-1-heading" style="font-size: 30px; color: rgba(255, 255, 255, 0.3);">지원자가 없습니다.</h3>
+                </c:otherwise>
+            </c:choose>
+        </c:if>
+
+        <c:if test="${sessionScope.userProjectState eq '지원중'}">
+            <h3>지원한 프로젝트</h3>
+            <c:forEach items="${userRequest}" var="item">
+                <p>
                 ${item.projectNo } /
                 ${item.memberId } /
                 ${item.state } /
                 ${item.subject } /
                 ${item.position } /
                 ${item.requestDt }
+                </p>
             </c:forEach>
         </c:if>
     </div>

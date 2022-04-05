@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -47,29 +48,66 @@ public class ProjectController {
         if (principal != null) {
             HttpSession session = request.getSession();
             String state = (String) session.getAttribute("userProjectState");
+
+            int projectNo = 0;
+            List<ProjectRequestVO> requestList = new ArrayList<>();
+
             if (state == null) {
-                ProjectVO userProject = projectService.getOngoingProject(principal.getName());
-                // 진행중인 프로젝트가 있을 때
-                if (userProject != null) {
-                    if (userProject.getLeaderId().equals(principal.getName())) {
-                        session.setAttribute("userProjectState", ProjectStateEnum.P5);
+                ProjectTeamVO userTeam = projectService.getOngoingProject(principal.getName());
+                // 대기, 진행중인 프로젝트가 있을 때
+                if (userTeam != null) {
+                    if (userTeam.getIsLeader().equals("1")) {
+                        session.setAttribute("userProjectState", userTeam.getState().equals("2") ? "진행중팀장" : "대기팀장");
                     } else {
-                        session.setAttribute("userProjectState", ProjectStateEnum.P6);
+                        session.setAttribute("userProjectState", userTeam.getState().equals("2") ? "진행중팀원" : "대기팀원");
                     }
-                    model.addAttribute("userProject", userProject);
+                    projectNo = userTeam.getProjectNo();
                 } else {
                     ProjectRequestVO rvo = new ProjectRequestVO();
                     rvo.setMemberId(principal.getName());
                     rvo.setState("1"); // 검토중
-                    List<ProjectRequestVO> requestList = projectRequestService.selectProjectRequest(rvo);
+                    requestList = projectRequestService.selectProjectRequest(rvo);
                     // 검토중인 요청이 있을 떄
                     if (!requestList.isEmpty()) {
-                        session.setAttribute("userProjectState", ProjectStateEnum.P2);
-                        model.addAttribute("userRequestProject", requestList);
+                        session.setAttribute("userProjectState", "지원중");
+                        model.addAttribute("userRequest", requestList);
+                    } else {
+                        session.setAttribute("userProjectState", "없음");
                     }
                 }
             }
-            System.out.println("=============================================="+state);
+
+            state = (String) session.getAttribute("userProjectState");
+            switch (state) {
+                case "지원중":
+                    if (requestList.isEmpty()) {
+                        ProjectRequestVO rvo = new ProjectRequestVO();
+                        rvo.setMemberId(principal.getName());
+                        rvo.setState("1"); // 검토중
+                        requestList = projectRequestService.selectProjectRequest(rvo);
+                    }
+                    model.addAttribute("userRequest", requestList);
+                    break;
+                case "대기팀원":
+                case "진행중팀원":
+                case "대기팀장":
+                case "진행중팀장":
+                    if (projectNo == 0) {
+                        ProjectTeamVO userTeam = projectService.getOngoingProject(principal.getName());
+                        projectNo = userTeam.getProjectNo();
+                    }
+                    model.addAttribute("userProject", projectService.getProjectInfo(projectNo));
+                    if (state.equals("대기팀장")) {
+                        // 지원자 리스트
+                        ProjectRequestVO requestVO = new ProjectRequestVO();
+                        requestVO.setProjectNo(projectNo);
+                        model.addAttribute("requestList", projectRequestService.selectProjectRequest(requestVO));
+                    }
+                    break;
+                case "없음":
+                default:
+                    break;
+            }
         }
 
         ProjectVO searchVO = new ProjectVO();
@@ -92,38 +130,6 @@ public class ProjectController {
             return "redirect:../loginForm.do";
         }
     }
-
-    /***
-     * 프로젝트 생성
-     * @param vo 프로젝트 vo
-     * @param principal 로그인 유저정보
-     * @return redirect:main.do
-     */
-    /*@PostMapping("/insertProject.do")
-    public String addProject(ProjectVO vo, Principal principal) {
-        if (principal != null) {
-            System.out.println("============================================"+vo);
-            vo.setLeaderId(principal.getName());
-            int result = projectService.insertProject(vo);
-        }
-        return "redirect:main.do";
-    }*/
-
-    /***
-     * 프로젝트 삭제
-     * @param vo 프로젝트 vo
-     * @param principal 로그인 유저정보
-     * @return redirect:main.do
-     */
-    /*@PostMapping("/deleteProject.do")
-    public String deleteProject(ProjectVO vo, Principal principal) {
-        if (principal.getName().equals(vo.getLeaderId())) {
-            projectService.deleteProject(vo);
-            return "redirect:main.do";
-        } else {
-            return "redirect:main.do";
-        }
-    }*/
 
     /***
      * 프로젝트 상세화면

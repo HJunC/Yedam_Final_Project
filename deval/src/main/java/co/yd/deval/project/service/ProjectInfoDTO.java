@@ -20,8 +20,8 @@ public class ProjectInfoDTO {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+9")
     private Date recruitSdt;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+9")
     private Date recruitEdt;
 
     private String subject;
@@ -44,7 +44,6 @@ public class ProjectInfoDTO {
     private int hit;
     private int applyRcnt;
     private String leaderId;
-    private String leaderPosition;
 
     private List<ProjectTeamVO> projectTeam;
 }

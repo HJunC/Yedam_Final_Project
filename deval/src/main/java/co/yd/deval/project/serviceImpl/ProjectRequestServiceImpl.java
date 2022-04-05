@@ -29,6 +29,8 @@ public class ProjectRequestServiceImpl implements ProjectRequestService {
 
     @Override
     public int insertProjectRequest(ProjectRequestVO vo) {
+        // 지원자수 증가
+        // 같은 지원자 인지 체크
         return mapper.insertProjectRequest(vo);
     }
 

@@ -44,6 +44,23 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public int insertProject(ProjectVO vo) {
+        switch (vo.getLeaderPosition()) {
+            case "FE":
+                vo.setFrontRcnt(vo.getFrontRcnt() - 1);
+                break;
+            case "BE":
+                vo.setBackRcnt(vo.getBackRcnt() - 1);
+                break;
+            case "FS":
+                vo.setFullRcnt(vo.getFullRcnt() - 1);
+                break;
+            case "DE":
+                vo.setDesignRcnt(vo.getDesignRcnt() - 1);
+                break;
+            case "PL":
+                vo.setPlannerRcnt(vo.getPlannerRcnt() - 1);
+                break;
+        }
         int result = mapper.insertProject(vo);
         ProjectTeamVO teamVo = new ProjectTeamVO();
         teamVo.setProjectNo(vo.getProjectNo());
@@ -66,13 +83,8 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public ProjectVO getOngoingProject(String memberId) {
-        ProjectTeamVO ongoingProject = teamMapper.getOngoingProject(memberId); // 진행중인 프로젝트
-        if (ongoingProject == null) {
-            return null;
-        } else {
-            return mapper.selectProject(ongoingProject.getProjectNo());
-        }
+    public ProjectTeamVO getOngoingProject(String memberId) {
+        return teamMapper.getOngoingProject(memberId); // 진행중인 프로젝트
     }
 
     @Override

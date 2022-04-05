@@ -49,7 +49,7 @@
                         <div class="form-group">
                             <label for="projectName">프로젝트 명</label>
                             <p class="input-info">최소6자, 최대 40자, 공백, 특수문자 불가능</p>
-                            <input type="text" name="projectName" id="projectName" class="input-lg round form-control bg-dark-input" placeholder="Enter username" pattern=".{3,100}" required aria-required="true">
+                            <input type="text" name="projectName" id="projectName" class="input-lg round form-control bg-dark-input" placeholder="ex)개발자 커뮤니티 프로젝트" pattern=".{6,40}" required aria-required="true">
                         </div>
 
                         <div class="form-group">
@@ -128,6 +128,7 @@
                             <label for="recruitEdt">프로젝트 모집 마감일</label>
                             <p class="input-info">1일 ~ 15일</p>
                             <input type="date" name="recruitEdt" id="recruitEdt" class="input-lg round form-control bg-dark-input" required aria-required="true">
+                            <input type="time" id="recruitEdtTime" class="input-lg round form-control bg-dark-input" value="00:00" required aria-required="true">
                         </div>
                         <div class="form-group">
                             <label for="subject">프로젝트 설명</label>
@@ -189,17 +190,25 @@
       isDone = false;
     }
 
+
+    data.recruitEdt = data.recruitEdt + " " + $("#recruitEdtTime").val();
+
     if (isDone) {
         $.ajax({
           type: "POST",
           url: "../api/project/insert",
           data: data,
           dataType: "json",
-          success: function(result) {
-            console.log(result);
+          success: function(json) {
+            if (json.result == 'success') {
+              alert("등록완료하였습니다.");
+              location.href = "main.do";
+            } else {
+              alert(json.errorMessage);
+            }
           },
-          error: function(result) {
-            console.log(result);
+          error: function(json) {
+            alert(json.errorMessage);
           }
         })
     }
