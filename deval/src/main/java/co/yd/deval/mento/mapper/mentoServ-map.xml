@@ -46,11 +46,17 @@
 		FROM MENTO_SERVICE
 	</select>
 	<select id="oneSatisAvg" resultType="double" parameterType="String">
-		SELECT TRUNC(AVG(STSFDG),1) 
+		SELECT NVL(TRUNC(AVG(STSFDG),1),0) 
 		FROM MENTO_SERVICE
 		WHERE MENTO_ID = #{id}
 	</select>
 	<select id="serviceCount" resultType="int">
 		SELECT COUNT(*) FROM MENTO_SERVICE
 	</select>
+	
+	<update id="buyerPayment" parameterType="map">
+		UPDATE MEMBER
+		SET CASH_PT = CASH_PT - #{cashPt}
+		WHERE MEMBER_ID = #{id}
+	</update>
 </mapper>

@@ -1,10 +1,12 @@
 package co.yd.deval.mento.serviceImpl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import co.yd.deval.member.service.MemberVO;
 import co.yd.deval.mento.mapper.MentoServMapper;
 import co.yd.deval.mento.service.MentoServService;
 import co.yd.deval.mento.service.MentoServVO;
@@ -52,6 +54,12 @@ public class MentoServServiceImpl implements MentoServService {
 	@Override
 	public int serviceCount() {
 		return map.serviceCount();
+	}
+
+	@Override
+	public int buyerPayment(Map<String, Object> buyer) {
+		// TODO Auto-generated method stub
+		return map.buyerPayment(buyer);
 	}
 
 }

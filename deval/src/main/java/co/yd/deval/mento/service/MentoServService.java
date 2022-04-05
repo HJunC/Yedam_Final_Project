@@ -1,6 +1,8 @@
 package co.yd.deval.mento.service;
 
 import java.util.List;
+import java.util.Map;
+
 
 public interface MentoServService {
 	//전체만족도
@@ -17,5 +19,8 @@ public interface MentoServService {
 	
 	//전체값 조회
 	int serviceCount();
+	
+	//결제후 멤버포인트차감
+	int buyerPayment(Map<String, Object> buyer);
 	
 }

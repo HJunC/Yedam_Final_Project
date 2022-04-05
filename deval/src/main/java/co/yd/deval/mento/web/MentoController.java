@@ -2,6 +2,7 @@ package co.yd.deval.mento.web;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,16 +82,17 @@ public class MentoController {
     }
     
     @GetMapping("/mentoSelect.do")
-    public String mentoSelect(Model model, MentoVO vo) {
-    	//추가
-		/*
-		 * MemberVO user = (MemberVO)
-		 * SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		 * model.addAttribute("member", memberDao.memberInsert(user));
-		 */
-		
-    	model.addAttribute("mento", mentoDAO.mentoSelectOne(vo));
-    	return "mento/mentoSelect";
+    public String mentoSelect(Model model, MentoVO vo, Principal principal) {
+    	
+    	  //추가
+		  MemberVO user = new MemberVO();
+		  if(principal != null) {
+			  user.setMemberId(principal.getName());
+			  model.addAttribute("member", memberDao.memberSelect(user));
+		  }
+		  
+		  model.addAttribute("mento", mentoDAO.mentoSelectOne(vo));
+		  return "mento/mentoSelect";
     }
 }
 

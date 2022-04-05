@@ -1,5 +1,8 @@
 package co.yd.deval.member.web;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import co.yd.deval.member.service.MemberService;
 import co.yd.deval.member.service.MemberVO;
@@ -52,5 +57,25 @@ public class MemberController {
 	public String coPage() {
 		return "member/coPage";
 	}
+	
+	@PostMapping("/updatePoint.do")
+	@ResponseBody
+	public void updatePoint(@RequestParam("cashPt") int cashPt, @RequestParam("memberId") String memberId) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("id", memberId);
+		map.put("cashPt", cashPt);
+		memberDao.memberCashUpdate(map);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

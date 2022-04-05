@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import co.yd.deval.member.service.MemberVO;
 import co.yd.deval.mento.service.MentoServService;
 import co.yd.deval.mento.service.MentoVO;
+import oracle.jdbc.proxy.annotation.Post;
 
 @Controller
 @RequestMapping("/mento")
@@ -32,8 +33,6 @@ public class MentoServController {
 		Map<String,Object> satis = new HashMap<String,Object>();
 		Double value = mentoServDAO.allSatisAvg();
 		Double value2 = mentoServDAO.oneSatisAvg(id);
-		System.out.println(value + "00000000000000000000");
-		System.out.println(value2 + "000000000000000000000");
 		
 		satis.put("all", value);
 		satis.put("one", value2);
@@ -63,5 +62,20 @@ public class MentoServController {
 		MemberVO user = (MemberVO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
 		return "redirect:mentiCheckForm?mento_id=" + user.getMemberId() + "&state=0";
+	}
+	
+	//서비스창 결제하기
+	@PostMapping("/mentoPayment.do")
+	@ResponseBody
+	public String mentoPayment(@RequestParam("cashPt") int cashPt, @RequestParam("memberId") String memberId) {
+		Map<String,Object> buyer = new HashMap<>(); 
+		
+		//회원 캐쉬포인트 차감
+		buyer.put("cashPt", cashPt);
+		buyer.put("memberId", memberId);
+		
+		mentoServDAO.buyerPayment(buyer);
+		//신청완료창으로 return
+		return "mento/mentoSuccess";
 	}
 }
