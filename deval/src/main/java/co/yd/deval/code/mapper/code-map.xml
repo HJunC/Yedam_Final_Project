@@ -3,7 +3,6 @@
 <mapper namespace="co.yd.deval.code.mapper.CodeMapper">
 
 	<select id="codeSelectList" resultType="co.yd.deval.code.service.CodeVO">
-
 		SELECT CQ_NO
 			 , CQ_LANG
 			 , TITLE
