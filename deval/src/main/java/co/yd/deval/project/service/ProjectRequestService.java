@@ -3,8 +3,7 @@ package co.yd.deval.project.service;
 import java.util.List;
 
 public interface ProjectRequestService {
-    List<ProjectRequestVO> selectProjectRequestAll();
-    ProjectRequestVO selectProjectRequest(ProjectRequestVO vo);
+    List<ProjectRequestVO> selectProjectRequest(ProjectRequestVO vo);
     int insertProjectRequest(ProjectRequestVO vo);
     int deleteProjectRequest(ProjectRequestVO vo);
     int updateProjectRequest(ProjectRequestVO vo);

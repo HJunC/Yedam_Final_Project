@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <c:set var="resources" value="${pageContext.request.contextPath}/resources"/>
 
 <!-- Home Section -->
@@ -25,7 +26,12 @@
 </section>
 <!-- End Home Section -->
 
-
+<style>
+    .input-info {
+        font-size: 14px;
+        color: #c0c0c0;
+    }
+</style>
 <!-- Section -->
 <section class="page-section bg-dark light-content">
     <div class="container">
@@ -34,49 +40,54 @@
         <div class="row">
             <div>
 
-                <form class="form contact-form" action="projectInsert.do" method="post">
+                <form class="form contact-form" id="insertForm">
                     <sec:csrfInput />
+                    <input type="hidden" name="leaderId" value="<sec:authentication property="principal.username"/>">
+                    <input type="hidden" id="totalRcnt" name="totalRcnt" value="0" min="0" max="15">
                     <div class="clearfix">
 
                         <div class="form-group">
                             <label for="projectName">프로젝트 명</label>
-                            <input type="text" name="projectName" id="projectName" class="input-lg round form-control bg-dark-input" placeholder="Enter username" pattern=".{3,100}" required aria-required="true">
+                            <p class="input-info">최소6자, 최대 40자, 공백, 특수문자 불가능</p>
+                            <input type="text" name="projectName" id="projectName" class="input-lg round form-control bg-dark-input" placeholder="ex)개발자 커뮤니티 프로젝트" pattern=".{6,40}" required aria-required="true">
                         </div>
 
                         <div class="form-group">
-                            <label>포지션 인원 (본인 포함)</label>
-                            <div class="row">
+                            <label>포지션 인원 / 총 <span id="totalCount"></span>명</label>
+                            <p class="input-info">본인을 포함한 인원수를 넣어주세요. 최대 15명</p>
+
+                            <div class="row" id="positionCountBox">
                                 <div class="col input-group me-3">
                                     <span class="input-group-text bg-dark" style="border-color: #5e646a;">프론트엔드</span>
-                                    <input type="number" id="frontRcnt" name="frontRcnt" class="input-lg round form-control bg-dark-input" min="0" max="9" value="0">
+                                    <input type="number" id="frontRcnt" name="frontRcnt" class="input-lg round form-control bg-dark-input" min="0" max="7" value="0" >
                                     <div class="input-group-text bg-dark" style="border-color: #5e646a;">
                                         <input class="form-check-input mt-0" type="radio" value="FE" name="leaderPosition" checked required>
                                     </div>
                                 </div>
                                 <div class="col input-group me-3">
                                     <span class="input-group-text bg-dark" style="border-color: #5e646a;">백엔드</span>
-                                    <input type="number" id="backRcnt" name="backRcnt" class="input-lg round form-control bg-dark-input" min="0" max="9" value="0">
+                                    <input type="number" id="backRcnt" name="backRcnt" class="input-lg round form-control bg-dark-input" min="0" max="7" value="0" >
                                     <div class="input-group-text bg-dark" style="border-color: #5e646a;">
                                         <input class="form-check-input mt-0" type="radio" value="BE" name="leaderPosition" required>
                                     </div>
                                 </div>
                                 <div class="col input-group me-3">
                                     <span class="input-group-text bg-dark" style="border-color: #5e646a;">풀스택</span>
-                                    <input type="number" id="fullRcnt" name="fullRcnt" class="input-lg round form-control bg-dark-input" min="0" max="9" value="0">
+                                    <input type="number" id="fullRcnt" name="fullRcnt" class="input-lg round form-control bg-dark-input" min="0" max="7" value="0" >
                                     <div class="input-group-text bg-dark" style="border-color: #5e646a;">
                                         <input class="form-check-input mt-0" type="radio" value="FS" name="leaderPosition" required>
                                     </div>
                                 </div>
                                 <div class="col input-group me-3">
                                     <span class="input-group-text bg-dark" style="border-color: #5e646a;">디자인</span>
-                                    <input type="number" id="designRcnt" name="designRcnt" class="input-lg round form-control bg-dark-input" min="0" max="9" value="0">
+                                    <input type="number" id="designRcnt" name="designRcnt" class="input-lg round form-control bg-dark-input" min="0" max="7" value="0" >
                                     <div class="input-group-text bg-dark" style="border-color: #5e646a;">
                                         <input class="form-check-input mt-0" type="radio" value="DE" name="leaderPosition" required>
                                     </div>
                                 </div>
                                 <div class="col input-group">
                                     <span class="input-group-text bg-dark" style="border-color: #5e646a;">기획</span>
-                                    <input type="number" id="plannerRcnt" name="plannerRcnt" class="input-lg round form-control bg-dark-input" min="0" max="9" value="0">
+                                    <input type="number" id="plannerRcnt" name="plannerRcnt" class="input-lg round form-control bg-dark-input" min="0" max="7" value="0" >
                                     <div class="input-group-text bg-dark" style="border-color: #5e646a;">
                                         <input class="form-check-input mt-0" type="radio" value="PL" name="leaderPosition" required>
                                     </div>
@@ -86,6 +97,7 @@
 
                         <div class="form-group">
                             <label for="projectTerm">프로젝트 기간</label>
+                            <p class="input-info">최소3일, 최대 365일</p>
                             <input type="number" name="projectTerm" id="projectTerm" class="input-lg round form-control bg-dark-input" required aria-required="true" min="0" max="365" value="3">
                         </div>
                         <div class="form-group">
@@ -114,7 +126,9 @@
                         </div>
                         <div class="form-group">
                             <label for="recruitEdt">프로젝트 모집 마감일</label>
+                            <p class="input-info">1일 ~ 15일</p>
                             <input type="date" name="recruitEdt" id="recruitEdt" class="input-lg round form-control bg-dark-input" required aria-required="true">
+                            <input type="time" id="recruitEdtTime" class="input-lg round form-control bg-dark-input" value="00:00" required aria-required="true">
                         </div>
                         <div class="form-group">
                             <label for="subject">프로젝트 설명</label>
@@ -125,7 +139,7 @@
 
                     <!-- Send Button -->
                     <div class="text-center pt-10">
-                        <button type="submit" class="submit_btn btn btn-mod btn-w btn-large btn-round">생성하기</button>
+                        <button type="button" class="submit_btn btn btn-mod btn-w btn-large btn-round" onclick="handleSubmit()">생성하기</button>
                     </div>
 
                 </form>
@@ -143,5 +157,61 @@
   const recruitEdt = document.getElementById("recruitEdt");
   recruitEdt.setAttribute("value", moment(today).format("YYYY-MM-DD"));
   recruitEdt.setAttribute("min", moment(today).format("YYYY-MM-DD"));
-  recruitEdt.setAttribute("max", moment(today.setDate(today.getDate() + 30)).format("YYYY-MM-DD"));
+  recruitEdt.setAttribute("max", moment(today.setDate(today.getDate() + 15)).format("YYYY-MM-DD")); // 프로젝트 모집 최대 마감일
+
+  document.getElementById("positionCountBox").addEventListener("change", handlePositionCount);
+
+  function handlePositionCount(e) {
+    var f = parseInt($("#frontRcnt").val());
+    var b = parseInt($("#backRcnt").val());
+    var u = parseInt($("#fullRcnt").val());
+    var d = parseInt($("#designRcnt").val());
+    var p = parseInt($("#plannerRcnt").val());
+    var total = f+b+u+d+p;
+    /*if (total > 15) {
+      alert("최대 인원수는 15명입니다.");
+      return;
+    }*/
+    $("#totalCount").html(total);
+    $("#totalRcnt").val(total);
+  }
+
+  function handleSubmit() {
+    var data = $("#insertForm").serializeObject();
+    var isDone = true;
+
+    if (data.leaderId == "") {
+      alert("error");
+      isDone = false;
+    }
+
+    if (data.totalRcnt == 0) {
+      alert("인원수를 입력해주세요");
+      isDone = false;
+    }
+
+
+    data.recruitEdt = data.recruitEdt + " " + $("#recruitEdtTime").val();
+
+    if (isDone) {
+        $.ajax({
+          type: "POST",
+          url: "../api/project/insert",
+          data: data,
+          dataType: "json",
+          success: function(json) {
+            if (json.result == 'success') {
+              alert("등록완료하였습니다.");
+              location.href = "main.do";
+            } else {
+              alert(json.errorMessage);
+            }
+          },
+          error: function(json) {
+            alert(json.errorMessage);
+          }
+        })
+    }
+  }
+
 </script>

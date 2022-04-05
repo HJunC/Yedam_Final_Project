@@ -1,5 +1,7 @@
 package co.yd.deval.project.mapper;
 
+import co.yd.deval.common.Criteria;
+import co.yd.deval.project.service.ProjectInfoDTO;
 import org.apache.ibatis.annotations.Param;
 
 import co.yd.deval.project.service.ProjectVO;
@@ -16,4 +18,11 @@ public interface ProjectMapper {
     int updateHit(int projectNo);
     List<ProjectVO> findByLeaderIdAndState(@Param("leaderId") String leaderId, @Param("state") String state);
     List<ProjectVO> searchProject(ProjectVO vo);
+    List<ProjectVO> searchMainPageProject(ProjectVO vo);
+
+    ProjectInfoDTO getProject(int projectNo);
+
+    // 검색 페이징 처리
+    List<ProjectVO> getListWithPaging(ProjectVO vo);
+    int getTotalCount(ProjectVO vo);
 }

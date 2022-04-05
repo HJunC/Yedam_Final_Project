@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import co.yd.deval.member.service.MemberService;
 import co.yd.deval.member.service.MemberVO;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 public class MemberController {
 	
@@ -19,7 +21,9 @@ public class MemberController {
 	private MemberService memberDao;
 	
 	@RequestMapping("/loginForm.do")
-	public String loginForm() {
+	public String loginForm(HttpServletRequest request) {
+		String referer = (String) request.getHeader("REFERER");
+		System.out.println(referer);
 		return "member/loginForm";
 	}
 	

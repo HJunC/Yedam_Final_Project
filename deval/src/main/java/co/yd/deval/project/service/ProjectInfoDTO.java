@@ -1,17 +1,16 @@
 package co.yd.deval.project.service;
 
-import co.yd.deval.common.Criteria;
-import co.yd.deval.common.PageDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
-public class ProjectVO {
+public class ProjectInfoDTO {
     private int projectNo;
     private String projectName;
     private String state;
@@ -46,8 +45,5 @@ public class ProjectVO {
     private int applyRcnt;
     private String leaderId;
 
-    // 테이블에 없는 데이터
-    private String leaderPosition;
-    private int rn;
-    private Criteria criteria;
+    private List<ProjectTeamVO> projectTeam;
 }
