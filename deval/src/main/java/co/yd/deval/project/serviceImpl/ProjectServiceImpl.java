@@ -112,4 +112,19 @@ public class ProjectServiceImpl implements ProjectService {
         return mapper.getTotalCount(vo);
     }
 
+	@Override
+	public List<ProjectVO> findProjectImLeader(String id) {
+		return map.findProjectImLeader(id);
+	}
+
+	@Override
+	public List<ProjectVO> findProjectByNo(String id) {
+		return map.findProjectByNo(id);
+	}
+
+	@Override
+	public List<ProjectVO> findWaitingProject(String id) {
+		return map.findWaitingProject(id);
+	}
+
 }

@@ -42,7 +42,7 @@
 					 <table class="table table-striped">
                      <tr class="active">
 			<th>No .</th>
-									<th>H I T</th>
+									<th>H I T$</th>
 									<th>I D</th>
 									<th>T I T L E</th>
 									<th>R EC O M M E N D</th>

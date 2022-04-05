@@ -10,6 +10,11 @@ public interface StudyService {
 	int studyInsert(StudyVO vo);
 	int studyUpdate(StudyVO vo);
 
+
+	List<StudyVO> findStudyImLeader(String id);
+	List<StudyVO> findStudyByNo(String id);
+	List<StudyVO> findWaitingStudy(String id);
+
 	// 모달창 회원정보
 	StudyInfoVO studySelectUser(StudyInfoVO vo);
 	int studyUserInsert(StudyInfoVO vo);
@@ -21,4 +26,5 @@ public interface StudyService {
 	int studyTeamMemberInsert(StudyReqVO vo);
 	int studyTeamMemberUpdate(StudyReqVO vo);
 	int studyTeamMemberDelete(StudyReqVO vo);
+
 }

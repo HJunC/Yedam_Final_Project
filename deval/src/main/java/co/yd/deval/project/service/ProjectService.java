@@ -16,6 +16,15 @@ public interface ProjectService {
     int deleteProject(ProjectVO vo);
     int updateProject(ProjectVO vo);
 
+    ProjectVO getOngoingProject(String memberId);
+    List<ProjectVO> searchMainPageProject(ProjectVO vo);
+    List<ProjectVO> findByLeaderIdAndState(String leaderId, String state);
+    List<ProjectVO> searchProject(ProjectVO vo);
+    
+    List<ProjectVO> findProjectImLeader(String id);
+    List<ProjectVO> findProjectByNo(String id);
+    List<ProjectVO> findWaitingProject(String id);
+
     ProjectTeamVO getOngoingProject(String memberId); // 로그인 유저의 프로젝트 정보
     List<ProjectVO> searchMainPageProject(ProjectVO vo); // 메인화면 프로젝트 구성
 
@@ -29,4 +38,5 @@ public interface ProjectService {
     // 검색 페이징 처리
     List<ProjectVO> getListWithPaging(ProjectVO vo);
     int getTotalCount(ProjectVO vo);
+
 }

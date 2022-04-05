@@ -80,6 +80,30 @@
 		WHERE MEMBER_ID = #{memberId}
 	</select>
 
+
+	<select id="findStudyImLeader" resultType="co.yd.deval.study.service.StudyVO">
+		select  *
+		from    study
+		where   leader_id = #{id}
+	</select>
+	
+	<select id="findStudyByNo" resultType="co.yd.deval.study.service.StudyVO">
+		select  *
+		from    study
+		where   study_no in (select  study_no
+						     from    study_team
+						     where   member_id = #{id})
+	</select>
+	
+	<select id="findWaitingStudy" resultType="co.yd.deval.study.service.StudyVO">
+		select  *
+		from    study
+		where   study_no in (select  study_no
+						     from    study_request
+						     where   member_id     = #{id}
+						     and     state         = 0)
+	</select>
+
 	<insert id="studyUserInsert"
 		parameterType="co.yd.deval.study.service.StudyInfoVO">
 		INSERT INTO STUDY_INFO ( COLLEGE
@@ -145,4 +169,5 @@
 		STUDY_NO = #{studyNo}
 	</delete>
 	
+
 </mapper>

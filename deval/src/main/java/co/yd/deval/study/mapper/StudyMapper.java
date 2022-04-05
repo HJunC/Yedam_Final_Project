@@ -2,6 +2,7 @@ package co.yd.deval.study.mapper;
 
 import java.util.List;
 
+
 import org.apache.ibatis.annotations.Param;
 
 import co.yd.deval.study.service.StudyInfoVO;
@@ -16,6 +17,10 @@ public interface StudyMapper {
 	int studyInsert(StudyVO vo);
 	int studyUpdate(StudyVO vo);
 
+	List<StudyVO> findStudyImLeader(String id);
+	List<StudyVO> findStudyByNo(String id);
+	List<StudyVO> findWaitingStudy(String id);
+
 	//모달창 정보
 	StudyInfoVO studySelectUser(StudyInfoVO vo);
 	int studyUserInsert(StudyInfoVO vo);
@@ -27,4 +32,5 @@ public interface StudyMapper {
 	int studyTeamMemberInsert(StudyReqVO vo);
 	int studyTeamMemberUpdate(StudyReqVO vo);
 	int studyTeamMemberDelete(StudyReqVO vo);
+
 }
