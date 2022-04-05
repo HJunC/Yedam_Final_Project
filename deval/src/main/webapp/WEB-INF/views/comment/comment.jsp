@@ -5,11 +5,12 @@
 	prefix="sec"%>
 <c:set var="resources"
 	value="${pageContext.request.contextPath}/resources" />
+<%-- <c:set var="userN"
+	value="${username }" /> --%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
 </head>
 <body>
 <section class="page-section bg-dark light-content pt-0">
@@ -27,11 +28,28 @@
 				</dt>
 				<dd class="gray">
 					<table class="table shopping-cart-table">
+					<tbody id="commentBody">
 					<tr>
 							<td>
 								<input style="" class="btn btn-mod btn-round btn-border-w btn-small" 
 								size="90" id="commentSub" name="commentSub"> 
 								<input type="hidden" id="boardNo" name="boardNo" value="${bno }">
+								
+								<c:if test="${not empty asdasd }">
+								<input type="hidden" id="boardTypeNo" name="boardTypeNo" value="1">
+								</c:if>
+								<c:if test="${not empty asdsada }">
+								<input type="hidden" id="boardTypeNo" name="boardTypeNo" value="2">
+								</c:if>
+								<c:if test="${not empty asdsadaddd }">
+								<input type="hidden" id="boardTypeNo" name="boardTypeNo" value="3">
+								</c:if>
+								<c:if test="${not empty code.cqNo }">
+								<input type="hidden" id="boardTypeNo" name="boardTypeNo" value="4">
+								</c:if>
+								<c:if test="${not empty review.cqNo }">
+								<input type="hidden" id="boardTypeNo" name="boardTypeNo" value="5">
+								</c:if>
 							</td>
 							<td>
 								<input type="hidden" id="writer" name="writer"
@@ -46,19 +64,17 @@
 							<tr>
 								<td>${comment.writer }: ${comment.commentSub }</td>
 								<!-- <td width="300px"></td> -->
-								<td width="135px" align="right"><input
-									class="btn btn-mod btn-round btn-border-w btn-small"
-									type="button" value="수정"> <input
-									class="btn btn-mod btn-round btn-border-w btn-small"
-									type="button" value="삭제"></td>
+								<c:if test="${comment.writer eq username }">
+									<td width="135px" align="right">
+									<input class="btn btn-mod btn-round btn-border-w btn-small" type="button" value="수정"> 
+									<input class="btn btn-mod btn-round btn-border-w btn-small" type="button" onclick="commentDelete(${comment.commentNo })" value="삭제">
+									</td>
+								</c:if>
 							</tr>
 						</c:forEach>
+						</tbody>
 					</table>
 				</dd>
-				<dt>
-					<a href="">답글리스트</a>
-				</dt>
-				<dd class="gray">답글내용</dd>
 			</dl>
 			<!-- End Accordion -->
 		</div>
@@ -76,5 +92,21 @@ function commentUpdate(str){
 	}
 	frm2.submit();
 }
+
+function commentDelete(no){
+	$.ajax({
+        type:'POST',
+        url : "../comment/commentDelete.do",
+        data: {"no":no},
+        success : function(data){
+        	location.reload();
+        },
+        error:function(request,status,error){
+        	
+       }
+    });
+}
+
+
 </script>
 </html>

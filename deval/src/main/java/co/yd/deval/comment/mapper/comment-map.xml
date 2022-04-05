@@ -15,11 +15,13 @@
 				, COMMENT_SUB
 				, WRITER
 				, BOARD_NO
+				, BOARD_TYPE_NO
 				)
 		VALUES(   COMMENT_NO_COUNT_SEQ.NEXTVAL
 				, #{commentSub}
 				, #{writer}
 				, #{boardNo}
+				, #{boardTypeNo}
 			  )
 	</insert>
 	
