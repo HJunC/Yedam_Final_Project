@@ -26,12 +26,10 @@ public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectMapper mapper;
     private final ProjectTeamMapper teamMapper;
-    private final ProjectRequestMapper requestMapper;
 
-    public ProjectServiceImpl(ProjectMapper mapper, ProjectTeamMapper teamMapper, ProjectRequestMapper requestMapper) {
+    public ProjectServiceImpl(ProjectMapper mapper, ProjectTeamMapper teamMapper) {
         this.mapper = mapper;
         this.teamMapper = teamMapper;
-        this.requestMapper = requestMapper;
     }
 
     @Override
@@ -46,20 +44,19 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public int insertProject(ProjectVO vo) {
-        System.out.println("============================================service"+vo);
-        int projectNo = mapper.insertProject(vo);
-
+        int result = mapper.insertProject(vo);
         ProjectTeamVO teamVo = new ProjectTeamVO();
-        teamVo.setProjectNo(projectNo);
+        teamVo.setProjectNo(vo.getProjectNo());
         teamVo.setMemberId(vo.getLeaderId());
         teamVo.setIsLeader("1"); // true
         teamVo.setPosition(vo.getLeaderPosition());
         teamVo.setState("0"); // 팀장 대기
-        return (teamMapper.insertProjectTeam(teamVo) == 1) ? projectNo : 0;
+        return (teamMapper.insertProjectTeam(teamVo) == 1) ? teamVo.getProjectNo() : 0;
     }
 
     @Override
     public int deleteProject(ProjectVO vo) {
+        // todo 팀을 먼저 지우고 지워야함
         return mapper.deleteProject(vo);
     }
 

@@ -25,7 +25,7 @@
     </div>
 </section>
 <!-- End Home Section -->
-프로젝트 없음(0), 수락 후 프로젝트 대기중(1), 진행 프로젝트 팀장(2), 진행 프로젝트 팀원(3),  프로젝트
+
 <!-- Call Action Section -->
 <section class="small-section bg-dark light-content">
     <div class="container relative">
@@ -50,11 +50,11 @@
             </c:otherwise>
         </c:choose>
 
-        <c:if test="${isLeader }">
+        <c:if test="${sessionScope.userProjectState eq 'P5'}">
             나는 리더
         </c:if>
 
-        <c:if test="${isRecruit }">
+        <c:if test="${sessionScope.userProjectState eq 'P2'}">
             <c:forEach items="${userRequestProject }" var="item">
                 ${item.projectNo } /
                 ${item.memberId } /

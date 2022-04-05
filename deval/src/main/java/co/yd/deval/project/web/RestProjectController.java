@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
 * @package : co.yd.deval.project.web
@@ -71,13 +73,21 @@ public class RestProjectController {
      * @return redirect:main.do
      */
     @PostMapping("/insert")
-    public ResponseEntity<ProjectVO> addProject(ProjectVO vo, Principal principal) {
+    public ResponseEntity<Map<String, Object>> addProject(ProjectVO vo, Principal principal) {
+        Map<String, Object> returnBody = new HashMap<>();
         if (principal.getName().equals(vo.getLeaderId())) {
-            int projectNo = projectService.insertProject(vo);
-            vo.setProjectNo(projectNo);
-            return ResponseEntity.ok().body(vo);
+            if (projectService.getOngoingProject(principal.getName()) == null) {
+                int projectNo = projectService.insertProject(vo);
+                vo.setProjectNo(projectNo);
+                returnBody.put("data", vo);
+                return ResponseEntity.ok().body(returnBody);
+            } else {
+                returnBody.put("error", "이미 프로젝트가 존재합니다.");
+            }
+        } else {
+            returnBody.put("error", "잘못된 접근입니다.");
         }
-        return ResponseEntity.badRequest().body(vo);
+        return ResponseEntity.badRequest().body(returnBody);
     }
 
     /***

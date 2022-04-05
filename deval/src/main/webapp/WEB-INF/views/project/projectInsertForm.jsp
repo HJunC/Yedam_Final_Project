@@ -42,7 +42,8 @@
 
                 <form class="form contact-form" id="insertForm">
                     <sec:csrfInput />
-                    <input type="hidden" name="leaderId" value="${sec.username()}">
+                    <input type="hidden" name="leaderId" value="<sec:authentication property="principal.username"/>">
+                    <input type="hidden" id="totalRcnt" name="totalRcnt" value="0" min="0" max="15">
                     <div class="clearfix">
 
                         <div class="form-group">
@@ -54,7 +55,7 @@
                         <div class="form-group">
                             <label>포지션 인원 / 총 <span id="totalCount"></span>명</label>
                             <p class="input-info">본인을 포함한 인원수를 넣어주세요. 최대 15명</p>
-                            <input type="hidden" id="totalRcnt" name="totalRcnt" value="0" min="0" max="15">
+
                             <div class="row" id="positionCountBox">
                                 <div class="col input-group me-3">
                                     <span class="input-group-text bg-dark" style="border-color: #5e646a;">프론트엔드</span>
@@ -137,7 +138,7 @@
 
                     <!-- Send Button -->
                     <div class="text-center pt-10">
-                        <button type="submit" class="submit_btn btn btn-mod btn-w btn-large btn-round">생성하기</button>
+                        <button type="button" class="submit_btn btn btn-mod btn-w btn-large btn-round" onclick="handleSubmit()">생성하기</button>
                     </div>
 
                 </form>
@@ -166,24 +167,42 @@
     var d = parseInt($("#designRcnt").val());
     var p = parseInt($("#plannerRcnt").val());
     var total = f+b+u+d+p;
+    /*if (total > 15) {
+      alert("최대 인원수는 15명입니다.");
+      return;
+    }*/
     $("#totalCount").html(total);
+    $("#totalRcnt").val(total);
   }
 
-  function handleInsert() {
+  function handleSubmit() {
     var data = $("#insertForm").serializeObject();
+    var isDone = true;
 
-    $.ajax({
-      action: "post",
-      url: "../api/project/insert",
-      data: data,
-      dataType: "json",
-      success: function(result) {
-        console.log(result);
-      },
-      error: function(e) {
-        alert(e);
-      }
-    })
+    if (data.leaderId == "") {
+      alert("error");
+      isDone = false;
+    }
+
+    if (data.totalRcnt == 0) {
+      alert("인원수를 입력해주세요");
+      isDone = false;
+    }
+
+    if (isDone) {
+        $.ajax({
+          type: "POST",
+          url: "../api/project/insert",
+          data: data,
+          dataType: "json",
+          success: function(result) {
+            console.log(result);
+          },
+          error: function(result) {
+            console.log(result);
+          }
+        })
+    }
   }
 
 </script>

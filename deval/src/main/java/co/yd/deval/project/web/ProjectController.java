@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.List;
 
@@ -41,28 +43,33 @@ public class ProjectController {
      * @return project/projectMain.jsp
      */
     @GetMapping("/main.do")
-    public String projectMain(Model model, Principal principal) {
+    public String projectMain(Model model, Principal principal, HttpServletRequest request) {
         if (principal != null) {
-            ProjectVO userProject = projectService.getOngoingProject(principal.getName());
-            // 진행중인 프로젝트가 있을 때
-            if (userProject != null) {
-                if (userProject.getLeaderId().equals(principal.getName())) {
-                    model.addAttribute("isLeader", true);
+            HttpSession session = request.getSession();
+            String state = (String) session.getAttribute("userProjectState");
+            if (state == null) {
+                ProjectVO userProject = projectService.getOngoingProject(principal.getName());
+                // 진행중인 프로젝트가 있을 때
+                if (userProject != null) {
+                    if (userProject.getLeaderId().equals(principal.getName())) {
+                        session.setAttribute("userProjectState", ProjectStateEnum.P5);
+                    } else {
+                        session.setAttribute("userProjectState", ProjectStateEnum.P6);
+                    }
+                    model.addAttribute("userProject", userProject);
                 } else {
-                    model.addAttribute("isLeader", false);
-                }
-                model.addAttribute("userProject", userProject);
-            } else {
-                ProjectRequestVO rvo = new ProjectRequestVO();
-                rvo.setMemberId(principal.getName());
-                rvo.setState("1"); // 검토중
-                List<ProjectRequestVO> requestList = projectRequestService.selectProjectRequest(rvo);
-                // 검토중인 요청이 있을 떄
-                if (!requestList.isEmpty()) {
-                    model.addAttribute("userRequestProject", requestList);
-                    model.addAttribute("isRecruit", true);
+                    ProjectRequestVO rvo = new ProjectRequestVO();
+                    rvo.setMemberId(principal.getName());
+                    rvo.setState("1"); // 검토중
+                    List<ProjectRequestVO> requestList = projectRequestService.selectProjectRequest(rvo);
+                    // 검토중인 요청이 있을 떄
+                    if (!requestList.isEmpty()) {
+                        session.setAttribute("userProjectState", ProjectStateEnum.P2);
+                        model.addAttribute("userRequestProject", requestList);
+                    }
                 }
             }
+            System.out.println("=============================================="+state);
         }
 
         ProjectVO searchVO = new ProjectVO();

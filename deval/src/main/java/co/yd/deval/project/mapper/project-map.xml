@@ -2,8 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="co.yd.deval.project.mapper.ProjectMapper">
 
-    <insert id="insertProject" parameterType="co.yd.deval.project.service.ProjectVO" useGeneratedKeys="false">
-        INSERT INTO PROJECT (PROJECT_NO_COUNT_SEQ.nextval,
+    <insert id="insertProject" parameterType="co.yd.deval.project.service.ProjectVO"
+            useGeneratedKeys="true" keyProperty="projectNo">
+        INSERT INTO PROJECT (PROJECT_NO,
                              PROJECT_NAME,
                              STATE,
                              PROCESS,
@@ -23,9 +24,9 @@
                              HIT,
                              APPLY_RCNT,
                              LEADER_ID)
-        VALUES (#{projectNo},
+        VALUES (PROJECT_NO_COUNT_SEQ.nextval,
                 #{projectName},
-                #{state},
+                '1',
                 #{process},
                 sysdate,
                 #{recruitEdt},
@@ -42,9 +43,9 @@
                 #{projectTerm},
                 0,
                 0,
-                #{leaderId});
-        <selectKey keyProperty="PROJECT_NO" resultType="int" order="AFTER">
-            select PROJECT_NO_COUNT_SEQ.currval FROM DUAL
+                #{leaderId})
+        <selectKey keyProperty="projectNo" resultType="int" order="AFTER">
+            select PROJECT_NO_COUNT_SEQ.currval as projectNo FROM DUAL
         </selectKey>
     </insert>
 
