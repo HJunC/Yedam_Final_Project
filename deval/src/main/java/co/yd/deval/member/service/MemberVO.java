@@ -1,9 +1,16 @@
 package co.yd.deval.member.service;
 
 import lombok.Getter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Getter
-public class MemberVO {
+public class MemberVO implements UserDetails {
 	private String memberId;   // 회원아이디
 	private String password;   // 회원 비밀번호
 	private String mail;       // 회원 이메일
@@ -89,5 +96,37 @@ public class MemberVO {
 
 	public void setTier(String tier) {
 		this.tier = tier;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		List<GrantedAuthority> auth = new ArrayList<>();
+		auth.add(new SimpleGrantedAuthority(this.role));
+		return auth;
+	}
+
+	@Override
+	public String getUsername() {
+		return memberId;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
 	}
 }

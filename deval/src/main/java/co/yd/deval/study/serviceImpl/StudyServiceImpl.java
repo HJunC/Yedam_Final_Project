@@ -55,18 +55,6 @@ public class StudyServiceImpl implements StudyService {
 		return map.studyUserUpdate(vo);
 	}
 
-	
-	// 스터디 참가
-	@Override
-	public List<StudyReqVO> studyReqSelectAll() {
-		return map.studyReqSelectAll();
-	}
-
-	@Override
-	public int studyTeamMemberInsert(StudyReqVO vo) {
-		return map.studyTeamMemberInsert(vo);
-	}
-
 	@Override
 	public List<StudyVO> findStudyImLeader(String id) {
 		return map.findStudyImLeader(id);
@@ -82,6 +70,18 @@ public class StudyServiceImpl implements StudyService {
 		return map.findWaitingStudy(id);
 	}
 
+	// 스터디 참가
+	@Override
+	public List<StudyReqVO> studyReqSelectAll() {
+		return map.studyReqSelectAll();
+	}
+
+	@Override
+	public int studyTeamMemberInsert(StudyReqVO vo) {
+		return map.studyTeamMemberInsert(vo);
+	}
+
+	@Override
 	public int studyTeamMemberUpdate(StudyReqVO vo) {
 		return map.studyTeamMemberUpdate(vo);
 	}

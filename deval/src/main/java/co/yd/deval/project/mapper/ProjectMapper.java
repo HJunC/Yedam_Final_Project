@@ -16,15 +16,12 @@ public interface ProjectMapper {
     int updateProject(ProjectVO vo);
 
     int updateHit(int projectNo);
-    List<ProjectVO> findByLeaderIdAndState(@Param("leaderId") String leaderId, @Param("state") String state);
-    List<ProjectVO> searchProject(ProjectVO vo);
     
     List<ProjectVO> findProjectImLeader(String id);
     List<ProjectVO> findProjectByNo(String id);
     List<ProjectVO> findWaitingProject(String id);
 
     List<ProjectVO> searchMainPageProject(ProjectVO vo);
-
     ProjectInfoDTO getProject(int projectNo);
 
     // 검색 페이징 처리

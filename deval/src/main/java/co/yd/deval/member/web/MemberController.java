@@ -53,9 +53,7 @@ public class MemberController {
 	}
 
 	@GetMapping("/myPage.do")
-	public String myPage(Model model, Principal user,@AuthenticationPrincipal UserDetails user1) {
-		MemberVO vo1 = (MemberVO) user1;
-		
+	public String myPage(Model model, Principal user) {
 		MemberVO vo = new MemberVO();
 		vo.setMemberId(user.getName());
 		model.addAttribute("member",memberDao.memberSelect(vo));

@@ -16,11 +16,6 @@ public interface ProjectService {
     int deleteProject(ProjectVO vo);
     int updateProject(ProjectVO vo);
 
-    ProjectVO getOngoingProject(String memberId);
-    List<ProjectVO> searchMainPageProject(ProjectVO vo);
-    List<ProjectVO> findByLeaderIdAndState(String leaderId, String state);
-    List<ProjectVO> searchProject(ProjectVO vo);
-    
     List<ProjectVO> findProjectImLeader(String id);
     List<ProjectVO> findProjectByNo(String id);
     List<ProjectVO> findWaitingProject(String id);

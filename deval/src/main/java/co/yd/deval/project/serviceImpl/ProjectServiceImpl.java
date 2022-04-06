@@ -114,17 +114,17 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public List<ProjectVO> findProjectImLeader(String id) {
-		return map.findProjectImLeader(id);
+		return mapper.findProjectImLeader(id);
 	}
 
 	@Override
 	public List<ProjectVO> findProjectByNo(String id) {
-		return map.findProjectByNo(id);
+		return mapper.findProjectByNo(id);
 	}
 
 	@Override
 	public List<ProjectVO> findWaitingProject(String id) {
-		return map.findWaitingProject(id);
+		return mapper.findWaitingProject(id);
 	}
 
 }
