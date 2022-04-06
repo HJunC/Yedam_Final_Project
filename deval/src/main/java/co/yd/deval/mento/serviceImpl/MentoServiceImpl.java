@@ -38,5 +38,22 @@ public class MentoServiceImpl implements MentoService{
 	public int mentoUpdate(MentoVO vo) {
 		return map.mentoUpdate(vo);
 	}
+
+	@Override
+	public int mentoCount() {
+		return map.mentoCount();
+	}
+
+	@Override
+	public int kindOfLang() {
+		return map.kindOfLang();
+	}
+
+	@Override
+	public List<String> kindOfAll() {
+		return map.kindOfAll();
+	}
+
+	
 	
 }

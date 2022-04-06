@@ -2,7 +2,10 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <c:set var="resources" value="${pageContext.request.contextPath }/resources"/>
+<c:set var="satis" value="${stisfied*20}" />
+<fmt:parseNumber var="stis" integerOnly="true" value="${satis}"/>
 <link rel="stylesheet" href="${resources}/css/custom/team-project-style.css">
 <main id="main">    
             
@@ -49,9 +52,8 @@
                                 <div class="col-md-6 col-lg-4 mb-sm-50 mb-xs-30 wow linesAnimIn" data-splitting="lines">
                                 	우리는 차별화를 뒀습니다! 특정 레벨이상 강사!
                                 </div>
-                                
-                                <div class="col-md-6 col-lg-4 mb-sm-50 mb-xs-30 wow linesAnimIn" data-splitting="lines">
-                                	평균만족도 20%
+								<div class="col-md-6 col-lg-4 mb-sm-50 mb-xs-30 wow linesAnimIn" data-splitting="lines">
+                                	1대1 교육시스템으로 확실한 교육을 받아보세요~
                                 </div>
                             </div>
                         </div>
@@ -66,7 +68,7 @@
                                         <div class="count-bg wow scalexIn"></div>
                                         <div class="relative wow fadeIn" data-wow-delay="1s">
                                             <div class="count-number">
-                                                78
+                                               ${stis}
                                             </div>
                                             <div class="count-descr">
                                                 <i class="fa fa-laugh-beam"></i>
@@ -83,7 +85,7 @@
                                         <div class="count-bg wow scalexIn"></div>
                                         <div class="relative wow fadeIn" data-wow-delay="1.1s">
                                             <div class="count-number">
-                                                5
+                                                ${langCount}
                                             </div>
                                             <div class="count-descr">
                                                 <i class="fa fa-book-open"></i>
@@ -100,7 +102,7 @@
                                         <div class="count-bg wow scalexIn"></div>
                                         <div class="relative wow fadeIn" data-wow-delay="1.2s">
                                             <div class="count-number">
-                                                30
+                                               	${mentoCount}
                                             </div>
                                             <div class="count-descr">
                                                 <i class="fa fa-chalkboard-teacher"></i>
@@ -117,7 +119,7 @@
                                         <div class="count-bg wow scalexIn"></div>
                                         <div class="relative wow fadeIn" data-wow-delay="1.3s">
                                             <div class="count-number">
-                                                15
+                                                ${servCount}
                                             </div>
                                             <div class="count-descr">
                                                 <i class="fa fa-hands-helping"></i>
@@ -141,21 +143,13 @@
                 <div>
                 	<h3 class="mb-30">배우고 싶은 프로그래밍 언어가 있으신가요?</h3>
                 </div>
-                      <form method="post" action="mentoList.do" id="frm" class="frm">
+                      <form action="mentoList.do" id="frm" class="frm">
                       <sec:csrfInput/>
                                     <div class="mb-20 mb-md-10">
                                         <select class="input-md round form-control" style="width:200px" id="lang" name="lang">
-                                            <option value="C">C</option>
-                                            <option>C++</option>
-                                            <option>C#</option>
-                                            <option value="Java">Java</option>
-                                            <option>Python</option>
-                                            <option>Visual Basic</option>
-                                            <option>JavaScript</option>
-                                            <option>PHP</option>
-                                            <option>Go</option>
-                                            <option>SQL</option>
-                                            <option>Ruby</option>
+                                            <c:forEach var="lang" items="${choice}">
+                                            	<option value="${lang}">${lang}</option>
+                                            </c:forEach>
                                         </select>
                                     </div>
                        <button type="submit" class="btn btn-mod btn-w btn-medium btn-round me-md-1" style="background-color:#00D8FF">언어 선택</button>

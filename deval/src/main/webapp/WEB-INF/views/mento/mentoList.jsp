@@ -70,13 +70,12 @@
                                 
                                 <div class="post-prev-title align-center">
                                 	<!-- 멘토 이름이 들어가는 곳 -->
-                                    <p>${mento.mentoId }</p>
+                                   <p> <Strong>${mento.mentoId }</Strong>(${mento.history})</p>
                                 </div>
 
                                 <div class="post-prev-text align-center">
                                     <strong>${mento.info }</strong>
                                 </div>
-                                
                                 <div class="post-prev-more align-center">
                                     <button type="button" class="btn btn-mod btn-w btn-round" onclick="selectMento('${mento.mentoId}')"><i class="fa fa-search"></i> 멘토상세보기</button>
                                 </div>
