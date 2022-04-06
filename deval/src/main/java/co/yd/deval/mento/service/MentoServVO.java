@@ -1,12 +1,15 @@
 package co.yd.deval.mento.service;
 
-import java.sql.Date;
+
+import java.util.Date;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Setter
 @Getter
+@ToString
 public class MentoServVO {
 	private int mentoServiceNo;
 	private Date startDate;

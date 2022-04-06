@@ -66,13 +66,13 @@
                                     	<div>원하는 시간대를 정해주세요</div>
                                     	<div>
                                     	<!-- 시간 가져오기 -->
-                                        <select class="form-control input-sm round" style="width: 150px" onchange="selectTime(this)" id="serviceStt" name="serviceStt">
+                                        <select class="form-control input-sm round" style="width: 150px" onchange="selectTime(this)" id="serviceStt" name="startTm">
                                         	<option>시작시간</option>
                                     	<c:forEach var="i" begin="${fn:substring(stT,0,2)}" end="${fn:substring(edT,0,2)-1}">
-                                            <option value="${i}"><c:out value="${i}"/>:00</option>
+                                            <option value="${i}:00"><c:out value="${i}"/>:00</option>
                                         </c:forEach>
                                         </select>
-                                        <select class="form-control input-sm round" style="width: 150px" onchange="totalTime()" id="serviceEdt" name="serviceEdt">
+                                        <select class="form-control input-sm round" style="width: 150px" onchange="totalTime()" id="serviceEdt" name="endTm">
                                         	<option>종료시간</option>
                                         </select>
                                         </div>
@@ -80,9 +80,10 @@
                                     <hr class="mt-0 mb-30 white" /> 
                                        <div class="mb-20 mb-md-10">
                                     	<div>원하는 기간를 정해주세요</div>
+                                    		<div style="float:right;">서비스시작날자<input type="date" name="startDate" id="startDate"></div>
                                     	<div>
                                         <c:if test="${!empty mento.termDay }">
-                                        	<select class="form-control input-sm round" style="width: 150px" name="termDay" id="termTime">
+                                        	<select class="form-control input-sm round" style="width: 150px" name="serviceTerm" id="termTime">
 	                                        		<c:if test="${lengthDay == 2}">
     		                                        	<c:forEach var="i" begin="1" end="${fn:substring(day,0,1)}">
             		                                		<option value="${i}일">${i}일</option>
@@ -96,24 +97,32 @@
                             	             </select>
                                          </c:if>
                                             <c:if test="${!empty mento.termWeek}">
-                                               <select class="form-control input-sm round" style="width: 150px" name="termWeek" id="termTime">
+                                               <select class="form-control input-sm round" style="width: 150px" name="serviceTerm" id="termTime">
                                             	<c:forEach var="i" begin="2" end="${fn:substring(week,0,1)}">
                                             		<option value="${i}주">${i}주</option>
                                             	</c:forEach>
                                             	</select>
                                             </c:if>
                                             <c:if test="${!empty mento.termMonth}">
-                                            	<select class="form-control input-sm round" style="width: 150px" name="termMonth" id="termTime">
+                                            	<select class="form-control input-sm round" style="width: 150px" name="serviceTerm" id="termTime">
                                             	<c:forEach var="i" begin="2" end="${fn:substring(month,0,1)}">
                                             		<option value="${i}달">${i}달</option>
                                             	</c:forEach>
                                             	</select>
                                             </c:if>
                                         </div>
+                                        <hr class="mt-0 mb-30 white" /> 
+                                       <div class="mb-20 mb-md-10">
+                                       		소개글을 적어주세요.
+                                       		<div>
+                                       		<textarea rows="3" cols="50" name="mentiInfo" id="mentiInfo"></textarea>
+                                       		</div>
+                                       </div>
                                     </div>
                                     <!-- 서비스신청모달창 -->
                                     <hr class="mt-0 mb-30 white" />
-                                        <a href="#test-modal" class="btn btn-mod btn-w btn-medium round mt-10 lightbox-gallery-5 mfp-inline" onclick="getPrice()">서비스신청!</a>
+                                    	<button type="button" class="btn btn-mod btn-w btn-medium round mt-10" onclick="getPrice()">서비스신청!</button>
+                                        <a href="#test-modal" id="modalControl" class="lightbox-gallery-5 mfp-inline" style="display:none;">modal</a>
 			                                <div id="test-modal" class="mfp-hide">
 												<h4>결제창</h4>
 											<div class="pricing-item">
@@ -141,10 +150,10 @@
 															<i id='icon' class="fa fa-won-sign"></i>
 															<span id="totalPrice"></span>
 														</div>
+														<div class="pr-per">서비스전체가격</div>
 														<div>
 														<input type="hidden" id="putPoint">충전금액을 적어주세요</input>
 														</div>
-														<div class="pr-per">서비스전체가격</div>
 
 														<!-- Button 들어가는곳 -->
 														<div class="pr-button" id="btnDiv">
@@ -154,6 +163,11 @@
 													</div>
 												</div>
 											</div>
+										</div>
+										<div>
+											<input type="hidden" name="mentiId" value="${member.memberId}">
+											<input type="hidden" name="mentoId" value="${mento.mentoId}">
+											<input type="hidden" name="endDate">
 										</div>
                                     </form>
                                 </div>
@@ -174,10 +188,11 @@
                 		</c:if>
                     </div>
                 </section>
-     <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js">           
+     <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>          
      <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="${resources}/js/moment.min.js"></script>
     <script type="text/javascript">
 
         // Load the Visualization API and the corechart package.
@@ -305,6 +320,13 @@
         //클릭시 호출function
         function getPrice() {
         	checkTime();
+        	var std = new Date($("startDate").val());
+      	  	var term = $('#termTime').val();
+      	  	var numTerm = parseInt(term);
+      	  	if(term.substr(-1) == '주') {
+      	  		numTerm = numTerm * 7
+      	  	}
+      	    $('#endDate').val(moment(std.setDate(std.getDate() + numTerm)).format("YYYY-MM-DD"));
         }
        
         function checkTime() {
@@ -326,14 +348,19 @@
     	        	if(totalPrice > ${member.cashPt}) {
     	        		putPoint.type = "text";
     	        		var chargeBtn = $('<input type="button" class="btn btn-mod btn-w btn-small round" id="charge" onclick="chargePt()" value="충전하기">');
+    	        		$('#btnDiv').empty();
     	        		$('#btnDiv').append(chargeBtn);
     	        	}else if(totalPrice < ${member.cashPt}) {
     	        		var paymentBtn = $('<input type="button" class="btn btn-mod btn-w btn-small round" id="payment" onclick="payment()" value="결제하기">');
+    	        		$('#btnDiv').empty();
     	        		$('#btnDiv').append(paymentBtn);
     	        	}
+    	        $('#modalControl').trigger('click');
         	}
         	return totalPrice;
+        	
         }
+        
        //충전하기
        function chargePt() {
     	   IMP.init("imp85822085");
@@ -345,8 +372,8 @@
     		          pg: "kakao",
     		          pay_method: "card",
     		          merchant_uid: "merchantId_" + new Date().getTime(),
-    		          amount: putPoint.val(),
-    		          buyer_name: 'hong',
+    		          amount: $('#putPoint').val(),
+    		          buyer_name: '${member.memberId}',
     		          name : 'hong',
     		      }, function (rsp) { // callback
     		    	  console.log(rsp);
@@ -371,17 +398,31 @@
     	   
     	  //결제하기
     	  // 결제되는 포인트 변수선언
-    	  var subtractPoint = checkTime();
     	  function payment() {
-    		  $.ajx({
-    			  url : "/mentoPayment.do",
+	    	  var totalPrice = $('#totalPrice').text();
+	    	  var price = parseInt(totalPrice);
+	    	  console.log(totalPrice);
+    		  $.ajax({
+    			  url : "mentoPayment.do",
     			  type : "POST",
+    			  async : false,
     			  data : {
-    				 memberId : ${member.memberId},
-    				 cashPt : subtractPoint
+    				 memberId : '${member.memberId}',
+    				 cashPt : price
+    			  },
+    			  success : function(data) {
+    				  if(data == 'success') {
+	    				  frm.submit();
+    				  }
     			  }
     		  });
     	  }
+    	  var today = new Date();
+    	  var startDate = document.getElementById('startDate');
+    	  startDate.setAttribute("value", moment(today.setDate(today.getDate() + 3)).format("YYYY-MM-DD"));
+    	  startDate.setAttribute("min", moment(today.setDate(today.getDate() + 3)).format("YYYY-MM-DD"));
+    	  startDate.setAttribute("max", moment(today.setDate(today.getDate() + 30)).format("YYYY-MM-DD"));
+    	 
     </script>
 </body>
 </html>

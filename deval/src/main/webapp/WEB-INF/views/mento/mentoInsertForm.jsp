@@ -96,7 +96,7 @@
                         </c:forEach>
                     </select>
                     <!-- 모달창 띄우기 -->
-                       	<a href="#test-modal" class="btn btn-mod btn-w btn-medium round mt-10 lightbox-gallery-5 mfp-inline">기간정하기</a>
+                       	<a href="#test-modal" class="btn btn-mod btn-w btn-medium round mt-10 lightbox-gallery-5 mfp-inline" onclick="insertButton()">기간정하기</a>
                                 <div id="test-modal" class="mfp-hide">
                                     <p>
                                         선택하신 기간이 확실합니까?
@@ -134,7 +134,7 @@
                     </select>
                 </div>
             </div>
-            <input type="button" class="btn btn-mod btn-w btn-round btn-large" value="등록" onclick="mentoInsert()">
+            <input type="hidden" id="btn" class="btn btn-mod btn-w btn-round btn-large" value="등록" onclick="mentoInsert()">
                 
             </form>
 
@@ -234,6 +234,11 @@
         }
         function closeModal() {
         	$.magnificPopup.close();
+        }
+        /* 기간정하기시 등록버튼생성 */
+        function insertButton() {
+        	var btn = document.getElementById('btn');
+        	btn.type = 'button';
         }
         
     </script>
