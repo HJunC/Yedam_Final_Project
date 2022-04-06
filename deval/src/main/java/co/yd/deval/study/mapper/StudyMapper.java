@@ -7,13 +7,15 @@ import org.apache.ibatis.annotations.Param;
 
 import co.yd.deval.study.service.StudyInfoVO;
 import co.yd.deval.study.service.StudyReqVO;
+import co.yd.deval.study.service.StudyTeamVO;
 import co.yd.deval.study.service.StudyVO;
 
 public interface StudyMapper {
 	//스터디 CURD
 	List<StudyVO> studySelectAll();
 	StudyVO studySelectNo(StudyVO vo);
-	
+
+	int findMaxStudyNo();
 	int studyInsert(StudyVO vo);
 	int studyUpdate(StudyVO vo);
 
@@ -30,7 +32,13 @@ public interface StudyMapper {
 	List<StudyReqVO> studyReqSelectAll();
 	//StudyReqVO studyTeam(StudyReqVO vo);
 	int studyTeamMemberInsert(StudyReqVO vo);
-	int studyTeamMemberUpdate(StudyReqVO vo);
+	int studyTeamLeaderInsert(StudyReqVO vo);
+	int studyTeamMemberUpdateAccept(StudyReqVO vo);
+	int studyTeamMemberUpdateRefuse(StudyReqVO vo);
 	int studyTeamMemberDelete(StudyReqVO vo);
+	
+	// 스터디 팀원 VIEW
+	List<StudyTeamVO> studyTeamSelectAll();
+	//StudyTeamVO studyTeamSelect(StudyTeamVO vo);
 
 }

@@ -2,13 +2,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <c:set var="resources" value="${pageContext.request.contextPath}/resources" />
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>studyMember.jsp</title>
-</head>
-<body>
+	<!DOCTYPE html>
+	<html>
+	<head>
+	<meta charset="UTF-8">
+	<title>studyMember.jsp</title>
+	</head>
+	<body>
                 <!-- Home Section -->
                 <section class="page-section bg-dark light-content" id="home">
                     <div class="container relative text-center">

@@ -86,34 +86,43 @@
     
     <script type="text/javascript">
      	function teamBye(id, sno) {
-    		console.log("-- StudyReq Member Delete Start --");
+    		console.log("-- StudyReq Member Refuse Start --");
     		$.ajax({
     			type: "POST",
-    			url: "studyReqDel.do",
+    			url: "studyReqRefuse.do",
     			data: {"memberId": id, "studyNo": sno},
     			success: function(json) {
-    				alert(id + '님을 거절하였습니다.');
+    				alert(id + '님을 거절했습니다.');
     				location.reload();
     			},
     			error: function(json) {
     			}
     		});
+    		console.log("-- Study Refuse End --")
 		}
      	
-    /*  	function teamGo(id, sno) {
-    		console.log("-- StudyReq Member Insert Start --");
+     	
+      	function teamGo(id, sno) {
+    		console.log("-- StudyReq Member Accept Start --");
     		$.ajax({
     			type: "POST",
-    			url: "studyReqDel.do",
+    			url: "studyReqAccept.do",
     			data: {"memberId": id, "studyNo": sno},
-    			success: function(json) {
-    				alert(id + '님이 스터디원이 되었습니다.');
-    				location.reload();
-    			},
-    			error: function(json) {
-    			}
+    			success : function(result) {
+					console.log(result);
+					 if (result.state != null || result.state != '0' ) {
+						
+						alert(id + '님이 ' + sno +'번 스터디에 참가했습니다.');
+						location.href = "studyMain.do";
+					} 
+				},
+				error : function(err) {
+					console.log("error", err);
+				}
     		});
-		} */
+    		console.log("-- Study Accept End --")
+		} 
     </script>
+   
 </body>
 </html>

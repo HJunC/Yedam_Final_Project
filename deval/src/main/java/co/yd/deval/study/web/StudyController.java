@@ -4,9 +4,7 @@ import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,7 +30,10 @@ public class StudyController {
 	@Autowired
 	private MemberService memberDao;
 	
-	/* STUDY */
+	@Autowired
+	private StudyMailSender mail;
+	
+	/* STUDY MAIN */
 	// 스터디 메인
     @GetMapping("/studyMain.do")
     public String main() {
@@ -48,7 +49,10 @@ public class StudyController {
     // 스터디 등록 기능
     @RequestMapping("/insertStudy.do")
     @ResponseBody
-    public String insertStudy(StudyVO vo, Principal user) {
+    public String insertStudy(StudyVO vo, StudyReqVO reqvo, Principal user) {
+    	
+    	int n = 0;
+    	
     	// 언어 2개 체크
     	if(vo.getCk_lang()!=null) {
     		if(vo.getCk_lang().length>0) {
@@ -58,9 +62,15 @@ public class StudyController {
     			vo.setLang2(vo.getCk_lang()[1]);
     		}
     	}
-
+    	
     	vo.setLeaderId(user.getName());
-    	int n = studyDao.studyInsert(vo);
+    	n = studyDao.studyInsert(vo);
+ 
+    	if(n != 0) {
+    		reqvo.setMemberId(user.getName());
+    		reqvo.setStudyNo(studyDao.findMaxStudyNo());
+    		n = studyDao.studyTeamLeaderInsert(reqvo);
+    	}
     	return Integer.toString(n);
     }
     
@@ -132,7 +142,6 @@ public class StudyController {
     
     
     /* Study Request */
-    
     @PostMapping("/studyReqInsert.do")
     @ResponseBody
     public ResponseEntity<StudyReqVO> studyReqInsert(int sno, StudyReqVO rvo, Principal principal) {
@@ -156,11 +165,29 @@ public class StudyController {
     @RequestMapping("/studyReqDel.do")
     @ResponseBody
     public ResponseEntity<Integer> studyReqDel(StudyReqVO vo) {
-    	
     	int n = studyDao.studyTeamMemberDelete(vo);
     	
     	return ResponseEntity.ok().body(n);
     }
+    
+	 @RequestMapping("/studyReqRefuse.do")
+	 @ResponseBody
+	 public ResponseEntity<Integer> studyReqRefuse(StudyReqVO vo) {
+		 int n = studyDao.studyTeamMemberUpdateRefuse(vo);
+		 
+		 return ResponseEntity.ok().body(n);
+	 }
+	 
+	 @RequestMapping("/studyReqAccept.do")
+	 @ResponseBody
+	 public ResponseEntity<Integer> studyReqAccept(StudyReqVO vo) throws Exception {
+		 int n = studyDao.studyTeamMemberUpdateAccept(vo);
+		 // 메일발송 시간 지연으로 인해 디자인 로딩창 넣기
+		 if (n != 0) {
+			 mail.sendMailTest();
+		 }
+		 return ResponseEntity.ok().body(n);
+	 }
     
     @RequestMapping("/studyReq.do")
     public String studyReq(Model model) {
@@ -170,7 +197,13 @@ public class StudyController {
     
     @RequestMapping("/studyMember.do")
     public String studyMember(Model model) {
-    	//model.addAttribute("", );
+    	model.addAttribute("study", studyDao.studyTeamSelectAll());
     	return "study/studyMember";
-    } 
+    }
+    
+    @RequestMapping("/designList.do")
+    public String designList(Model model) {
+    	
+    	return "study/designList";
+    }
 }

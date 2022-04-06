@@ -8,6 +8,7 @@ import co.yd.deval.study.mapper.StudyMapper;
 import co.yd.deval.study.service.StudyInfoVO;
 import co.yd.deval.study.service.StudyReqVO;
 import co.yd.deval.study.service.StudyService;
+import co.yd.deval.study.service.StudyTeamVO;
 import co.yd.deval.study.service.StudyVO;
 
 
@@ -36,6 +37,11 @@ public class StudyServiceImpl implements StudyService {
 	@Override
 	public List<StudyVO> studySelectAll() {
 		return map.studySelectAll();
+	}
+	
+	@Override
+	public int findMaxStudyNo() {
+		return map.findMaxStudyNo();
 	}
 	
 	
@@ -80,15 +86,35 @@ public class StudyServiceImpl implements StudyService {
 	public int studyTeamMemberInsert(StudyReqVO vo) {
 		return map.studyTeamMemberInsert(vo);
 	}
+	
+	@Override
+	public int studyTeamLeaderInsert(StudyReqVO vo) {
+		return map.studyTeamLeaderInsert(vo);
+	}
 
 	@Override
-	public int studyTeamMemberUpdate(StudyReqVO vo) {
-		return map.studyTeamMemberUpdate(vo);
+	public int studyTeamMemberUpdateAccept(StudyReqVO vo) {
+		return map.studyTeamMemberUpdateAccept(vo);
+	}
+
+	@Override
+	public int studyTeamMemberUpdateRefuse(StudyReqVO vo) {
+		return map.studyTeamMemberUpdateRefuse(vo);
 	}
 
 	@Override
 	public int studyTeamMemberDelete(StudyReqVO vo) {
 		return map.studyTeamMemberDelete(vo);
 	}
+	
+	// 스터디 팀 VIEW
+	@Override
+	public List<StudyTeamVO> studyTeamSelectAll() {
+		return map.studyTeamSelectAll();
+	}
+
+	
+
+
 
 }

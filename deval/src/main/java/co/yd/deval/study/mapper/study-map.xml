@@ -7,7 +7,7 @@
 		resultType="co.yd.deval.study.service.StudyVO">
 		SELECT *
 		FROM STUDY
-		WHERE STATE = '0'
+		WHERE STATE = 0
 		ORDER BY STUDY_NO DESC
 	</select>
 	
@@ -75,33 +75,33 @@
 	<!-- Study User Info (Modal)-->
 	<select id="studySelectUser"
 		resultType="co.yd.deval.study.service.StudyInfoVO">
-		SELECT *
-		FROM STUDY_INFO
-		WHERE MEMBER_ID = #{memberId}
+		SELECT	*
+		FROM	STUDY_INFO
+		WHERE	MEMBER_ID = #{memberId}
 	</select>
 
 
 	<select id="findStudyImLeader" resultType="co.yd.deval.study.service.StudyVO">
-		select  *
-		from    study
-		where   leader_id = #{id}
+		SELECT  *
+		FROM    STUDY
+		WHERE   LEADER_ID = #{id}
 	</select>
 	
 	<select id="findStudyByNo" resultType="co.yd.deval.study.service.StudyVO">
-		select  *
-		from    study
-		where   study_no in (select  study_no
-						     from    study_team
-						     where   member_id = #{id})
+		SELECT  *
+		FROM    STUDY
+		WHERE   STUDY_NO IN (sELECT  STUDY_NO
+						     FROM    STUDY_TEAM
+						     WHERE   MEMBER_ID = #{id})
 	</select>
 	
 	<select id="findWaitingStudy" resultType="co.yd.deval.study.service.StudyVO">
-		select  *
-		from    study
-		where   study_no in (select  study_no
-						     from    study_request
-						     where   member_id     = #{id}
-						     and     state         = 0)
+		SELECT  *
+		FROM    STUDY
+		WHERE   STUDY_NO IN (SELECT  STUDY_NO
+						     FROM    STUDY_REQUEST
+						     WHERE   MEMBER_ID     = #{id}
+						     AND     STATE         = 0)
 	</select>
 
 	<insert id="studyUserInsert"
@@ -133,11 +133,13 @@
 		WHERE MEMBER_ID = #{memberId}
 	</update>
 	
-	<!-- Study Req & Team -->
 	
+	<!-- Study Request -->
 	<select id="studyReqSelectAll" resultType="co.yd.deval.study.service.StudyReqVO" parameterType="co.yd.deval.study.service.StudyReqVO">
 		SELECT *
 		FROM STUDY_REQUEST
+		WHERE STATE = 0
+		ORDER BY MEMBER_ID ASC
 	</select>
 	
 	<insert id="studyTeamMemberInsert" parameterType="co.yd.deval.study.service.StudyReqVO">
@@ -157,9 +159,38 @@
 						   		   , #{license}
 						   		   , #{present}
 						   		   , #{profileImg}
-						   		   )								   
-		
+						   		   )
 	</insert>
+	
+	<insert id="studyTeamLeaderInsert" parameterType="co.yd.deval.study.service.StudyReqVO">
+		INSERT INTO STUDY_REQUEST (   STUDY_NO
+									, STATE
+									, MEMBER_ID
+									, ISLEADER
+								   )
+								   
+						   VALUES (  #{studyNo}
+						   		   , 1
+						   		   , #{memberId}
+						   		   , 1
+						   		   )					
+	</insert>
+	
+	<update id="studyTeamMemberUpdateAccept" parameterType="co.yd.deval.study.service.StudyReqVO">
+		UPDATE STUDY_REQUEST
+		SET STATE = 1
+		WHERE MEMBER_ID = #{memberId}
+		AND
+		STUDY_NO = #{studyNo}
+	</update>
+	
+	<update id="studyTeamMemberUpdateRefuse" parameterType="co.yd.deval.study.service.StudyReqVO">
+		UPDATE STUDY_REQUEST
+		SET STATE = 2
+		WHERE MEMBER_ID = #{memberId}
+		AND
+		STUDY_NO = #{studyNo}
+	</update>
 	
 	<delete id="studyTeamMemberDelete" parameterType="co.yd.deval.study.service.StudyReqVO">
 		DELETE
@@ -168,6 +199,22 @@
 		AND
 		STUDY_NO = #{studyNo}
 	</delete>
+	
+	
+	<!-- Study Team VIEW -->
+	<select id="studyTeamSelectAll" parameterType="co.yd.deval.study.service.StudyTeamVO" resultType="co.yd.deval.study.service.StudyTeamVO">
+		SELECT *
+		FROM STUDY_TEAM
+		WHERE STUDY_NO IN (SELECT STUDY_NO
+                            FROM STUDY_TEAM
+                            WHERE MEMBER_ID = #{memberId})
+		AND STATE = 1
+	</select>
+	
+	<select id="findMaxStudyNo" resultType="int">
+		select max(study_no)
+		from study
+	</select>
 	
 
 </mapper>
