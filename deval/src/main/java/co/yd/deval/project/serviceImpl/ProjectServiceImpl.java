@@ -97,8 +97,9 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public ProjectInfoDTO getProject(int projectNo) {
         ProjectInfoDTO dto = mapper.getProject(projectNo);
-        ProjectTeamVO searchTeamVo = new ProjectTeamVO();
-        searchTeamVo.setProjectNo(projectNo);
+        ProjectTeamVO searchTeamVo = ProjectTeamVO.builder()
+                                    .projectNo(projectNo)
+                                    .build();
         dto.setProjectTeam(teamMapper.selectProjectTeam(searchTeamVo));
         return dto;
     }

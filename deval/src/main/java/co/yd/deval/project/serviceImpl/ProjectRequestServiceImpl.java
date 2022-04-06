@@ -50,7 +50,7 @@ public class ProjectRequestServiceImpl implements ProjectRequestService {
         // todo 프로젝트 포지션 카운트 - 1
 
         // todo 프로젝트 팀에 추가
-        ProjectTeamVO teamVO = new ProjectTeamVO();
+        ProjectTeamVO teamVO = ProjectTeamVO.builder().build();
         teamMapper.insertProjectTeam(teamVO);
         vo.setUpdateState("3");
         return mapper.updateProjectRequest(vo);
