@@ -79,13 +79,6 @@
 		FROM STUDY_INFO
 		WHERE MEMBER_ID = #{memberId}
 	</select>
-
-
-	<select id="findStudyImLeader" resultType="co.yd.deval.study.service.StudyVO">
-		select  *
-		from    study
-		where   leader_id = #{id}
-	</select>
 	
 	<select id="findStudyByNo" resultType="co.yd.deval.study.service.StudyVO">
 		select  *

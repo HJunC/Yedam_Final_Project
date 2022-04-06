@@ -1,12 +1,14 @@
 package co.yd.deval.member.web;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.security.Principal;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,9 +20,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import co.yd.deval.member.service.MemberService;
 import co.yd.deval.member.service.MemberVO;
 import co.yd.deval.project.service.ProjectService;
+import co.yd.deval.project.service.ProjectVO;
 import co.yd.deval.study.service.StudyService;
-
-import javax.servlet.http.HttpServletRequest;
+import co.yd.deval.study.service.StudyVO;
 
 @Controller
 public class MemberController {
@@ -61,13 +63,22 @@ public class MemberController {
 		MemberVO vo = new MemberVO();
 		vo.setMemberId(user.getName());
 		model.addAttribute("member",memberDao.memberSelect(vo));
-		model.addAttribute("myProjects",projectDao.findProjectImLeader(vo.getMemberId()));
-		model.addAttribute("myStudies",studyDao.findStudyImLeader(vo.getMemberId()));
-		model.addAttribute("projects",projectDao.findProjectByNo(vo.getMemberId()));
-		model.addAttribute("waitProjects",projectDao.findWaitingProject(vo.getMemberId()));
-		model.addAttribute("studies",studyDao.findStudyByNo(vo.getMemberId()));
-		model.addAttribute("waitStudies",studyDao.findWaitingStudy(vo.getMemberId()));
 		return "member/myPage";
+	}
+	
+	@GetMapping("/myStudies.do")
+	@ResponseBody
+	public ResponseEntity<Map<String,Object>> myStudies(Principal user) {
+		Map<String,Object> map = new HashMap<>();
+		map.put("wait", studyDao.findWaitingStudy(user.getName()));
+		map.put("study", studyDao.findStudyByNo(user.getName()));
+		return ResponseEntity.ok().body(map);
+	}
+	
+	@GetMapping("/myProjects.do")
+	@ResponseBody
+	public ResponseEntity<List<ProjectVO>> myProjects(Principal user){
+		return ResponseEntity.ok().body(null);
 	}
 
 	@GetMapping("/coPage.do")

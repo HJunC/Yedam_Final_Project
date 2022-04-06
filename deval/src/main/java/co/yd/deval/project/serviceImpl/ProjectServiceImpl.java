@@ -1,16 +1,15 @@
 package co.yd.deval.project.serviceImpl;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import co.yd.deval.project.mapper.ProjectMapper;
-import co.yd.deval.project.mapper.ProjectRequestMapper;
 import co.yd.deval.project.mapper.ProjectTeamMapper;
 import co.yd.deval.project.service.ProjectInfoDTO;
 import co.yd.deval.project.service.ProjectService;
 import co.yd.deval.project.service.ProjectTeamVO;
 import co.yd.deval.project.service.ProjectVO;
-
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
 * @package : co.yd.deval.project.serviceImpl
@@ -111,11 +110,6 @@ public class ProjectServiceImpl implements ProjectService {
     public int getTotalCount(ProjectVO vo) {
         return mapper.getTotalCount(vo);
     }
-
-	@Override
-	public List<ProjectVO> findProjectImLeader(String id) {
-		return mapper.findProjectImLeader(id);
-	}
 
 	@Override
 	public List<ProjectVO> findProjectByNo(String id) {

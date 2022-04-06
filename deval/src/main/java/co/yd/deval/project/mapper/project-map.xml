@@ -169,12 +169,6 @@
         AND project_no > 0
     </select>
     
-    <select id="findProjectImLeader" resultType="co.yd.deval.project.service.ProjectVO">
-    	SELECT *
-    	FROM   PROJECT
-    	WHERE  LEADER_ID  = #{id}
-    </select>
-    
     <select id="findProjectByNo" resultType="co.yd.deval.project.service.ProjectVO">
     	SELECT  *
     	FROM    PROJECT
