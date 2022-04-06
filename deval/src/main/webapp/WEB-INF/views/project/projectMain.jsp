@@ -16,6 +16,7 @@
                 <div class="wow fadeInUpShort" data-wow-delay=".2s">
                     <p class="hs-line-6 opacity-075 mb-20 mb-xs-0">
                         딱 맞는 사람과 함께 개발 프로젝트를 진행해보세요
+                        ${sessionScope.userProjectState }
                     </p>
                 </div>
             </div>
@@ -30,16 +31,11 @@
 <section class="small-section bg-dark light-content">
     <div class="container relative">
         <c:choose>
-            <c:when test="${isLeader eq 'true'}">
-                내 프로젝트
-                <a href="projectDetail.do?no=${userProject.projectNo}">
-                    ${userProject.projectNo} / ${userProject.projectName} / 리더 아이디 : ${userProject.leaderId}
-                </a>
-            </c:when>
-
-            <c:when test="${isLeader eq 'false'}">
-                내 프로젝트
+            <c:when test="${not empty userProject}">
+            <h3>내 프로젝트</h3>
+            <a href="projectDetail.do?no=${userProject.projectNo}">
                 ${userProject.projectNo} / ${userProject.projectName} / 리더 아이디 : ${userProject.leaderId}
+            </a>
             </c:when>
 
             <c:otherwise>
@@ -55,7 +51,47 @@
             </c:otherwise>
         </c:choose>
 
+        <c:if test="${sessionScope.userProjectState eq '대기팀장' || sessionScope.userProjectState eq '진행중 팀장'}">
+            나는 리더
+        </c:if>
 
+        <c:if test="${sessionScope.userProjectState eq '대기팀장'}">
+            <h4>지원자</h4>
+            <c:choose>
+                <c:when test="${not empty requestList}">
+                    <c:forEach items="${requestList}" var="item">
+                        <p>
+                        ${item.projectNo } /
+                        ${item.memberId } /
+                        ${item.state } /
+                        ${item.subject } /
+                        ${item.position } /
+                        ${item.requestDt }
+                        <button type="button" class="btn btn-mod btn-w btn-medium btn-round">수락</button>
+                        <button type="button" class="btn btn-mod btn-w btn-medium btn-round">거절</button>
+                        </p>
+                    </c:forEach>
+                </c:when>
+
+                <c:otherwise>
+                    <h3 class="call-action-1-heading" style="font-size: 30px; color: rgba(255, 255, 255, 0.3);">지원자가 없습니다.</h3>
+                </c:otherwise>
+            </c:choose>
+        </c:if>
+
+        <c:if test="${sessionScope.userProjectState eq '지원중'}">
+            <h3>지원한 프로젝트</h3>
+            <c:forEach items="${userRequest}" var="item">
+                <p>
+                ${item.projectNo } /
+                ${item.memberId } /
+                ${item.state } /
+                ${item.subject } /
+                ${item.position } /
+                ${item.requestDt }
+                </p>
+            </c:forEach>
+        </c:if>
     </div>
 </section>
 <!-- End Call Action Section -->
@@ -77,31 +113,31 @@
 <!-- Call Action Section -->
 <section class="small-section bg-dark light-content">
     <div class="container relative">
-        <h4>팀 프로젝트 찾기</h4>
+        <div>
+            <h3 class="me-4" style="display: inline-block;">팀 프로젝트 찾기</h3>
+            <a href="search?pageNum=1&amount=10" class="btn btn-mod btn-border-w btn-round btn-small">프로젝트 더보기</a>
+        </div>
         <div class="list-group project-list">
 
             <c:forEach items="${projectList }" var="item">
                 <a href="projectDetail.do?no=${item.projectNo}" class="list-group-item d-flex justify-content-between align-items-start" aria-current="true">
-                <div class="ms-2 me-auto">
-                    <div class="fw-bold">${item.projectName}</div>
-                    모집일
-                    <fmt:formatDate value="${item.recruitSdt}" type="both" pattern="yyyy-MM-dd"/>
-                    ~
-                    <fmt:formatDate value="${item.recruitEdt}" type="both" pattern="yyyy-MM-dd"/>
-                </div>
-                <c:if test="item.frontRcnt > 0">
-
-                </c:if>
-                <span class="badge me-1 ${item.frontRcnt > 0 ? 'bg-primary' : 'bg-dark'}">프론트엔드 ${item.frontRcnt}</span>
-                <span class="badge me-1 ${item.backRcnt > 0 ? 'bg-primary' : 'bg-dark'}">백엔드 ${item.backRcnt}</span>
-                <span class="badge me-1 ${item.fullRcnt > 0 ? 'bg-primary' : 'bg-dark'}">풀스택 ${item.fullRcnt}</span>
-                <span class="badge me-1 ${item.designRcnt > 0 ? 'bg-primary' : 'bg-dark'}">디자인 ${item.designRcnt}</span>
-                <span class="badge me-1 ${item.plannerRcnt > 0 ? 'bg-primary' : 'bg-dark'}">기획 ${item.plannerRcnt}</span>
-            </a>
-
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold">${item.projectName}</div>
+                        모집일
+                        <fmt:formatDate value="${item.recruitSdt}" type="both" pattern="yyyy-MM-dd"/>
+                        ~
+                        <fmt:formatDate value="${item.recruitEdt}" type="both" pattern="yyyy-MM-dd"/>
+                    </div>
+                    <span class="badge me-1 ${item.frontRcnt > 0 ? 'bg-primary' : 'bg-dark'}">프론트엔드 ${item.frontRcnt}</span>
+                    <span class="badge me-1 ${item.backRcnt > 0 ? 'bg-primary' : 'bg-dark'}">백엔드 ${item.backRcnt}</span>
+                    <span class="badge me-1 ${item.fullRcnt > 0 ? 'bg-primary' : 'bg-dark'}">풀스택 ${item.fullRcnt}</span>
+                    <span class="badge me-1 ${item.designRcnt > 0 ? 'bg-primary' : 'bg-dark'}">디자인 ${item.designRcnt}</span>
+                    <span class="badge me-1 ${item.plannerRcnt > 0 ? 'bg-primary' : 'bg-dark'}">기획 ${item.plannerRcnt}</span>
+                </a>
             </c:forEach>
 
         </div>
+
     </div>
 </section>
 <!-- End Call Action Section -->
@@ -232,6 +268,14 @@
 </section>
 <!-- End Testimonials Section -->
 
+<script src="${resources}/js/moment.min.js"></script>
+<script src="${resources}/js/moment-with-locales.min.js"></script>
 <script>
+  // 작성시간
+  moment.locale('ko');
+  function createAtKr(date) {
+    return moment(date).fromNow();
+  }
+
 
 </script>

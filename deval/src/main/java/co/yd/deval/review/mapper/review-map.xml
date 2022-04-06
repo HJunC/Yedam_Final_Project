@@ -6,15 +6,13 @@
 		SELECT * 
 		FROM CODE_QUESTION_REPLY
 		WHERE CQ_NO = #{cqNo}
+		ORDER BY CQ_REPLY_NO DESC
 	</select>
 	
 	<select id="reviewSelectOne" resultType="co.yd.deval.review.service.ReviewVO">
 		SELECT * 
 		FROM CODE_QUESTION_REPLY
-		WHERE CQ_NO = #{cqNo}
-		<if test="cqReplyNo != null">
-		AND CQ_REPLY_NO = #{cqReplyNo}
-		</if>
+		WHERE CQ_REPLY_NO = #{cqReplyNo}
 	</select>
 	
 	<insert id="reviewInsert" parameterType="co.yd.deval.review.service.ReviewVO">
@@ -58,5 +56,12 @@
 		SET RECOMMEND = RECOMMEND + 1
 		WHERE CQ_REPLY_NO = #{cqReplyNo}
 	</update>
+	
+	<select id="cqNoSelect" resultType="co.yd.deval.review.service.ReviewVO">
+		SELECT *
+		FROM CODE_QUESTION_REPLY
+		WHERE CQ_NO = #{cqNo}
+		AND ROWNUM = 1
+	</select>
 	
 </mapper>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.yd.deval.board.mapper.BoardMapper">
+
+<select id="boardSelectList" resultType="co.yd.deval.board.service.BoardVO">
+select *
+from board
+</select>
+
+ 
+<select id="boardSelect" resultType="co.yd.deval.board.service.BoardVO">
+select *
+from board
+where board_no = #{boardNo}
+ 
+</select>
+
+
+<insert  id="boardInsert"  parameterType="co.yd.deval.board.service.BoardVO" >
+insert into board ( board_no,
+board_type_no,
+title,
+subject,
+writer,
+category
+)
+
+values(
+ BOARD_NO_COUNT_SEQ.nextVal,
+#{boardTypeNo},
+#{title},
+#{subject},
+#{writer},
+#{category}
+)
+</insert>
+
+
+
+<!-- 수정 -->
+<update id="boardUpdate" parameterType="co.yd.deval.board.service.BoardVO" >
+<set>
+update board 
+<if test= "title !=null">   title=#{title},</if>
+<if test= "subject!=null">   subject=#{subject},</if>
+<if test= "category!=null">   category=#{category},</if>
+where board_no=#{boardNo}
+</set>
+</update>
+
+
+<!-- 삭제 -->
+<delete id="boardDelete" parameterType="co.yd.deval.board.service.BoardVO" >
+delete from board
+where board_no=#{boardNo}
+</delete>
+
+</mapper>

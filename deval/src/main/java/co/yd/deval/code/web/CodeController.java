@@ -1,5 +1,7 @@
 package co.yd.deval.code.web;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,7 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import co.yd.deval.code.service.CodeService;
 import co.yd.deval.code.service.CodeVO;
-import oracle.jdbc.proxy.annotation.Post;
+import co.yd.deval.comment.service.CommentService;
+import co.yd.deval.comment.service.CommentVO;
 
 @Controller
 @RequestMapping("/code")
@@ -17,6 +20,9 @@ public class CodeController {
 
 	@Autowired
 	private CodeService codeDAO;
+	
+	@Autowired
+	private CommentService commentDAO;
 
 	@GetMapping("/codeList.do")
 	public String codeList(Model model) {
@@ -24,11 +30,16 @@ public class CodeController {
 		return "code/codeList";
 	}
 
-	@PostMapping("/codeSelectOne.do")
-	public String codeSelectOne(Model model, CodeVO vo) {
+	@GetMapping("/codeSelectOne.do")
+	public String codeSelectOne(Model model, CodeVO vo, Principal principal) {
 		vo = codeDAO.codeSelectOne(vo);
 		if (vo != null) {
 			model.addAttribute("code", vo);
+			CommentVO cmVo = new CommentVO();
+			cmVo.setBoardNo(vo.getCqNo());
+			model.addAttribute("comments", commentDAO.commentSelectList(cmVo));
+			model.addAttribute("username", principal.getName());
+			model.addAttribute("bno", vo.getCqNo());
 			codeDAO.codeHitUp(vo);
 			return "code/codeSelectOne";
 		}
@@ -80,10 +91,9 @@ public class CodeController {
 		return "code/error";
 	}
 	
-	@PostMapping("/reviewList.do")
-	public String reviewList(Model model, CodeVO vo) {
-		
-		return "code/reviewList";
-	}
+//	@PostMapping("/reviewList.do")
+//	public String reviewList(Model model, CodeVO vo) {
+//		return "code/reviewList";
+//	}
 
 }

@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
-		  id="multipartFile">
+		  id="multipartResolver">
 		<property name="maxUploadSize" value="1073741824"/>
 		<property name="maxInMemorySize" value="1073741824"/>
 	</bean>

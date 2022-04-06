@@ -1,9 +1,8 @@
 package co.yd.deval.project.web;
 
-import co.yd.deval.project.service.ProjectService;
-import co.yd.deval.project.service.ProjectTeamService;
-import co.yd.deval.project.service.ProjectTeamVO;
-import co.yd.deval.project.service.ProjectVO;
+import co.yd.deval.common.Criteria;
+import co.yd.deval.common.PageDTO;
+import co.yd.deval.project.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,64 +10,157 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
+
+/**
+* @package : co.yd.deval.project.web
+* @name : ProjectController.java
+* @date : 2022-04-01 오후 3:04
+* @author : ByungHo
+* @version : 1.0.0
+* @modifyed : ByungHo
+**/
 
 @Controller
 @RequestMapping("/project")
 public class ProjectController {
 
-    private final ProjectService projectDao;
+    private final ProjectService projectService;
+    private final ProjectRequestService projectRequestService;
 
-    public ProjectController(ProjectService projectDao) {
-        this.projectDao = projectDao;
+    public ProjectController(ProjectService projectService, ProjectRequestService projectRequestService) {
+        this.projectService = projectService;
+        this.projectRequestService = projectRequestService;
     }
 
+    /***
+     * 프로젝트 메인화면
+     * @param model
+     * @param principal
+     * @return project/projectMain.jsp
+     */
     @GetMapping("/main.do")
-    public String projectMain(Model model) {
-        String userId = "hong";
-        ProjectVO userProject = projectDao.getNowUserProject(userId);
-        if (userProject != null) {
-            if (userProject.getLeaderId().equals(userId)) {
-                model.addAttribute("isLeader", "true");
-            } else {
-                model.addAttribute("isLeader", "false");
+    public String projectMain(Model model, Principal principal, HttpServletRequest request) {
+        if (principal != null) {
+            HttpSession session = request.getSession();
+            String state = (String) session.getAttribute("userProjectState");
+
+            int projectNo = 0;
+            List<ProjectRequestVO> requestList = new ArrayList<>();
+
+            if (state == null) {
+                ProjectTeamVO userTeam = projectService.getOngoingProject(principal.getName());
+                // 대기, 진행중인 프로젝트가 있을 때
+                if (userTeam != null) {
+                    if (userTeam.getIsLeader().equals("1")) {
+                        session.setAttribute("userProjectState", userTeam.getState().equals("2") ? "진행중팀장" : "대기팀장");
+                    } else {
+                        session.setAttribute("userProjectState", userTeam.getState().equals("2") ? "진행중팀원" : "대기팀원");
+                    }
+                    projectNo = userTeam.getProjectNo();
+                } else {
+                    ProjectRequestVO rvo = new ProjectRequestVO();
+                    rvo.setMemberId(principal.getName());
+                    rvo.setState("1"); // 검토중
+                    requestList = projectRequestService.selectProjectRequest(rvo);
+                    // 검토중인 요청이 있을 떄
+                    if (!requestList.isEmpty()) {
+                        session.setAttribute("userProjectState", "지원중");
+                        model.addAttribute("userRequest", requestList);
+                    } else {
+                        session.setAttribute("userProjectState", "없음");
+                    }
+                }
             }
-            model.addAttribute("userProject", userProject);
+
+            state = (String) session.getAttribute("userProjectState");
+            switch (state) {
+                case "지원중":
+                    if (requestList.isEmpty()) {
+                        ProjectRequestVO rvo = new ProjectRequestVO();
+                        rvo.setMemberId(principal.getName());
+                        rvo.setState("1"); // 검토중
+                        requestList = projectRequestService.selectProjectRequest(rvo);
+                    }
+                    model.addAttribute("userRequest", requestList);
+                    break;
+                case "대기팀원":
+                case "진행중팀원":
+                case "대기팀장":
+                case "진행중팀장":
+                    if (projectNo == 0) {
+                        ProjectTeamVO userTeam = projectService.getOngoingProject(principal.getName());
+                        projectNo = userTeam.getProjectNo();
+                    }
+                    model.addAttribute("userProject", projectService.getProjectInfo(projectNo));
+                    if (state.equals("대기팀장")) {
+                        // 지원자 리스트
+                        ProjectRequestVO requestVO = new ProjectRequestVO();
+                        requestVO.setProjectNo(projectNo);
+                        model.addAttribute("requestList", projectRequestService.selectProjectRequest(requestVO));
+                    }
+                    break;
+                case "없음":
+                default:
+                    break;
+            }
         }
-        ProjectVO searchVo = new ProjectVO();
-        //List<ProjectVO> projectList = projectDao.searchMainPageProject(searchVo);
-        List<ProjectVO> projectList = projectDao.selectProjectAll();
+
+        ProjectVO searchVO = new ProjectVO();
+        List<ProjectVO> projectList = projectService.searchMainPageProject(searchVO);
         model.addAttribute("projectList", projectList);
         return "project/projectMain";
     }
 
+    /***
+     * 프로젝트 추가화면 이동
+     * @param principal 로그인 유저정보
+     * @return project/projectInsertForm.jsp
+     */
     @GetMapping("/projectInsertForm.do")
-    public String projectInsertForm() {
-        return "project/projectInsertForm";
-    }
-
-    @PostMapping("/projectInsert.do")
-    public String projectInsert(ProjectVO vo) {
-        // todo 로그인 유저 입력
-        vo.setLeaderId("hong");
-        int result = projectDao.insertProject(vo);
-        if (result != 0) {
-            System.out.println(vo);
-            return "redirect:main.do";
+    public String projectInsertForm(Principal principal) {
+        if (principal != null) {
+            // todo 프로젝트 진행여부 체크
+            return "project/projectInsertForm";
         } else {
-            System.out.println("error");
-            return "redirect:main.do";
+            return "redirect:../loginForm.do";
         }
     }
 
+    /***
+     * 프로젝트 상세화면
+     * @param model
+     * @param projectNo
+     * @return project/projectDetail.jsp
+     */
     @GetMapping("/projectDetail.do")
     public String projectDetail(Model model, @RequestParam("no") int projectNo) {
-        model.addAttribute("project", projectDao.selectProject(projectNo));
+        ProjectInfoDTO dto = projectService.getProjectInfo(projectNo);
+        model.addAttribute("project", dto);
+        model.addAttribute("team", dto.getProjectTeam());
         return "project/projectDetail";
     }
 
-    @GetMapping("/projectSearch.do")
-    public String projectSearch(Model model, ProjectVO vo) {
+    /***
+     * 프로젝트 검색
+     * @param model
+     * @param vo 프로젝트 객체
+     * @param cri
+     * @return project/projectSearch.jsp
+     */
+    @GetMapping("/search")
+    public String projectSearch(Model model, ProjectVO vo, Criteria cri) {
+        vo.setCriteria(cri);
+        List<ProjectVO> projectList = projectService.getListWithPaging(vo);
+        PageDTO pageDTO = new PageDTO(cri, projectService.getTotalCount(vo));
+
+        model.addAttribute("projectList", projectList);
+        model.addAttribute("search", vo);
+        model.addAttribute("pageMaker", new PageDTO(cri, projectService.getTotalCount(vo)));
         return "project/projectSearch";
     }
 
