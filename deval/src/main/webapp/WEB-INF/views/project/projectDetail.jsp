@@ -110,6 +110,7 @@
                 <!-- End Comments -->
 
                 <sec:authorize access="isAuthenticated()">
+                    <c:if test="${sessionScope.userProjectState eq '없음' or sessionScope.userProjectState eq '지원중' }">
                     <!-- Add Comment -->
                     <div class="mb-80 mb-xs-40">
 
@@ -172,6 +173,7 @@
 
                     </div>
                     <!-- End Add Comment -->
+                    </c:if>
                 </sec:authorize>
 
             </div>
@@ -318,12 +320,15 @@
   function addRequest() {
     $.ajax({
       url: "/api/project/request",
+      type: "POST",
       data: $("#addRequestForm").serialize(),
       dataType: "json",
       success: function(data) {
+        // todo 성공처리 표시
         console.log(data);
       },
       error: function (error) {
+        // todo error 표시
         console.log(error);
       }
     })

@@ -96,7 +96,7 @@ public class ProjectController {
                         ProjectTeamVO userTeam = projectService.getOngoingProject(principal.getName());
                         projectNo = userTeam.getProjectNo();
                     }
-                    model.addAttribute("userProject", projectService.getProjectInfo(projectNo));
+                    model.addAttribute("userProject", projectService.getProject(projectNo));
                     if (state.equals("대기팀장")) {
                         // 지원자 리스트
                         ProjectRequestVO requestVO = new ProjectRequestVO();
@@ -118,17 +118,17 @@ public class ProjectController {
 
     /***
      * 프로젝트 추가화면 이동
-     * @param principal 로그인 유저정보
-     * @return project/projectInsertForm.jsp
+     * @param request 세션을 가져오기 위한 param
+     * @return 진행중인 프로젝트가 없으면 projectInsertForm.jsp로 이동
      */
     @GetMapping("/projectInsertForm.do")
-    public String projectInsertForm(Principal principal) {
-        if (principal != null) {
-            // todo 프로젝트 진행여부 체크
+    public String projectInsertForm(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        if(session.getAttribute("userProjectState").equals("없음")
+            || session.getAttribute("userProjectState").equals("진행중")) {
             return "project/projectInsertForm";
-        } else {
-            return "redirect:../loginForm.do";
         }
+        return "redirect:main.do";
     }
 
     /***
@@ -139,7 +139,8 @@ public class ProjectController {
      */
     @GetMapping("/projectDetail.do")
     public String projectDetail(Model model, @RequestParam("no") int projectNo) {
-        ProjectInfoDTO dto = projectService.getProjectInfo(projectNo);
+        ProjectInfoDTO dto = projectService.getProject(projectNo);
+        projectService.updateHit(projectNo);
         model.addAttribute("project", dto);
         model.addAttribute("team", dto.getProjectTeam());
         return "project/projectDetail";
@@ -149,15 +150,14 @@ public class ProjectController {
      * 프로젝트 검색
      * @param model
      * @param vo 프로젝트 객체
-     * @param cri
+     * @param cri 페이지 객체
      * @return project/projectSearch.jsp
      */
-    @GetMapping("/search")
+    @GetMapping("/search.do")
     public String projectSearch(Model model, ProjectVO vo, Criteria cri) {
         vo.setCriteria(cri);
         List<ProjectVO> projectList = projectService.getListWithPaging(vo);
         PageDTO pageDTO = new PageDTO(cri, projectService.getTotalCount(vo));
-
         model.addAttribute("projectList", projectList);
         model.addAttribute("search", vo);
         model.addAttribute("pageMaker", new PageDTO(cri, projectService.getTotalCount(vo)));

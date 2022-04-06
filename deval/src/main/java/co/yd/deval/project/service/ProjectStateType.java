@@ -1,6 +1,6 @@
 package co.yd.deval.project.service;
 
-public enum ProjectStateEnum {
+public enum ProjectStateType {
     P1("없음"),
     P2("지원중"),
     P3("대기팀원"),
@@ -9,6 +9,6 @@ public enum ProjectStateEnum {
     P6("진행중팀장"),
     ;
 
-    ProjectStateEnum(String val) {
+    ProjectStateType(String val) {
     }
 }

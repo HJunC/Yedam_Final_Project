@@ -58,7 +58,7 @@
 
                             <div class="row" id="positionCountBox">
                                 <div class="col input-group me-3">
-                                    <span class="input-group-text bg-dark" style="border-color: #5e646a;">프론트엔드</span>
+                                    <span class="input-group-text bg-dark" style="border-color: #5e646a;">프론트</span>
                                     <input type="number" id="frontRcnt" name="frontRcnt" class="input-lg round form-control bg-dark-input" min="0" max="7" value="0" >
                                     <div class="input-group-text bg-dark" style="border-color: #5e646a;">
                                         <input class="form-check-input mt-0" type="radio" value="FE" name="leaderPosition" checked required>
@@ -190,7 +190,6 @@
       isDone = false;
     }
 
-
     data.recruitEdt = data.recruitEdt + " " + $("#recruitEdtTime").val();
 
     if (isDone) {
@@ -199,16 +198,19 @@
           url: "../api/project/insert",
           data: data,
           dataType: "json",
-          success: function(json) {
-            if (json.result == 'success') {
+          success: function(res) {
+            if (res.result === "success") {
+              console.log(res);
               alert("등록완료하였습니다.");
               location.href = "main.do";
             } else {
-              alert(json.errorMessage);
+              console.log(res);
+              alert(res.message);
             }
           },
-          error: function(json) {
-            alert(json.errorMessage);
+          error: function(res) {
+            console.log(res);
+            alert(res.message)
           }
         })
     }

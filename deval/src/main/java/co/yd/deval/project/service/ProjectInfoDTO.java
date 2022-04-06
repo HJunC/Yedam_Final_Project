@@ -1,15 +1,17 @@
 package co.yd.deval.project.service;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.List;
 
-@Data
-@NoArgsConstructor
+@Getter
+@Setter
+@ToString
 public class ProjectInfoDTO {
     private int projectNo;
     private String projectName;

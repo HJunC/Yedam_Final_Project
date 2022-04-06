@@ -1,9 +1,10 @@
 package co.yd.deval.project.serviceImpl;
 
 import co.yd.deval.project.mapper.ProjectRequestMapper;
+import co.yd.deval.project.mapper.ProjectTeamMapper;
 import co.yd.deval.project.service.ProjectRequestService;
 import co.yd.deval.project.service.ProjectRequestVO;
-import org.springframework.beans.factory.annotation.Autowired;
+import co.yd.deval.project.service.ProjectTeamVO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,8 +20,13 @@ import java.util.List;
 @Service("projectRequestService")
 public class ProjectRequestServiceImpl implements ProjectRequestService {
 
-    @Autowired
-    private ProjectRequestMapper mapper;
+    private final ProjectRequestMapper mapper;
+    private final ProjectTeamMapper teamMapper;
+
+    public ProjectRequestServiceImpl(ProjectRequestMapper mapper, ProjectTeamMapper teamMapper) {
+        this.mapper = mapper;
+        this.teamMapper = teamMapper;
+    }
 
     @Override
     public List<ProjectRequestVO> selectProjectRequest(ProjectRequestVO vo) {
@@ -28,19 +34,26 @@ public class ProjectRequestServiceImpl implements ProjectRequestService {
     }
 
     @Override
-    public int insertProjectRequest(ProjectRequestVO vo) {
-        // 지원자수 증가
-        // 같은 지원자 인지 체크
+    public int request(ProjectRequestVO vo) {
+        // todo 지원자수 증가
+        // todo 같은 지원자 인지 체크
         return mapper.insertProjectRequest(vo);
     }
 
     @Override
-    public int deleteProjectRequest(ProjectRequestVO vo) {
+    public int remove(ProjectRequestVO vo) {
         return mapper.deleteProjectRequest(vo);
     }
 
     @Override
-    public int updateProjectRequest(ProjectRequestVO vo) {
+    public int approve(ProjectRequestVO vo) {
+        // todo 프로젝트 포지션 카운트 - 1
+
+        // todo 프로젝트 팀에 추가
+        ProjectTeamVO teamVO = new ProjectTeamVO();
+        teamMapper.insertProjectTeam(teamVO);
+        vo.setUpdateState("3");
         return mapper.updateProjectRequest(vo);
     }
+
 }

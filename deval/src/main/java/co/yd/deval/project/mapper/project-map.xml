@@ -73,8 +73,12 @@
         WHERE PROJECT_NO = #{projectNo}
     </update>
 
-    <update id="updateHit" parameterType="co.yd.deval.project.service.ProjectVO">
+    <update id="updateHit">
         UPDATE PROJECT SET HIT = HIT + 1
+        WHERE PROJECT_NO = #{projectNo}
+    </update>
+    <update id="updateApplyCount">
+        UPDATE PROJECT SET APPLY_RCNT = APPLY_RCNT + 1
         WHERE PROJECT_NO = #{projectNo}
     </update>
 

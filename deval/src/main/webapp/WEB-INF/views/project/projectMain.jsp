@@ -16,7 +16,6 @@
                 <div class="wow fadeInUpShort" data-wow-delay=".2s">
                     <p class="hs-line-6 opacity-075 mb-20 mb-xs-0">
                         딱 맞는 사람과 함께 개발 프로젝트를 진행해보세요
-                        ${sessionScope.userProjectState }
                     </p>
                 </div>
             </div>
@@ -32,7 +31,7 @@
     <div class="container relative">
         <c:choose>
             <c:when test="${not empty userProject}">
-            <h3>내 프로젝트</h3>
+            <h3>내 프로젝트 ${sessionScope.userProjectState }</h3>
             <a href="projectDetail.do?no=${userProject.projectNo}">
                 ${userProject.projectNo} / ${userProject.projectName} / 리더 아이디 : ${userProject.leaderId}
             </a>
@@ -67,8 +66,8 @@
                         ${item.subject } /
                         ${item.position } /
                         ${item.requestDt }
-                        <button type="button" class="btn btn-mod btn-w btn-medium btn-round">수락</button>
-                        <button type="button" class="btn btn-mod btn-w btn-medium btn-round">거절</button>
+                        <button type="button" class="btn btn-mod btn-w btn-medium btn-round" onclick="approveRequest('${item.memberId }', '${item.projectNo }')">수락</button>
+                        <button type="button" class="btn btn-mod btn-w btn-medium btn-round" onclick="refuseRequest('${item.memberId }', '${item.projectNo }')">거절</button>
                         </p>
                     </c:forEach>
                 </c:when>
@@ -115,7 +114,7 @@
     <div class="container relative">
         <div>
             <h3 class="me-4" style="display: inline-block;">팀 프로젝트 찾기</h3>
-            <a href="search?pageNum=1&amount=10" class="btn btn-mod btn-border-w btn-round btn-small">프로젝트 더보기</a>
+            <a href="search.do?pageNum=1&amount=10" class="btn btn-mod btn-border-w btn-round btn-small">프로젝트 더보기</a>
         </div>
         <div class="list-group project-list">
 
@@ -277,5 +276,42 @@
     return moment(date).fromNow();
   }
 
+  function approveRequest(memberId, projectNo) {
+    $.ajax({
+      url: "../api/project/approveRequest",
+      type: "POST",
+      data: {
+        memberId,
+        projectNo
+      },
+      success: function (res) {
+        console.log(res);
+        alert("팀에 합류하였습니다 !");
+      },
+      error: function (res) {
+        console.log(res);
+        alert("에러");
+      }
+    })
+  }
+
+  function refuseRequest(memberId, projectNo) {
+    $.ajax({
+      url: "../api/project/refuseRequest",
+      type: "POST",
+      data: {
+        memberId,
+        projectNo
+      },
+      success: function (res) {
+        console.log(res);
+        alert("요청이 거절되었습니다.");
+      },
+      error: function (res) {
+        console.log(res);
+        alert("에러");
+      }
+    })
+  }
 
 </script>

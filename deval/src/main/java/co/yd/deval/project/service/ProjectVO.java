@@ -1,16 +1,17 @@
 package co.yd.deval.project.service;
 
 import co.yd.deval.common.Criteria;
-import co.yd.deval.common.PageDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
-@Data
-@NoArgsConstructor
+@Getter
+@Setter
+@ToString
 public class ProjectVO {
     private int projectNo;
     private String projectName;
@@ -21,7 +22,7 @@ public class ProjectVO {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+9")
     private Date recruitSdt;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+9")
     private Date recruitEdt;
 

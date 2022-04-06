@@ -32,49 +32,13 @@ public class RestProjectController {
     }
 
     @GetMapping("/detail")
-    public ProjectInfoDTO detailProject(@RequestParam("no") int projectNo) {
-        return projectService.getProjectInfo(projectNo);
-    }
-
-    /***
-     * 프로젝트 참가 요청
-     * @param vo 프로젝트 요청 vo
-     * @param principal 로그인 유저정보
-     * @return ProjectRequestVO
-     */
-    @PostMapping("/request")
-    public ResponseEntity<Map<String, Object>> request(ProjectRequestVO vo, Principal principal, HttpServletRequest request) {
-        Map<String, Object> returnBody = new HashMap<>();
-        HttpSession session = request.getSession();
-        if (principal != null) {
-            int result = projectRequestService.insertProjectRequest(vo);
-            if (result == 0) {
-                returnBody.put("result", "fail");
-                returnBody.put("errorMessage", "입력 실패하였습니다.");
-                return ResponseEntity.badRequest().body(returnBody);
-            }
-            returnBody.put("result", "success");
-            session.setAttribute("userProjectState", "지원중");
-            return ResponseEntity.ok().body(returnBody);
-        } else {
-            returnBody.put("errorMessage", "잘못된 접근입니다.");
-            return ResponseEntity.badRequest().body(returnBody);
-        }
-    }
-
-    /***
-     * 프로젝트 참가 요청 삭제
-     * @param vo 프로젝트 요청 vo
-     * @param principal 로그인 유저정보
-     * @return ProjectRequestVO
-     */
-    @PostMapping("/requestDelete")
-    public ResponseEntity<ProjectRequestVO> requestDelete(ProjectRequestVO vo, Principal principal) {
-        if (principal != null) {
-            projectRequestService.deleteProjectRequest(vo);
-            return ResponseEntity.ok().body(vo);
-        } else {
-            return ResponseEntity.badRequest().body(vo);
+    public ResponseEntity<Object> detailProject(@RequestParam("no") int projectNo) {
+        try {
+            ProjectInfoDTO dto = projectService.getProject(projectNo);
+            return ResponseEntity.ok().body(dto);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("error");
         }
     }
 
@@ -82,25 +46,36 @@ public class RestProjectController {
      * 프로젝트 생성
      * @param vo 프로젝트 vo
      * @param principal 로그인 유저정보
-     * @return redirect:main.do
+     * @return
      */
     @PostMapping("/insert")
-    public ResponseEntity<Map<String, Object>> addProject(ProjectVO vo, Principal principal) {
-        Map<String, Object> returnBody = new HashMap<>();
+    public ResponseEntity<Map<String, Object>> addProject(ProjectVO vo, Principal principal, HttpServletRequest request) {
+        Map<String, Object> res = new HashMap<>();
+        HttpSession session = request.getSession();
         if (principal.getName().equals(vo.getLeaderId())) {
-            if (projectService.getOngoingProject(principal.getName()) == null) {
-                projectService.insertProject(vo);
-                returnBody.put("result", "success");
-                return ResponseEntity.ok().body(returnBody);
+            if (session.getAttribute("userProjectState").equals("없음")
+                    || session.getAttribute("userProjectState").equals("지원중")) {
+                try {
+                    int createPno = projectService.create(vo);
+                    if (createPno > 0) {
+                        session.setAttribute("userProjectState", "대기팀장");
+                        res.put("result", "success");
+                        res.put("projectNo", createPno);
+                        return ResponseEntity.ok().body(res);
+                    } else {
+                        res.put("message", "에러");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    res.put("message", "양식 에러");
+                }
             } else {
-                returnBody.put("result", "fail");
-                returnBody.put("errorMessage", "이미 프로젝트가 존재합니다.");
+                res.put("message", "이미 프로젝트가 존재합니다.");
             }
         } else {
-            returnBody.put("result", "fail");
-            returnBody.put("errorMessage", "잘못된 접근입니다.");
+            res.put("message", "잘못된 접근입니다.");
         }
-        return ResponseEntity.badRequest().body(returnBody);
+        return ResponseEntity.badRequest().body(res);
     }
 
     /***
@@ -112,7 +87,7 @@ public class RestProjectController {
     @PostMapping("/delete")
     public ResponseEntity<ProjectVO> deleteProject(ProjectVO vo, Principal principal) {
         if (principal.getName().equals(vo.getLeaderId())) {
-            projectService.deleteProject(vo);
+            projectService.remove(vo);
             return ResponseEntity.ok().body(vo);
         } else {
             return ResponseEntity.badRequest().body(vo);
@@ -120,19 +95,82 @@ public class RestProjectController {
     }
 
     /***
-     * 프로젝트 업데이트
+     * 프로젝트 시작
      * @param vo 프로젝트 vo
      * @param principal 로그인 유저정보
      * @return
      */
-    @PostMapping("/update")
+    @PostMapping("/start")
     public ResponseEntity<ProjectVO> progressProject(ProjectVO vo, Principal principal) {
         if (principal.getName().equals(vo.getLeaderId())) {
-            // projectNo, 업데이트 내용
+            // todo 프로젝트 시작
             return ResponseEntity.ok().body(vo);
         } else {
             return ResponseEntity.badRequest().body(vo);
         }
     }
 
+    /***
+     * 팀원 추방
+     */
+
+    /***
+     * 프로젝트 나가기
+     */
+
+    /***
+     * 프로젝트 참가 요청
+     * @param vo 프로젝트 요청 vo
+     * @param principal 로그인 유저정보
+     * @return
+     */
+    @PostMapping("/request")
+    public ResponseEntity<Map<String, Object>> request(ProjectRequestVO vo, Principal principal, HttpServletRequest request) {
+        Map<String, Object> returnBody = new HashMap<>();
+        if (principal != null) {
+            int result = projectRequestService.request(vo);
+            if (result > 0) {
+                projectService.updateApplyCount(vo.getProjectNo());
+                HttpSession session = request.getSession();
+                session.setAttribute("userProjectState", "지원중");
+                returnBody.put("result", "success");
+                return ResponseEntity.ok().body(returnBody);
+            } else {
+                returnBody.put("result", "fail");
+                returnBody.put("message", "입력 실패하였습니다.");
+                return ResponseEntity.badRequest().body(returnBody);
+            }
+        } else {
+            returnBody.put("message", "잘못된 접근입니다.");
+            return ResponseEntity.badRequest().body(returnBody);
+        }
+    }
+
+    /***
+     * 프로젝트 참가 요청 거절
+     * @param vo 프로젝트 요청 vo
+     * @param principal 로그인 유저정보
+     * @return
+     */
+    @PostMapping("/refuseRequest")
+    public ResponseEntity<ProjectRequestVO> deleteRequest(ProjectRequestVO vo, Principal principal) {
+        if (principal != null) {
+            projectRequestService.remove(vo);
+            return ResponseEntity.ok().body(vo);
+        } else {
+            return ResponseEntity.badRequest().body(vo);
+        }
+    }
+
+    /***
+     * 프로젝트 참가 요청 승인 (팀 합류)
+     * @param vo
+     * @param principal
+     * @return
+     */
+    @PostMapping("/approveRequest")
+    public ResponseEntity<ProjectRequestVO> approveRequest(ProjectRequestVO vo, Principal principal) {
+        projectRequestService.approve(vo);
+        return ResponseEntity.ok().body(vo);
+    }
 }

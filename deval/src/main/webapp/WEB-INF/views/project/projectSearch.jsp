@@ -91,7 +91,7 @@
             <!-- Sidebar -->
             <div class="col-md-4 col-lg-3 mt-10">
 
-                <form class="form" id="searchForm" action="/project/search" style="position: sticky; top: 100px" method="get">
+                <form class="form" id="searchForm" action="/project/search.do" style="position: sticky; top: 100px" method="get">
 
                     <!-- Search Widget -->
                     <div class="widget">
@@ -190,11 +190,11 @@
 <script src="${resources}/js/common/jQueryPage.js"></script>
 
 <script>
-    var total = ${pageMaker.total}
+    var endPage = ${pageMaker.endPage}
     var current = ${pageMaker.cri.pageNum}
 
     window.pagObj = $('#pagination').twbsPagination({
-      totalPages: total,
+      totalPages: endPage,
       startPage: current,
       visiblePages: 5, // 최대로 보여줄 페이지
       prev: "<i class='fa fa-chevron-left'></i>", // Previous Button Label

@@ -8,13 +8,14 @@
 	<security:http pattern="/resources/**" security="none" />
 	<security:http>
 		<security:intercept-url pattern="/myPage.do" access="hasAnyAuthority('ROLE_USER','ROLE_ADMIN')"/>
+		<security:intercept-url pattern="/project/projectInsertForm.do" access="hasAnyAuthority('ROLE_USER','ROLE_ADMIN')"/>
 		<security:intercept-url pattern="/coPage.do" access="hasAnyAuthority('ROLE_COMPANY','ROLE_ADMIN')"/>
 		<security:intercept-url pattern="/**" access="permitAll()" />
 		<security:form-login login-page="/loginForm.do" 
 							 login-processing-url="/login" 
-							 default-target-url="/home.do" />
+							 default-target-url="/" />
 		<security:logout logout-url="/logout" 
-						 logout-success-url="/home.do" />
+						 logout-success-url="/" />
 		<security:csrf disabled="true" />
 	</security:http>
 	<security:authentication-manager>
