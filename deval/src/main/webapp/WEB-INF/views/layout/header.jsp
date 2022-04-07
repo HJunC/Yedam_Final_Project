@@ -35,7 +35,6 @@
 </style>
 <nav class="main-nav dark transparent stick-fixed wow-menubar">
 	<div class="full-wrapper relative clearfix">
-
 		<!-- Logo ( * your text or image into link tag *) -->
 		<div class="nav-logo-wrap local-scroll">
 			<a href="${root}/home.do" class="logo">

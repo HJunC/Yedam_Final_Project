@@ -1,14 +1,15 @@
 package co.yd.deval.project.service;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.sql.Date;
 
 @Getter
 @Setter
 @ToString
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProjectRequestVO {
     private int projectNo;
     private String memberId;

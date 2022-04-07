@@ -1,17 +1,20 @@
 package co.yd.deval.project.service;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 @Getter
 @Setter
 @ToString
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProjectInfoDTO {
     private int projectNo;
     private String projectName;
@@ -48,4 +51,17 @@ public class ProjectInfoDTO {
     private String leaderId;
 
     private List<ProjectTeamVO> projectTeam;
+
+    private List<String> langArray;
+
+    /***
+     * DB에서 받은 lang 값을 langArray에 List로 저장
+     * @param lang 문자형태의 언어데이터
+     */
+    public void setLang(String lang) {
+        this.lang = lang;
+        String[] temp = lang.split(",");
+        this.langArray = new ArrayList<>();
+        this.langArray.addAll(Arrays.asList(temp));
+    }
 }

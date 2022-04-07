@@ -49,9 +49,8 @@ public class RestProjectController {
      * @return
      */
     @PostMapping("/insert")
-    public ResponseEntity<Map<String, Object>> addProject(ProjectVO vo, Principal principal, HttpServletRequest request) {
+    public ResponseEntity<Map<String, Object>> addProject(ProjectVO vo, Principal principal, HttpSession session) {
         Map<String, Object> res = new HashMap<>();
-        HttpSession session = request.getSession();
         if (principal.getName().equals(vo.getLeaderId())) {
             if (session.getAttribute("userProjectState").equals("없음")
                     || session.getAttribute("userProjectState").equals("지원중")) {
@@ -125,13 +124,12 @@ public class RestProjectController {
      * @return
      */
     @PostMapping("/request")
-    public ResponseEntity<Map<String, Object>> request(ProjectRequestVO vo, Principal principal, HttpServletRequest request) {
+    public ResponseEntity<Map<String, Object>> request(ProjectRequestVO vo, Principal principal, HttpSession session) {
         Map<String, Object> returnBody = new HashMap<>();
         if (principal != null) {
             int result = projectRequestService.request(vo);
             if (result > 0) {
                 projectService.updateApplyCount(vo.getProjectNo());
-                HttpSession session = request.getSession();
                 session.setAttribute("userProjectState", "지원중");
                 returnBody.put("result", "success");
                 return ResponseEntity.ok().body(returnBody);

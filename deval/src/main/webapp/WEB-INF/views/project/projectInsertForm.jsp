@@ -102,7 +102,23 @@
                         </div>
                         <div class="form-group">
                             <label for="lang">사용언어</label>
-                            <input type="text" name="lang" id="lang" class="input-lg round form-control bg-dark-input" placeholder="JAVA, Spring, React ..." required aria-required="true">
+
+                            <script src="${resources}/js/common/Languages.js"></script>
+
+                            <div>
+                                <div class="tags" id="languages"></div>
+                            </div>
+
+                            <script>
+                              var languages = $("#languages");
+                              var checkBox = "";
+                              mostUsed.forEach((item, index) => {
+                                checkBox += '<input type="checkbox" class="btn-check" id="btncheck'+index+'" name="langArray" value="' + item + '">';
+                                checkBox += '<label class="btn btn-outline-primary" for="btncheck'+index+'">' + item + '</label>';
+                              })
+                              languages.append(checkBox);
+                            </script>
+
                         </div>
                         <div class="form-group">
                             <label>진행방식</label>
@@ -180,12 +196,12 @@
     var data = $("#insertForm").serializeObject();
     var isDone = true;
 
-    if (data.leaderId == "") {
+    if (data.leaderId === "") {
       alert("error");
       isDone = false;
     }
 
-    if (data.totalRcnt == 0) {
+    if (data.totalRcnt === 0) {
       alert("인원수를 입력해주세요");
       isDone = false;
     }

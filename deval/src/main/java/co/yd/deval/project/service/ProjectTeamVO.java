@@ -1,14 +1,13 @@
 package co.yd.deval.project.service;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Setter
 @ToString
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProjectTeamVO {
     private int projectNo;
     private String memberId;

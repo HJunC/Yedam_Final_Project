@@ -15,11 +15,11 @@
                 <div class="wow fadeInUpShort" data-wow-delay=".1s">
                 <c:choose>
                     <c:when test="${project.state eq '1'}"><p class="badge bg-info text-dark">모집중</p></c:when>
-                    <c:when test="${project.state eq '2'}"><p class="badge bg-info text-dark">모집완료</p></c:when>
-                    <c:when test="${project.state eq '3'}"><p class="badge bg-info text-dark">진행</p></c:when>
-                    <c:when test="${project.state eq '4'}"><p class="badge bg-info text-dark">완료</p></c:when>
-                    <c:when test="${project.state eq '8'}"><p class="badge bg-info text-dark">모집기간 지남</p></c:when>
-                    <c:when test="${project.state eq '9'}"><p class="badge bg-info text-dark">취소</p></c:when>
+                    <c:when test="${project.state eq '2'}"><p class="badge bg-warning text-dark">모집완료</p></c:when>
+                    <c:when test="${project.state eq '3'}"><p class="badge bg-primary">진행중</p></c:when>
+                    <c:when test="${project.state eq '4'}"><p class="badge bg-success">완료</p></c:when>
+                    <c:when test="${project.state eq '8'}"><p class="badge bg-warning text-dark">모집기간 지남</p></c:when>
+                    <c:when test="${project.state eq '9'}"><p class="badge bg-danger">취소됨</p></c:when>
                 </c:choose>
                     <h2 class="hs-line-7 mb-40 mb-xs-20" style="font-size: 52px;">${project.projectName}</h2>
                 </div>
@@ -110,69 +110,81 @@
                 <!-- End Comments -->
 
                 <sec:authorize access="isAuthenticated()">
-                    <c:if test="${sessionScope.userProjectState eq '없음' or sessionScope.userProjectState eq '지원중' }">
-                    <!-- Add Comment -->
-                    <div class="mb-80 mb-xs-40">
+                    <c:if test="${sessionScope.userProjectState eq '없음'
+                                or sessionScope.userProjectState eq '지원중'
+                                and project.state eq '1'}">
+                        <!-- Add Comment -->
+                        <div class="mb-80 mb-xs-40">
 
-                        <h4 class="blog-page-title">참가 신청</h4>
+                            <h4 class="blog-page-title">참가 신청</h4>
 
-                        <!-- Form -->
-                        <form id="addRequestForm" class="form">
-                            <input type="hidden" name="projectNo" value="${project.projectNo}">
-                            <input type="hidden" name="memberId" value="<sec:authentication property="principal.username"/>">
-                            <div class="mb-30 mb-md-20">
-                                <!-- Website -->
-                                <label for="website">포지션</label>
-                                <div class="row">
-                                    <div class="col input-group me-3">
-                                        <span class="input-group-text bg-dark" style="border-color: #5e646a;">프론트엔드</span>
-                                        <div class="input-group-text bg-dark" style="border-color: #5e646a;">
-                                            <input class="form-check-input mt-0" type="radio" value="FE" name="position" required>
-                                        </div>
-                                    </div>
-                                    <div class="col input-group me-3">
-                                        <span class="input-group-text bg-dark" style="border-color: #5e646a;">백엔드</span>
-                                        <div class="input-group-text bg-dark" style="border-color: #5e646a;">
-                                            <input class="form-check-input mt-0" type="radio" value="BE" name="position" required>
-                                        </div>
-                                    </div>
-                                    <div class="col input-group me-3">
-                                        <span class="input-group-text bg-dark" style="border-color: #5e646a;">풀스택</span>
-                                        <div class="input-group-text bg-dark" style="border-color: #5e646a;">
-                                            <input class="form-check-input mt-0" type="radio" value="FS" name="position" required>
-                                        </div>
-                                    </div>
-                                    <div class="col input-group me-3">
-                                        <span class="input-group-text bg-dark" style="border-color: #5e646a;">디자인</span>
-                                        <div class="input-group-text bg-dark" style="border-color: #5e646a;">
-                                            <input class="form-check-input mt-0" type="radio" value="DE" name="position" required>
-                                        </div>
-                                    </div>
-                                    <div class="col input-group">
-                                        <span class="input-group-text bg-dark" style="border-color: #5e646a;">기획</span>
-                                        <div class="input-group-text bg-dark" style="border-color: #5e646a;">
-                                            <input class="form-check-input mt-0" type="radio" value="PL" name="position" required>
-                                        </div>
+                            <!-- Form -->
+                            <form id="addRequestForm" class="form">
+                                <input type="hidden" name="projectNo" value="${project.projectNo}">
+                                <input type="hidden" name="memberId" value="<sec:authentication property="principal.username"/>">
+                                <div class="mb-30 mb-md-20">
+                                    <!-- Website -->
+                                    <h4 class="blog-page-title">프로젝트 설명</h4>
+                                    <div class="d-flex justify-content-between">
+                                        <c:if test="${project.frontRcnt > 0}">
+                                            <div class="col input-group justify-content-center">
+                                                <span class="input-group-text bg-dark" style="border-color: #5e646a;">프론트엔드</span>
+                                                <div class="input-group-text bg-dark" style="border-color: #5e646a;">
+                                                    <input class="form-check-input mt-0" type="radio" value="FE" name="position" required>
+                                                </div>
+                                            </div>
+                                        </c:if>
+                                        <c:if test="${project.backRcnt > 0}">
+                                            <div class="col input-group justify-content-center">
+                                                <span class="input-group-text bg-dark" style="border-color: #5e646a;">백엔드</span>
+                                                <div class="input-group-text bg-dark" style="border-color: #5e646a;">
+                                                    <input class="form-check-input mt-0" type="radio" value="BE" name="position" required>
+                                                </div>
+                                            </div>
+                                        </c:if>
+                                        <c:if test="${project.fullRcnt > 0}">
+                                            <div class="col input-group justify-content-center">
+                                                <span class="input-group-text bg-dark" style="border-color: #5e646a;">풀스택</span>
+                                                <div class="input-group-text bg-dark" style="border-color: #5e646a;">
+                                                    <input class="form-check-input mt-0" type="radio" value="FS" name="position" required>
+                                                </div>
+                                            </div>
+                                        </c:if>
+                                        <c:if test="${project.designRcnt > 0}">
+                                            <div class="col input-group justify-content-center">
+                                                <span class="input-group-text bg-dark" style="border-color: #5e646a;">디자인</span>
+                                                <div class="input-group-text bg-dark" style="border-color: #5e646a;">
+                                                    <input class="form-check-input mt-0" type="radio" value="DE" name="position" required>
+                                                </div>
+                                            </div>
+                                        </c:if>
+                                        <c:if test="${project.plannerRcnt > 0}">
+                                            <div class="col input-group justify-content-center">
+                                                <span class="input-group-text bg-dark" style="border-color: #5e646a;">기획</span>
+                                                <div class="input-group-text bg-dark" style="border-color: #5e646a;">
+                                                    <input class="form-check-input mt-0" type="radio" value="PL" name="position" required>
+                                                </div>
+                                            </div>
+                                        </c:if>
                                     </div>
                                 </div>
-                            </div>
 
-                            <!-- subject -->
-                            <div class="mb-30 mb-md-20">
-                                <label for="subject">지원내용</label>
-                                <textarea name="subject" id="subject" class="input-md round form-control" rows="6" placeholder="본인을 소개해주세요 😀" maxlength="400"></textarea>
-                            </div>
+                                <!-- subject -->
+                                <div class="mb-30 mb-md-20">
+                                    <label for="subject">지원내용</label>
+                                    <textarea name="subject" id="subject" class="input-md round form-control" rows="6" placeholder="본인을 소개해주세요 😀" maxlength="400"></textarea>
+                                </div>
 
-                            <!-- Send Button -->
-                            <button type="button" class="btn btn-mod btn-w btn-medium btn-round" onclick="addRequest()">
-                                신청하기
-                            </button>
+                                <!-- Send Button -->
+                                <button type="button" class="btn btn-mod btn-w btn-medium btn-round" onclick="addRequest()">
+                                    신청하기
+                                </button>
 
-                        </form>
-                        <!-- End Form -->
+                            </form>
+                            <!-- End Form -->
 
-                    </div>
-                    <!-- End Add Comment -->
+                        </div>
+                        <!-- End Add Comment -->
                     </c:if>
                 </sec:authorize>
 
@@ -191,14 +203,9 @@
 
                         <div class="widget-body">
                             <div class="tags">
-                                <a href="">Java</a>
-                                <a href="">Portfolio</a>
-                                <a href="">Digital</a>
-                                <a href="">Branding</a>
-                                <a href="">Theme</a>
-                                <a href="">Clean</a>
-                                <a href="">UI & UX</a>
-                                <a href="">Love</a>
+                                <c:forEach var="item" items="${project.langArray}">
+                                    <a href="#">${item}</a>
+                                </c:forEach>
                             </div>
                         </div>
 
@@ -206,52 +213,44 @@
                     <!-- End Widget -->
 
                     <!-- 포지션 -->
-                    <div class="widget">
+                    <c:choose>
+                        <c:when test="${project.state eq '1'}">
+                            <div class="widget">
+                                <h3 class="widget-title">남은 포지션</h3>
+                                <div class="widget-body">
+                                    <p class="mb-1">프론트엔드 개발자 <span class="badge <c:if test='${project.frontRcnt > 0}'>bg-primary</c:if>">${project.frontRcnt}</span></p>
+                                    <p class="mb-1">백엔드 개발자 <span class="badge <c:if test='${project.backRcnt > 0}'>bg-primary</c:if>">${project.backRcnt}</span></p>
+                                    <p class="mb-1">풀스택 개발자 <span class="badge <c:if test='${project.fullRcnt > 0}'>bg-primary</c:if>">${project.fullRcnt}</span></p>
+                                    <p class="mb-1">디자이너 <span class="badge <c:if test='${project.designRcnt > 0}'>bg-primary</c:if>">${project.designRcnt}</span></p>
+                                    <p class="mb-1">기획자 <span class="badge <c:if test='${project.plannerRcnt > 0}'>bg-primary</c:if>">${project.plannerRcnt}</span></p>
+                                </div>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="widget">
+                                <h3 class="widget-title">포지션 정보</h3>
+                                <div class="widget-body">
+                                    <p class="mb-1">프론트엔드 개발자</p>
+                                    <p class="badge bg-secondary">코장</p>
+                                    <p class="mb-1">백엔드 개발자</p>
+                                    <p class="badge bg-secondary">브랜든</p>
+                                    <p class="mb-1">풀스택 개발자</p>
+                                    <p class="badge bg-secondary">코딩이뭐야</p>
+                                    <p class="mb-1">디자이너</p>
+                                    <p class="badge bg-secondary">한글</p>
+                                    <p class="mb-1">기획자</p>
+                                    <p class="badge bg-secondary">한국어</p>
+                                </div>
+                            </div>
+                        </c:otherwise>
+                    </c:choose>
 
-                        <h3 class="widget-title">포지션</h3>
-
-                        <div class="widget-body">
-                            <ul class="clearlist widget-menu">
-                                <li>
-                                    <a href="#" title="">프론트엔드 개발자</a>
-                                    <small>
-                                        - ${project.frontRcnt}
-                                    </small>
-                                </li>
-                                <li>
-                                    <a href="#" title="">백엔드 개발자</a>
-                                    <small>
-                                        - ${project.backRcnt}
-                                    </small>
-                                </li>
-                                <li>
-                                    <a href="#" title="">풀스택 개발자</a>
-                                    <small>
-                                        - ${project.fullRcnt}
-                                    </small>
-                                </li>
-                                <li>
-                                    <a href="#" title="">디자이너</a>
-                                    <small>
-                                        - ${project.designRcnt}
-                                    </small>
-                                </li>
-                                <li>
-                                    <a href="#" title="">기획자</a>
-                                    <small>
-                                        - ${project.plannerRcnt}
-                                    </small>
-                                </li>
-                            </ul>
-                        </div>
-
-                    </div>
-                    <!-- End Widget -->
+                    <!-- End 포지션 -->
 
                     <!-- 기간 -->
                     <div class="widget">
 
-                        <h3 class="widget-title">프로젝트 진행 기간 (${project.projectTerm}일)</h3>
+                        <h3 class="widget-title">진행 기간 (${project.projectTerm}일)</h3>
 
                         <div class="widget-body">
                             <ul class="clearlist widget-menu">
@@ -274,7 +273,7 @@
                     <!-- 진행 방식 -->
                     <div class="widget">
 
-                        <h3 class="widget-title">프로젝트 진행 방식</h3>
+                        <h3 class="widget-title">진행 방식</h3>
 
                         <div class="widget-body">
                             <c:if test="${project.process eq 'ON'}">
@@ -297,7 +296,6 @@
             <!-- End Sidebar -->
 
         </div>
-
     </div>
 </section>
 <!-- End Section -->
@@ -305,7 +303,10 @@
 <script src="${resources}/js/moment.min.js"></script>
 <script src="${resources}/js/moment-with-locales.min.js"></script>
 <script>
-  // 작성시간
+
+  /**
+   * 작성시간 설정
+   */
   moment.locale('ko');
   var createAt = document.getElementById("createAt");
   createAt.append(moment("<fmt:formatDate value="${project.recruitSdt}" type="both" pattern="yyyy-MM-dd hh:mm:ss"/>").fromNow());
@@ -317,6 +318,9 @@
   var today = new Date();
   today = moment(today).format("YYYY-MM-DD");
 
+  /**
+   * 프로젝트 합류 요청 ajax
+   */
   function addRequest() {
     $.ajax({
       url: "/api/project/request",
@@ -324,11 +328,11 @@
       data: $("#addRequestForm").serialize(),
       dataType: "json",
       success: function(data) {
-        // todo 성공처리 표시
+        alert("지원하였습니다.");
         console.log(data);
       },
       error: function (error) {
-        // todo error 표시
+        alert("에러입니다.")
         console.log(error);
       }
     })

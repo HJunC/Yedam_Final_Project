@@ -44,9 +44,8 @@ public class ProjectController {
      * @return project/projectMain.jsp
      */
     @GetMapping("/main.do")
-    public String projectMain(Model model, Principal principal, HttpServletRequest request) {
+    public String projectMain(Model model, Principal principal, HttpSession session) {
         if (principal != null) {
-            HttpSession session = request.getSession();
             String state = (String) session.getAttribute("userProjectState");
 
             int projectNo = 0;
@@ -99,8 +98,9 @@ public class ProjectController {
                     model.addAttribute("userProject", projectService.getProject(projectNo));
                     if (state.equals("대기팀장")) {
                         // 지원자 리스트
-                        ProjectRequestVO requestVO = new ProjectRequestVO();
-                        requestVO.setProjectNo(projectNo);
+                        ProjectRequestVO requestVO = ProjectRequestVO.builder()
+                                .projectNo(projectNo)
+                                .state("1").build();
                         model.addAttribute("requestList", projectRequestService.selectProjectRequest(requestVO));
                     }
                     break;
@@ -156,10 +156,9 @@ public class ProjectController {
     @GetMapping("/search.do")
     public String projectSearch(Model model, ProjectVO vo, Criteria cri) {
         vo.setCriteria(cri);
-        List<ProjectVO> projectList = projectService.getListWithPaging(vo);
-        PageDTO pageDTO = new PageDTO(cri, projectService.getTotalCount(vo));
-        model.addAttribute("projectList", projectList);
         model.addAttribute("search", vo);
+        List<ProjectVO> projectList = projectService.getListWithPaging(vo);
+        model.addAttribute("projectList", projectList);
         model.addAttribute("pageMaker", new PageDTO(cri, projectService.getTotalCount(vo)));
         return "project/projectSearch";
     }

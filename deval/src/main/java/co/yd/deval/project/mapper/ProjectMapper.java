@@ -15,6 +15,7 @@ public interface ProjectMapper {
     int deleteProject(ProjectVO vo);
     int updateProject(ProjectVO vo);
 
+    int updatePositionCount(ProjectVO vo);
     int updateHit(int projectNo);
     int updateApplyCount(int projectNo);
 

@@ -2,16 +2,20 @@ package co.yd.deval.project.service;
 
 import co.yd.deval.common.Criteria;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
 @ToString
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProjectVO {
     private int projectNo;
     private String projectName;
@@ -51,4 +55,7 @@ public class ProjectVO {
     private String leaderPosition;
     private int rn;
     private Criteria criteria;
+
+    private List<String> langArray;
+
 }
