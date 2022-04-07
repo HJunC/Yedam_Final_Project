@@ -78,6 +78,9 @@ public class MemberController {
 	@GetMapping("/myProjects.do")
 	@ResponseBody
 	public ResponseEntity<List<ProjectVO>> myProjects(Principal user){
+		Map<String,Object> map = new HashMap<>();
+		map.put("wait", projectDao.findWaitingProject(user.getName()));
+		map.put("project", projectDao.findProjectByNo(user.getName()));
 		return ResponseEntity.ok().body(null);
 	}
 

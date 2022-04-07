@@ -46,7 +46,7 @@
         <div class="row">
         	<div id="info_box" class="col-md-8 offset-lg-1 mb-sm-80 order-first order-md-last">
 				<!-- 나의 정보가 보이는 div -->
-				<div id="my_info_box" class="border border-white" style="height:1000px;display:none">
+				<div id="my_info_box" class="border border-white" style="height:1000px;">
 					<h2>나의 정보</h2>
 					<hr>
 					<div>
@@ -170,29 +170,32 @@
 				</div>
 				
 				<!-- 모집,신청,진행,완료된 프로젝트의 목록을 보여주는 div -->
-				<div id="project_box" class="border border-white" style="height:1000px">
+				<div id="project_box" class="border border-white" style="height:1000px;display:none">
 					<h2>프로젝트 목록</h2>
 					<hr class="border border-white">
 					<h3>대기중인 프로젝트</h3>
 					<table id="waitProject" class="table">
-						<tr>
-							<th>프로젝트 이름</th>
-							<th>프로젝트 기간</th>
-							<th>프로젝트 시작일</th>
-							<th>프로젝트 종료일</th>
-						</tr>
-						
+						<thead>
+							<tr>
+								<th>프로젝트 이름</th>
+								<th>프로젝트 기간</th>
+								<th>프로젝트 시작일</th>
+								<th>프로젝트 종료일</th>
+							</tr>
+						</thead>
 					</table>
 					<hr class="border border-white">
 					<h3>참여한 프로젝트</h3>
 					<table id="joinProject" class="table">
-						<tr>
-							<th>프로젝트 이름</th>
-							<th>프로젝트 기간</th>
-							<th>프로젝트 시작일</th>
-							<th>프로젝트 종료일</th>
-						</tr>
-							
+						<thead>
+							<tr>
+								<th>프로젝트 이름</th>
+								<th>프로젝트 기간</th>
+								<th>프로젝트 시작일</th>
+								<th>프로젝트 종료일</th>
+								<th>상태</th>
+							</tr>
+						</thead>	
 					</table>				
 				</div>
 				
@@ -202,23 +205,27 @@
 					<hr class="border border-white">
 					<h3>대기중인 스터디</h3>
 					<table id="waitStudy" class="table">
-						<tr>
-							<th>스터디 이름</th>
-							<th>스터디 장소</th>
-							<th>스터디 시작일</th>
-							<th>스터디 종료일</th>
-						</tr>
-						
+						<thead>
+							<tr>
+								<th>스터디 이름</th>
+								<th>스터디 장소</th>
+								<th>스터디 시작일</th>
+								<th>스터디 종료일</th>
+							</tr>
+						</thead>
 					</table>
 					<hr class="border border-white">
 					<h3>진행중인 스터디</h3>
 					<table id="joinStudy" class="table">
-						<tr>
-							<th>스터디 이름</th>
-							<th>스터디 장소</th>
-							<th>스터디 시작일</th>
-							<th>스터디 종료일</th>
-						</tr>
+						<thead>
+							<tr>
+								<th>스터디 이름</th>
+								<th>스터디 장소</th>
+								<th>스터디 시작일</th>
+								<th>스터디 종료일</th>
+								<th>상태</th>
+							</tr>
+						</thead>
 					</table>
 				</div>
 				
@@ -283,6 +290,37 @@
 						$('#tag').children().css('display','none');
 						$('#info_box').children().css('display','none');
 						$('#project_box').css('display','block');
+						$.ajax({
+							url:"myProjects.do",
+							success : function(data){
+								if(data === ''){
+									$('#joinProject>tbody').empty();
+									$('#waitProject>tbody').empty();
+									$('#joinProject').append(makeNotTr(2));
+									$('#waitProject').append(makeNotTr(1));
+								} else {
+									if(data.project.length == 0){
+										$('#joinProject>tbody').empty();
+										$('#joinProject').append(makeNotTr(2));	
+									} else {
+										$('#joinProject>tbody').empty();
+										$.each(data.study,function(item,idx){
+											$('#joinProject>tbody').append(makeTr(idx,4));
+										})
+									}
+									
+									if(data.wait.length == 0){
+										$('#waitProject>tbody').empty();
+										$('#waitProject').append(makeNotTr(1))	
+									} else {
+										$('#waitProject>tbody').empty();
+										$.each(data.wait,function(item,idx){
+											$('#waitProject').append(makeTr(idx,2))	
+										})
+									}
+								}
+							}
+						});
 					   });
 	
 	$('#myStudy').on('click',function(){
@@ -292,12 +330,32 @@
 						$.ajax({
 							url:"myStudies.do",
 							success : function(data){
-								$.each(data.study,function(item,idx){
-									$('#joinStudy>tbody').append(makeTr(idx,1));
-								})
-								$.each(data.wait,function(item,idx){
-									$('#waitStudy>tbody').append(makeTr(idx,1))	
-								})
+								if(data == ''){
+									$('#joinStudy>tbody').empty();
+									$('#waitStudy>tbody').empty();
+									$('#joinStudy').append(makeNotTr(2));
+									$('#waitStudy').append(makeNotTr(1))
+								} else {
+									if(data.study.length == 0){
+										$('#joinStudy>tbody').empty();
+										$('#joinStudy').append(makeNotTr(2));	
+									} else {
+										$('#joinStudy>tbody').empty();
+										$.each(data.study,function(item,idx){
+											$('#joinStudy').append(makeTr(idx,3));
+										})
+									}
+									
+								 	if(data.wait.length == 0){
+										$('#waitStudy>tbody').empty();
+										$('#waitStudy').append(makeNotTr(1))	
+									} else { 
+										$('#waitStudy>tbody').empty();
+										$.each(data.wait,function(item,idx){
+											$('#waitStudy').append(makeTr(idx,1))	
+										})
+									}
+								}
 							}
 						})
 					});
@@ -325,14 +383,26 @@
 		}
 	});
 	
+	function makeNotTr(n){
+		var tr = $('<tr>');
+		var td;
+		if(n == 1){
+			td = $('<td colspan="4">').text('신청 이력이 없습니다.')			
+		} else {
+			td = $('<td colspan="5">').text('참여 이력이 없습니다.')
+		}
+		tr.append(td);
+		return $('<tbody>').append(tr);
+	}
+	
 	function makeTr(item,n){
-		console.log(item);
 		var tr = $('<tr>')
 		var td1 = $('<td>')
 		var td2 = $('<td>')
 		var td3 = $('<td>')
 		var td4 = $('<td>')
-		if(n == 1){
+		var td5 = $('<td>')
+		if(n == 1 || n == 3){
 			td1.text(item.studyNm);
 			td2.text(item.location);
 			td3.text(item.studySdt);
@@ -347,7 +417,32 @@
 			tr.css('color','green');
 		}
 		tr.append(td1,td2,td3,td4);
-		console.log(tr);
+		if (n==3) {
+			if(item.state == 0){
+				td5.text('모집중')
+			} else if(item.state == 1){
+				td5.text('마감')
+			} else if(item.state == 2){
+				td5.text('진행중').css('color','blue')
+			} else {
+				td5.text('종료').css('color','green')
+			}
+			tr.append(td5)
+		} else if(n == 4){
+			if(item.state == 1){
+				td5.text('모집중')
+			} else if(item.state == 2){
+				td5.text('마감')
+			} else if(item.state == 3){
+				td5.text('진행중').css('color','blue')
+			} else if(item.state == 4){
+				td5.text('종료').css('color','green')
+			} else {
+				td5.text('취소').css('color','red')
+			}
+			tr.append(td5)
+		}
+		return $('<tbody>').append(tr);
 	}
 </script>
 

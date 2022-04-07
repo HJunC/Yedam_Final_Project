@@ -12,6 +12,6 @@
 	<!-- 테스트용, 실제 서버에서는 사용 안함 -->
 	<bean class="java.lang.String" id="uploadPath">
 		<constructor-arg value="C:\DEV\fileTest\"/>
-	</bean>
+	</bean> 
 	
 </beans>
