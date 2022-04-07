@@ -1,6 +1,9 @@
 package co.yd.deval.study.web;
 
 import java.security.Principal;
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import co.yd.deval.common.Criteria;
+import co.yd.deval.common.PageDTO;
 import co.yd.deval.member.service.MemberService;
 import co.yd.deval.member.service.MemberVO;
 import co.yd.deval.study.service.StudyInfoVO;
@@ -36,7 +41,10 @@ public class StudyController {
 	/* STUDY MAIN */
 	// 스터디 메인
     @GetMapping("/studyMain.do")
-    public String main() {
+    public String main(StudyVO vo, Model model, Principal User) {
+    	model.addAttribute("study", vo);
+    	model.addAttribute("member", User);
+    	model.addAttribute("list", studyDao.studyUnfinedTeamBtn(User.getName()));
         return "study/studyMain";
     }
     
@@ -49,7 +57,7 @@ public class StudyController {
     // 스터디 등록 기능
     @RequestMapping("/insertStudy.do")
     @ResponseBody
-    public String insertStudy(StudyVO vo, StudyReqVO reqvo, Principal user) {
+    public String insertStudy(StudyVO vo, StudyReqVO reqvo, Principal user, HttpSession session) {
     	
     	int n = 0;
     	
@@ -93,18 +101,25 @@ public class StudyController {
     }
     
     // 스터디 검색 찾기 -> 전체목록
-    @RequestMapping("/studyList.do")
-    public String studyList(Model model) {
-    	model.addAttribute("study", studyDao.studySelectAll());
+    @GetMapping("/studyList.do")
+    public String studyList(StudyVO vo, Model model, Principal User, Criteria cri) {
+    	vo.setCriteria(cri);
+    	model.addAttribute("study", studyDao.getListWithPaging(vo));
+    	model.addAttribute("pageMaker", new PageDTO(cri, studyDao.getTotalCount(vo)));
+    	model.addAttribute("list", studyDao.studyMemberFind(User.getName()));
+    	model.addAttribute("studyfind", vo);
+    	model.addAttribute("member", User);
     	return "study/studyList";
     }
     
     // 스터디 상세글
     @PostMapping("/studySelect.do")
-    public String studySelect(StudyVO vo, Model model) {
+    public String studySelect(StudyVO vo, Model model, Principal User) {
 		vo = studyDao.studySelectNo(vo);
     	if(vo != null) {
     		model.addAttribute("study", vo);
+    		model.addAttribute("member", User);
+    		model.addAttribute("list", studyDao.studyMemberFind(User.getName()));
     		return "study/studySelect";
     	} else {
     		model.addAttribute("message", "게시글존재x");

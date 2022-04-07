@@ -35,7 +35,16 @@
                         </div>
                     </div>
                 </section>
-                <!-- End Title -->
+      <!-- End Title -->
+                
+      <!-- Start Search List -->
+      <form class="form" id="searchForm" action="studyList.do" style="position: sticky; top: 100px" method="get">
+      
+                    <input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
+					<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
+      </form>
+                
+    <!-- Start Study List -->
 	<div align="center">
 		<table style="width: 100%;">
 			<thead>
@@ -68,7 +77,18 @@
 				</c:forEach>
 			</tbody>
 		</table>
-
+		 <!-- End Study List -->
+		
+		<c:if test="${studyfind.leaderId ne member.name}">
+		 <c:if test="${empty list[0]}">
+		  <div class="col-sm-6 col-md-3 col-lg-3 mb-40">
+               <div class="mb-10">
+               		<a href="addStudy.do" class="btn btn-mod btn-w btn-round btn-small">모집</a>
+               </div>
+          </div>
+		 </c:if>
+		</c:if>
+		
 		<!-- Modal Start -->
 		<a href="#mod_myinfo" id="mod_open"
 			class="btn btn-mod btn-w btn-medium round mt-10 lightbox-gallery-5 mfp-inline">내정보</a>
@@ -206,16 +226,6 @@
 	<!-- End Modal -->
 	</div>
 	
-
-	<!-- Pagination 페이징처리 시작-->
-	<div class="pagination mt-30 mt-xs-10">
-		<a href=""><i class="fa fa-chevron-left"></i></a> <a href=""
-			class="active">1</a> <a href="">2</a> <a href="">3</a> <a href="">4</a>
-		<a href="">5</a> <a href=""><i class="fa fa-chevron-right"></i></a>
-	</div>
-	<!-- End Pagination 페이징처리 끝-->
-
-
 	<!-- 게시글 번호 값으로 상세글 넘기기 -->
 	<div>
 		<form id="selfrm" action="studySelect.do" method="post">
@@ -229,5 +239,52 @@
 			document.forms.selfrm.submit();
 		}
 	</script>
+	
+		<!-- Pagination 페이징처리 시작-->
+<!-- 	<div class="pagination mt-30 mt-xs-10">
+		<a href=""><i class="fa fa-chevron-left"></i></a>
+		<a href="" class="active">1</a> <a href="">2</a>
+		<a href="">3</a>
+		<a href="">4</a>
+		<a href="">5</a>
+		<a href="">
+		<i class="fa fa-chevron-right"></i></a>
+	</div> -->
+	<!-- End Pagination 페이징처리 끝-->
+	  <!-- Pagination -->
+       <div class="pagination">
+          <ul class="pagination" id="pagination"></ul>
+       </div>
+      <!-- End Pagination -->
+
+<!-- ?pageNum=3&amount=3 -->
+
+
+<script src="${resources}/js/common/jQueryPage.js"></script>
+<script>
+    var total = ${pageMaker.total}
+    var current = ${pageMaker.cri.pageNum}
+
+    window.pagObj = $('#pagination').twbsPagination({
+      totalPages: total,
+      startPage: current,
+      visiblePages: 5, // 최대로 보여줄 페이지
+      prev: "<i class='fa fa-chevron-left'></i>", // Previous Button Label
+      next: "<i class='fa fa-chevron-right'></i>", // Next Button Label
+      first: '«', // First Button Label
+      last: '»', // Last Button Label
+      onPageClick: function (event, page) { // Page Click event
+        console.info("current page : " + page);
+      } }).on('page', function (event, page) {
+      searchDateList(page);
+    });
+
+  function searchDateList(page) {
+    var searchForm = $("#searchForm");
+    console.log(page);
+    searchForm.find("input[name='pageNum']").val(page);
+    searchForm.submit();
+  }
+</script>
 </body>
 </html>

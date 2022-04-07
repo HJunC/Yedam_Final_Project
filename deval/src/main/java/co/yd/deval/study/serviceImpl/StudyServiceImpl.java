@@ -44,6 +44,15 @@ public class StudyServiceImpl implements StudyService {
 		return map.findMaxStudyNo();
 	}
 	
+	@Override
+	public List<StudyReqVO> studyMemberFind(String id) {
+		return map.studyMemberFind(id);
+	}
+	
+	@Override
+	public List<StudyReqVO> studyUnfinedTeamBtn(String id) {
+		return map.studyUnfinedTeamBtn(id);
+	}
 	
 	// 모달창 회원정보
 	@Override
@@ -111,6 +120,18 @@ public class StudyServiceImpl implements StudyService {
 	@Override
 	public List<StudyTeamVO> studyTeamSelectAll() {
 		return map.studyTeamSelectAll();
+	}
+
+	
+	// 페이징 처리
+	@Override
+	public List<StudyVO> getListWithPaging(StudyVO vo) {
+		return map.getListWithPaging(vo);
+	}
+
+	@Override
+	public int getTotalCount(StudyVO vo) {
+		return map.getTotalCount(vo);
 	}
 
 	

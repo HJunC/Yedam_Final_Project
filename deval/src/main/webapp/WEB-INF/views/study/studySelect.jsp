@@ -65,13 +65,19 @@
       	 <sec:csrfInput/>
 	         <button type="button" onclick="location.href='studyList.do'">목록</button>
 	         <button type="button" onclick="">문의</button>
+	         <%-- <sec:authentication property="principal.username"/> --%>     
+	      <c:if test="${study.leaderId eq member.name}">
 	         <button type="submit">수정</button>
+	      </c:if>  
 	         <input type="hidden" name="studyNo" value="${study.studyNo }">
          </form>
       </div>
-      
+      <c:if test="${study.leaderId ne member.name}">
+        <c:if test="${empty list[0]}">
 		<!-- Modal Start -->
-		<button onclick="MyInfoModal()" id="joinBtn" class="btn btn-mod btn-w btn-medium round mt-10  mfp-inline">참가</button>
+			<button onclick="MyInfoModal()" id="joinBtn" class="btn btn-mod btn-w btn-medium round mt-10  mfp-inline">참가</button>
+		</c:if>
+	  </c:if>
 		<style>
 		.mfp-content {
 			border: 1px solid #ddd;
@@ -205,15 +211,8 @@
 									});
 									console.log("-- Study Req End --")
 								});
-				      	
 				      	}
-				      	
-				      	// 글쓴이는 자기글에 참여할수없는 기능
-				      	var user = '<sec:authentication property="principal.memberId"/>';
-				      	var writer = '${study.leaderId}';
-				      	if(user == writer){
-				      		$('#joinBtn').attr('disabled',true);
-				      	}
+				      				      	
       				</script>
       			</div>
       		</div>

@@ -22,6 +22,13 @@
 							<span data-period="2800" data-type='[ "Challenge", "Passion", "cooperation"]' class="typewrite" aria-hidden="true">
 							<span class="wrap"></span></span>
 						</h2>
+						<div class="local-scroll wow fadeInUpShort" data-wow-delay=".3s">
+                           <a href="studyList.do" class="btn btn-mod btn-w btn-small btn-round mx-md-1">Start Study</a>
+                         <c:if test="${empty list[0]}">
+                           <a href="studyList.do" class="btn btn-mod btn-w btn-small btn-round mx-md-1">Study Team</a>
+                         </c:if>
+                           <a href="studyList.do" class="btn btn-mod btn-w btn-small btn-round mx-md-1">Team Requestor</a>
+                        </div>
 					</div>
 				</div>
 				<div class="split-image col-lg-6 offset-lg-1 d-flex align-items-center parallax" data-offset="20">

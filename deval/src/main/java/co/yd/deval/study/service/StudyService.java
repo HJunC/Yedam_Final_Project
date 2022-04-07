@@ -15,8 +15,6 @@ public interface StudyService {
 	List<StudyVO> findStudyByNo(String id);
 	List<StudyVO> findWaitingStudy(String id);
 	
-	
-
 	// 모달창 회원정보
 	StudyInfoVO studySelectUser(StudyInfoVO vo);
 	int studyUserInsert(StudyInfoVO vo);
@@ -24,6 +22,8 @@ public interface StudyService {
 	
 	// 스터디 참가
 	List<StudyReqVO> studyReqSelectAll();
+	List<StudyReqVO> studyMemberFind(String id);
+	List<StudyReqVO> studyUnfinedTeamBtn(String id);
 	//StudyReqVO studyTeam(StudyReqVO vo);
 	int studyTeamMemberInsert(StudyReqVO vo);
 	int studyTeamLeaderInsert(StudyReqVO vo);
@@ -35,4 +35,7 @@ public interface StudyService {
 	List<StudyTeamVO> studyTeamSelectAll();
 	//StudyTeamVO studyTeamSelect(StudyTeamVO vo);
 
+	// 검색 페이징 처리
+    List<StudyVO> getListWithPaging(StudyVO vo);
+    int getTotalCount(StudyVO vo);
 }

@@ -2,6 +2,7 @@ package co.yd.deval.study.service;
 
 import java.sql.Date;
 
+import co.yd.deval.common.Criteria;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,4 +27,8 @@ public class StudyVO {
 	private String studyNm;
 	private String lang2;
 	private String[] ck_lang;
+	
+	//페이징
+    private int rn;
+    private Criteria criteria;
 }

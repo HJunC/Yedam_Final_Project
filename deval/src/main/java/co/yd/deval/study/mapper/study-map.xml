@@ -186,11 +186,25 @@
 	
 	<update id="studyTeamMemberUpdateRefuse" parameterType="co.yd.deval.study.service.StudyReqVO">
 		UPDATE STUDY_REQUEST
-		SET STATE = 2
+		SET STATE = 3
 		WHERE MEMBER_ID = #{memberId}
 		AND
 		STUDY_NO = #{studyNo}
 	</update>
+	
+	<select id="studyMemberFind" resultType="co.yd.deval.study.service.StudyReqVO">
+		SELECT *
+		FROM STUDY_REQUEST
+		WHERE STATE <![CDATA[<]]> 2
+		AND MEMBER_ID = #{id}
+	</select>
+	
+	<select id="studyUnfinedTeamBtn" resultType="co.yd.deval.study.service.StudyReqVO">
+		SELECT *
+		FROM STUDY_REQUEST
+		WHERE STATE = 1
+		AND MEMBER_ID = #{memberId}
+	</select>
 	
 	<delete id="studyTeamMemberDelete" parameterType="co.yd.deval.study.service.StudyReqVO">
 		DELETE
@@ -212,9 +226,36 @@
 	</select>
 	
 	<select id="findMaxStudyNo" resultType="int">
-		select max(study_no)
-		from study
+		SELECT MAX(STUDY_NO)
+		FROM STUDY
 	</select>
 	
+	<sql id="option">
+        
+    </sql>
 
+    <select id="getListWithPaging" resultType="co.yd.deval.study.service.StudyVO">
+        <![CDATA[
+        SELECT * FROM (
+            SELECT ROWNUM rn, t.*
+              FROM STUDY t
+
+        ]]>
+	        <where>
+	            <include refid="option"></include>
+	            AND rownum <![CDATA[<=]]> #{criteria.pageNum} * #{criteria.amount}
+	        </where>
+        )
+        <![CDATA[
+        WHERE rn > (#{criteria.pageNum} - 1) * #{criteria.amount}
+        ]]>
+    </select>
+
+    <select id="getTotalCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM STUDY
+        <where>
+	        <include refid="option"></include>
+	        AND study_no > 0        
+        </where>
+    </select>
 </mapper>
