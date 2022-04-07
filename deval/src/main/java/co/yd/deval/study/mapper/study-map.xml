@@ -203,7 +203,7 @@
 		SELECT *
 		FROM STUDY_REQUEST
 		WHERE STATE = 1
-		AND MEMBER_ID = #{memberId}
+		AND MEMBER_ID = #{id}
 	</select>
 	
 	<delete id="studyTeamMemberDelete" parameterType="co.yd.deval.study.service.StudyReqVO">
