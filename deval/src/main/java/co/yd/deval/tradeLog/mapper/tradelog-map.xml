@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.yd.deval.tradeLog.mapper.TradeLogMapper">
+	<select id="selectTradeLog" resultType="co.yd.deval.tradeLog.service.TradeLogVO">
+			SELECT * FROM TRADELOG
+	</select>
+	<insert id="insertTradeLog" parameterType="co.yd.deval.tradeLog.service.TradeLogVO">
+		<selectKey keyProperty="serviceNo" order="BEFORE" resultType="int">
+			SELECT MAX(MENTO_SERVICE_NO) 
+			FROM MENTO_SERVICE
+		</selectKey>
+			INSERT INTO TRADE_LOG(		TRADE_LOG_NO,
+										 SERVICE_NO,
+										 START_DATE,
+										 END_DATE,
+										 BUYER,
+										 SELLER,
+										 MENTO_REQT,
+										 PRICE)
+			VALUES(						TRADELOG_SEQ.nextval,
+										#{serviceNo},
+										#{startDate},
+										#{endDate},
+										#{buyer},
+										#{seller},
+										#{mentoReqt},
+										#{price})	
+	</insert>
+	
+	<select id="mentiList" resultType="co.yd.deval.tradeLog.service.TradeLogVO">
+		SELECT PRICE
+		FROM TRADE_LOG
+		WHERE SELLER = #{seller}
+		AND STATE = '처리중'
+	</select>
+</mapper>

@@ -167,7 +167,9 @@
 										<div>
 											<input type="hidden" name="mentiId" value="${member.memberId}">
 											<input type="hidden" name="mentoId" value="${mento.mentoId}">
-											<input type="hidden" name="endDate">
+											<input type="hidden" name="endDate" id="endDate">
+											<input type="hidden" name="price" id="logPrice">
+											<input type="hidden" name="mentoReqt" id="mentoReqt">
 										</div>
                                     </form>
                                 </div>
@@ -320,12 +322,14 @@
         //클릭시 호출function
         function getPrice() {
         	checkTime();
-        	var std = new Date($("startDate").val());
+        	var std = new Date($("#startDate").val());
       	  	var term = $('#termTime').val();
       	  	var numTerm = parseInt(term);
       	  	if(term.substr(-1) == '주') {
-      	  		numTerm = numTerm * 7
-      	  	}
+      	  		numTerm = numTerm * 7;
+      	  	}else if(term.substr(-1) == '달') {
+      	  		numTerm = numTerm * 30;
+      	  	} 
       	    $('#endDate').val(moment(std.setDate(std.getDate() + numTerm)).format("YYYY-MM-DD"));
         }
        
@@ -412,6 +416,13 @@
     			  },
     			  success : function(data) {
     				  if(data == 'success') {
+	    				  //tradeLog price 값선언
+	    		    	  var logPrice = document.getElementById('logPrice');
+	    				  var mentoReqt = document.getElementById('mentoReqt');
+	    				  mentoReqt.value = $('#startDate').val() + "~" + $('#endDate').val();
+	    		    	  logPrice.value = parseInt($('#totalPrice').text());
+	    		    	  
+	    		    	  //insert submit
 	    				  frm.submit();
     				  }
     			  }
@@ -422,6 +433,8 @@
     	  startDate.setAttribute("value", moment(today.setDate(today.getDate() + 3)).format("YYYY-MM-DD"));
     	  startDate.setAttribute("min", moment(today.setDate(today.getDate() + 3)).format("YYYY-MM-DD"));
     	  startDate.setAttribute("max", moment(today.setDate(today.getDate() + 30)).format("YYYY-MM-DD"));
+    	  
+    	 
     	 
     </script>
 </body>

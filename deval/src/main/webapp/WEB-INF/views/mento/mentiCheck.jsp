@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +11,8 @@
 <c:set var="resources" value="${pageContext.request.contextPath }/resources"/>
 </head>
 <body>
+
+
 	 <main id="main">    
             
                 <!-- Home Section -->
@@ -35,7 +39,7 @@
                                     <table class="table shopping-cart-table">
                                         <tr>
                                         	<th>
-                                        		<input type="checkbox">전체
+                                        		
                                         	</th>
                                             <th>
                                                 멘티
@@ -54,6 +58,7 @@
                                             </th>
                                             <th>
                                             </th>
+                                            <th></th>
                                         </tr>
                                         <tr>
                                         	<td>
@@ -79,36 +84,41 @@
                                             <td>
                                             </td>
                                             <td class="text-end text-nowrap">
-                                                <a href="#" title="Remove item"><i class="fa fa-trash-alt"></i><span class="sr-only">Remove item</span></a>
+                                                <a href="#" onclick="serviceDelete()" title="Remove item"><i class="fa fa-trash-alt"></i></a>
                                             </td>
                                         </tr>
                                         <c:forEach var="menti" items="${mentis}">
+                                        	
                                         	<tr>
                                         	<td>
-                                        		<input type="checkbox">
+                                        		<input type="checkbox" name="checkBox">
                                         	</td>
                                             <td>
                                             <div>
+                                            	<!-- member(proFileImg) 경로 땡겨와서 수정! -->
                                                 <img src="${resources}/images/mento/prev.bmp" alt="" width="100" />
                                             </div>
                                             </td>
                                             <td>
-                                            	${menti.menti_id }
+                                            	${menti.mentiId }
                                             </td>
                                             <td class="shopping-cart-table-title">
                                                 ${menti.startTm } - ${menti.endTm }
                                             </td>
                                             <td>
-                                               ${menti.startDate } = ${menti.endDate }
+                                               ${menti.serviceTerm}
                                             </td>
                                             <td>
-                                                endDate-startDate x endTm-startTm x price
+                                            	<fmt:formatNumber value="${menti.price}" pattern="#,###"/>원
                                             </td>
                                             <td>
                                             </td>
                                             <td class="text-end text-nowrap">
-                                                <a href="#" title="Remove item"><i class="fa fa-trash-alt"></i><span class="sr-only">Remove item</span></a>
+                                                <a href="#" onclick="serviceDelete()" title="Remove item"><i class="fa fa-trash-alt"></i><span class="sr-only">Remove item</span></a>
                                             </td>
+	                                        <td>
+	                                        	<input type="hidden" name="mentoServiceNo" id="mentoServiceNo" value="${menti.mentoServiceNo}"/>
+	                                        </td>
                                         </tr>
                                         </c:forEach>
                                     </table>
@@ -118,15 +128,8 @@
                                 
                                 <div class="row">
                                     <div class="col-md-4 text text-md-end order-first order-md-last mb-sm-10">
-                                        <a href="" class="btn btn-mod btn-border-w btn-round btn-small">Update Cart</a>
+                                        <input type="button" onclick="serviceAccept()" class="btn btn-mod btn-border-w btn-round btn-small" value="서비스수락">
                                     </div>
-                                    <div class="col-md-8">
-                                        <form action="#" class="form text-nowrap">
-                                            <label for="coupon-code" class="sr-only">Coupon-code</label>
-                                            <input type="text" name="coupon-code" id="coupon-code" class="input-sm round" placeholder="Coupon code" style="width: 200px;" pattern=".{3,100}" required />
-                                            &nbsp;<button type="submit" class="btn btn-mod btn-round btn-border-w btn-small">Apply Coupon</button>
-                                        </form>
-                                    </div>                                    
                                 </div>
                                 
                             </div>
@@ -146,6 +149,48 @@
             		idAll.checked == check.checked
             	} */
             	
+            	function serviceDelete() {
+            		var tag = $(event.target).parent().parent().parent();
+            		
+            		var no = document.getElementById('mentoServiceNo').value;
+            		var serviceNo = parseInt(no);
+            		$.ajax({
+            			url : "serviceRefuse.do",
+            			type : "POST",
+            			data : {
+            				mentoServiceNo : serviceNo 
+            			} 
+            		}).done(function(data) {
+        				console.log(data);
+        				tag.remove();
+        				
+        			});
+            	}
+            	
+            	function serviceAccept() {
+            		let list = [];
+            		$("[name='checkBox']:checked").each(function(i,checkbox) {
+            			console.log(checkbox);
+            			var tr = $(checkbox).parent().parent();
+        				var td = $(tr).children();
+            			var obj = {};
+            			var serviceNo = td.eq(8).find('input').val();
+            			obj["mentoServiceNo"] = serviceNo;
+            			list.push(obj);
+            		});
+            		if(list.length != 0){
+            			$.ajax({
+            				url : "serviceAccept.do",
+            				type : "POST",
+            				dataType: 'text',
+            				data : JSON.stringify(list),
+            				contentType : 'application/json',
+            				success : function(data) {
+            					alert(data);
+            				}
+            			});
+            		}
+            	}
             </script>
 </body>
 </html>

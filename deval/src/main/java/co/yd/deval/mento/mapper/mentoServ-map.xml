@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.yd.deval.mento.mapper.MentoServMapper">
-	<select id="mentoServList" parameterType="co.yd.deval.mento.service.MentoServVO">
-		SELECT * 
-		FROM MENTO_SERVICE
-		WHERE MENTO_ID = #{mentoId}
-		AND STATE = 0
+	<select id="mentoServList" resultType="co.yd.deval.mento.service.MentoServVO">
+		SELECT M.*,T.PRICE,U.PROFILE_IMG
+		FROM MENTO_SERVICE M , TRADE_LOG T ,MEMBER U 
+		WHERE M.MENTO_SERVICE_NO = T.SERVICE_NO
+		AND U.MEMBER_ID = M.MENTI_ID
+		AND T.STATE = '처리중' 
+		AND M.STATE = 0
+		AND M.MENTO_ID = #{id}
 	</select>
 	<select id="mentoServSelect" resultType="co.yd.deval.mento.service.MentoServVO" parameterType="co.yd.deval.mento.service.MentoServVO">
 		SELECT * 
@@ -24,7 +27,7 @@
 								  MENTI_INFO)
 		VALUES					 (MENTO_SERVICE_SEQ.NEXTVAL,
 								  #{mentoId},
-								  #{menti_id},
+								  #{mentiId},
 								  #{serviceTerm},
 								  #{startTm},
 								  #{endTm},
@@ -33,18 +36,21 @@
 								  #{mentiInfo})	  
 		
 	</insert>
-	<update id="mentoServUpdate" parameterType="co.yd.deval.mento.service.MentoServVO">
-	
+	<update id="mentoServUpdate" parameterType="Int">
+		UPDATE MENTO_SERVICE
+		SET STATE = 2
+		WHERE MENTO_SERVICE_NO = #{mentoServiceNo}
 	</update>
-	<delete id="mentoServDelete" parameterType="co.yd.deval.mento.service.MentoServVO">
-		DELETE FROM MENTO_SERVICE
-		WHERE MENTO_SERVICE_NO = ${mentoServiceNo}
+	<delete id="mentoServDelete" >
+		
 	</delete>
 	
 	<select id="allSatisAvg" resultType="double">
 		SELECT TRUNC(AVG(STSFDG),1) 
 		FROM MENTO_SERVICE
 	</select>
+	
+	<!-- 그래프 데이터 -->
 	<select id="oneSatisAvg" resultType="double" parameterType="String">
 		SELECT NVL(TRUNC(AVG(STSFDG),1),0) 
 		FROM MENTO_SERVICE
@@ -54,9 +60,17 @@
 		SELECT COUNT(*) FROM MENTO_SERVICE
 	</select>
 	
+	<!-- 결제 후 포인트차감 -->
 	<update id="buyerPayment" parameterType="Map">
 		UPDATE MEMBER
 		SET CASH_PT = CASH_PT - #{cashPt}
 		WHERE MEMBER_ID = #{memberId}
+	</update>
+	
+	<!-- 서비스 수락 -->
+	<update id="mentoServAccept" parameterType="co.yd.deval.mento.service.MentoServVO">
+		UPDATE MENTO_SERVICE
+		SET STATE = 1
+		WHERE MENTO_SERVICE_NO = #{mentoServiceNo}
 	</update>
 </mapper>

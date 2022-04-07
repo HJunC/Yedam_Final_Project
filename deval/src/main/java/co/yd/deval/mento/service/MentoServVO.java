@@ -3,6 +3,8 @@ package co.yd.deval.mento.service;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -12,7 +14,9 @@ import lombok.ToString;
 @ToString
 public class MentoServVO {
 	private int mentoServiceNo;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date startDate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date endDate;
 	private String serviceTerm;
 	private String mentiInfo;
@@ -22,4 +26,6 @@ public class MentoServVO {
 	private String state;
 	private String stsfdg;
 	private String mentiId;
+	private int price;
+	private String profileImg;
 }
