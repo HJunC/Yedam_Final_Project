@@ -1,6 +1,7 @@
 package co.yd.deval.member.serviceImpl;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -8,8 +9,6 @@ import org.springframework.stereotype.Repository;
 import co.yd.deval.member.mapper.MemberMapper;
 import co.yd.deval.member.service.MemberService;
 import co.yd.deval.member.service.MemberVO;
-
-
 
 
 @Repository("memberDao")
@@ -20,25 +19,21 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Override
 	public MemberVO memberSelect(MemberVO vo) {
-		// TODO Auto-generated method stub
 		return map.memberSelect(vo);
 	}
 
 	@Override
 	public int memberInsert(MemberVO vo) {
-		// TODO Auto-generated method stub
 		return map.memberInsert(vo);
 	}
 
 	@Override
 	public int memberUpdate(MemberVO vo) {
-		// TODO Auto-generated method stub
 		return map.memberUpdate(vo);
 	}
 
 	@Override
 	public int memberDelete(MemberVO vo) {
-		// TODO Auto-generated method stub
 		return map.memberDelete(vo);
 	}
 	
@@ -50,14 +45,12 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Override
 	public int memberExpUp(HashMap<String, Object> exp) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int memberCashUpdate(HashMap<String, Object> cash) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int memberCashUpdate(Map<String, Object> cash) {
+		return map.memberCashUpdate(cash);
 	}
 
 }

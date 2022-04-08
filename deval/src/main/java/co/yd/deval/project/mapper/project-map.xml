@@ -2,11 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="co.yd.deval.project.mapper.ProjectMapper">
 
-    <insert id="insertProject">
-        <selectKey keyProperty="id" resultType="int" order="BEFORE">
-            /*todo 시퀸스값 반환*/
-            select #{projectNo} FROM DUAL
-        </selectKey>
+    <insert id="insertProject" parameterType="co.yd.deval.project.service.ProjectVO"
+            useGeneratedKeys="true" keyProperty="projectNo">
         INSERT INTO PROJECT (PROJECT_NO,
                              PROJECT_NAME,
                              STATE,
@@ -27,9 +24,9 @@
                              HIT,
                              APPLY_RCNT,
                              LEADER_ID)
-        VALUES (#{projectNo},
+        VALUES (PROJECT_NO_COUNT_SEQ.nextval,
                 #{projectName},
-                #{state},
+                '1',
                 #{process},
                 sysdate,
                 #{recruitEdt},
@@ -46,10 +43,13 @@
                 #{projectTerm},
                 0,
                 0,
-                #{leaderId});
+                #{leaderId})
+        <selectKey keyProperty="projectNo" resultType="int" order="AFTER">
+            select PROJECT_NO_COUNT_SEQ.currval as projectNo FROM DUAL
+        </selectKey>
     </insert>
 
-    <update id="updateProject">
+    <update id="updateProject" parameterType="co.yd.deval.project.service.ProjectVO">
         UPDATE PROJECT
         <set>
             <if test="projectName != null">PROJECT_NAME = #{projectName},</if>
@@ -73,12 +73,12 @@
         WHERE PROJECT_NO = #{projectNo}
     </update>
 
-    <update id="updateHit">
+    <update id="updateHit" parameterType="co.yd.deval.project.service.ProjectVO">
         UPDATE PROJECT SET HIT = HIT + 1
         WHERE PROJECT_NO = #{projectNo}
     </update>
 
-    <delete id="deleteProject">
+    <delete id="deleteProject" parameterType="co.yd.deval.project.service.ProjectVO">
         DELETE FROM PROJECT
         WHERE PROJECT_NO = #{projectNo}
     </delete>
@@ -94,32 +94,108 @@
          WHERE PROJECT_NO = #{projectNo}
     </select>
 
-    <select id="findByLeaderIdAndState" resultType="co.yd.deval.project.service.ProjectVO">
-        SELECT *
-          FROM PROJECT
-         WHERE LEADER_ID = #{leaderId}
-           AND STATE = #{state}
+    <select id="searchMainPageProject" resultType="co.yd.deval.project.service.ProjectVO">
+        SELECT * FROM (
+            SELECT t.*
+              FROM DEVAL.PROJECT t
+             WHERE STATE = '1'
+               AND RECRUIT_EDT >= sysdate - 1
+        <if test="lang != null">AND LANG LIKE '%'||#lang#||'%'</if>
+               AND FRONT_RCNT > 0
+                OR BACK_RCNT > 0
+                OR DESIGN_RCNT > 0
+                OR FULL_RCNT > 0
+                OR PLANNER_RCNT > 0
+             ORDER BY dbms_random.value
+        ) WHERE ROWNUM <![CDATA[ <= ]]> 10
     </select>
 
-    <select id="searchProject" resultType="co.yd.deval.project.service.ProjectVO">
+<!--    <select id="searchMainPageProject" resultType="co.yd.deval.project.service.ProjectVO">
+        SELECT * FROM (
+        SELECT t.*
+        FROM DEVAL.PROJECT t
+        WHERE STATE = '1'
+        AND RECRUIT_EDT >= sysdate - 1
+        <if test="lang != null">AND LANG LIKE '%'||#lang#||'%'</if>
+        <if test="projectName != null">AND PROJECT_NAME LIKE '%'||#projectName#||'%'</if>
+        <if test="process != null">AND PROCESS = #{process}</if>
+
+        <if test="totalRcnt != 0">AND TOTAL_RCNT = #{totalRcnt}</if>
+
+        <if test="frontRcnt != 0">AND FRONT_RCNT >= #{frontRcnt}</if>
+        <if test="backRcnt != 0">AND BACK_RCNT >= #{backRcnt}</if>
+        <if test="designRcnt != 0">AND DESIGN_RCNT >= #{designRcnt}</if>
+        <if test="fullRcnt != 0">AND FULL_RCNT >= #{fullRcnt}</if>
+        <if test="plannerRcnt != 0">AND PLANNER_RCNT >= #{plannerRcnt}</if>
+
+        <if test="projectTerm != 0">AND PROJECT_TERM BETWEEN 0 AND #{projectTerm}</if>
+        ORDER BY RECRUIT_EDT
+        ) WHERE ROWNUM <![CDATA[ <= ]]> 10
+    </select>-->
+
+    <sql id="option">
+        <where>
+            STATE = '1'
+            AND RECRUIT_EDT >= sysdate - 1
+            <choose>
+                <when test="state == null">AND STATE = '1'</when>
+                <when test="state != null">AND STATE = #{state}</when>
+            </choose>
+            <if test="projectName != null">AND PROJECT_NAME LIKE '%'||#{projectName}||'%'</if>
+            <if test="process != null">AND PROCESS = #{process}</if>
+            <if test="lang != null">AND LANG LIKE '%'||#lang#||'%'</if>
+            <if test="projectTerm != 0">AND PROJECT_TERM = #{projectTerm}</if>
+        </where>
+    </sql>
+
+    <select id="getListWithPaging" resultType="co.yd.deval.project.service.ProjectVO">
+        <![CDATA[
+        SELECT * FROM (
+            SELECT ROWNUM rn, t.*
+              FROM PROJECT t
+
+        ]]>
+            <include refid="option"></include>
+            AND rownum <![CDATA[<=]]> #{criteria.pageNum} * #{criteria.amount}
+        )
+        <![CDATA[
+        WHERE rn > (#{criteria.pageNum} - 1) * #{criteria.amount}
+        ]]>
+    </select>
+
+    <select id="getTotalCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM PROJECT
+        <include refid="option"></include>
+        AND project_no > 0
+    </select>
+    
+    <select id="findProjectImLeader" resultType="co.yd.deval.project.service.ProjectVO">
+    	SELECT *
+    	FROM   PROJECT
+    	WHERE  LEADER_ID  = #{id}
+    </select>
+    
+    <select id="findProjectByNo" resultType="co.yd.deval.project.service.ProjectVO">
+    	SELECT  *
+    	FROM    PROJECT
+    	WHERE   PROJECT_NO IN (SELECT  PROJECT_NO
+    	                       FROM    PROJECT_TEAM
+    	                       WHERE   MEMBER_ID = #{id})
+    </select>
+
+    <select id="findWaitingProject" resultType="co.yd.deval.project.service.ProjectVO">
+    	SELECT  *
+    	FROM    PROJECT
+    	WHERE   PROJECT_NO IN (SELECT  PROJECT_NO
+    						   FROM    PROJECT_REQUEST
+    						   WHERE   MEMBER_ID = #{id}
+    						   AND     STATE = 1)
+    </select>
+
+    <select id="getProject" resultType="co.yd.deval.project.service.ProjectInfoDTO">
         SELECT *
           FROM PROJECT
-        <where>
-            <if test="projectName != null">AND PROJECT_NAME LIKE '%'||#projectName#||'%'</if>
-            <if test="state != null">AND STATE = #{state}</if>
-            <if test="process != null">AND PROCESS = #{process}</if>
-            <if test="recruitEdt != null">AND RECRUIT_EDT <![CDATA[ <= ]]> #{recruitEdt}</if>
-            <if test="subject != null">AND SUBJECT = #{subject}</if>
-            <if test="lang != null">AND LANG LIKE '%'||#lang#||'%'</if>
-            <if test="totalRcnt != null">AND TOTAL_RCNT = #{totalRcnt}</if>
-            <if test="projectSdt != null">AND PROJECT_SDT = #{projectSdt}</if>
-            <if test="frontRcnt != null">AND FRONT_RCNT >= #{frontRcnt}</if>
-            <if test="backRcnt != null">AND BACK_RCNT >= #{backRcnt}</if>
-            <if test="designRcnt != null">AND DESIGN_RCNT >= #{designRcnt}</if>
-            <if test="projectEdt != null">AND PROJECT_EDT <![CDATA[ <= ]]> #{projectEdt}</if>
-            <if test="fullRcnt != null">AND FULL_RCNT >= #{fullRcnt}</if>
-            <if test="plannerRcnt != null">AND PLANNER_RCNT >= #{plannerRcnt}</if>
-            <if test="projectTerm != null">AND PROJECT_TERM = #{projectTerm}</if>
-        </where>
+         WHERE PROJECT_NO = #{projectNo}
     </select>
+
 </mapper>

@@ -10,7 +10,7 @@ import co.yd.deval.member.service.MemberVO;
 
 
 
-public class MemberDetailService implements UserDetailsService {
+public class LoginDetailService implements UserDetailsService {
 
 	@Autowired
 	private MemberMapper map;

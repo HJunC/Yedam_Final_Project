@@ -8,4 +8,9 @@ public interface MentoService {
 	int mentoInsert(MentoVO vo);
 	int mentoDelete(MentoVO vo);
 	int mentoUpdate(MentoVO vo);
+	
+	//멘토메인화면 정보
+	int mentoCount();
+	int kindOfLang();
+	List<String> kindOfAll();
 }

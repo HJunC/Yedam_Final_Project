@@ -22,11 +22,13 @@
 			<div class="container relative">
 					<!-- 검색 -->
 					<div class="row">
-						<div>
+						<div align="right">
 							<form action="#" class="form">
+								<h3 align="left"></h3>
+								<label for="lang">#${cqno}리뷰</label> &nbsp;&nbsp;&nbsp;
 								<input type="text" name="codeSearch" id="codeSearch" 
-								class="input-sm round" placeholder="검색" 
-								style="width: 300px; height: 48px;" pattern="" required />
+									class="input-sm round" placeholder="검색" 
+									style="width: 300px; height: 48px;" pattern="" required />
 								&nbsp;
 								<button type="submit" class="btn btn-mod btn-round btn-border-w btn-small">검색</button>
 							</form>
@@ -59,11 +61,17 @@
 						<form id="frm" method="post">
 							<input name="${_csrf.parameterName }" value="${_csrf.token}" type="hidden">
 							<input type="hidden" id="cqReplyNo" name="cqReplyNo">
-							<input type="hidden" id="cqNo" name="cqNo" value="${review.cqNo }">
+						</form>
+						<form id="frm2" method="post">
+							<input name="${_csrf.parameterName }" value="${_csrf.token}" type="hidden">
+							<input type="hidden" id="cqNo" name="cqNo" value="${cqno }">
 							<input class="btn btn-mod btn-round btn-border-w btn-small"
-								type="button" value="리뷰쓰기" onclick="reviewInput()">
+								type="button" value="원문가기" onclick="reviewInput('C')">
+							<input class="btn btn-mod btn-round btn-border-w btn-small"
+								type="button" value="리뷰쓰기" onclick="reviewInput('I')">
 						</form>
 						</div>
+						
 					</div>
 				</div>
 		</section>
@@ -78,9 +86,13 @@
 		frm.submit();
 	}
 	
-	function reviewInput() {
-		frm.action = "reviewInsertForm.do";
-		frm.submit();
+	function reviewInput(str) {
+		if(str=="I"){
+			frm2.action = "reviewInsertForm.do";
+		} else if (str == "C") {
+			frm2.action = "../code/codeSelectOne.do";
+		}
+		frm2.submit();
 	}
 </script>
 </html>

@@ -16,7 +16,9 @@ public class MentoVO {
 	private int people;
 	private String mentoId;
 	private int price;
-	private String maxTerm;
 	private String serviceStt;
 	private String serviceEdt;
+	private String termDay;
+	private String termWeek;
+	private String termMonth;
 }

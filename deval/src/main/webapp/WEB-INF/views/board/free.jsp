@@ -52,11 +52,25 @@ border: none;
 </head>
 <body>
 
+
 <section class="page-section bg-dark light-content">
 <div align="center" class="container" >
 <div class="col-md-7">
 <h1 class="hs-line-7 mb-40 mb-xs-20">free.</h1>
 <div class="table-responsive">
+
+						<!-- Content Column -->
+					 <table class="table table-striped">
+                     <tr class="active">
+			<th>No .</th>
+									<th>H I T$</th>
+									<th>I D</th>
+									<th>T I T L E</th>
+									<th>R EC O M M E N D</th>
+									<th>D A T E</th>
+								</tr>
+					 
+
 
 
 <a href="write.do" class="button" class="blog-page-title">Write.</a>

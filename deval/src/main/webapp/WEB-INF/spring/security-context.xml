@@ -7,6 +7,8 @@
 
 	<security:http pattern="/resources/**" security="none" />
 	<security:http>
+		<security:intercept-url pattern="/myPage.do" access="hasAnyAuthority('ROLE_USER','ROLE_ADMIN')"/>
+		<security:intercept-url pattern="/coPage.do" access="hasAnyAuthority('ROLE_COMPANY','ROLE_ADMIN')"/>
 		<security:intercept-url pattern="/**" access="permitAll()" />
 		<security:form-login login-page="/loginForm.do" 
 							 login-processing-url="/login" 
@@ -21,6 +23,6 @@
 		</security:authentication-provider>
 	</security:authentication-manager>
 	
-	<bean class="co.yd.deval.member.serviceImpl.MemberDetailService" id="mds"></bean>
+	<bean class="co.yd.deval.member.serviceImpl.LoginDetailService" id="mds"></bean>
 	
 </beans>

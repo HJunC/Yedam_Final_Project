@@ -14,6 +14,7 @@
                 #{projectNo},
                 #{state})
     </insert>
+
     <update id="updateProjectTeam">
         UPDATE PROJECT_TEAM
         <set>
@@ -24,26 +25,33 @@
             <if test="state != null">STATE = #{state},</if>
         </set>
         WHERE PROJECT_NO = #{projectNo}
+          AND MEMBER_ID = #{memberId}
     </update>
+
     <delete id="deleteProjectTeam">
         DELETE FROM PROJECT_TEAM
-        WHERE PROJECT_NO = #{projectNo}
+         WHERE PROJECT_NO = #{projectNo}
+        <if test="memberId != null">AND MEMBER_ID = #{memberId}</if>
     </delete>
 
     <select id="selectProjectTeamAll" resultType="co.yd.deval.project.service.ProjectTeamVO">
         SELECT *
-        FROM PROJECT_TEAM
-    </select>
-    <select id="selectProjectTeam" resultType="co.yd.deval.project.service.ProjectTeamVO">
-        SELECT *
-        FROM PROJECT_TEAM
-        WHERE PROJECT_NO = #{projectNo}
+          FROM PROJECT_TEAM
     </select>
 
-    <select id="findByMemberIdAndState" resultType="co.yd.deval.project.service.ProjectTeamVO">
+    <select id="selectProjectTeam" resultType="co.yd.deval.project.service.ProjectTeamVO">
         SELECT *
-         FROM PROJECT
-        WHERE LEADER_ID = #{memberId}
-          AND STATE = #{state}
+          FROM PROJECT_TEAM
+         WHERE PROJECT_NO = #{projectNo}
+        <if test="memberId != null">AND MEMBER_ID = #{memberId}</if>
     </select>
+
+    <select id="getOngoingProject" resultType="co.yd.deval.project.service.ProjectTeamVO">
+        SELECT *
+          FROM PROJECT_TEAM
+         WHERE MEMBER_ID = #{memberId}
+           AND STATE IN ('0', '1', '2')
+    </select>
+
+
 </mapper>
