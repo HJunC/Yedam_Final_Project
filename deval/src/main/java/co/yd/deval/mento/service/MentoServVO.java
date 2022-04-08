@@ -20,8 +20,8 @@ public class MentoServVO {
 	private Date endDate;
 	private String serviceTerm;
 	private String mentiInfo;
-	private String startTm;
-	private String endTm;
+	private int startTm;
+	private int endTm;
 	private String mentoId;
 	private String state;
 	private String stsfdg;

@@ -68,8 +68,8 @@
                                     	<!-- 시간 가져오기 -->
                                         <select class="form-control input-sm round" style="width: 150px" onchange="selectTime(this)" id="serviceStt" name="startTm">
                                         	<option>시작시간</option>
-                                    	<c:forEach var="i" begin="${fn:substring(stT,0,2)}" end="${fn:substring(edT,0,2)-1}">
-                                            <option value="${i}:00"><c:out value="${i}"/>:00</option>
+                                    	<c:forEach var="i" begin="${stT}" end="${edT-1}">
+                                            <option value="${i}"><c:out value="${i}"/>:00</option>
                                         </c:forEach>
                                         </select>
                                         <select class="form-control input-sm round" style="width: 150px" onchange="totalTime()" id="serviceEdt" name="endTm">
@@ -283,7 +283,7 @@
         	$('#serviceEdt').empty()
        		for(var i=startTime+1; i<endTime+1; i++) {
 		        var option = document.createElement('option');
-				option.value = i + ':00';
+				option.value = i;
 				option.innerText = i + ':00';
        			timeSelect.appendChild(option);
        		}
@@ -294,9 +294,9 @@
         	// 토탈가격 시간측정
         	var edTime = document.getElementById('serviceEdt').value;
         	var stTime = document.getElementById('serviceStt').value;
-        	var edTime3 = parseInt(edTime.substr(0,2));
-        	var stTime3 = parseInt(stTime.substr(0,2));
-        	var priceTime = edTime3 - stTime3;
+        	/* var edTime3 = parseInt(edTime.substr(0,2));
+        	var stTime3 = parseInt(stTime.substr(0,2)); */
+        	var priceTime = edTime - stTime;
         	$('#priceTime').html('시간 :  ' + priceTime + "시간");
         	return priceTime;
         	
@@ -354,7 +354,7 @@
     	        		var chargeBtn = $('<input type="button" class="btn btn-mod btn-w btn-small round" id="charge" onclick="chargePt()" value="충전하기">');
     	        		$('#btnDiv').empty();
     	        		$('#btnDiv').append(chargeBtn);
-    	        	}else if(totalPrice < ${member.cashPt}) {
+    	        	}else if(totalPrice <= ${member.cashPt}) {
     	        		var paymentBtn = $('<input type="button" class="btn btn-mod btn-w btn-small round" id="payment" onclick="payment()" value="결제하기">');
     	        		$('#btnDiv').empty();
     	        		$('#btnDiv').append(paymentBtn);
@@ -392,6 +392,7 @@
     		              }).done(function (data) {
     		                // 가맹점 서버 결제 API 성공시 로직
     		                alert("결제에 성공했습니다");
+    		                
     		              })
     		          } else {
     		              // 결제 실패 시 로직,

@@ -56,6 +56,7 @@
                                             <th>
                                                 Total
                                             </th>
+                                            <th>시작시간</th>
                                             <th>
                                             </th>
                                             <th></th>
@@ -81,6 +82,7 @@
                                             <td>
                                                 100원
                                             </td>
+                                            
                                             <td>
                                             </td>
                                             <td class="text-end text-nowrap">
@@ -112,12 +114,33 @@
                                             	<fmt:formatNumber value="${menti.price}" pattern="#,###"/>원
                                             </td>
                                             <td>
+                                            	<fmt:formatDate value="${menti.startDate}" pattern="yyyy-MM-dd"/>
+                                            </td>
+                                            <td>
                                             </td>
                                             <td class="text-end text-nowrap">
                                                 <a href="#" onclick="serviceDelete()" title="Remove item"><i class="fa fa-trash-alt"></i><span class="sr-only">Remove item</span></a>
                                             </td>
 	                                        <td>
 	                                        	<input type="hidden" name="mentoServiceNo" id="mentoServiceNo" value="${menti.mentoServiceNo}"/>
+	                                        </td>
+	                                        <td>
+	                                        	<input type="hidden" id="startDate" value="<fmt:formatDate value="${menti.startDate}" pattern="yyyy-MM-dd"/>">
+	                                        </td>
+	                                        <td>
+	                                        	<input type="hidden" id="endDate" value="<fmt:formatDate value="${menti.endDate}" pattern="yyyy-MM-dd"/>">
+	                                        </td>
+	                                        <td>
+	                                        	<input type="hidden" id="startTm" value="${menti.startTm }">
+	                                        </td>
+	                                        <td>
+									            <input type="hidden" id="endTm" value="${menti.endTm}">                            
+	                                        </td>
+	                                        <td>
+	                                        	<input type="hidden" id="mentiId" value="${menti.mentiId }">
+	                                        </td>
+	                                        <td>
+	                                        	<input type="hidden" id="mentiPrice" value="${menti.price }">
 	                                        </td>
                                         </tr>
                                         </c:forEach>
@@ -154,11 +177,14 @@
             		
             		var no = document.getElementById('mentoServiceNo').value;
             		var serviceNo = parseInt(no);
+            		
             		$.ajax({
             			url : "serviceRefuse.do",
             			type : "POST",
             			data : {
-            				mentoServiceNo : serviceNo 
+            				mentoServiceNo : serviceNo,
+            				memberId : $('#mentiId').val(),
+            				cashPt : $('#mentiPrice').val()
             			} 
             		}).done(function(data) {
         				console.log(data);
@@ -174,8 +200,17 @@
             			var tr = $(checkbox).parent().parent();
         				var td = $(tr).children();
             			var obj = {};
-            			var serviceNo = td.eq(8).find('input').val();
+            			var serviceNo = td.eq(9).find('input').val();
+            			var startDate = td.eq(10).find('input').val();
+            			var endDate = td.eq(11).find('input').val();
+            			var startTm = td.eq(12).find('input').val();
+            			var endTm = td.eq(13).find('input').val();
             			obj["mentoServiceNo"] = serviceNo;
+            			obj["startDate"] = startDate;
+            			obj["endDate"] = endDate;
+            			obj["startTm"] = startTm;
+            			obj["endTm"] = endTm;
+            			obj["mentoId"] = '${mentis[0].mentoId}'
             			list.push(obj);
             		});
             		if(list.length != 0){

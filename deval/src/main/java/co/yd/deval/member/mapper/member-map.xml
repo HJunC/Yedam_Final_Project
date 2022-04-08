@@ -61,6 +61,10 @@
 		SET CASH_PT = CASH_PT + #{cashPt}
 		WHERE MEMBER_ID = #{id}
 	</update>
-	
+	<update id="refund" parameterType="Map">
+		UPDATE MEMBER
+		SET CASH_PT = CASH_PT + #{cashPt}
+		WHERE MEMBER_ID = #{memberId}
+	</update>
 	
 </mapper>

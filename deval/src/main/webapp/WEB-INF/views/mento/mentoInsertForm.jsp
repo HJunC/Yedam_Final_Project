@@ -120,10 +120,10 @@
                     시작시간
                     <select class="input-md round form-control" style="width: 170px;" id="serviceStt" name="serviceStt" onchange="endTime(this)">
                     	<c:forEach var="i" begin="0" end="9">
-                        <option value="0${i}:00">0${i}:00</option>
+                        <option value="${i}">0${i}:00</option>
                         </c:forEach>
                         <c:forEach var="i" begin="10" end="23">
-                        <option value="${i}:00">${i}:00</option>
+                        <option value="${i}">${i}:00</option>
                         </c:forEach>
                     </select>
                 </div>
@@ -196,10 +196,10 @@
         	for(var i = startTime+1; i<=24; i++) {
 	        	var option = document.createElement('option');
         		if(i < 10) {
-        			option.value = '0' + i + ':00';
+        			option.value = i;
         			option.innerText = '0' + i + ':00';
         		}else if(i > 9) {
-        			option.value = i + ':00';
+        			option.value = i;
         			option.innerText = i + ':00';
         		}
 	        		selectId.appendChild(option);
