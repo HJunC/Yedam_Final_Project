@@ -19,5 +19,6 @@ public class BoardVO {
 	private int recommend;
 	private String writer;
 	private String category;	
+	private String photo;	
 }
 

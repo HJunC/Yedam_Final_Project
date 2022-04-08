@@ -11,7 +11,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class CommentVO {
+public class BCommentVO {
 
 		private int commentNo;
 		private String commentSub;

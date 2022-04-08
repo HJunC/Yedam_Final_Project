@@ -5,34 +5,34 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import co.yd.deval.board.mapper.CommentMapper;
-import co.yd.deval.board.service.CommentService;
-import co.yd.deval.board.service.CommentVO;
+import co.yd.deval.board.mapper.BCommentMapper;
+import co.yd.deval.board.service.BCommentService;
+import co.yd.deval.board.service.BCommentVO;
 
 @Service("commentDao")
-public class CommentServiceImpl implements CommentService {
+public class CommentServiceImpl implements BCommentService {
 
 	@Autowired
-	private CommentMapper map;
+	private BCommentMapper map;
 
 	@Override
-	public List<CommentVO> commentSelectList(CommentVO vo) {
+	public List<BCommentVO> commentSelectList(BCommentVO vo) {
 		return map.commentSelectList(vo);
 	}
 	
 	@Override
-	public CommentVO commentSelect(CommentVO vo) {
+	public BCommentVO commentSelect(BCommentVO vo) {
 		return map.commentSelect(vo);
 	}
 
 	@Override
-	public int commentInsert(CommentVO vo) {
+	public int commentInsert(BCommentVO vo) {
 		return map.commentInsert(vo);
 	 
 	}
 
 	@Override
-	public int commentDelete(CommentVO vo) {
+	public int commentDelete(BCommentVO vo) {
 		return map.commentDelete(vo);
 	}
 

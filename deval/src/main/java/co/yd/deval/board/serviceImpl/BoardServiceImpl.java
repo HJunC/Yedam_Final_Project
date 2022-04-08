@@ -6,7 +6,8 @@ import org.springframework.stereotype.Service;
 import co.yd.deval.board.mapper.BoardMapper;
 import co.yd.deval.board.service.BoardService;
 import co.yd.deval.board.service.BoardVO;
-import co.yd.deval.board.service.CommentVO;
+import co.yd.deval.board.service.Search;
+import co.yd.deval.board.service.BCommentVO;
 
 @Service("boardDao")
 public class BoardServiceImpl implements BoardService {
@@ -48,4 +49,9 @@ public class BoardServiceImpl implements BoardService {
 	public int boardHitUp(int board_no) {
 		return map.boardHitUp(board_no);
 	}
+
+	/*
+	 * public static int getBoardListCnt(Search search) { // TODO Auto-generated
+	 * method stub return 0; }
+	 */
 }

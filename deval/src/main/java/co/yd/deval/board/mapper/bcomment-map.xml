@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="co.yd.deval.board.mapper.CommentMapper">
+<mapper namespace="co.yd.deval.board.mapper.BCommentMapper">
 
  
-<select id="commentSelectList" resultType="co.yd.deval.board.service.CommentVO">
+<select id="commentSelectList" resultType="co.yd.deval.board.service.BCommentVO">
 	select *
 	from comments
 	where board_no=#{boardNo}
 </select>
  
  
-<select id="commentSelect" resultType="co.yd.deval.board.service.CommentVO">
+<select id="commentSelect" resultType="co.yd.deval.board.service.BCommentVO">
 	select *
 	from comments
 	where comment_no = #{commentNo}
 </select>
 
 
-<insert  id="commentInsert"  parameterType="co.yd.deval.board.service.CommentVO">
+<insert  id="commentInsert"  parameterType="co.yd.deval.board.service.BCommentVO">
 INSERT INTO COMMENTS
 		(COMMENT_NO,
 		COMMENT_SUB,
@@ -31,7 +31,7 @@ VALUES (COMMENT_NO_COUNT_SEQ.NEXTVAL,
 </insert>
 
 
-<delete  id="commentDelete"  parameterType="co.yd.deval.board.service.CommentVO">
+<delete  id="commentDelete"  parameterType="co.yd.deval.board.service.BCommentVO">
     delete from comments
     where comment_no=#{commentNo} 
 </delete>

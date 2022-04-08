@@ -8,18 +8,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import co.yd.deval.board.service.CommentService;
-import co.yd.deval.board.service.CommentVO;
+import co.yd.deval.board.service.BCommentService;
+import co.yd.deval.board.service.BCommentVO;
 
 @Controller
 @RequestMapping("/board")
-public class CommentController {
+public class BCommentController {
 
  @Autowired
- private CommentService commentDao;
+ private BCommentService commentDao;
 
  
  
@@ -33,7 +32,7 @@ public class CommentController {
 	 
 		@PostMapping("/commentPost.do")
 		@ResponseBody
-		public List<CommentVO> boardDetail(CommentVO vo, Model model) {
+		public List<BCommentVO> boardDetail(BCommentVO vo, Model model) {
 			System.out.println("============================" + vo);
 			int n = commentDao.commentInsert(vo);
 			if(n>0) {
@@ -44,7 +43,7 @@ public class CommentController {
 
 	
 		@GetMapping("/commentDelete.do")
-		public String commentDelete(CommentVO vo) {
+		public String commentDelete(BCommentVO vo) {
 			commentDao.commentDelete(vo);
 			return "board/boardDetail";
 		}

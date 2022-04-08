@@ -42,6 +42,7 @@ VALUES (BOARD_NO_COUNT_SEQ.NEXTVAL,
 </insert>
 
 
+
 <!-- 수정 -->
 <update id="boardUpdate" parameterType="co.yd.deval.board.service.BoardVO" >
 	update board
@@ -62,6 +63,7 @@ VALUES (BOARD_NO_COUNT_SEQ.NEXTVAL,
 </delete>
 
 
+
 <update id="boardHitUp" parameterType="int">
 	UPDATE BOARD
 	SET
@@ -76,5 +78,4 @@ VALUES (BOARD_NO_COUNT_SEQ.NEXTVAL,
 	RECOMMEND = RECOMMEND +1
 	where board_no=#{boardNo}
 </update>
-
 </mapper>

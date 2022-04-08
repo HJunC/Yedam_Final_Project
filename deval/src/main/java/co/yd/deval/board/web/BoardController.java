@@ -1,176 +1,215 @@
 package co.yd.deval.board.web;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import co.yd.deval.board.service.BoardService;
 import co.yd.deval.board.service.BoardVO;
-import co.yd.deval.board.service.CommentService;
-import co.yd.deval.board.service.CommentVO;
-
+import co.yd.deval.board.service.BCommentService;
+import co.yd.deval.board.service.BCommentVO;
+import co.yd.deval.board.service.FileManageService;
+  
 @Controller
 @RequestMapping("/board")
 public class BoardController {
-   
-   @Autowired
-   private BoardService boardDao;
-   
-   @Autowired
-   private CommentService commentDao;
+    @Autowired
+	private BoardService boardDao;
 
-   /**
-    * ììœ ê²Œì‹œíŒ ëª©ë¡
-    * @param model
-    */
-   @GetMapping("/free.do")
-   public String free(Model model) {
-      model.addAttribute("boardList", boardDao.boardSelectList(1));
-      System.out.println(model);
-      return "board/free";
-   }
 
-   /**
-    * ê¸€ì“°ê¸° í™”ë©´ ì´ë™
-    */
-   @GetMapping("/write.do")
-   public String write() {
-      return "board/write";
-   }
+	@Autowired
+	private BCommentService commentDao;
 
-   /**
-    * ì»¨íŠ¸ë¡¤ëŸ¬ ì„¤ëª… ë¬´ìŠ¨ì¼ì„ í•˜ëŠ”ì§€
-    * íŒŒì¼ì—…ë¡œë“œ í™”ë©´ìœ¼ë¡œ ì´ë™? (ì´ê±° íŒŒì¼ì—…ë¡œë“œ ì–´ë–¤ì‹ìœ¼ë¡œ í•˜ëŠ”ê±´ì§€?)
-    */
-   
-   /*
-    * ì»¨íŠ¸ë¡¤ëŸ¬ ì„¤ëª…
-    * @param vo
-    * @param board_no
-    */
-   
-   @RequestMapping("/boardDetail.do")
-   public String boardDetail(Model model, int board_no) {
-      return "board/boardDetail";
-   }
+	@Autowired
+	private FileManageService fileManageDao;
 
-   /**
-    * ì»¨íŠ¸ë¡¤ëŸ¬ ì„¤ëª…
-    * @param vo
-    */
-   @PostMapping("/writePost.do")
-   public String write(BoardVO vo) {
-      System.out.println(vo);
-      boardDao.boardInsert(vo);
+	@Autowired
+	private String uploadPath;
+	/**
+	 * ÀÚÀ¯°Ô½ÃÆÇ ¸ñ·Ï
+	 * 
+	 * @param model
+	 */
+	@GetMapping("/free.do")
+	public String free(Model model) {
+		model.addAttribute("boardList", boardDao.boardSelectList(1));
+		System.out.println(model);
+		return "board/free";
+	
+	}
 
-      if (vo.getBoardTypeNo() == 1) {
-         return "redirect:free.do";
-      } else if (vo.getBoardTypeNo() == 2) {
-         return "redirect:notice.do";
-      } else {
-         return "redirect:technical.do";
-      }
+	/**
+	 * ±Û¾²±â È­¸é ÀÌµ¿
+	 */
+	@GetMapping("/write.do")
+	public String write() {
+		return "board/write";
+	}
 
-   }
+	@RequestMapping("/boardDetail.do")
+	public String boardDetail(Model model, int board_no) {
+		return "board/boardDetail";
+	}
 
-   /**
-    * ì»¨íŠ¸ë¡¤ëŸ¬ ì„¤ëª…
-    * @param model
-    */
-   @GetMapping("/notice.do")
-   public String notice(Model model) {
-      model.addAttribute("noticeList", boardDao.boardSelectList(2));
-      return "board/notice";
-   }
+	/**
+	 * ÄÁÆ®·Ñ·¯ ¼³¸í
+	 * 
+	 * 
+	 * @PostMapping("/writePost.do") public String write(BoardVO vo ,) {
+	 * System.out.println(vo); boardDao.boardInsert(vo);
+	 * 
+	 * if (vo.getBoardTypeNo() == 1) { return "redirect:free.do"; } else if
+	 * (vo.getBoardTypeNo() == 2) { return "redirect:notice.do"; } else { return
+	 * "redirect:technical.do"; }
+	 * 
+	 * }
+	 */
 
-   /**
-    * ì»¨íŠ¸ë¡¤ëŸ¬ ì„¤ëª…
-    * @param model
-    */
-   @GetMapping("/technical.do")
-   public String technical(Model model) {
-      model.addAttribute("technicList", boardDao.boardSelectList(3));
-      return "board/technical";
-   }
+	@PostMapping("/writePost.do")
 
-   /**
-    * ì»¨íŠ¸ë¡¤ëŸ¬ ì„¤ëª…
-    * @param vo
-    */
-   @GetMapping("/boardDelete.do")
-   public String boardDelete(BoardVO vo) {
-      int i = boardDao.boardDelete(vo);
-      if (i != 0) {
-         return "redirect:free.do";
-      }
-      return "redirect:free.do";
-   }
+	public String write(BoardVO vo, MultipartFile file) {
+		String originalName = file.getOriginalFilename();
+		String fileType = originalName.substring(originalName.lastIndexOf(".") + 1, originalName.length());
+		String fileName = UUID.randomUUID().toString() + "." + fileType;
+		String pathName =  uploadPath + fileName;
+		File dest = new File(pathName);
+       
+		try {
+			FileCopyUtils.copy(file.getBytes(), dest);
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-   /**
-    * ì»¨íŠ¸ë¡¤ëŸ¬ ì„¤ëª…
-    * @param vo
-    * @param model
-    */
-   @PostMapping("/boardSelect.do")
-   public String boardSelect(BoardVO vo, Model model, CommentVO cvo) {
-      boardDao.boardHitUp(vo.getBoardNo());
-      boardDao.boardRecUp(vo.getBoardNo());
-      cvo.setBoardNo(vo.getBoardNo());
-      
-      model.addAttribute("board", boardDao.boardSelect(vo));
-      model.addAttribute("comments", commentDao.commentSelectList(cvo));
-      return "board/boardDetail";
-   }
+		vo.setPhoto(fileName);
+		int n = boardDao.boardInsert(vo);
+        
+		if (vo.getBoardTypeNo() == 1) {
+			return "redirect:free.do";
+		} else if (vo.getBoardTypeNo() == 2) {
+			return "redirect:notice.do";
+		} else {
 
-   /**
-    * ì»¨íŠ¸ë¡¤ëŸ¬ ì„¤ëª…
-    * @param vo
-    * @param model
-    */
-   @PostMapping("/boardUpdateForm.do")
-   public String boardUpdateForm(Model model, BoardVO vo) {
-      model.addAttribute("board", vo);
-      return "board/boardUpdateForm";
+		return "redirect:technical.do";
+	
+		}
 
-   }
+	
+	}
 
-   /**
-    * ì»¨íŠ¸ë¡¤ëŸ¬ ì„¤ëª…
-    * @param vo
-    */
-   @PostMapping("/boardUpdate.do")
-   public String boardUpdate(BoardVO vo) {
-      int n = boardDao.boardUpdate(vo);
-      if (n != 0) {
-         return "redirect:free.do";
-      }
-      return "redirect:boardSelect.do";
-   }
+	/**
+	 * 
+	 * ÄÁÆ®·Ñ·¯ ¼³¸í
+	 * 
+	 * @param model
+	 */
+	@GetMapping("/notice.do")
+	public String notice(Model model) {
+		model.addAttribute("noticeList", boardDao.boardSelectList(2));
+		return "board/notice";
+	}
 
-   /**
-    * ì»¨íŠ¸ë¡¤ëŸ¬ ì„¤ëª…
-    * @param vo
-    * @param model
-    */
-   @PostMapping("/noticeSelect.do")
-   public String noticeSelect(BoardVO vo, Model model) {
-      model.addAttribute("board", boardDao.boardSelect(vo));
-      return "board/boardDetail";
-   }
+	/**
+	 * ÄÁÆ®·Ñ·¯ ¼³¸í
+	 * 
+	 * @param model
+	 */
+	@GetMapping("/technical.do")
+	public String technical(Model model) {
+		model.addAttribute("technicList", boardDao.boardSelectList(3));
+		return "board/technical";
+	}
 
-   /**
-    * ì»¨íŠ¸ë¡¤ëŸ¬ ì„¤ëª…
-    * @param vo
-    * @param model
-    */
-   @PostMapping("/technicSelect.do")
-   public String technicSelect(BoardVO vo, Model model) {
-      model.addAttribute("board", boardDao.boardSelect(vo));
-      return "board/boardDetail";
-   }
+	/**
+	 * ÄÁÆ®·Ñ·¯ ¼³¸í
+	 * 
+	 * @param vo
+	 */
+	@GetMapping("/boardDelete.do")
+	public String boardDelete(BoardVO vo) {
+		int i = boardDao.boardDelete(vo);
+		if (i != 0) {
+			return "redirect:free.do";
+		}
+		return "redirect:free.do";
+	}
 
-   
+	/**
+	 * ÄÁÆ®·Ñ·¯ ¼³¸í
+	 * 
+	 * @param vo
+	 * @param model
+	 */
+	@PostMapping("/boardSelect.do")
+	public String boardSelect(BoardVO vo, Model model, BCommentVO cvo) {
+		boardDao.boardHitUp(vo.getBoardNo());
+		boardDao.boardRecUp(vo.getBoardNo());
+		cvo.setBoardNo(vo.getBoardNo());
+
+		model.addAttribute("board", boardDao.boardSelect(vo));
+		model.addAttribute("comments", commentDao.commentSelectList(cvo));
+		return "board/boardDetail";
+	}
+
+	/**
+	 * ÄÁÆ®·Ñ·¯ ¼³¸í
+	 * 
+	 * @param vo
+	 * @param model
+	 */
+	@PostMapping("/boardUpdateForm.do")
+	public String boardUpdateForm(Model model, BoardVO vo) {
+		model.addAttribute("board", vo);
+		return "board/boardUpdateForm";
+
+	}
+
+	/**
+	 * ÄÁÆ®·Ñ·¯ ¼³¸í
+	 * 
+	 * @param vo
+	 */
+	@PostMapping("/boardUpdate.do")
+	public String boardUpdate(BoardVO vo) {
+		int n = boardDao.boardUpdate(vo);
+		if (n != 0) {
+			return "redirect:free.do";
+		}
+		return "redirect:boardSelect.do";
+	}
+
+	/**
+	 * ÄÁÆ®·Ñ·¯ ¼³¸í
+	 * 
+	 * @param vo
+	 * @param model
+	 */
+	@PostMapping("/noticeSelect.do")
+	public String noticeSelect(BoardVO vo, Model model) {
+		model.addAttribute("board", boardDao.boardSelect(vo));
+		return "board/boardDetail";
+	}
+
+	/**
+	 * ÄÁÆ®·Ñ·¯ ¼³¸í
+	 * 
+	 * @param vo
+	 * @param model
+	 */
+	@PostMapping("/technicSelect.do")
+	public String technicSelect(BoardVO vo, Model model) {
+		model.addAttribute("board", boardDao.boardSelect(vo));
+		return "board/boardDetail";
+	}
+
 }

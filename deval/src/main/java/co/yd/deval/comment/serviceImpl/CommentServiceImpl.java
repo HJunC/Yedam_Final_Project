@@ -17,17 +17,17 @@ public class CommentServiceImpl implements CommentService {
 	
 	@Override
 	public List<CommentVO> commentSelectList(CommentVO vo) {
-		return map2.commentSelectList(vo);
+		return map2.comSelectList(vo);
 	}
 
 	@Override
 	public int commentInsert(CommentVO vo) {
-		return map2.commentInsert(vo);
+		return map2.comInsert(vo);
 	}
 
 	@Override
 	public int commentDelete(CommentVO vo) {
-		return map2.commentDelete(vo);
+		return map2.comDelete(vo);
 	}
 
 }

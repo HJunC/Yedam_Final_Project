@@ -48,11 +48,12 @@ td {
 	cursor: pointer;
 	float: center;
 }
+.
 </style>
 </head>
 
 <body>
-
+	<c:set var="upload" value="/upload" />
 	<section class="page-section bg-dark light-content">
 		<div align="center" class="container">
 			<div class="col-md-6 mb-md-20">
@@ -110,6 +111,14 @@ td {
 								<td><input type="hidden" value="${board.recommend}"
 									name="recommend" id="recommend">${board.recommend}</td>
 							</tr>
+							<tr>
+							
+							<td>file</td>
+							<td class="post-prev-img" style="border-radius: 70%;">
+							<a href="#">
+				<img src="images/${board.photo}" alt="My Image"  width="100" height="200"></a></td>
+							</tr>
+
 
 						</tbody>
 					</table>
@@ -134,39 +143,45 @@ td {
 				<div class="mb-60 mb-md-30"></div>
 
 				<table id="tbl">
-					
+
 					<c:forEach items="${comments}" var="comment">
 						<tr>
-						<td>나도 한마디(id)</td>						
-						<td>${comment.commentDate}</td>
-						<td>${comment.commentSub}</td>
+							<td>나도 한마디(id)</td>
+							<td>${comment.commentDate}</td>
+							<td>${comment.commentSub}</td>
 						</tr>
 					</c:forEach>
-					
+
 				</table>
-				
+
 				<form action="commentPost.do" method="post">
 					<table>
 						<tr>
-						 
+
 							<td>Subject</td>
 							<td><textarea rows="4" cols="500" id="commentSub"
 									name="commentSub" required="required"
 									class="input-mx square form-control"
 									placeholder="Enter subject" maxlength="400"></textarea></td>
 						</tr>
+
+
+
 					</table>
-		  <hr>
-		  <button type="button" class="btn btn-warning" id="addComment">submit</button>
+					<hr>
+					<button type="button" class="btn btn-warning" id="addComment">submit</button>
 				</form>
-				
-<!-- <button class="btn btn-secondary"
+
+
+
+
+				<!-- <button class="btn btn-secondary"
 					onclick="location.href='boardDetail.do'">목록으로</button> -->
 
 
 
 				<script type="text/javascript">
- 					$("#addComment").on("click", function() {
+					$("#addComment").on("click", function() {
 						$.ajax({
 							url : "commentPost.do",
 							data : {
@@ -184,28 +199,25 @@ td {
 							}
 
 						})
- 					});
-					
-					function makeTr(data){
+					});
+
+					function makeTr(data) {
 						$("#tbl").empty();
-// 						<tr>
-	// 						
-	// 						<td></td>
-	// 						<td>안녕하세요</td>
-// 						</tr>
-						
-						$.each(data, function(idx, item){
-// 							console.log(item);
+						// 						<tr>
+						// 						
+						// 						<td></td>
+						// 						<td>안녕하세요</td>
+						// 						</tr>
+
+						$.each(data, function(idx, item) {
+							// 							console.log(item);
 							let tr = $("<tr>");
-							tr.append(
-								$("<th>").text("나도 한마디"),
-								$("<td>").text(item.commentDate),
-								$("<td>").text(item.commentSub)
-							);
-						$("#tbl").append(tr);
+							tr.append($("<th>").text("나도 한마디"), $("<td>").text(
+									item.commentDate), $("<td>").text(
+									item.commentSub));
+							$("#tbl").append(tr);
 						});
 					}
-					
 				</script>
 
 
