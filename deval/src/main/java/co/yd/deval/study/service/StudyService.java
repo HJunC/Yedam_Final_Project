@@ -5,12 +5,12 @@ import java.util.List;
 public interface StudyService {
 	// 스터디 모집
 	List<StudyVO> studySelectAll();
-	StudyVO studySelectNo(StudyVO vo);
+	List<StudyVO> studyLocSearch(String loc);
 	
+	StudyVO studySelectNo(StudyVO vo);
 	int findMaxStudyNo();
 	int studyInsert(StudyVO vo);
 	int studyUpdate(StudyVO vo);
-
 	List<StudyVO> findStudyImLeader(String id);
 	List<StudyVO> findStudyByNo(String id);
 	List<StudyVO> findWaitingStudy(String id);
@@ -24,16 +24,18 @@ public interface StudyService {
 	List<StudyReqVO> studyReqSelectAll();
 	List<StudyReqVO> studyMemberFind(String id);
 	List<StudyReqVO> studyUnfinedTeamBtn(String id);
-	//StudyReqVO studyTeam(StudyReqVO vo);
+	
+	// 스터디 신청페이지
+	List<StudyReqVO> studyLeaderBtn(String id);
+	List<StudyReqVO> studyLeaderReqPage(String leaderId);
 	int studyTeamMemberInsert(StudyReqVO vo);
 	int studyTeamLeaderInsert(StudyReqVO vo);
 	int studyTeamMemberUpdateAccept(StudyReqVO vo);
 	int studyTeamMemberUpdateRefuse(StudyReqVO vo);
 	int studyTeamMemberDelete(StudyReqVO vo);
 	
-	// 스터디 팀원 VIEW
-	List<StudyTeamVO> studyTeamSelectAll();
-	//StudyTeamVO studyTeamSelect(StudyTeamVO vo);
+	// 스터디 팀원 페이지 VIEW
+	List<StudyTeamVO> studyTeamMember(String memberId);
 
 	// 검색 페이징 처리
     List<StudyVO> getListWithPaging(StudyVO vo);

@@ -116,12 +116,22 @@ public class StudyServiceImpl implements StudyService {
 		return map.studyTeamMemberDelete(vo);
 	}
 	
-	// 스터디 팀 VIEW
+	// 신청자 페이지
 	@Override
-	public List<StudyTeamVO> studyTeamSelectAll() {
-		return map.studyTeamSelectAll();
+	public List<StudyReqVO> studyLeaderBtn(String id) {
+		return map.studyLeaderBtn(id);
 	}
 
+	@Override
+	public List<StudyReqVO> studyLeaderReqPage(String leaderId) {
+		return map.studyLeaderReqPage(leaderId);
+	}
+	
+	// 스터디 팀 VIEW
+	@Override
+	public List<StudyTeamVO> studyTeamMember(String memberId) {
+		return map.studyTeamMember(memberId);
+	}
 	
 	// 페이징 처리
 	@Override
@@ -132,6 +142,11 @@ public class StudyServiceImpl implements StudyService {
 	@Override
 	public int getTotalCount(StudyVO vo) {
 		return map.getTotalCount(vo);
+	}
+
+	@Override
+	public List<StudyVO> studyLocSearch(String loc) {
+		return map.studyLocSearch(loc);
 	}
 
 	

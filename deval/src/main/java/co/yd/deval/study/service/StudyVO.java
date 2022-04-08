@@ -2,6 +2,8 @@ package co.yd.deval.study.service;
 
 import java.sql.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import co.yd.deval.common.Criteria;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,7 +23,9 @@ public class StudyVO {
 	private int maxRcnt;
 	private String defficulty;
 	private String leaderId;
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date studySdt;
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date studyEdt;
 	private String state;
 	private String studyNm;

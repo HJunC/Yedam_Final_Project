@@ -1,7 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:set var="resources"
-	value="${pageContext.request.contextPath}/resources" />
+<c:set var="resources" value="${pageContext.request.contextPath}/resources" />
+
+
+
 	
 	<!-- Home Section -->
 		<section class="home-section bg-dark light-content" id="home">
@@ -25,9 +27,11 @@
 						<div class="local-scroll wow fadeInUpShort" data-wow-delay=".3s">
                            <a href="studyList.do" class="btn btn-mod btn-w btn-small btn-round mx-md-1">Start Study</a>
                          <c:if test="${not empty list[0]}">
-                           <a href="studyList.do" class="btn btn-mod btn-w btn-small btn-round mx-md-1">Study Team</a>
+                           <a href="studyMember.do" class="btn btn-mod btn-w btn-small btn-round mx-md-1">Study Team</a>
                          </c:if>
-                           <a href="studyList.do" class="btn btn-mod btn-w btn-small btn-round mx-md-1">Team Requestor</a>
+                         <c:if test="${not empty study}">
+                           <a href="studyReq.do" class="btn btn-mod btn-w btn-small btn-round mx-md-1">Team Requestor</a>
+                        </c:if>
                         </div>
 					</div>
 				</div>
@@ -52,11 +56,11 @@
                         <ul class="works-grid work-grid-5 clearfix hide-titles" id="work-grid"> 
                             
                             <!-- Work Item (Lightbox) -->
-                            <li class="work-item mix photography">
+                            <li class="work-item mix photography" style="width: 100px;">
                                 <a href="${resources }/images/portfolio/full-project-1.jpg" class="work-lightbox-link mfp-image">
                                     <div class="work-img">
                                         <div class="work-img-bg wow-p scalexIn"></div>
-                                        <img src="${resources }/images/portfolio/projects-1.jpg" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
+                                        <img src="${resources }/images/studyimg/main/01 (1).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
                                     </div>
                                     <div class="work-intro">
                                         <h3 class="work-title">Green Leaf</h3>
@@ -73,7 +77,7 @@
                                 <a href="portfolio-single-1-dark.html" class="work-ext-link">
                                     <div class="work-img">
                                         <div class="work-img-bg wow-p scalexIn"></div>
-                                        <img src="${resources }/images/portfolio/projects-2.jpg" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
+                                        <img src="${resources }/images/studyimg/main/01 (3).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
                                     </div>
                                     <div class="work-intro">
                                         <h3 class="work-title">Photo Lighting</h3>
@@ -90,7 +94,7 @@
                                 <a href="portfolio-single-1-dark.html" class="work-ext-link">
                                     <div class="work-img">
                                         <div class="work-img-bg wow-p scalexIn"></div>
-                                        <img src="${resources }/images/portfolio/projects-3.jpg" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
+                                        <img src="${resources }/images/studyimg/main/01 (3).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
                                     </div>
                                     <div class="work-intro">
                                         <h3 class="work-title">Green Branch</h3>
@@ -107,7 +111,7 @@
                                 <a href="portfolio-single-1-dark.html" class="work-ext-link">
                                     <div class="work-img">
                                         <div class="work-img-bg wow-p scalexIn"></div>
-                                        <img src="${resources }/images/portfolio/projects-4.jpg" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
+                                        <img src="${resources }/images/studyimg/main/01 (18).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
                                     </div>
                                     <div class="work-intro">
                                         <h3 class="work-title">White Chair</h3>
@@ -124,7 +128,7 @@
                                 <a href="portfolio-single-1-dark.html" class="work-ext-link">
                                     <div class="work-img">
                                         <div class="work-img-bg wow-p scalexIn"></div>
-                                        <img src="${resources }/images/portfolio/projects-5.jpg" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
+                                        <img src="${resources }/images/studyimg/main/01 (5).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
                                     </div>
                                     <div class="work-intro">
                                         <h3 class="work-title">White Table</h3>
@@ -141,7 +145,7 @@
                                 <a href="images/portfolio/full-project-6.jpg" class="work-lightbox-link mfp-image">
                                     <div class="work-img">
                                         <div class="work-img-bg wow-p scalexIn"></div>
-                                        <img src="${resources }/images/portfolio/projects-6.jpg" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
+                                        <img src="${resources }/images/studyimg/main/01 (6).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
                                     </div>
                                     <div class="work-intro">
                                         <h3 class="work-title">The Book</h3>
@@ -158,7 +162,7 @@
                                 <a href="portfolio-single-2-dark.html" class="work-ext-link">
                                     <div class="work-img">
                                         <div class="work-img-bg wow-p scalexIn"></div>
-                                        <img src="${resources }/images/portfolio/projects-7.jpg" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
+                                        <img src="${resources }/images/studyimg/main/01 (7).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
                                     </div>
                                     <div class="work-intro">
                                         <h3 class="work-title">Green Branch</h3>
@@ -175,7 +179,7 @@
                                 <a href="portfolio-single-3-dark.html" class="work-ext-link">
                                     <div class="work-img">
                                         <div class="work-img-bg wow-p scalexIn"></div>
-                                        <img src="${resources }/images/portfolio/projects-8.jpg" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
+                                        <img src="${resources }/images/studyimg/main/01 (8).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
                                     </div>
                                     <div class="work-intro">
                                         <h3 class="work-title">White Chair</h3>
@@ -192,7 +196,7 @@
                                 <a href="portfolio-single-4-dark.html" class="work-ext-link">
                                     <div class="work-img">
                                         <div class="work-img-bg wow-p scalexIn"></div>
-                                        <img src="${resources }/images/portfolio/projects-9.jpg" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
+                                        <img src="${resources }/images/studyimg/main/01 (9).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
                                     </div>
                                     <div class="work-intro">
                                         <h3 class="work-title">White Table</h3>
@@ -209,7 +213,7 @@
                                 <a href="portfolio-single-5-dark.html" class="work-ext-link">
                                     <div class="work-img">
                                         <div class="work-img-bg wow-p scalexIn"></div>
-                                        <img src="${resources }/images/portfolio/projects-10.jpg" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
+                                        <img src="${resources }/images/studyimg/main/01 (16).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
                                     </div>
                                     <div class="work-intro">
                                         <h3 class="work-title">Green Branch</h3>
@@ -226,7 +230,7 @@
                                 <a href="portfolio-single-1-dark.html" class="work-ext-link">
                                     <div class="work-img">
                                         <div class="work-img-bg wow-p scalexIn"></div>
-                                        <img src="${resources }/images/portfolio/projects-11.jpg" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
+                                        <img src="${resources }/images/studyimg/main/01 (11).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
                                     </div>
                                     <div class="work-intro">
                                         <h3 class="work-title">White Chair</h3>
@@ -243,7 +247,7 @@
                                 <a href="portfolio-single-2-dark.html" class="work-ext-link">
                                     <div class="work-img">
                                         <div class="work-img-bg wow-p scalexIn"></div>
-                                        <img src="${resources }/images/portfolio/projects-12.jpg" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
+                                        <img src="${resources }/images/studyimg/main/01 (12).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
                                     </div>
                                     <div class="work-intro">
                                         <h3 class="work-title">White Table</h3>
@@ -260,7 +264,7 @@
                                 <a href="portfolio-single-5-dark.html" class="work-ext-link">
                                     <div class="work-img">
                                         <div class="work-img-bg wow-p scalexIn"></div>
-                                        <img src="${resources }/images/portfolio/projects-5.jpg" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
+                                        <img src="${resources }/images/studyimg/main/01 (13).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
                                     </div>
                                     <div class="work-intro">
                                         <h3 class="work-title">Green Branch</h3>
@@ -277,7 +281,7 @@
                                 <a href="portfolio-single-1-dark.html" class="work-ext-link">
                                     <div class="work-img">
                                         <div class="work-img-bg wow-p scalexIn"></div>
-                                        <img src="${resources }/images/portfolio/projects-6.jpg" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
+                                        <img src="${resources }/images/studyimg/main/01 (14).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
                                     </div>
                                     <div class="work-intro">
                                         <h3 class="work-title">White Chair</h3>
@@ -294,7 +298,7 @@
                                 <a href="portfolio-single-2-dark.html" class="work-ext-link">
                                     <div class="work-img">
                                         <div class="work-img-bg wow-p scalexIn"></div>
-                                        <img src="${resources }/images/portfolio/projects-7.jpg" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
+                                        <img src="${resources }/images/studyimg/main/01 (15).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
                                     </div>
                                     <div class="work-intro">
                                         <h3 class="work-title">White Table</h3>

@@ -7,6 +7,7 @@
 
 	<security:http pattern="/resources/**" security="none" />
 	<security:http>
+		<security:intercept-url pattern="/study/studyList.do" access="isAuthenticated()"/>
 		<security:intercept-url pattern="/myPage.do" access="hasAnyAuthority('ROLE_USER','ROLE_ADMIN')"/>
 		<security:intercept-url pattern="/coPage.do" access="hasAnyAuthority('ROLE_COMPANY','ROLE_ADMIN')"/>
 		<security:intercept-url pattern="/**" access="permitAll()" />

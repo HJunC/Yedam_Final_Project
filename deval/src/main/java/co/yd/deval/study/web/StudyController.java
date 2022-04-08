@@ -38,13 +38,16 @@ public class StudyController {
 	@Autowired
 	private StudyMailSender mail;
 	
+	
 	/* STUDY MAIN */
 	// 스터디 메인
     @GetMapping("/studyMain.do")
-    public String main(StudyVO vo, Model model, Principal User) {
-    	model.addAttribute("study", vo);
-    	model.addAttribute("member", User);
-    	model.addAttribute("list", studyDao.studyUnfinedTeamBtn(User.getName()));
+    public String main(StudyVO vo, StudyReqVO rvo, Model model, Principal User) {
+    	if(User != null) {
+	    	model.addAttribute("study", studyDao.studyLeaderBtn(User.getName()));
+	    	model.addAttribute("member", User);
+	    	model.addAttribute("list", studyDao.studyUnfinedTeamBtn(User.getName()));
+    	}
         return "study/studyMain";
     }
     
@@ -57,10 +60,11 @@ public class StudyController {
     // 스터디 등록 기능
     @RequestMapping("/insertStudy.do")
     @ResponseBody
-    public String insertStudy(StudyVO vo, StudyReqVO reqvo, Principal user, HttpSession session) {
+    public String insertStudy(StudyVO vo, StudyReqVO reqvo, StudyInfoVO invo, Principal user, HttpSession session) {
     	
     	int n = 0;
-    	
+    	invo.setMemberId(user.getName());
+    	invo = studyDao.studySelectUser(invo);
     	// 언어 2개 체크
     	if(vo.getCk_lang()!=null) {
     		if(vo.getCk_lang().length>0) {
@@ -73,10 +77,16 @@ public class StudyController {
     	
     	vo.setLeaderId(user.getName());
     	n = studyDao.studyInsert(vo);
+    	
+    	
  
     	if(n != 0) {
     		reqvo.setMemberId(user.getName());
     		reqvo.setStudyNo(studyDao.findMaxStudyNo());
+    		reqvo.setCareer(invo.getCareer());
+    		reqvo.setCollege(invo.getCollege());
+    		reqvo.setLicense(invo.getLicense());
+    		reqvo.setPresent(invo.getPresent());
     		n = studyDao.studyTeamLeaderInsert(reqvo);
     	}
     	return Integer.toString(n);
@@ -110,6 +120,13 @@ public class StudyController {
     	model.addAttribute("studyfind", vo);
     	model.addAttribute("member", User);
     	return "study/studyList";
+    }
+    
+    // 스터디 지역 찾기 (지도사용)
+    @GetMapping("/locationList.do")
+    @ResponseBody
+    public List<StudyVO> locationList(StudyVO vo) {
+    	return studyDao.studyLocSearch(vo.getLocation());
     }
     
     // 스터디 상세글
@@ -205,14 +222,14 @@ public class StudyController {
 	 }
     
     @RequestMapping("/studyReq.do")
-    public String studyReq(Model model) {
-    	model.addAttribute("study", studyDao.studyReqSelectAll());
+    public String studyReq(StudyVO vo, StudyReqVO rvo, Model model, Principal User) {
+    	model.addAttribute("study", studyDao.studyLeaderReqPage(User.getName()));
     	return "study/studyReq";
     }
     
     @RequestMapping("/studyMember.do")
-    public String studyMember(Model model) {
-    	model.addAttribute("study", studyDao.studyTeamSelectAll());
+    public String studyMember(StudyVO vo, StudyReqVO rvo, Model model, Principal User) {
+    	model.addAttribute("study", studyDao.studyTeamMember(User.getName()));
     	return "study/studyMember";
     }
     

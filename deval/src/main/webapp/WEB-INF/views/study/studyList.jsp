@@ -13,11 +13,13 @@
 <!-- 모달창 링크 -->
 <link rel="stylesheet" href="${resources}/css/custom/study_modal_style.css">
 
-<html>
-<body>
+<!-- 지도 -->
+<link rel="stylesheet" href="${resources}/css/custom/korea.css" />
 	<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 	<script src="${resources}/js/study/common.js"></script>
 
+<html>
+<body>
 	<!-- Title -->
                 <section class="small-section bg-dark-alfa-50" data-background="images/full-width-images/section-bg-19.jpg">
                     <div class="container relative">
@@ -36,6 +38,12 @@
                     </div>
                 </section>
       <!-- End Title -->
+      
+      <!-- Start Study Map -->
+     <script type="text/javascript" src="${resources}/js/study/d3.js"></script>
+    <script type="text/javascript" src="${resources}/js/study/korea.js"></script>
+     <div id="container"></div>
+     <!-- End Study Map -->
                 
       <!-- Start Search List -->
       <form class="form" id="searchForm" action="studyList.do" style="position: sticky; top: 100px" method="get">
@@ -46,7 +54,7 @@
                 
     <!-- Start Study List -->
 	<div align="center">
-		<table style="width: 100%;">
+		<table id="locSearch" style="width: 100%;">
 			<thead>
 				<tr class="row100 head">
 					<th>스터디번호</th>
@@ -59,7 +67,7 @@
 					<th>학습기간</th>
 				</tr>
 			</thead>
-
+			
 			<tbody>
 				<c:forEach items="${study}" var="std">
 					<tr onclick="studySearch('${std.studyNo }')">
@@ -285,6 +293,12 @@
     searchForm.find("input[name='pageNum']").val(page);
     searchForm.submit();
   }
+  
+  window.onload = function() {
+		console.log('test')
+	    drawMap('#container');
+	};
+
 </script>
 </body>
 </html>

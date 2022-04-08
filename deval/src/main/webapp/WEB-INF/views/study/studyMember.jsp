@@ -20,14 +20,14 @@
                         </div>
                     </div>
                 </section>
-                <!-- End Home Section -->
-                
-                 <!-- Section -->
-                <section class="page-section bg-dark light-content pt-0">
+                <!-- End Home Section -->\
+                <!-- Section -->
+               <section class="page-section bg-dark light-content pt-0">
                     <div class="container relative">
                         <div class="row mb-120 mb-sm-50">
                             
                             <!-- Team item -->
+                            <c:forEach items="${study}" var="std">
                             <div class="col-md-4 mb-xs-30">
                                 <div class="team-item-wrap wow fadeInUp" data-wow-delay=".1s" data-wow-duration="1.2s">
                                     <div class="team-item-decoration" style="background-image: url(${resources}/images/team/team-decoration-1.jpg);"></div>
@@ -36,10 +36,12 @@
                                             <img src="${resources}/images/team/team-1.jpg" alt="" />
                                             <div class="team-item-detail">
                                                 <p class="team-item-detail-title">
-                                                    Hello & Welcome!
+                                                    ${std.present }
                                                 </p>
                                                 <p>
-                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit lacus, a&nbsp;iaculis diam. 
+                                                   학력: ${std.college }<br>
+                                                   경력: ${std.career }<br>
+                                                   자격증: ${std.license }<br> 
                                                 </p>
                                                 <div class="team-social-links">
                                                     <a href="#" target="_blank"><i class="fab fa-facebook"></i><span class="sr-only">Facebook profile</span></a>
@@ -50,87 +52,18 @@
                                         </div>
                                         <div class="team-item-descr">
                                             <div class="team-item-name">
-                                                Tomas Maller
+                                                ${std.name }(${std.memberId })
                                             </div>
                                             <div class="team-item-role">
-                                                Art director
+                                                ${std.mail }
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            </c:forEach>
                             <!-- End Team item -->
-                            
-                            <!-- Team item -->
-                            <div class="col-md-4 mb-xs-30">
-                                <div class="team-item-wrap wow fadeInUp" data-wow-delay=".2s" data-wow-duration="1.2s">
-                                    <div class="team-item-decoration" style="background-image: url(${resources}/images/team/team-decoration-2.jpg);"></div>
-                                    <div class="team-item">
-                                        <div class="team-item-image">
-                                            <img src="${resources}/images/team/team-2.jpg" alt="" />
-                                            <div class="team-item-detail">
-                                                <p class="team-item-detail-title">
-                                                    Nice to meet!
-                                                </p>
-                                                <p>
-                                                    Curabitur augue, nec finibus mauris pretium eu. Duis placerat ex gravida nibh tristique porta.
-                                                </p>
-                                                <div class="team-social-links">
-                                                    <a href="#" target="_blank"><i class="fab fa-facebook"></i><span class="sr-only">Facebook profile</span></a>
-                                                    <a href="#" target="_blank"><i class="fab fa-twitter"></i><span class="sr-only">Twitter profile</span></a>
-                                                    <a href="#" target="_blank"><i class="fab fa-pinterest"></i><span class="sr-only">Pinterest profile</span></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="team-item-descr">
-                                            <div class="team-item-name">
-                                                Steeve Anders
-                                            </div>
-                                            <div class="team-item-role">
-                                                Product designer
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End Team item -->
-                            
-                            <!-- Team item -->
-                            <div class="col-md-4 mb-xs-30">
-                                <div class="team-item-wrap wow fadeInUp" data-wow-delay=".3s" data-wow-duration="1.2s">
-                                    <div class="team-item-decoration" style="background-image: url(${resources}/images/team/team-decoration-3.jpg);"></div>
-                                    <div class="team-item">
-                                        <div class="team-item-image">
-                                            <img src="${resources}/images/team/team-3.jpg" alt="" />
-                                            <div class="team-item-detail">
-                                                <p class="team-item-detail-title">
-                                                    Whats Up!
-                                                </p>
-                                                <p>
-                                                    Adipiscing elit curabitur eu&nbsp;adipiscing lacus eu&nbsp;adipiscing lacus, a&nbsp;iaculis diam. 
-                                                </p>
-                                                <div class="team-social-links">
-                                                    <a href="#" target="_blank"><i class="fab fa-facebook"></i><span class="sr-only">Facebook profile</span></a>
-                                                    <a href="#" target="_blank"><i class="fab fa-twitter"></i><span class="sr-only">Twitter profile</span></a>
-                                                    <a href="#" target="_blank"><i class="fab fa-pinterest"></i><span class="sr-only">Pinterest profile</span></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="team-item-descr">
-                                            <div class="team-item-name">
-                                                Adam Johnson
-                                            </div>
-                                            <div class="team-item-role">
-                                                Developer
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End Team item -->
-                            
-                        </div>
-                        
+                     </div>
                         
                         <div class="row section-text">
                         
@@ -153,17 +86,7 @@
                 <hr class="mt-0 mb-0 white" />
                 <!-- End Divider -->
                 
-                 <!-- Home Section -->
-               <section class="page-section bg-dark light-content" id="home">
-                    <div class="container relative text-center">
-                        <div class="row"">
-                            <div class="col-lg-10 offset-lg-1">
-                                <h3 class="hs-line-7 mb-0 wow fadeInUpShort" data-wow-delay=".2s">TEAM INFORMATION</h3>
-                            </div>
-                        </div>
-                    </div>
-                </section> 
-                <!-- End Home Section -->
+                
                 <!-- Contact Section -->
                 <section class="page-section bg-dark light-content">
                     <div class="container relative">
@@ -196,7 +119,7 @@
                                                 지역
                                             </div>
                                             <div class="ci-text">
-                                                대구
+                                                ${study[0].location }
                                             </div>
                                             <div class="ci-link">
                                                 <a href="https://goo.gl/maps/7Vw1PBhxx5BaXStr8" target="_blank">See on the Map</a>
@@ -215,7 +138,7 @@
                                                 공부기간
                                             </div>
                                             <div class="ci-text">
-                                                2022.04.02 ~ 2022.04.29
+                                                ${study[0].studySdt } ~ ${study[0].studyEdt }
                                             </div>
                                         </div>
                                     </div>
@@ -226,9 +149,5 @@
                     </div>
                 </section>
                 <!-- End Contact Section -->
-                
-                <!-- Divider -->
-                <hr class="mt-0 mb-0 white" />
-                <!-- End Divider -->
 </body>
 </html>

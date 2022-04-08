@@ -11,6 +11,13 @@
 		ORDER BY STUDY_NO DESC
 	</select>
 	
+	<select id="studyLocSearch" resultType="co.yd.deval.study.service.StudyVO">
+		SELECT *
+		FROM STUDY
+		WHERE LOCATION = #{loc}
+		ORDER BY STUDY_NO DESC
+	</select>
+	
 	<select id="studySelectNo"
 		resultType="co.yd.deval.study.service.StudyVO">
 		SELECT *
@@ -64,8 +71,8 @@
 			<if test="maxRcnt 	 != null and maxRcnt  	!= ''"> MAX_RCNT   = #{maxRcnt},</if>
 			<if test="defficulty != null and defficulty != ''"> DEFFICULTY = #{defficulty},</if>
 			<if test="leaderId 	 != null and leaderId 	!= ''"> LEADER_ID  = #{leaderId},</if>
-			<if test="studySdt   != null and studySdt 	!= ''"> STUDY_SDT  = #{studySdt},</if>
-			<if test="studyEdt   != null and studyEdt 	!= ''"> STUDY_EDT  = #{studyEdt},</if>
+			<if test="studySdt   != null"> STUDY_SDT  = #{studySdt},</if>
+			<if test="studyEdt   != null"> STUDY_EDT  = #{studyEdt},</if>
 			<if test="studyNm    != null and studyNm 	!= ''"> STUDY_NM   = #{studyNm},</if>
 			<if test="lang2   	 != null and lang2 		!= ''"> LANG2      = #{lang2},</if>
 		</set>
@@ -206,6 +213,24 @@
 		AND MEMBER_ID = #{id}
 	</select>
 	
+	<select id="studyLeaderBtn" resultType="co.yd.deval.study.service.StudyReqVO">
+		SELECT *
+		FROM STUDY_REQUEST
+		WHERE ISLEADER = 1
+		AND MEMBER_ID = #{id}
+	</select>
+	
+	<select id="studyLeaderReqPage" resultType="co.yd.deval.study.service.StudyReqVO">
+		SELECT *
+		FROM STUDY_REQUEST
+		WHERE STUDY_NO = (	SELECT STUDY_NO
+		                  	FROM STUDY
+		                  	WHERE LEADER_ID = #{leaderId}
+		                  	AND STATE = 0
+		                  	)
+		AND STATE = 0
+	</select>
+	
 	<delete id="studyTeamMemberDelete" parameterType="co.yd.deval.study.service.StudyReqVO">
 		DELETE
 		FROM STUDY_REQUEST
@@ -214,32 +239,30 @@
 		STUDY_NO = #{studyNo}
 	</delete>
 	
-	
 	<!-- Study Team VIEW -->
-	<select id="studyTeamSelectAll" parameterType="co.yd.deval.study.service.StudyTeamVO" resultType="co.yd.deval.study.service.StudyTeamVO">
-		SELECT *
-		FROM STUDY_TEAM
-		WHERE STUDY_NO IN (SELECT STUDY_NO
-                            FROM STUDY_TEAM
-                            WHERE MEMBER_ID = #{memberId})
-		AND STATE = 1
-	</select>
-	
 	<select id="findMaxStudyNo" resultType="int">
 		SELECT MAX(STUDY_NO)
 		FROM STUDY
 	</select>
 	
+	<select id="studyTeamMember" resultType="co.yd.deval.study.service.StudyTeamVO">
+		SELECT *
+		FROM STUDY_TEAM
+		WHERE STUDY_NO = (	SELECT STUDY_NO
+                            FROM STUDY_REQUEST
+                            WHERE MEMBER_ID = #{memberId}
+                            )
+		AND STATE = 1
+	</select>
+	
+	<!-- Paging -->
 	<sql id="option">
-        
     </sql>
-
     <select id="getListWithPaging" resultType="co.yd.deval.study.service.StudyVO">
         <![CDATA[
         SELECT * FROM (
             SELECT ROWNUM rn, t.*
               FROM STUDY t
-
         ]]>
 	        <where>
 	            <include refid="option"></include>
