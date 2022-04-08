@@ -1,24 +1,22 @@
 package co.yd.deval.board.serviceImpl;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import co.yd.deval.board.mapper.BoardMapper;
 import co.yd.deval.board.service.BoardService;
 import co.yd.deval.board.service.BoardVO;
+import co.yd.deval.board.service.CommentVO;
 
 @Service("boardDao")
 public class BoardServiceImpl implements BoardService {
-	 
-	
+
 	@Autowired
 	private BoardMapper map;
-	
+
 	@Override
-	public List<BoardVO> boardSelectList() {
-		return map.boardSelectList();
+	public List<BoardVO> boardSelectList(int b) {
+		return map.boardSelectList(b);
 	}
 
 	@Override
@@ -42,17 +40,12 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public void boardHitUp(BoardVO vo) {
-		map.boardHitUp(vo);
-		
+	public int boardRecUp(int board_no) {
+		return map.boardRecUp(board_no);
 	}
 
 	@Override
-	public void boardRecUp(BoardVO vo) {
-		map.boardRecUp(vo);
+	public int boardHitUp(int board_no) {
+		return map.boardHitUp(board_no);
 	}
-	
-
-
-	
 }

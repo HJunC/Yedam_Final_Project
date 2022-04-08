@@ -18,7 +18,6 @@ public class BoardVO {
 	private int hit;
 	private int recommend;
 	private String writer;
-	private String category;
-	
+	private String category;	
 }
 
