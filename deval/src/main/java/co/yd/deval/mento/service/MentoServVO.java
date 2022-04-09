@@ -28,4 +28,5 @@ public class MentoServVO {
 	private String mentiId;
 	private int price;
 	private String profileImg;
+	private int tradeLogNo;
 }

@@ -113,9 +113,10 @@ public class MentoServController {
 		int n = mentoServDAO.mentoServDelete(mentoServiceNo);
 	}
 	
+	//거절시 환불 
 	@PostMapping("/serviceRefuse.do")
 	@ResponseBody
-	public int serviceRefuse(int mentoServiceNo, String memberId, int cashPt) {
+	public int serviceRefuse(int mentoServiceNo, String memberId, int cashPt, int tradeLogNo) {
 		System.out.println(mentoServiceNo + "dddddddddddddddddddddddddddd");
 		int n = mentoServDAO.mentoServUpdate(mentoServiceNo);
 		if(n != 0) {
@@ -123,6 +124,7 @@ public class MentoServController {
 			map.put("memberId", memberId);
 			map.put("cashPt", cashPt);
 			memberDao.refund(map);
+			tradeDAO.updateRefuse(tradeLogNo);
 		}
 		return n;
 	}

@@ -29,4 +29,9 @@ public class TradeLogServiceImpl implements TradeLogService {
 		return map.mentiList(seller);
 	}
 
+	@Override
+	public int updateRefuse(int tradeNo) {
+		return map.updateRefuse(tradeNo);
+	}
+
 }

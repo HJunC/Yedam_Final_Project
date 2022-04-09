@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.yd.deval.mento.mapper.MentoServMapper">
 	<select id="mentoServList" resultType="co.yd.deval.mento.service.MentoServVO">
-		SELECT M.*,T.PRICE,U.PROFILE_IMG
+		SELECT M.*,T.PRICE,T.TRADE_LOG_NO,U.PROFILE_IMG
 		FROM MENTO_SERVICE M , TRADE_LOG T ,MEMBER U 
 		WHERE M.MENTO_SERVICE_NO = T.SERVICE_NO
 		AND U.MEMBER_ID = M.MENTI_ID

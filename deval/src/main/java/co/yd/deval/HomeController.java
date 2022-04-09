@@ -34,4 +34,9 @@ public class HomeController {
 		return mainPage();
 	}
 	
+	@RequestMapping("/chat.do")
+	public String chat() {
+		return "chat/chat";
+	}
+	
 }

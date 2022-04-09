@@ -8,4 +8,7 @@ public interface TradeLogMapper {
 	List<TradeLogVO> selectTradeLog();
 	List<TradeLogVO> mentiList(String seller);
 	int insertTradeLog(TradeLogVO vo);
+	
+	//환불 후 상태 변경
+	int updateRefuse(int tradeNo);
 }

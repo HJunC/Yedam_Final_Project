@@ -142,6 +142,9 @@
 	                                        <td>
 	                                        	<input type="hidden" id="mentiPrice" value="${menti.price }">
 	                                        </td>
+	                                        <td>
+	                                        	<input type="hidden" id="tradeLogNo" value="${menti.tradeLogNo}">
+	                                        </td>
                                         </tr>
                                         </c:forEach>
                                     </table>
@@ -164,13 +167,7 @@
                 
             </main>
             <script type="text/javascript">
-            	/*
-            	전체체크 처리부분
-            	function checkAll() {
-            		let check = document.querySelectorAll('check');
-            		let idAll = document.getElementById('all');
-            		idAll.checked == check.checked
-            	} */
+            	
             	
             	function serviceDelete() {
             		var tag = $(event.target).parent().parent().parent();
@@ -184,7 +181,8 @@
             			data : {
             				mentoServiceNo : serviceNo,
             				memberId : $('#mentiId').val(),
-            				cashPt : $('#mentiPrice').val()
+            				cashPt : $('#mentiPrice').val(),
+            				tradeLogNo : $('#tradeLogNo').val()
             			} 
             		}).done(function(data) {
         				console.log(data);

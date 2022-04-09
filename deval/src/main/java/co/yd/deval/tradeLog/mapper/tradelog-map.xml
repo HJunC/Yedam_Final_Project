@@ -31,6 +31,12 @@
 		SELECT PRICE
 		FROM TRADE_LOG
 		WHERE SELLER = #{seller}
-		AND STATE = '처리중'
+		AND STATE = '처리전'
 	</select>
+	
+	<update id="updateRefuse" parameterType="int">
+		UPDATE TRADE_LOG
+		SET STATE = '환불'
+		WHERE TRADE_LOG_NO = #{tradeLogNo}
+	</update>
 </mapper>

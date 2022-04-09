@@ -7,4 +7,7 @@ public interface TradeLogService {
 	//멘테체크리스트 들어갈 값
 	List<TradeLogVO> mentiList(String seller);
 	int insertTradeLog(TradeLogVO vo);
+	
+	//환불 후 상태 변경
+	int updateRefuse(int tradeNo);
 }

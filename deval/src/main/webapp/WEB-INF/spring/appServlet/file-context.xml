@@ -7,6 +7,7 @@
 		  id="multipartResolver">
 		<property name="maxUploadSize" value="1073741824"/>
 		<property name="maxInMemorySize" value="1073741824"/>
+		<property name="defaultEncoding" value="utf-8"/>
 	</bean>
 	
 	<!-- 테스트용, 실제 서버에서는 사용 안함 -->
