@@ -31,6 +31,7 @@ public class StudyVO {
 	private String studyNm;
 	private String lang2;
 	private String[] ck_lang;
+	private int rcnt;
 	
 	//페이징
     private int rn;

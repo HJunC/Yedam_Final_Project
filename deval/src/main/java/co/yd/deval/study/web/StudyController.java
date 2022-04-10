@@ -88,6 +88,7 @@ public class StudyController {
     		reqvo.setLicense(invo.getLicense());
     		reqvo.setPresent(invo.getPresent());
     		n = studyDao.studyTeamLeaderInsert(reqvo);
+    		
     	}
     	return Integer.toString(n);
     }
@@ -212,18 +213,35 @@ public class StudyController {
 	 
 	 @RequestMapping("/studyReqAccept.do")
 	 @ResponseBody
-	 public ResponseEntity<Integer> studyReqAccept(StudyReqVO vo) throws Exception {
-		 int n = studyDao.studyTeamMemberUpdateAccept(vo);
-		 // 메일발송 시간 지연으로 인해 디자인 로딩창 넣기
-		 if (n != 0) {
-			 mail.sendMailTest();
+	 public ResponseEntity<Integer> studyReqAccept(StudyReqVO rvo, StudyVO vo) throws Exception {
+//		 System.out.println(rvo);
+		 		 
+		 vo.setStudyNo(rvo.getStudyNo());
+		 vo = studyDao.studySelectNo(vo);
+		 System.out.println("=========================="+vo);
+		 
+		 if(vo.getRcnt() >= vo.getMaxRcnt()) {
+			 return null;
+		 } else {
+			 // rcnt update
+			 studyDao.rcntMember(vo);
+			 //vo.setRcnt(vo.getRcnt()+1);
+			 
+			 int n= studyDao.studyTeamMemberUpdateAccept(rvo);
+			 // 메일발송 시간 지연으로 인해 디자인 로딩창 넣기
+			 if (n != 0) {
+				
+				 mail.sendMailTest();
+			 }
+			 
+			 return ResponseEntity.ok().body(n);
 		 }
-		 return ResponseEntity.ok().body(n);
 	 }
     
     @RequestMapping("/studyReq.do")
     public String studyReq(StudyVO vo, StudyReqVO rvo, Model model, Principal User) {
     	model.addAttribute("study", studyDao.studyLeaderReqPage(User.getName()));
+    	
     	return "study/studyReq";
     }
     

@@ -44,7 +44,9 @@
 						, STUDY_EDT
 						, STATE
 						, STUDY_NM
-						, LANG2)
+						, LANG2
+						, RCNT
+						)
 						
 		VALUES (		#{studyNo} 
 						, #{lang1}
@@ -58,8 +60,33 @@
 						, #{studyEdt}
 						, '0'
 						, #{studyNm}
-						, #{lang2})
+						, #{lang2}
+						, 0
+						)
 	</insert>
+	
+	<update id="rcntLeader" parameterType="co.yd.deval.study.service.StudyVO">
+		UPDATE STUDY
+		SET RCNT + 1
+		LEADER_ID = #{leaderId}
+		AND
+		STUDY_NO = #{studyNo}
+	</update>
+	
+	<update id="rcntMember" parameterType="co.yd.deval.study.service.StudyVO">
+		UPDATE STUDY
+		SET RCNT = RCNT + 1
+		WHERE STUDY_NO = #{studyNo}
+	</update>
+	
+	<select id="studyRcntSelect" resultType="int">
+		SELECT COUNT(*)
+		FROM STUDY_REQUEST
+		WHERE STUDY_NO IN (SELECT STUDY_NO
+		                               FROM STUDY
+		                               WHERE STUDY_NO = #{studyNo})
+		AND STATE = 1;
+	</select>
 
 	<update id="studyUpdate"
 		parameterType="co.yd.deval.study.service.StudyVO">

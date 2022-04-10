@@ -15,7 +15,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-
+${request}
 				<!-- Title -->
                 <section class="small-section bg-dark-alfa-50" data-background="images/full-width-images/section-bg-19.jpg">
                     <div class="container relative">
@@ -105,12 +105,17 @@
      	
       	function teamGo(id, sno) {
     		console.log("-- StudyReq Member Accept Start --");
+
     		$.ajax({
     			type: "POST",
     			url: "studyReqAccept.do",
     			data: {"memberId": id, "studyNo": sno},
     			success : function(result) {
 					console.log(result);
+					if(result=='' || result==null){
+						alert('참가 인원을 초과 했습니다.');
+						location.href='#';
+					}
 					 if (result.state != null || result.state != '0' ) {
 						
 						alert(id + '님이 ' + sno +'번 스터디에 참가했습니다.');

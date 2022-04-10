@@ -149,8 +149,19 @@ public class StudyServiceImpl implements StudyService {
 		return map.studyLocSearch(loc);
 	}
 
-	
+	@Override
+	public int studyRcntSelect(StudyVO vo) {
+		return map.studyRcntSelect(vo);
+	}
 
+	@Override
+	public int rcntLeader(StudyVO vo) {
+		return map.rcntLeader(vo);
+	}
 
+	@Override
+	public int rcntMember(StudyVO vo) {
+		return map.rcntMember(vo);
+	}
 
 }

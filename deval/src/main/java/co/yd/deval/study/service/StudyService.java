@@ -40,4 +40,9 @@ public interface StudyService {
 	// 검색 페이징 처리
     List<StudyVO> getListWithPaging(StudyVO vo);
     int getTotalCount(StudyVO vo);
+    
+    //현재인원
+    int studyRcntSelect(StudyVO vo);
+    int rcntLeader(StudyVO vo);
+    int rcntMember(StudyVO vo);
 }
