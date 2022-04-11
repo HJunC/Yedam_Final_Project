@@ -203,12 +203,14 @@
             			var endDate = td.eq(11).find('input').val();
             			var startTm = td.eq(12).find('input').val();
             			var endTm = td.eq(13).find('input').val();
+            			var mentiId = $('#mentiId').val();
             			obj["mentoServiceNo"] = serviceNo;
             			obj["startDate"] = startDate;
             			obj["endDate"] = endDate;
             			obj["startTm"] = startTm;
             			obj["endTm"] = endTm;
-            			obj["mentoId"] = '${mentis[0].mentoId}'
+            			obj["mentoId"] = '${mentis[0].mentoId}';
+            			obj["mentiId"] = mentiId;
             			list.push(obj);
             		});
             		if(list.length != 0){
@@ -219,9 +221,10 @@
             				data : JSON.stringify(list),
             				contentType : 'application/json',
             				success : function(data) {
-            					alert(data);
+            					as.send
             				}
             			});
+            			
             		}
             	}
             </script>

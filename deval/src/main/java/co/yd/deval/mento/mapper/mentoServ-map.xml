@@ -46,7 +46,7 @@
 	</delete>
 	
 	<select id="allSatisAvg" resultType="double">
-		SELECT TRUNC(AVG(STSFDG),1) 
+		SELECT nvl(TRUNC(AVG(STSFDG),1),0) 
 		FROM MENTO_SERVICE
 	</select>
 	

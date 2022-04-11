@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import co.yd.deval.chat.service.ChatRoomService;
 import co.yd.deval.member.service.MemberService;
 import co.yd.deval.member.service.MemberVO;
 import co.yd.deval.project.service.ProjectService;
@@ -34,6 +35,8 @@ public class MemberController {
 	private StudyService studyDao;
 	@Autowired
 	private SetleLogService setleDAO;
+	@Autowired
+	private ChatRoomService chatRoomDAO;
 	
 	
 	@RequestMapping("/loginForm.do")

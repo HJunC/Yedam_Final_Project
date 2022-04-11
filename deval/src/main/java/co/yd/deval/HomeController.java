@@ -3,11 +3,14 @@ package co.yd.deval;
 
 import java.security.Principal;
 
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import co.yd.deval.chat.service.ChatRoomService;
 
 /**
 * @package : co.yd.deval
@@ -19,7 +22,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 **/
 @Controller
 public class HomeController {
-
+	@Autowired
+	private ChatRoomService chatRoomDAO;
+	
 	public String mainPage() {
 		return "home/home";
 	}
@@ -37,6 +42,13 @@ public class HomeController {
 	@RequestMapping("/chat.do")
 	public String chat() {
 		return "chat/chat";
+	}
+	@GetMapping("/chatList.do")
+	public String chatList(Model model, Principal principal) { 
+		
+		model.addAttribute("list", chatRoomDAO.selectListChat(principal.getName()));
+		
+		return "chat/chatList";
 	}
 	
 }

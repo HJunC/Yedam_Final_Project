@@ -3,14 +3,14 @@
 <mapper namespace="co.yd.deval.mento.mapper.TestMapper">
 	<select id="timeCheck" resultType="int">
 		SELECT COUNT(*)
-		FROM TEST
+		FROM TIME_TABLE
 		WHERE SERVICE_DATE BETWEEN #{startDate} AND #{endDate}
 		AND SERVICE_TIME BETWEEN #{startTm} AND #{endTm}
-		AND MENTOID = #{mentoId}
+		AND MENTO_ID = #{mentoId}
 	</select>
 	
 	<insert id="insertMentoring" parameterType="co.yd.deval.mento.service.MentoServVO">
-		INSERT INTO test(mentoId, memberId, service_date, service_time)
+		INSERT INTO TIME_TABLE(mento_Id, menti_Id, service_date, service_time)
 		VALUES(#{mentoId},#{mentiId},#{startDate},#{startTm})
 	</insert>
 </mapper>

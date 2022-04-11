@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import co.yd.deval.chat.service.ChatRoomService;
+import co.yd.deval.chat.service.ChatRoomVO;
 import co.yd.deval.member.service.MemberService;
 import co.yd.deval.member.service.MemberVO;
 import co.yd.deval.mento.service.MentoServService;
@@ -39,6 +41,8 @@ public class MentoServController {
 	private TestService testDAO;
 	@Autowired
 	private MemberService memberDao;
+	@Autowired
+	private ChatRoomService chatRoomDAO;
 	
 	@GetMapping("/mentoServChart.do")
 	@ResponseBody
@@ -138,6 +142,11 @@ public class MentoServController {
 			int n = testDAO.timeCheck(vo);
 			System.out.println(vo);
 			if(n == 0) {
+				//수락시 채팅방 생성
+				ChatRoomVO chatVo = new ChatRoomVO();
+				chatVo.setOwnerId(vo.getMentoId());
+				chatVo.setEntryId(vo.getMentiId());
+				chatRoomDAO.makeChatRoom(chatVo);
 				//해당 서비스의 시작날짜 부터 종료날짜까지 for문을 돌립니다.
 				for(Date sDate = vo.getStartDate(); sDate.before(datePuls(vo.getEndDate(), 1)); sDate = datePuls(sDate, 1)) {
 					//해당 서비스의 선택날짜의 시작시간 부터 종료시간까지 for문을 돌립니다.
@@ -183,5 +192,7 @@ public class MentoServController {
 		
 		return cal.getTime();
 	}
+	
+	
 	
 }
