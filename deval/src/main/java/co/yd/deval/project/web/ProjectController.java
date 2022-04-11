@@ -116,7 +116,16 @@ public class ProjectController {
         projectService.updateHit(projectNo);
         model.addAttribute("project", dto);
         model.addAttribute("team", dto.getProjectTeam());
-        model.addAttribute("member", user);
+
+        if (user != null) {
+            model.addAttribute("member", user);
+            for(ProjectRequestVO rvo : dto.getRequestList()) {
+                if (rvo.getMemberId().equals(user.getName())) {
+                    model.addAttribute("isRequest", true);
+                }
+            }
+        }
+        
         return "project/projectDetail";
     }
 

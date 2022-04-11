@@ -108,7 +108,7 @@
 
                 </div>
                 <!-- End Comments -->
-                ${member.name}
+
                 <%--프로젝트 모집중인 팀장만 볼수있는 화면--%>
                 <c:if test="${not empty project.requestList
                             and project.leaderId eq member.name}">
@@ -126,7 +126,8 @@
                 <%--<sec:authorize access="isAuthenticated()">--%>
                     <c:if test="${sessionScope.userProjectState ne '팀장'
                                 and sessionScope.userProjectState ne '팀원'
-                                and project.state eq '1'}">
+                                and project.state eq '1'
+                                and !isRequest}">
                         <!-- Add Comment -->
                         <div class="mb-80 mb-xs-40">
 
