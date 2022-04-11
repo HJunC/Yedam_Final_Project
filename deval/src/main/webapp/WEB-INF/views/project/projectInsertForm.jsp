@@ -248,7 +248,7 @@
     if (isDone) {
         $.ajax({
           type: "POST",
-          url: "/api/project/insert",
+          url: "../api/project/insert",
           data: data,
           dataType: "json",
           success: function(res) {

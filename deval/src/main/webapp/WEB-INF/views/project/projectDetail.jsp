@@ -108,14 +108,22 @@
 
                 </div>
                 <!-- End Comments -->
+                ${member.name}
+                <%--프로젝트 모집중인 팀장만 볼수있는 화면--%>
+                <c:if test="${not empty project.requestList
+                            and project.leaderId eq member.name}">
+                <div class="mb-80 mb-xs-40">
 
-               <%-- <c:if test="${not empty project.requestList}">
+                    <h4 class="blog-page-title">신청현황</h4>
+
                     <c:forEach items="${project.requestList}" var="item">
                         ${item.memberId} / ${item.position}
                     </c:forEach>
-                </c:if>--%>
 
-                <sec:authorize access="isAuthenticated()">
+                </div>
+                </c:if>
+
+                <%--<sec:authorize access="isAuthenticated()">--%>
                     <c:if test="${sessionScope.userProjectState ne '팀장'
                                 and sessionScope.userProjectState ne '팀원'
                                 and project.state eq '1'}">
@@ -127,7 +135,7 @@
                             <!-- Form -->
                             <form id="addRequestForm" class="form">
                                 <input type="hidden" name="projectNo" value="${project.projectNo}">
-                                <input type="hidden" name="memberId" value="<sec:authentication property="principal.username"/>">
+                                <input type="hidden" name="memberId" value="${member.name}">
                                 <div class="mb-30 mb-md-20">
                                     <!-- Website -->
                                     <h6>지원 포지션</h6>
@@ -192,7 +200,7 @@
                         </div>
                         <!-- End Add Comment -->
                     </c:if>
-                </sec:authorize>
+               <%-- </sec:authorize>--%>
 
             </div>
             <!-- End Content -->
@@ -346,7 +354,7 @@
    */
   function addRequest() {
     $.ajax({
-      url: "/api/project/request",
+      url: "../api/project/request",
       type: "POST",
       data: $("#addRequestForm").serialize(),
       dataType: "json",
@@ -367,7 +375,7 @@
    */
   function updateProject() {
     $.ajax({
-      url: "/api/project/update",
+      url: "../api/project/update",
       type: "POST",
       data: "",
       dataType: "json",
@@ -388,11 +396,11 @@
    */
   function deleteProject() {
     $.ajax({
-      url: "/api/project/delete",
+      url: "../api/project/delete",
       type: "POST",
       data: {
         "projectNo": ${project.projectNo},
-        "leaderId": "<sec:authentication property="principal.username"/>"
+        "leaderId": ""
       },
       dataType: "json",
       success: function(res) {

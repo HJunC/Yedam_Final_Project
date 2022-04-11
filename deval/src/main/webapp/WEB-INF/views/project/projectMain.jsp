@@ -284,7 +284,7 @@
    */
   function approveRequest(memberId, projectNo) {
     $.ajax({
-      url: "/api/project/approveRequest",
+      url: "../api/project/approveRequest",
       type: "POST",
       data: {
         memberId,
@@ -309,7 +309,7 @@
    */
   function refuseRequest(memberId, projectNo) {
     $.ajax({
-      url: "/api/project/refuseRequest",
+      url: "../api/project/refuseRequest",
       type: "POST",
       data: {
         memberId,
@@ -332,7 +332,7 @@
    */
   function deleteRequest(memberId, projectNo) {
     $.ajax({
-      url: "/api/project/deleteRequest",
+      url: "../api/project/deleteRequest",
       type: "POST",
       data: {
         memberId,

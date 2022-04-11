@@ -111,11 +111,12 @@ public class ProjectController {
      * @return project/projectDetail.jsp
      */
     @GetMapping("/projectDetail.do")
-    public String projectDetail(Model model, @RequestParam("no") int projectNo) {
+    public String projectDetail(Model model, @RequestParam("no") int projectNo, Principal user) {
         ProjectInfoDTO dto = projectService.getProject(projectNo);
         projectService.updateHit(projectNo);
         model.addAttribute("project", dto);
         model.addAttribute("team", dto.getProjectTeam());
+        model.addAttribute("member", user);
         return "project/projectDetail";
     }
 
@@ -128,10 +129,11 @@ public class ProjectController {
      */
     @GetMapping("/search.do")
     public String projectSearch(Model model, ProjectVO vo, Criteria cri) {
+        if (cri.getPageNum() == 0) cri.setPageNum(1);
+        if (cri.getAmount() == 0) cri.setAmount(10);
         vo.setCriteria(cri);
         model.addAttribute("search", vo);
-        List<ProjectVO> projectList = projectService.getListWithPaging(vo);
-        model.addAttribute("projectList", projectList);
+        model.addAttribute("projectList", projectService.getListWithPaging(vo));
         model.addAttribute("pageMaker", new PageDTO(cri, projectService.getTotalCount(vo)));
         return "project/projectSearch";
     }

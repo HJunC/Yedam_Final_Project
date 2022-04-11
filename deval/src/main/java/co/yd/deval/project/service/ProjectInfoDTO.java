@@ -65,6 +65,6 @@ public class ProjectInfoDTO {
         this.lang = lang;
         String[] temp = lang.split(",");
         this.langArray = new ArrayList<>();
-        this.langArray.addAll(Arrays.asList(temp.trim()));
+        this.langArray.addAll(Arrays.asList(temp));
     }
 }

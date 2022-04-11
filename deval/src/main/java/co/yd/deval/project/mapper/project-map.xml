@@ -133,7 +133,7 @@
 
     <sql id="option">
         <where>
-            STATE = '1'
+            STATE IN ('1')
             AND RECRUIT_EDT >= sysdate
             <choose>
                 <when test="state == null">AND STATE = '1'</when>
@@ -151,7 +151,7 @@
             <if test="designRcnt == 1">AND DESIGN_RCNT > 0</if>
             <if test="fullRcnt == 1">AND FULL_RCNT > 0</if>
             <if test="plannerRcnt == 1">AND PLANNER_RCNT > 0</if>
-            <if test="projectTerm != 0">AND PROJECT_TERM = #{projectTerm}</if>
+            <if test="projectTerm != 0">AND PROJECT_TERM >= #{projectTerm}</if>
         </where>
     </sql>
 
