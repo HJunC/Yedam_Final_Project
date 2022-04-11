@@ -93,7 +93,7 @@ td {
 
 <tr>
 							<td >file</td>
-							<td>  <input type="file" id="photo" name="file" accept="image/*"></td>
+							<td> <input type="file" id="photo" name="file" accept="image/*"></td>
 	
 						</tr>
 					</table>
@@ -104,8 +104,7 @@ td {
 
 				</form>
 				
-	 
-				<!-- Send Button -->
+ 	<!-- Send Button -->
 				<div class="container relative">
 
 
@@ -130,6 +129,8 @@ td {
 
 			</div>
 		</div>
+		
+		
 	</section>
 
 </body>

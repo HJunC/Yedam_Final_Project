@@ -18,4 +18,7 @@ public interface BoardService {
 
 	int boardRecUp(int board_no);
 
+	List<BoardVO> getListWithPaging(BoardVO vo);
+
+	int getTotalCount(BoardVO vo);
 }

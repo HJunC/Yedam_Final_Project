@@ -2,6 +2,7 @@ package co.yd.deval.board.web;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ import co.yd.deval.board.service.BoardVO;
 import co.yd.deval.board.service.BCommentService;
 import co.yd.deval.board.service.BCommentVO;
 import co.yd.deval.board.service.FileManageService;
+import co.yd.deval.common.Criteria;
+import co.yd.deval.common.PageDTO;
+import co.yd.deval.project.service.ProjectVO;
   
 @Controller
 @RequestMapping("/board")
@@ -25,12 +29,8 @@ public class BoardController {
     @Autowired
 	private BoardService boardDao;
 
-
 	@Autowired
 	private BCommentService commentDao;
-
-	@Autowired
-	private FileManageService fileManageDao;
 
 	@Autowired
 	private String uploadPath;
@@ -40,13 +40,19 @@ public class BoardController {
 	 * @param model
 	 */
 	@GetMapping("/free.do")
-	public String free(Model model) {
-		model.addAttribute("boardList", boardDao.boardSelectList(1));
-		System.out.println(model);
-		return "board/free";
-	
-	}
+	public String free(Model model, BoardVO vo, Criteria cri) {
+		vo.setBoardTypeNo(1);
+        vo.setCriteria(cri);
+        List<BoardVO> boardList = boardDao.getListWithPaging(vo);
+        model.addAttribute("boardList", boardList);
+        model.addAttribute("board", vo);
+        model.addAttribute("pageMaker", new PageDTO(cri, boardDao.getTotalCount(vo)));
+        return "board/free";
+    }
 
+	
+	
+	
 	/**
 	 * 글쓰기 화면 이동
 	 */

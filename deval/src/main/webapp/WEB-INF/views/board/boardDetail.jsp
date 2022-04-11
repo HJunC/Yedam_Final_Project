@@ -116,19 +116,36 @@ td {
 							<td>file</td>
 							<td class="post-prev-img" style="border-radius: 70%;">
 							<a href="#">
-				<img src="images/${board.photo}" alt="My Image"  width="100" height="200"></a></td>
+				<img src="images/${board.photo}" id="photo" alt="이미지 미리보기"  width="100" height="200"></a></td>
 							</tr>
-
-
 						</tbody>
 					</table>
-
+    
 					<!-- 	<div class="container relative">
 						<div class="mb-80 mb-xs-40"> -->
 					<button type="submit" class="button">게시글 수정</button>
 
 				</form>
 
+<script src="http://madalla.kr/js/jquery-1.8.3.min.js"></script>
+
+<script type="text/javascript">
+$(function() {
+    $("#file").on('change', function(){
+    readURL(this);
+    });
+});
+
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+        $('#photo').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+</script>
 
 				<button class="button"
 					onclick="location.href='boardDelete.do?boardNo=${board.boardNo}'">게시글

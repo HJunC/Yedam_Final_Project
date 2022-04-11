@@ -1,13 +1,13 @@
 package co.yd.deval.board.serviceImpl;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import co.yd.deval.board.mapper.BoardMapper;
 import co.yd.deval.board.service.BoardService;
 import co.yd.deval.board.service.BoardVO;
-import co.yd.deval.board.service.Search;
-import co.yd.deval.board.service.BCommentVO;
+ 
 
 @Service("boardDao")
 public class BoardServiceImpl implements BoardService {
@@ -48,6 +48,16 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public int boardHitUp(int board_no) {
 		return map.boardHitUp(board_no);
+	}
+
+	@Override
+	public List<BoardVO> getListWithPaging(BoardVO vo) {
+		return map.getListWithPaging(vo);
+	}
+
+	@Override
+	public int getTotalCount(BoardVO vo) {
+		return map.getTotalCount(vo);
 	}
 
 	/*

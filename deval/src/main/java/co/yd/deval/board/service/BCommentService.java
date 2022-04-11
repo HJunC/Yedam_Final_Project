@@ -12,8 +12,6 @@ public interface BCommentService {
 
     int commentDelete(BCommentVO vo);
 
-
-
 }
 
 
