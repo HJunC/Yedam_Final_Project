@@ -164,4 +164,9 @@ public class StudyServiceImpl implements StudyService {
 		return map.rcntMember(vo);
 	}
 
+	@Override
+	public int studyEnd(StudyVO vo) {
+		return map.studyEnd(vo);
+	}
+
 }

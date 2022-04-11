@@ -7,6 +7,8 @@ public interface StudyService {
 	List<StudyVO> studySelectAll();
 	List<StudyVO> studyLocSearch(String loc);
 	
+	int studyEnd(StudyVO vo);
+	
 	StudyVO studySelectNo(StudyVO vo);
 	int findMaxStudyNo();
 	int studyInsert(StudyVO vo);

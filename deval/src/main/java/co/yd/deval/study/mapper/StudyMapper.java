@@ -15,6 +15,8 @@ public interface StudyMapper {
 	// 스터디 모집
 		List<StudyVO> studySelectAll();
 		List<StudyVO> studyLocSearch(String loc);
+		int studyEnd(StudyVO vo);
+		
 		StudyVO studySelectNo(StudyVO vo);
 		
 		int findMaxStudyNo();

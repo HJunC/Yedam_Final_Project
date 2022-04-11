@@ -74,10 +74,13 @@
       </div>
       <c:if test="${study.leaderId ne member.name}">
         <c:if test="${empty list[0]}">
+         <c:if test="${study.rcnt ne study.maxRcnt}">
 		<!-- Modal Start -->
 			<button onclick="MyInfoModal()" id="joinBtn" class="btn btn-mod btn-w btn-medium round mt-10  mfp-inline">참가</button>
 		</c:if>
+		</c:if>
 	  </c:if>
+	  
 		<style>
 		.mfp-content {
 			border: 1px solid #ddd;

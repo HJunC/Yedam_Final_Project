@@ -105,8 +105,7 @@ public class StudyController {
     public String editStudy(StudyVO vo) {
     	int n = studyDao.studyUpdate(vo);
     	if (n != 0) {
-			/* return "redirect:studySelect.do?studyNo="+vo.getStudyNo(); -> get방식 */ 
-    		return "redirect:studyList.do";
+			return "redirect:studyList.do";
     	}
 		return "study/studyError";
     }
@@ -214,20 +213,22 @@ public class StudyController {
 	 @RequestMapping("/studyReqAccept.do")
 	 @ResponseBody
 	 public ResponseEntity<Integer> studyReqAccept(StudyReqVO rvo, StudyVO vo) throws Exception {
-//		 System.out.println(rvo);
 		 		 
 		 vo.setStudyNo(rvo.getStudyNo());
 		 vo = studyDao.studySelectNo(vo);
-		 System.out.println("=========================="+vo);
 		 
 		 if(vo.getRcnt() >= vo.getMaxRcnt()) {
-			 return null;
-		 } else {
-			 // rcnt update
-			 studyDao.rcntMember(vo);
-			 //vo.setRcnt(vo.getRcnt()+1);
+			 int r = studyDao.studyEnd(vo);
 			 
+			 if(r != 0) {
+				 studyDao.studyTeamMemberDelete(rvo);
+			 }
+			 return ResponseEntity.ok().body(0);
+			 
+		 } else {
+			 studyDao.rcntMember(vo);
 			 int n= studyDao.studyTeamMemberUpdateAccept(rvo);
+			 
 			 // 메일발송 시간 지연으로 인해 디자인 로딩창 넣기
 			 if (n != 0) {
 				

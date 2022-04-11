@@ -79,7 +79,7 @@
 						<td>${std.studyNm }</td>
 						<td>${std.leaderId }</td>
 						<td>${std.defficulty }</td>
-						<td>${std.maxRcnt }</td>
+						<td>${std.rcnt}/${std.maxRcnt }</td>
 						<td>${std.studySdt }~${std.studyEdt }</td>
 					</tr>
 				</c:forEach>

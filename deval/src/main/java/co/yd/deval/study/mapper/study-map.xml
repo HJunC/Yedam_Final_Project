@@ -11,6 +11,13 @@
 		ORDER BY STUDY_NO DESC
 	</select>
 	
+<!-- 	<select id="studyEndStateHide" resultType="co.yd.deval.study.service.StudyVO">
+		SELECT COUNT(*)
+		FROM STUDY
+		WHERE LEADER_ID = #{leaderId}
+		AND STATE != 2
+	</select> -->
+	
 	<select id="studyLocSearch" resultType="co.yd.deval.study.service.StudyVO">
 		SELECT *
 		FROM STUDY
@@ -65,6 +72,15 @@
 						)
 	</insert>
 	
+	<select id="studyRcntSelect" resultType="int">
+		SELECT COUNT(*)
+		FROM STUDY_REQUEST
+		WHERE STUDY_NO IN (	SELECT STUDY_NO
+		                    FROM STUDY
+		                    WHERE STUDY_NO = #{studyNo})
+		AND STATE = 1;
+	</select>
+	
 	<update id="rcntLeader" parameterType="co.yd.deval.study.service.StudyVO">
 		UPDATE STUDY
 		SET RCNT + 1
@@ -79,15 +95,12 @@
 		WHERE STUDY_NO = #{studyNo}
 	</update>
 	
-	<select id="studyRcntSelect" resultType="int">
-		SELECT COUNT(*)
-		FROM STUDY_REQUEST
-		WHERE STUDY_NO IN (SELECT STUDY_NO
-		                               FROM STUDY
-		                               WHERE STUDY_NO = #{studyNo})
-		AND STATE = 1;
-	</select>
-
+	<update id="studyEnd" parameterType="co.yd.deval.study.service.StudyVO">
+		UPDATE STUDY
+		SET STATE = 2
+		WHERE STUDY_NO = #{studyNo}
+	</update>
+	
 	<update id="studyUpdate"
 		parameterType="co.yd.deval.study.service.StudyVO">
 		UPDATE STUDY

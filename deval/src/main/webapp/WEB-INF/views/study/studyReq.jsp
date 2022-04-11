@@ -112,7 +112,7 @@ ${request}
     			data: {"memberId": id, "studyNo": sno},
     			success : function(result) {
 					console.log(result);
-					if(result=='' || result==null){
+					/* if(result == '' || result == null){
 						alert('참가 인원을 초과 했습니다.');
 						location.href='#';
 					}
@@ -120,7 +120,14 @@ ${request}
 						
 						alert(id + '님이 ' + sno +'번 스터디에 참가했습니다.');
 						location.href = "studyMain.do";
-					} 
+					}  */
+					if (result == 0){
+						alert('참가 인원을 초과 했습니다.');
+						
+					} else {
+						alert(id + '님이 ' + sno + '번 스터디에 참가했습니다.');
+						location.href = "studyMain.do";
+					}
 				},
 				error : function(err) {
 					console.log("error", err);
