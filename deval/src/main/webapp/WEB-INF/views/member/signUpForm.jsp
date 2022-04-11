@@ -33,40 +33,29 @@
 
 				<form action="signUp.do" method="post" onsubmit="return formCheck()" class="form contact-form">
 					<div class="clearfix">
-
 						<div class="form-group">
 							<label for="memberId">아이디</label>
-							<input type="text" name="memberId" id="memberId" class="input-lg round form-control" placeholder="Enter id" pattern=".{3,100}" required aria-required="true">
+							<input type="text" name="memberId" id="memberId" class="input-lg round form-control" placeholder="Enter id">
 						</div>
-
 						<div class="form-group">
 							<label for="memberPassword">비밀번호</label>
-							<input type="password" name="memberPassword" id="memberPassword"  class="input-lg round form-control" placeholder="Enter password" pattern=".{5,100}" required aria-required="true">
+							<input type="password" name="password" id="memberPassword"  class="input-lg round form-control" placeholder="Enter password">
 						</div>
-
 						<div class="form-group">
 							<label for="passwordCheck">비밀번호 확인</label>
-							<input type="password" id="passwordCheck" onchange="pwdCheck()" class="input-lg round form-control" placeholder="Confirm password" pattern=".{5,100}" required aria-required="true">
+							<input type="password" id="passwordCheck" onchange="pwdCheck()" class="input-lg round form-control" placeholder="Confirm password">
 							<div id="checkWord"></div>
 						</div>
-
 						<div class="form-group">
 							<label for="memberMail">이메일</label>
-							<input type="text" name="memberMail" id="memberMail" class="input-lg round form-control" placeholder="Enter email" pattern=".{3,100}" required aria-required="true">
+							<input type="email" name="mail" id="memberMail" class="input-lg round form-control" placeholder="Enter email">
 						</div>
-
 						<div class="form-group">
 							<label for="memberName">이름</label>
-							<input type="text" name="memberName" id="memberName" class="input-lg round form-control" placeholder="Enter name" pattern=".{3,100}" required aria-required="true">
-						</div>
-
-						<div class="form-group">
-							<label for="memberPhone">전화번호</label>
-							<input type="text" name="memberPhone" id="memberPhone" class="input-lg round form-control" placeholder="Enter phone number" pattern=".{3,100}" required aria-required="true">
+							<input type="text" name="name" id="memberName" class="input-lg round form-control" placeholder="Enter name">
 						</div>
 
 					</div>
-
 					<!-- Send Button -->
 					<div class="pt-10">
 						<button type="submit" class="submit_btn btn btn-mod btn-large btn-round btn-full" id="reg-btn">회원가입</button>

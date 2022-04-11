@@ -1,9 +1,12 @@
 package co.yd.deval.member.web;
 
+import java.io.File;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,11 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import co.yd.deval.member.service.MemberService;
 import co.yd.deval.member.service.MemberVO;
@@ -33,6 +38,8 @@ public class MemberController {
 	private ProjectService projectDao;
 	@Autowired
 	private StudyService studyDao;
+	@Autowired
+	private String uploadPath;
 	
 	
 	@RequestMapping("/loginForm.do")
@@ -64,6 +71,29 @@ public class MemberController {
 		vo.setMemberId(user.getName());
 		model.addAttribute("member",memberDao.memberSelect(vo));
 		return "member/myPage";
+	}
+	
+	@PostMapping("/myInfoUpdate.do")
+	@ResponseBody
+	public ResponseEntity<Integer> myInfoUpdate(MemberVO vo, MultipartFile imgFile){
+		String originalName = imgFile.getOriginalFilename();
+    	String fileType = originalName.substring(originalName.lastIndexOf(".") + 1, originalName.length());
+    	String fileName = UUID.randomUUID().toString() + "." + fileType;
+    	String pathName = uploadPath + "profile/" + fileName;
+    	File dest = new File(pathName);
+    	try {
+    		FileCopyUtils.copy(imgFile.getBytes(), dest);
+    	} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	vo.setProfileImg(fileName);
+    	int r = memberDao.memberUpdate(vo);
+    	if (r != 0) {
+    		return ResponseEntity.ok().body(1);
+    	}
+		return ResponseEntity.ok().body(0);
 	}
 	
 	@GetMapping("/myStudies.do")

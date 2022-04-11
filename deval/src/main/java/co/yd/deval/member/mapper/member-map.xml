@@ -37,7 +37,7 @@
 		<set>
 			<if test="password != null and password != ''"> PASSWORD = #{password}, </if>
 			<if test="mail != null and mail != ''"> MAIL = #{mail}, </if>
-			<if test="name != nulland name != ''"> NAME = #{name}, </if>
+			<if test="name != null and name != ''"> NAME = #{name}, </if>
 			<if test="resume != null and resume != ''"> RESUME = #{resume}, </if>
 			<if test="profileImg != null and profileImg != ''"> PROFILE_IMG = #{profileImg}, </if>
 		</set>

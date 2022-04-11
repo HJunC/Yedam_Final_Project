@@ -50,7 +50,7 @@
 					<h2>나의 정보</h2>
 					<hr>
 					<div>
-						<img src="${member.profileImg}" alt="..">
+						<img src="upload/${member.profileImg}" alt="..">
 						<table class="table">
 							<tr>
 								<th>아이디</th>
@@ -92,7 +92,7 @@
 					<h2>정보 수정</h2>
 					<hr>
 					<div>
-						<form id="infoUpdFrm" action="" method="post">
+						<form id="infoUpdFrm" action="myInfoUpdate.do" method="post" enctype="multipart/form-data">
 							<table class="table">
 								<tr>
 									<th>아이디</th>
@@ -103,11 +103,11 @@
 								<tr>
 									<th>이메일</th>
 									<td colspan="3">
-										<input class="form-control" type="email" id="mail" name="mail" value="${member.mail}">
+										<input class="form-control" type="email" id="mail" name="mail" value="">
 									</td>
 									<th>이름</th>
 									<td>
-										<input class="form-control" type="text" id="name" name="name" value="${member.name}">
+										<input class="form-control" type="text" id="name" name="name" value="">
 									</td>
 								</tr>
 								<tr>
