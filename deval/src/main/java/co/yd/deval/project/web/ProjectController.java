@@ -60,6 +60,8 @@ public class ProjectController {
                         session.setAttribute("userProjectState", "팀원");
                     }
                     projectNo = userTeam.getProjectNo();
+                } else {
+                    session.setAttribute("userProjectState", "");
                 }
             }
 
@@ -69,7 +71,7 @@ public class ProjectController {
                     ProjectTeamVO userTeam = projectService.getOngoingProject(principal.getName());
                     projectNo = userTeam.getProjectNo();
                 }
-                model.addAttribute("userProject", projectService.getProject(projectNo));
+                model.addAttribute("userProject", projectService.selectProject(projectNo));
                 if ((boolean) session.getAttribute("isWait")) {
                     // 지원자 리스트
                     ProjectRequestVO requestVO = ProjectRequestVO.builder()

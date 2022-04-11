@@ -98,12 +98,21 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    public ProjectVO selectProject(int projectNo) {
+        return mapper.selectProject(projectNo);
+    }
+
+    @Override
     public ProjectInfoDTO getProject(int projectNo) {
         ProjectInfoDTO dto = mapper.getProject(projectNo);
         ProjectTeamVO searchTeamVo = ProjectTeamVO.builder()
                                     .projectNo(projectNo)
                                     .build();
+        ProjectRequestVO searchRequestVo = ProjectRequestVO.builder()
+                                            .projectNo(projectNo)
+                                            .build();
         dto.setProjectTeam(teamMapper.selectProjectTeam(searchTeamVo));
+        dto.setRequestList(requestMapper.selectProjectRequest(searchRequestVo));
         return dto;
     }
 

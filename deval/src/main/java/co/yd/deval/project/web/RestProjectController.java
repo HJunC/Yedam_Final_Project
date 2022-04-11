@@ -4,7 +4,6 @@ import co.yd.deval.project.service.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.HashMap;
@@ -84,6 +83,7 @@ public class RestProjectController {
         if (principal.getName().equals(vo.getLeaderId())) {
             projectService.remove(vo);
             session.setAttribute("userProjectState", "");
+            session.setAttribute("isWait", false);
             return ResponseEntity.ok().body(vo);
         } else {
             return ResponseEntity.badRequest().body(vo);
@@ -164,12 +164,13 @@ public class RestProjectController {
      * @return
      */
     @PostMapping("/refuseRequest")
-    public ResponseEntity<ProjectRequestVO> deleteRequest(ProjectRequestVO vo, Principal principal) {
+    public ResponseEntity<Integer> deleteRequest(ProjectRequestVO vo, Principal principal) {
         if (principal != null) {
-            projectRequestService.remove(vo);
-            return ResponseEntity.ok().body(vo);
+            vo.setUpdateState("3");
+            int result = projectRequestService.updateRequest(vo);
+            return ResponseEntity.ok().body(result);
         } else {
-            return ResponseEntity.badRequest().body(vo);
+            return ResponseEntity.badRequest().body(0);
         }
     }
 
@@ -180,7 +181,8 @@ public class RestProjectController {
      * @return
      */
     @PostMapping("/approveRequest")
-    public ResponseEntity<ProjectRequestVO> approveRequest(ProjectRequestVO vo, Principal principal) {
+    public ResponseEntity<ProjectRequestVO> approveRequest(ProjectRequestVO vo) {
+        System.out.println(vo);
         projectRequestService.approve(vo);
         return ResponseEntity.ok().body(vo);
     }
@@ -188,6 +190,11 @@ public class RestProjectController {
     @PostMapping("/deleteRequest")
     public ResponseEntity<ProjectRequestVO> deleteRequest(ProjectRequestVO vo) {
         projectRequestService.remove(vo);
+        return ResponseEntity.ok().body(vo);
+    }
+
+    @GetMapping("/test")
+    public ResponseEntity<ProjectVO> test(ProjectVO vo) {
         return ResponseEntity.ok().body(vo);
     }
 }

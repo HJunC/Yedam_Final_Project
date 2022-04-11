@@ -101,22 +101,43 @@
                             <input type="number" name="projectTerm" id="projectTerm" class="input-lg round form-control bg-dark-input" required aria-required="true" min="0" max="365" value="3">
                         </div>
                         <div class="form-group">
-                            <label for="lang">사용언어</label>
-
+                            <label for="lang">사용 기술<h6 id="viewLang"></h6></label>
                             <script src="${resources}/js/common/Languages.js"></script>
 
                             <div>
-                                <div class="tags" id="languages"></div>
+                                <div class="tags" id="languagesBox"><p class="input-info mb-1">언어</p></div>
+                                <div class="tags" id="fplBox"><p class="input-info mb-1">프레임워크</p></div>
+                                <div class="tags" id="versionControlBox"><p class="input-info mb-1">버전관리</p></div>
+                                <div class="tags" id="databaseBox"><p class="input-info mb-1">DB</p></div>
                             </div>
+                            <input type="hidden" name="lang" value="">
 
                             <script>
-                              var languages = $("#languages");
                               var checkBox = "";
-                              mostUsed.forEach((item, index) => {
-                                checkBox += '<input type="checkbox" class="btn-check" id="btncheck'+index+'" name="langArray" value="' + item + '">';
-                                checkBox += '<label class="btn btn-outline-primary" for="btncheck'+index+'">' + item + '</label>';
+                              Language.forEach(item => {
+                                checkBox += '<input type="checkbox" class="btn-check" id="btncheck'+item+'" name="langArray" value="' + item + '">';
+                                checkBox += '<label class="btn btn-outline-primary" for="btncheck'+item+'">' + item + '</label>';
                               })
-                              languages.append(checkBox);
+                              $("#languagesBox").append(checkBox);
+                              checkBox = "";
+                              FPL.forEach(item => {
+                                checkBox += '<input type="checkbox" class="btn-check" id="btncheck'+item+'" name="langArray" value="' + item + '">';
+                                checkBox += '<label class="btn btn-outline-primary" for="btncheck'+item+'">' + item + '</label>';
+                              })
+                              $("#fplBox").append(checkBox);
+                              checkBox = "";
+                              versionControl.forEach(item => {
+                                checkBox += '<input type="checkbox" class="btn-check" id="btncheck'+item+'" name="langArray" value="' + item + '">';
+                                checkBox += '<label class="btn btn-outline-primary" for="btncheck'+item+'">' + item + '</label>';
+                              })
+                              $("#versionControlBox").append(checkBox);
+                              checkBox = "";
+                              Database.forEach(item => {
+                                checkBox += '<input type="checkbox" class="btn-check" id="btncheck'+item+'" name="langArray" value="' + item + '">';
+                                checkBox += '<label class="btn btn-outline-primary" for="btncheck'+item+'">' + item + '</label>';
+                              })
+                              $("#databaseBox").append(checkBox);
+                              checkBox = "";
                             </script>
 
                         </div>
@@ -175,6 +196,22 @@
   recruitEdt.setAttribute("min", moment(today).format("YYYY-MM-DD"));
   recruitEdt.setAttribute("max", moment(today.setDate(today.getDate() + 15)).format("YYYY-MM-DD")); // 프로젝트 모집 최대 마감일
 
+  $("input[name=langArray]").on("change", handleLangCheckbox);
+
+  function handleLangCheckbox() {
+    var lang = "";
+    var list = $("input[name=langArray]:checked");
+    for(var i = 0; i < list.length; i++) {
+      if(i + 1 !== list.length) {
+        lang += list[i].value + ", ";
+      } else {
+        lang += list[i].value;
+      }
+    }
+    $("#viewLang").html(lang);
+    $("input[name=lang]").val(lang);
+  }
+
   document.getElementById("positionCountBox").addEventListener("change", handlePositionCount);
 
   function handlePositionCount(e) {
@@ -205,13 +242,13 @@
       alert("인원수를 입력해주세요");
       isDone = false;
     }
-
-    data.recruitEdt = data.recruitEdt + " " + $("#recruitEdtTime").val();
+    delete data.langArray;
+    data.recruitEdt = data.recruitEdt + " " + $("#recruitEdtTime").val() + ":00";
 
     if (isDone) {
         $.ajax({
           type: "POST",
-          url: "../api/project/insert",
+          url: "/api/project/insert",
           data: data,
           dataType: "json",
           success: function(res) {

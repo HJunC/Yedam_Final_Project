@@ -91,9 +91,7 @@ public class ProjectRequestServiceImpl implements ProjectRequestService {
     }
 
     @Override
-    public int refuse(ProjectRequestVO vo) {
-        // 요청 상태 변경
-        vo.setUpdateState("2");
+    public int updateRequest(ProjectRequestVO vo) {
         return mapper.updateProjectRequest(vo);
     }
 

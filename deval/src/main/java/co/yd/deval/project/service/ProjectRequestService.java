@@ -26,6 +26,6 @@ public interface ProjectRequestService {
      */
     int approve(ProjectRequestVO vo);
 
-    int refuse(ProjectRequestVO vo);
+    int updateRequest(ProjectRequestVO vo);
 
 }

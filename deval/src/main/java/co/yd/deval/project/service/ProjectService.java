@@ -35,6 +35,13 @@ public interface ProjectService {
     List<ProjectVO> searchMainPageProject(ProjectVO vo);
 
     /***
+     * 단순 프로젝트 정보
+     * @param projectNo
+     * @return
+     */
+    ProjectVO selectProject(int projectNo);
+
+    /***
      * 프로젝트 팀원 포함한 정보
      * @param projectNo 프로젝트 번호
      * @return ProjectInfoDTO
@@ -48,6 +55,7 @@ public interface ProjectService {
      */
     List<ProjectVO> getListWithPaging(ProjectVO vo);
     int getTotalCount(ProjectVO vo);
+
 
     void updateHit(int projectNo);
     void updateApplyCount(int projectNo);

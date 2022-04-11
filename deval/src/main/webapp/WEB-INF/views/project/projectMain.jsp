@@ -293,6 +293,7 @@
       success: function (res) {
         console.log(res);
         alert("팀에 합류하였습니다 !");
+        location.reload();
       },
       error: function (res) {
         console.log(res);
@@ -317,6 +318,7 @@
       success: function (res) {
         console.log(res);
         alert("요청이 거절되었습니다.");
+        location.reload();
       },
       error: function (res) {
         console.log(res);

@@ -25,8 +25,8 @@ public class ProjectInfoDTO {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+9")
     private Date recruitSdt;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+9")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+9")
     private Date recruitEdt;
 
     private String subject;
@@ -34,6 +34,7 @@ public class ProjectInfoDTO {
     private int totalRcnt;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+9")
     private Date projectSdt;
 
     private int frontRcnt;
@@ -41,6 +42,7 @@ public class ProjectInfoDTO {
     private int designRcnt;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+9")
     private Date projectEdt;
 
     private int fullRcnt;
@@ -51,6 +53,7 @@ public class ProjectInfoDTO {
     private String leaderId;
 
     private List<ProjectTeamVO> projectTeam;
+    private List<ProjectRequestVO> requestList;
 
     private List<String> langArray;
 
@@ -62,6 +65,6 @@ public class ProjectInfoDTO {
         this.lang = lang;
         String[] temp = lang.split(",");
         this.langArray = new ArrayList<>();
-        this.langArray.addAll(Arrays.asList(temp));
+        this.langArray.addAll(Arrays.asList(temp.trim()));
     }
 }

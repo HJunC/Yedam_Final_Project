@@ -27,7 +27,7 @@ public class ProjectVO {
     private Date recruitSdt;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+9")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+9")
     private Date recruitEdt;
 
     private String subject;
@@ -35,6 +35,7 @@ public class ProjectVO {
     private int totalRcnt;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+9")
     private Date projectSdt;
 
     private int frontRcnt;
@@ -42,6 +43,7 @@ public class ProjectVO {
     private int designRcnt;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+9")
     private Date projectEdt;
 
     private int fullRcnt;

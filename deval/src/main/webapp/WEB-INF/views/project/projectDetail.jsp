@@ -109,6 +109,12 @@
                 </div>
                 <!-- End Comments -->
 
+               <%-- <c:if test="${not empty project.requestList}">
+                    <c:forEach items="${project.requestList}" var="item">
+                        ${item.memberId} / ${item.position}
+                    </c:forEach>
+                </c:if>--%>
+
                 <sec:authorize access="isAuthenticated()">
                     <c:if test="${sessionScope.userProjectState ne '팀장'
                                 and sessionScope.userProjectState ne '팀원'
@@ -124,7 +130,7 @@
                                 <input type="hidden" name="memberId" value="<sec:authentication property="principal.username"/>">
                                 <div class="mb-30 mb-md-20">
                                     <!-- Website -->
-                                    <h4 class="blog-page-title">프로젝트 설명</h4>
+                                    <h6>지원 포지션</h6>
                                     <div class="d-flex justify-content-between">
                                         <c:if test="${project.frontRcnt > 0}">
                                             <div class="col input-group justify-content-center">
@@ -171,7 +177,7 @@
 
                                 <!-- subject -->
                                 <div class="mb-30 mb-md-20">
-                                    <label for="subject">지원내용</label>
+                                    <h6>지원 내용</h6>
                                     <textarea name="subject" id="subject" class="input-md round form-control" rows="6" placeholder="본인을 소개해주세요 😀" maxlength="400"></textarea>
                                 </div>
 
@@ -299,7 +305,7 @@
                             <button type="button" onclick="" class="btn btn-mod btn-w btn-round btn-small">
                                 수정하기
                             </button>
-                            <button type="button" onclick="" class="btn btn-mod btn-w btn-round btn-small" style="background: rgb(251 71 71 / 90%);">
+                            <button type="button" onclick="deleteProject()" class="btn btn-mod btn-w btn-round btn-small" style="background: rgb(251 71 71 / 90%);">
                                 프로젝트 삭제
                             </button>
                         </div>
@@ -344,9 +350,10 @@
       type: "POST",
       data: $("#addRequestForm").serialize(),
       dataType: "json",
-      success: function(data) {
+      success: function(res) {
+        console.log(res);
         alert("지원하였습니다.");
-        console.log(data);
+        location.reload();
       },
       error: function (error) {
         alert("에러입니다.")
@@ -364,9 +371,10 @@
       type: "POST",
       data: "",
       dataType: "json",
-      success: function(data) {
+      success: function(res) {
+        console.log(res);
         alert("수정하였습니다.");
-        console.log(data);
+        location.reload();
       },
       error: function (error) {
         alert("에러입니다.")
@@ -384,10 +392,10 @@
       type: "POST",
       data: {
         "projectNo": ${project.projectNo},
-        "leaderId": ${project.leaderId}
+        "leaderId": "<sec:authentication property="principal.username"/>"
       },
       dataType: "json",
-      success: function(data) {
+      success: function(res) {
         alert("프로젝트가 삭제되었습니다.");
         location.href = "/project/main.do";
       },
