@@ -76,6 +76,9 @@ public class ProjectServiceImpl implements ProjectService {
                                 .projectNo(vo.getProjectNo())
                                 .build();
         teamMapper.deleteProjectTeam(teamVO);
+        ProjectRequestVO requestVO = ProjectRequestVO.builder()
+                                     .projectNo(vo.getProjectNo()).build();
+        requestMapper.deleteProjectRequest(requestVO);
         return mapper.deleteProject(vo);
     }
 

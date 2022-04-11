@@ -50,11 +50,11 @@
             </c:otherwise>
         </c:choose>
 
-        <c:if test="${sessionScope.userProjectState eq '대기팀장' || sessionScope.userProjectState eq '진행중 팀장'}">
+        <c:if test="${sessionScope.userProjectState eq '팀장'}">
             나는 리더
         </c:if>
 
-        <c:if test="${sessionScope.userProjectState eq '대기팀장'}">
+        <c:if test="${sessionScope.isWait == true}">
             <h4>지원자</h4>
             <c:choose>
                 <c:when test="${not empty requestList}">
@@ -78,7 +78,7 @@
             </c:choose>
         </c:if>
 
-        <c:if test="${sessionScope.userProjectState eq '지원중'}">
+        <c:if test="${not empty userRequest}">
             <h3>지원한 프로젝트</h3>
             <c:forEach items="${userRequest}" var="item">
                 <p>
@@ -88,6 +88,7 @@
                 ${item.subject } /
                 ${item.position } /
                 ${item.requestDt }
+                    <button type="button" class="btn btn-mod btn-w btn-medium btn-round" onclick="deleteRequest('${item.memberId }', '${item.projectNo }')">지원 삭제</button>
                 </p>
             </c:forEach>
         </c:if>
@@ -276,9 +277,14 @@
     return moment(date).fromNow();
   }
 
+  /**
+   * 요청 승인
+   * @param memberId
+   * @param projectNo
+   */
   function approveRequest(memberId, projectNo) {
     $.ajax({
-      url: "../api/project/approveRequest",
+      url: "/api/project/approveRequest",
       type: "POST",
       data: {
         memberId,
@@ -295,9 +301,14 @@
     })
   }
 
+  /**
+   * 요청 거절
+   * @param memberId
+   * @param projectNo
+   */
   function refuseRequest(memberId, projectNo) {
     $.ajax({
-      url: "../api/project/refuseRequest",
+      url: "/api/project/refuseRequest",
       type: "POST",
       data: {
         memberId,
@@ -314,4 +325,25 @@
     })
   }
 
+  /**
+   * 지원 삭제
+   */
+  function deleteRequest(memberId, projectNo) {
+    $.ajax({
+      url: "/api/project/deleteRequest",
+      type: "POST",
+      data: {
+        memberId,
+        projectNo
+      },
+      success: function (res) {
+        alert("지원 신청을 삭제하였습니다.");
+        location.reload();
+      },
+      error: function (res) {
+        console.log(res);
+        alert("에러");
+      }
+    })
+  }
 </script>

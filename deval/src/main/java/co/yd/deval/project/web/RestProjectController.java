@@ -49,27 +49,23 @@ public class RestProjectController {
      * @return
      */
     @PostMapping("/insert")
-    public ResponseEntity<Map<String, Object>> addProject(ProjectVO vo, Principal principal, HttpSession session) {
+    public ResponseEntity<Map<String, Object>> insertProject(ProjectVO vo, Principal principal, HttpSession session) {
         Map<String, Object> res = new HashMap<>();
         if (principal.getName().equals(vo.getLeaderId())) {
-            if (session.getAttribute("userProjectState").equals("없음")
-                    || session.getAttribute("userProjectState").equals("지원중")) {
-                try {
-                    int createPno = projectService.create(vo);
-                    if (createPno > 0) {
-                        session.setAttribute("userProjectState", "대기팀장");
-                        res.put("result", "success");
-                        res.put("projectNo", createPno);
-                        return ResponseEntity.ok().body(res);
-                    } else {
-                        res.put("message", "에러");
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    res.put("message", "양식 에러");
+            try {
+                int createPno = projectService.create(vo);
+                if (createPno > 0) {
+                    session.setAttribute("userProjectState", "팀장");
+                    session.setAttribute("isWait", true);
+                    res.put("result", "success");
+                    res.put("projectNo", createPno);
+                    return ResponseEntity.ok().body(res);
+                } else {
+                    res.put("message", "에러");
                 }
-            } else {
-                res.put("message", "이미 프로젝트가 존재합니다.");
+            } catch (Exception e) {
+                e.printStackTrace();
+                res.put("message", "양식 에러");
             }
         } else {
             res.put("message", "잘못된 접근입니다.");
@@ -84,9 +80,10 @@ public class RestProjectController {
      * @return
      */
     @PostMapping("/delete")
-    public ResponseEntity<ProjectVO> deleteProject(ProjectVO vo, Principal principal) {
+    public ResponseEntity<ProjectVO> deleteProject(ProjectVO vo, Principal principal, HttpSession session) {
         if (principal.getName().equals(vo.getLeaderId())) {
             projectService.remove(vo);
+            session.setAttribute("userProjectState", "");
             return ResponseEntity.ok().body(vo);
         } else {
             return ResponseEntity.badRequest().body(vo);
@@ -100,7 +97,7 @@ public class RestProjectController {
      * @return
      */
     @PostMapping("/start")
-    public ResponseEntity<ProjectVO> progressProject(ProjectVO vo, Principal principal) {
+    public ResponseEntity<ProjectVO> startProject(ProjectVO vo, Principal principal) {
         if (principal.getName().equals(vo.getLeaderId())) {
             // todo 프로젝트 시작
             return ResponseEntity.ok().body(vo);
@@ -110,12 +107,29 @@ public class RestProjectController {
     }
 
     /***
+     * 프로젝트 업데이트
+     */
+    @PostMapping("/update")
+    public ResponseEntity<Integer> updateProject(ProjectVO vo) {
+        int result = projectService.updateProject(vo);
+        return ResponseEntity.ok().body(result);
+    }
+
+    /***
      * 팀원 추방
      */
+    @PostMapping("/expulsion")
+    public ResponseEntity<ProjectVO> expulsion(ProjectVO vo) {
+        return ResponseEntity.ok().body(vo);
+    }
 
     /***
      * 프로젝트 나가기
      */
+    @PostMapping("/exit")
+    public ResponseEntity<ProjectVO> exit(ProjectVO vo) {
+        return ResponseEntity.ok().body(vo);
+    }
 
     /***
      * 프로젝트 참가 요청
@@ -124,13 +138,12 @@ public class RestProjectController {
      * @return
      */
     @PostMapping("/request")
-    public ResponseEntity<Map<String, Object>> request(ProjectRequestVO vo, Principal principal, HttpSession session) {
+    public ResponseEntity<Map<String, Object>> request(ProjectRequestVO vo, Principal principal) {
         Map<String, Object> returnBody = new HashMap<>();
         if (principal != null) {
             int result = projectRequestService.request(vo);
             if (result > 0) {
                 projectService.updateApplyCount(vo.getProjectNo());
-                session.setAttribute("userProjectState", "지원중");
                 returnBody.put("result", "success");
                 return ResponseEntity.ok().body(returnBody);
             } else {
@@ -169,6 +182,12 @@ public class RestProjectController {
     @PostMapping("/approveRequest")
     public ResponseEntity<ProjectRequestVO> approveRequest(ProjectRequestVO vo, Principal principal) {
         projectRequestService.approve(vo);
+        return ResponseEntity.ok().body(vo);
+    }
+
+    @PostMapping("/deleteRequest")
+    public ResponseEntity<ProjectRequestVO> deleteRequest(ProjectRequestVO vo) {
+        projectRequestService.remove(vo);
         return ResponseEntity.ok().body(vo);
     }
 }

@@ -77,10 +77,12 @@
         UPDATE PROJECT SET HIT = HIT + 1
         WHERE PROJECT_NO = #{projectNo}
     </update>
+
     <update id="updateApplyCount">
         UPDATE PROJECT SET APPLY_RCNT = APPLY_RCNT + 1
         WHERE PROJECT_NO = #{projectNo}
     </update>
+
     <update id="updatePositionCount">
         UPDATE PROJECT
         <set>
@@ -113,44 +115,21 @@
         SELECT * FROM (
             SELECT t.*
               FROM DEVAL.PROJECT t
-             WHERE STATE = '1'
+             WHERE STATE IN ('1')
                AND RECRUIT_EDT >= sysdate
         <if test="langArray != null and langArray.size != 0">
             <foreach collection="langArray" item="item" index="index">
                 AND LANG LIKE '%'||#{item}||'%'
             </foreach>
         </if>
-               AND FRONT_RCNT > 0
+               AND  (FRONT_RCNT > 0
                 OR BACK_RCNT > 0
                 OR DESIGN_RCNT > 0
                 OR FULL_RCNT > 0
-                OR PLANNER_RCNT > 0
+                OR PLANNER_RCNT > 0)
              ORDER BY dbms_random.value
         ) WHERE ROWNUM <![CDATA[ <= ]]> 10
     </select>
-
-<!--    <select id="searchMainPageProject" resultType="co.yd.deval.project.service.ProjectVO">
-        SELECT * FROM (
-        SELECT t.*
-        FROM DEVAL.PROJECT t
-        WHERE STATE = '1'
-        AND RECRUIT_EDT >= sysdate - 1
-        <if test="lang != null">AND LANG LIKE '%'||#lang#||'%'</if>
-        <if test="projectName != null">AND PROJECT_NAME LIKE '%'||#projectName#||'%'</if>
-        <if test="process != null">AND PROCESS = #{process}</if>
-
-        <if test="totalRcnt != 0">AND TOTAL_RCNT = #{totalRcnt}</if>
-
-        <if test="frontRcnt != 0">AND FRONT_RCNT >= #{frontRcnt}</if>
-        <if test="backRcnt != 0">AND BACK_RCNT >= #{backRcnt}</if>
-        <if test="designRcnt != 0">AND DESIGN_RCNT >= #{designRcnt}</if>
-        <if test="fullRcnt != 0">AND FULL_RCNT >= #{fullRcnt}</if>
-        <if test="plannerRcnt != 0">AND PLANNER_RCNT >= #{plannerRcnt}</if>
-
-        <if test="projectTerm != 0">AND PROJECT_TERM BETWEEN 0 AND #{projectTerm}</if>
-        ORDER BY RECRUIT_EDT
-        ) WHERE ROWNUM <![CDATA[ <= ]]> 10
-    </select>-->
 
     <sql id="option">
         <where>

@@ -110,8 +110,8 @@
                 <!-- End Comments -->
 
                 <sec:authorize access="isAuthenticated()">
-                    <c:if test="${sessionScope.userProjectState eq '없음'
-                                or sessionScope.userProjectState eq '지원중'
+                    <c:if test="${sessionScope.userProjectState ne '팀장'
+                                and sessionScope.userProjectState ne '팀원'
                                 and project.state eq '1'}">
                         <!-- Add Comment -->
                         <div class="mb-80 mb-xs-40">
@@ -290,6 +290,23 @@
                     </div>
                     <!-- End Widget -->
 
+                    <!-- 설정 -->
+                    <div class="widget">
+
+                        <h3 class="widget-title">설정</h3>
+
+                        <div class="widget-body">
+                            <button type="button" onclick="" class="btn btn-mod btn-w btn-round btn-small">
+                                수정하기
+                            </button>
+                            <button type="button" onclick="" class="btn btn-mod btn-w btn-round btn-small" style="background: rgb(251 71 71 / 90%);">
+                                프로젝트 삭제
+                            </button>
+                        </div>
+
+                    </div>
+                    <!-- End Widget -->
+
                 </div>
 
             </div>
@@ -330,6 +347,49 @@
       success: function(data) {
         alert("지원하였습니다.");
         console.log(data);
+      },
+      error: function (error) {
+        alert("에러입니다.")
+        console.log(error);
+      }
+    })
+  }
+
+  /**
+   * todo 프로젝트 수정
+   */
+  function updateProject() {
+    $.ajax({
+      url: "/api/project/update",
+      type: "POST",
+      data: "",
+      dataType: "json",
+      success: function(data) {
+        alert("수정하였습니다.");
+        console.log(data);
+      },
+      error: function (error) {
+        alert("에러입니다.")
+        console.log(error);
+      }
+    })
+  }
+
+  /**
+   * 프로젝트 삭제
+   */
+  function deleteProject() {
+    $.ajax({
+      url: "/api/project/delete",
+      type: "POST",
+      data: {
+        "projectNo": ${project.projectNo},
+        "leaderId": ${project.leaderId}
+      },
+      dataType: "json",
+      success: function(data) {
+        alert("프로젝트가 삭제되었습니다.");
+        location.href = "/project/main.do";
       },
       error: function (error) {
         alert("에러입니다.")
