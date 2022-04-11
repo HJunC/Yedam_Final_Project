@@ -32,7 +32,7 @@
                          <c:if test="${not empty study}">
                            <a href="studyReq.do" class="btn btn-mod btn-w btn-small btn-round mx-md-1">Team Requestor</a>
                         </c:if>
-                           <a href="chat.do">채팅</a>
+                          <!--  <a href="chat.do">채팅</a> -->
                         </div>
 					</div>
 				</div>
@@ -56,308 +56,100 @@
                         <!-- Works Grid -->
                         <ul class="works-grid work-grid-5 clearfix hide-titles" id="work-grid"> 
                             
-                            <!-- Work Item (Lightbox) -->
-                            <li class="work-item mix photography" style="width: 130px; ">
-                                <a href="${resources }/images/portfolio/full-project-1.jpg" class="work-lightbox-link mfp-image">
-                                    <div class="work-img">
-                                        <div class="work-img-bg wow-p scalexIn"></div>
-                                        <img src="${resources }/images/studyimg/main/01 (1).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
-                                    </div>
-                                    <div class="work-intro">
-                                        <h3 class="work-title">Green Leaf</h3>
-                                        <div class="work-descr">
-                                            Lightbox 
-                                        </div>
-                                    </div>
-                                </a>
+                         	<li class="work-item mix branding" style="width: 100px; padding: 10px;">
+                                 <img src="${resources }/images/studyimg/main/01 (1).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
-                            <!-- End Work Item -->
                             
-                            <!-- Work Item (External Page) -->
-                            <li class="work-item mix branding design" style="width: 130px;">
-                                <a href="portfolio-single-1-dark.html" class="work-ext-link">
-                                    <div class="work-img">
-                                        <div class="work-img-bg wow-p scalexIn"></div>
-                                        <img src="${resources }/images/studyimg/main/01 (2).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
-                                    </div>
-                                    <div class="work-intro">
-                                        <h3 class="work-title">Photo Lighting</h3>
-                                        <div class="work-descr">
-                                            External Page
-                                        </div>
-                                    </div>
-                                </a>
+                          	<li class="work-item mix branding" style="width: 100px; padding: 10px;">
+                                 <img src="${resources }/images/studyimg/main/01 (2).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
-                            <!-- End Work Item -->
                             
-                            <!-- Work Item (External Page) -->
-                            <li class="work-item mix branding" style="width: 130px;">
-                                <a href="portfolio-single-1-dark.html" class="work-ext-link">
-                                    <div class="work-img">
-                                        <div class="work-img-bg wow-p scalexIn"></div>
-                                        <img src="${resources }/images/studyimg/main/01 (3).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
-                                    </div>
-                                    <div class="work-intro">
-                                        <h3 class="work-title">Green Branch</h3>
-                                        <div class="work-descr">
-                                            External Page
-                                        </div>
-                                    </div>
-                                </a>
+           
+                            <li class="work-item mix branding" style="width: 100px; padding: 10px;">
+                                 <img src="${resources }/images/studyimg/main/01 (3).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
-                            <!-- End Work Item -->
+                    
                             
-                            <!-- Work Item (External Page) -->
-                            <li class="work-item mix design photography" style="width: 130px;">
-                                <a href="portfolio-single-1-dark.html" class="work-ext-link">
-                                    <div class="work-img">
-                                        <div class="work-img-bg wow-p scalexIn"></div>
-                                        <img src="${resources }/images/studyimg/main/01 (4).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
-                                    </div>
-                                    <div class="work-intro">
-                                        <h3 class="work-title">White Chair</h3>
-                                        <div class="work-descr">
-                                            External Page
-                                        </div>
-                                    </div>
-                                </a>
+                            <li class="work-item mix branding" style="width: 100px; padding: 10px;">
+                                 <img src="${resources }/images/studyimg/main/01 (4).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
-                            <!-- End Work Item -->
                             
-                            <!-- Work Item (External Page) -->
-                            <li class="work-item mix design" style="width: 130px;">
-                                <a href="portfolio-single-1-dark.html" class="work-ext-link">
-                                    <div class="work-img">
-                                        <div class="work-img-bg wow-p scalexIn"></div>
-                                        <img src="${resources }/images/studyimg/main/01 (5).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
-                                    </div>
-                                    <div class="work-intro">
-                                        <h3 class="work-title">White Table</h3>
-                                        <div class="work-descr">
-                                            External Page
-                                        </div>
-                                    </div>
-                                </a>
+                            <li class="work-item mix branding" style="width: 100px; padding: 10px;">
+                                 <img src="${resources }/images/studyimg/main/01 (5).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
-                            <!-- End Work Item -->
                             
-                            <!-- Work Item (Lightbox) -->
-                            <li class="work-item mix design branding" style="width: 130px;">
-                                <a href="images/portfolio/full-project-6.jpg" class="work-lightbox-link mfp-image">
-                                    <div class="work-img">
-                                        <div class="work-img-bg wow-p scalexIn"></div>
-                                        <img src="${resources }/images/studyimg/main/01 (6).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
-                                    </div>
-                                    <div class="work-intro">
-                                        <h3 class="work-title">The Book</h3>
-                                        <div class="work-descr">
-                                            Lightbox
-                                        </div>
-                                    </div>
-                                </a>
+                           	<li class="work-item mix branding" style="width: 100px; padding: 10px;">
+                                 <img src="${resources }/images/studyimg/main/01 (6).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
-                            <!-- End Work Item -->
                             
-                            <!-- Work Item (External Page) -->
-                            <li class="work-item mix branding" style="width: 130px;">
-                                <a href="portfolio-single-2-dark.html" class="work-ext-link">
-                                    <div class="work-img">
-                                        <div class="work-img-bg wow-p scalexIn"></div>
-                                        <img src="${resources }/images/studyimg/main/01 (7).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
-                                    </div>
-                                    <div class="work-intro">
-                                        <h3 class="work-title">Green Branch</h3>
-                                        <div class="work-descr">
-                                            External Page
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <!-- End Work Item -->
+                           <li class="work-item mix branding" style="width: 100px; padding: 10px;">
+                                 <img src="${resources }/images/studyimg/main/01 (7).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                           </li>
+                           
+                           <li class="work-item mix branding" style="width: 100px; padding: 10px;">
+                                 <img src="${resources }/images/studyimg/main/01 (8).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                           </li>
                             
-                            <!-- Work Item (External Page) -->
-                            <li class="work-item mix design photography" style="width: 130px;">
-                                <a href="portfolio-single-3-dark.html" class="work-ext-link">
-                                    <div class="work-img">
-                                        <div class="work-img-bg wow-p scalexIn"></div>
-                                        <img src="${resources }/images/studyimg/main/01 (8).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
-                                    </div>
-                                    <div class="work-intro">
-                                        <h3 class="work-title">White Chair</h3>
-                                        <div class="work-descr">
-                                            External Page
-                                        </div>
-                                    </div>
-                                </a>
+                            <li class="work-item mix branding" style="width: 100px; padding: 10px;">
+                                 <img src="${resources }/images/studyimg/main/01 (9).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
-                            <!-- End Work Item -->
                             
-                            <!-- Work Item (External Page) -->
-                            <li class="work-item mix design" style="width: 130px;">
-                                <a href="portfolio-single-4-dark.html" class="work-ext-link">
-                                    <div class="work-img">
-                                        <div class="work-img-bg wow-p scalexIn"></div>
-                                        <img src="${resources }/images/studyimg/main/01 (9).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
-                                    </div>
-                                    <div class="work-intro">
-                                        <h3 class="work-title">White Table</h3>
-                                        <div class="work-descr">
-                                            External Page
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <!-- End Work Item -->
+                           <li class="work-item mix branding" style="width: 100px; padding: 10px;">
+                                 <img src="${resources }/images/studyimg/main/01 (15).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                           </li>
                             
-                            <!-- Work Item (External Page) -->
-                            <li class="work-item mix branding" style="width: 130px;">
-                                <a href="portfolio-single-5-dark.html" class="work-ext-link">
-                                    <div class="work-img">
-                                        <div class="work-img-bg wow-p scalexIn"></div>
-                                        <img src="${resources }/images/studyimg/main/01 (10).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
-                                    </div>
-                                    <div class="work-intro">
-                                        <h3 class="work-title">Green Branch</h3>
-                                        <div class="work-descr">
-                                            External Page
-                                        </div>
-                                    </div>
-                                </a>
+                           	<li class="work-item mix branding" style="width: 100px; padding: 10px;">
+                                 <img src="${resources }/images/studyimg/main/01 (11).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
-                            <!-- End Work Item -->
                             
-                            <!-- Work Item (External Page) -->
-                            <li class="work-item mix design photography" style="width: 130px;">
-                                <a href="portfolio-single-1-dark.html" class="work-ext-link">
-                                    <div class="work-img">
-                                        <div class="work-img-bg wow-p scalexIn"></div>
-                                        <img src="${resources }/images/studyimg/main/01 (11).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
-                                    </div>
-                                    <div class="work-intro">
-                                        <h3 class="work-title">White Chair</h3>
-                                        <div class="work-descr">
-                                            External Page
-                                        </div>
-                                    </div>
-                                </a>
+                           	<li class="work-item mix branding" style="width: 100px; padding: 10px;">
+                                 <img src="${resources }/images/studyimg/main/01 (12).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
-                            <!-- End Work Item -->
                             
-                            <!-- Work Item (External Page) -->
-                            <li class="work-item mix design" style="width: 130px;">
-                                <a href="portfolio-single-2-dark.html" class="work-ext-link">
-                                    <div class="work-img">
-                                        <div class="work-img-bg wow-p scalexIn"></div>
-                                        <img src="${resources }/images/studyimg/main/01 (12).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
-                                    </div>
-                                    <div class="work-intro">
-                                        <h3 class="work-title">White Table</h3>
-                                        <div class="work-descr">
-                                            External Page
-                                        </div>
-                                    </div>
-                                </a>
+                          	 <li class="work-item mix branding" style="width: 100px; padding: 10px;">
+                                 <img src="${resources }/images/studyimg/main/01 (13).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
-                            <!-- End Work Item -->
                             
-                            <!-- Work Item (External Page) -->
-                            <li class="work-item mix branding" style="width: 130px;">
-                                <a href="portfolio-single-5-dark.html" class="work-ext-link">
-                                    <div class="work-img">
-                                        <div class="work-img-bg wow-p scalexIn"></div>
-                                        <img src="${resources }/images/studyimg/main/01 (13).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
-                                    </div>
-                                    <div class="work-intro">
-                                        <h3 class="work-title">Green Branch</h3>
-                                        <div class="work-descr">
-                                            External Page
-                                        </div>
-                                    </div>
-                                </a>
+                           	<li class="work-item mix branding" style="width: 100px; padding: 10px;">
+                                 <img src="${resources }/images/studyimg/main/01 (14).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
-                            <!-- End Work Item -->
                             
-                            <!-- Work Item (External Page) -->
-                            <li class="work-item mix design photography" style="width: 130px;">
-                                <a href="portfolio-single-1-dark.html" class="work-ext-link">
-                                    <div class="work-img">
-                                        <div class="work-img-bg wow-p scalexIn"></div>
-                                        <img src="${resources }/images/studyimg/main/01 (14).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
-                                    </div>
-                                    <div class="work-intro">
-                                        <h3 class="work-title">White Chair</h3>
-                                        <div class="work-descr">
-                                            External Page
-                                        </div>
-                                    </div>
-                                </a>
+                            <li class="work-item mix branding" style="width: 100px; padding: 10px;">
+                                 <img src="${resources }/images/studyimg/main/01 (18).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
-                            <!-- End Work Item -->
                             
-                            <!-- Work Item (External Page) -->
-                            <li class="work-item mix design" style="width: 130px;">
-                                <a href="portfolio-single-2-dark.html" class="work-ext-link">
-                                    <div class="work-img">
-                                        <div class="work-img-bg wow-p scalexIn"></div>
-                                        <img src="${resources }/images/studyimg/main/01 (15).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
-                                    </div>
-                                    <div class="work-intro">
-                                        <h3 class="work-title">White Table</h3>
-                                        <div class="work-descr">
-                                            External Page
-                                        </div>
-                                    </div>
-                                </a>
+                          	<li class="work-item mix branding" style="width: 100px; padding: 10px;">
+                                 <img src="${resources }/images/studyimg/main/01 (17).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
-                            <!-- End Work Item -->
-                              <!-- Work Item (External Page) -->
-                            <li class="work-item mix design" style="width: 130px;">
-                                <a href="portfolio-single-2-dark.html" class="work-ext-link">
-                                    <div class="work-img">
-                                        <div class="work-img-bg wow-p scalexIn"></div>
-                                        <img src="${resources }/images/studyimg/main/01 (16).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
-                                    </div>
-                                    <div class="work-intro">
-                                        <h3 class="work-title">White Table</h3>
-                                        <div class="work-descr">
-                                            External Page
-                                        </div>
-                                    </div>
-                                </a>
+                            
+                            <li class="work-item mix branding" style="width: 125px; padding: 10px;">
+                                 <img src="${resources }/images/studyimg/main/1 (19).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
-                            <!-- End Work Item -->
-                              <!-- Work Item (External Page) -->
-                            <li class="work-item mix design" style="width: 130px;">
-                                <a href="portfolio-single-2-dark.html" class="work-ext-link">
-                                    <div class="work-img">
-                                        <div class="work-img-bg wow-p scalexIn"></div>
-                                        <img src="${resources }/images/studyimg/main/01 (17).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
-                                    </div>
-                                    <div class="work-intro">
-                                        <h3 class="work-title">White Table</h3>
-                                        <div class="work-descr">
-                                            External Page
-                                        </div>
-                                    </div>
-                                </a>
+                            
+                            <li class="work-item mix branding" style="width: 100px; padding: 10px;">
+                                 <img src="${resources }/images/studyimg/main/1 (20).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
-                            <!-- End Work Item -->
-                              <!-- Work Item (External Page) -->
-                            <li class="work-item mix design" style="width: 130px;">
-                                <a href="portfolio-single-2-dark.html" class="work-ext-link">
-                                    <div class="work-img">
-                                        <div class="work-img-bg wow-p scalexIn"></div>
-                                        <img src="${resources }/images/studyimg/main/01 (18).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />
-                                    </div>
-                                    <div class="work-intro">
-                                        <h3 class="work-title">White Table</h3>
-                                        <div class="work-descr">
-                                            External Page
-                                        </div>
-                                    </div>
-                                </a>
+                            
+                            <li class="work-item mix branding" style="width: 130px; padding: 10px;">
+                                 <img src="${resources }/images/studyimg/main/1 (21).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
-                            <!-- End Work Item -->
+                            
+                            <li class="work-item mix branding" style="width: 90px; padding: 10px;">
+                                 <img src="${resources }/images/studyimg/main/1 (23).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                            </li>
+                            
+                            <li class="work-item mix branding" style="width: 130px; padding: 10px;">
+                                 <img src="${resources }/images/studyimg/main/1 (24).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                            </li>
+                            
+                            <li class="work-item mix branding" style="width: 100px;">
+                                 <img src="${resources }/images/studyimg/main/1 (22).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                            </li>
+                            
+                             <li class="work-item mix branding" style="width: 100px; padding: 10px;">
+                                 <img src="${resources }/images/studyimg/main/1 (25).jpg" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                            </li>
+                           
                         </ul>
                         <!-- End Works Grid -->
                     </div>
