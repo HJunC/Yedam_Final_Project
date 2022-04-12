@@ -57,8 +57,8 @@
 	  						<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
 	  						<input type="hidden" name="location" >
 	  						
-								<label for="lang">언어</label> 
-								<select id="cqLang" name="lang1" class="input-md round form-control" style="width: 100px; height: 40px;">
+								<label for="lang" style="font-size: 17px;">언어 </label> 
+								<select id="cqLang" name="lang1" class="input-md round form-control" style="width: 100px; height: 30px; font-size: 13px;">
 									<option value="">전체</option>
 									<option>Apache Groovy</option>
 									<option>C</option>
@@ -96,8 +96,8 @@
 									<option>TypeScript</option>
 									<option>Zig</option>
 								</select>&nbsp;&nbsp;&nbsp;&nbsp; 
-								<label for="type">난이도</label> 
-								<select id="cqType" name="defficulty" class="input-md round form-control" style="width: 100px; height: 40px;">
+								<label for="type" style="font-size: 17px;">난이도</label> 
+								<select id="cqType" name="defficulty" class="input-md round form-control" style="width: 100px; height: 30px; font-size: 13px;">
 									<option value="">전체</option>
 									<option value="상">상</option>
 									<option value="중">중</option>
@@ -105,7 +105,7 @@
 								</select>&nbsp;&nbsp;&nbsp;&nbsp; 
 								<input type="text" name="codeSearch" id="codeSearch" 
 								class="input-sm round" placeholder="검색" 
-								style="width: 300px; height: 40px;" />
+								style="width: 300px; height: 30px; font-size: 13px;" />
 								&nbsp;
 								<button type="submit" class="btn btn-mod btn-round btn-border-w btn-small">검색</button>
 							</form>
@@ -130,6 +130,7 @@
 								<th width="150">현재상태</th>
 							 </tr>
 							</thead>
+							<tbody style="font-size: 15px;">
 							<c:forEach items="${study }" var="std">
 								<tr onclick="studySearch('${std.studyNo }')">
 									<td>${std.studyNo }</td>
@@ -150,6 +151,7 @@
                 					</c:choose>
 								</tr>
 							</c:forEach>
+							</tbody>
 							</table>
 						</div>
 						<!-- End Study List -->
@@ -266,9 +268,9 @@
 							<p>원활한 스터디 참가를 위해서 정보를 입력해주세요</p>
 						</div>
 						<br>
-						<div class="ml-auto">
+						<!-- <div class="ml-auto">
 							<button class="btn danger" id="btn_md_cls">CLOSE</button>
-						</div>
+						</div> -->
 						
 						<!-- Modal close & Modal User data -->
 						<script type="text/javascript">

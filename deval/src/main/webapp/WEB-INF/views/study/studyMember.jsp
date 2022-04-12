@@ -64,20 +64,6 @@
                             </c:forEach>
                             <!-- End Team item -->
                      </div>
-                        
-                        <div class="row section-text">
-                        
-                            <div class="col-lg-4 mb-md-50 mb-xs-30">
-                                <div class="lead-alt wow linesAnimIn" data-wow-offset="0" data-splitting="lines">
-                                    Our mission is to make design simple and useful.
-                                </div>
-                            </div>
-                            
-                            <div class="col-lg-8 mb-sm-50 mb-xs-30 wow linesAnimIn" data-wow-offset="0" data-splitting="lines">
-                                Lorem ipsum dolor sit amet conseur adipisci inerene maximus ligula sempe metuse pelente mattis. Maecenas volutpat, diam eni sagittis quam porta quam. Sed id dolor consectetur fermentum volutpat accumsan purus. 
-                                Etiam sit amet fringilla lacus susantebe sit ullamcorper pulvinar neque porttitor. Integere lectus. Praesent sede nisi eleifend fermum orci amet, iaculis libero. Donec vel ultricies purus. Name dictum sem ipsumebe euliquam.
-                            </div>
-                        </div>
                     </div>
                 </section>
                 <!-- End Section -->     
@@ -120,9 +106,6 @@
                                             </div>
                                             <div class="ci-text">
                                                 ${study[0].location }
-                                            </div>
-                                            <div class="ci-link">
-                                                <a href="https://goo.gl/maps/7Vw1PBhxx5BaXStr8" target="_blank">See on the Map</a>
                                             </div>
                                         </div>
                                     </div>

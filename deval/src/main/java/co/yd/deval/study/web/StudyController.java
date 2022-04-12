@@ -78,8 +78,6 @@ public class StudyController {
     	vo.setLeaderId(user.getName());
     	n = studyDao.studyInsert(vo);
     	
-    	
- 
     	if(n != 0) {
     		reqvo.setMemberId(user.getName());
     		reqvo.setStudyNo(studyDao.findMaxStudyNo());
@@ -88,7 +86,6 @@ public class StudyController {
     		reqvo.setLicense(invo.getLicense());
     		reqvo.setPresent(invo.getPresent());
     		n = studyDao.studyTeamLeaderInsert(reqvo);
-    		
     	}
     	return Integer.toString(n);
     }
