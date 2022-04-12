@@ -67,8 +67,27 @@
         </div>
         <!-- End Bar Item -->
 
-        <c:if test="${project.state eq '2'}">
-            <button type="button" class="btn btn-mod btn-w btn-round btn-large" style="background-color: aqua;">프로젝트 시작하기</button>
+        <c:if test="${project.state eq '2' and project.leaderId eq member.name}">
+
+            <!-- Lightbox Modal -->
+            <a href="#test-modal" class="btn btn-mod btn-w btn-medium round mt-10 lightbox-gallery-5 mfp-inline">프로젝트 시작하기</a>
+
+            <div id="test-modal" class="mfp-hide">
+                <h3>프로젝트를 시작할까요? 🎪</h3>
+                <h5>총 프로젝트 기간 ${project.projectTerm}일</h5>
+                <div class="d-flex justify-content-between mb-40">
+
+                    <div class="form-group">
+                        시작일<input type="date" class="input-lg round form-control" name="projectSdt" id="projectSdt" readonly>
+                    </div>
+                    <div class="form-group">
+                        종료일<input type="date" class="input-lg round form-control" name="projectEdt" id="projectEdt" readonly>
+                    </div>
+                </div>
+                <button type="button" onclick="startProject()" class="btn btn-mod btn-round btn-large">시작</button>
+            </div>
+            <!-- End Lightbox Modal -->
+
         </c:if>
 
     </div>
@@ -290,18 +309,9 @@
                         <h3 class="widget-title">진행 기간 (${project.projectTerm}일)</h3>
 
                         <div class="widget-body">
-                            <ul class="clearlist widget-menu">
-                                <li>
-                                    <div class="form-group">
-                                        시작일<input type="date" class="input-lg round form-control bg-dark-input" value="${project.projectSdt}">
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="form-group">
-                                        종료일<input type="date" class="input-lg round form-control bg-dark-input" value="${project.projectEdt}">
-                                    </div>
-                                </li>
-                            </ul>
+                            <fmt:formatDate value="${project.projectSdt}" type="both" pattern="yyyy-MM-dd"/>
+                            ~
+                            <fmt:formatDate value="${project.projectEdt}" type="both" pattern="yyyy-MM-dd"/>
                         </div>
 
                     </div>
@@ -366,18 +376,30 @@
   });
 
   /**
-   * 작성시간 설정
+   * 작성시간 표시
    */
   moment.locale('ko');
   var createAt = document.getElementById("createAt");
-  createAt.append(moment("<fmt:formatDate value="${project.recruitSdt}" type="both" pattern="yyyy-MM-dd hh:mm:ss"/>").fromNow());
+  createAt.append(moment("<fmt:formatDate value="${project.recruitSdt}" type="both" pattern="yyyy-MM-dd HH:mm:ss"/>").fromNow());
 
-  // progressBar
+  /**
+   * 프로젝트 시작 시간 설정
+   */
+  var today = new Date();
+  var projectSdtInput = document.getElementById("projectSdt");
+  projectSdtInput.setAttribute("value", moment(today).format("YYYY-MM-DD"));
+  var projectEdtInput = document.getElementById("projectEdt");
+  projectEdtInput.setAttribute("value", moment(today.setDate(today.getDate() + ${project.projectTerm})).format("YYYY-MM-DD"));
+  $("#projectSdt").on("change", (e) => {
+    const sdtDate = new Date(projectSdtInput.value);
+    projectEdtInput.setAttribute("value", moment(sdtDate.setDate(sdtDate.getDate() + ${project.projectTerm})).format("YYYY-MM-DD"));
+  })
+
+  /**
+   * progressBar
+   */
   var progressBar = document.getElementById("progressBar");
   progressBar.setAttribute("aria-valuenow", "5");
-
-  var today = new Date();
-  today = moment(today).format("YYYY-MM-DD");
 
   /**
    * 프로젝트 합류 요청 ajax
@@ -447,14 +469,15 @@
   /**
    * 프로젝트 시작
    */
-  function startProject(projectSdt, projectEdt) {
+  function startProject() {
     $.ajax({
       url: "../api/project/start",
       type: "POST",
       data: {
         "projectNo": ${project.projectNo},
-        projectSdt,
-        projectEdt,
+        "leaderId": '${member.name}',
+        "projectSdt": $("input[name=projectSdt]").val(),
+        "projectEdt": $("input[name=projectEdt]").val(),
       },
       dataType: "json",
       success: function(res) {

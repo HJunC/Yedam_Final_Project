@@ -99,9 +99,14 @@ public class RestProjectController {
     @PostMapping("/start")
     public ResponseEntity<ProjectVO> startProject(ProjectVO vo, Principal principal, HttpSession session) {
         if (principal.getName().equals(vo.getLeaderId())) {
-            projectService.startProject(vo);
-            session.setAttribute("isWait", false);
-            return ResponseEntity.ok().body(vo);
+            try {
+                projectService.startProject(vo);
+                session.setAttribute("isWait", false);
+                return ResponseEntity.ok().body(vo);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return ResponseEntity.badRequest().body(vo);
+            }
         } else {
             return ResponseEntity.badRequest().body(vo);
         }

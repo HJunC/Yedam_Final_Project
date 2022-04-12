@@ -125,7 +125,6 @@ public class ProjectController {
                 }
             }
         }
-        
         return "project/projectDetail";
     }
 
