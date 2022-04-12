@@ -16,12 +16,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import co.yd.deval.board.service.BoardService;
 import co.yd.deval.board.service.BoardVO;
-import co.yd.deval.board.service.BCommentService;
-import co.yd.deval.board.service.BCommentVO;
-import co.yd.deval.board.service.FileManageService;
+import co.yd.deval.comment.service.CommentService;
+import co.yd.deval.comment.service.CommentVO;
 import co.yd.deval.common.Criteria;
 import co.yd.deval.common.PageDTO;
-import co.yd.deval.project.service.ProjectVO;
   
 @Controller
 @RequestMapping("/board")
@@ -30,7 +28,7 @@ public class BoardController {
 	private BoardService boardDao;
 
 	@Autowired
-	private BCommentService commentDao;
+	private CommentService commentDAO;
 
 	@Autowired
 	private String uploadPath;
@@ -41,6 +39,8 @@ public class BoardController {
 	 */
 	@GetMapping("/free.do")
 	public String free(Model model, BoardVO vo, Criteria cri) {
+		if (cri.getPageNum() == 0) cri.setPageNum(1);
+		if (cri.getAmount() == 0) cri.setAmount(10);
 		vo.setBoardTypeNo(1);
         vo.setCriteria(cri);
         List<BoardVO> boardList = boardDao.getListWithPaging(vo);
@@ -50,9 +50,6 @@ public class BoardController {
         return "board/free";
     }
 
-	
-	
-	
 	/**
 	 * 글쓰기 화면 이동
 	 */
@@ -157,13 +154,12 @@ public class BoardController {
 	 * @param model
 	 */
 	@PostMapping("/boardSelect.do")
-	public String boardSelect(BoardVO vo, Model model, BCommentVO cvo) {
+	public String boardSelect(BoardVO vo, Model model, CommentVO cvo) {
 		boardDao.boardHitUp(vo.getBoardNo());
-		boardDao.boardRecUp(vo.getBoardNo());
 		cvo.setBoardNo(vo.getBoardNo());
 
 		model.addAttribute("board", boardDao.boardSelect(vo));
-		model.addAttribute("comments", commentDao.commentSelectList(cvo));
+		model.addAttribute("comments", commentDAO.commentSelectList(cvo));
 		return "board/boardDetail";
 	}
 
