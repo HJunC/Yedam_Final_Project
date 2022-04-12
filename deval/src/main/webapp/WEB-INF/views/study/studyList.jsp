@@ -377,6 +377,7 @@
 		
 	};
 $(document).ready(function() {
+	
 	$("select[name=defficulty]").val('${param.defficulty}');
 	$("select[name=lang1]").val('${param.lang1}');
 });
