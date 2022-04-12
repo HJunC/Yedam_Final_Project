@@ -34,4 +34,9 @@ public class TradeLogServiceImpl implements TradeLogService {
 		return map.updateRefuse(tradeNo);
 	}
 
+	@Override
+	public int AcceptTradeLog(int tradeNo) {
+		return map.AcceptTradeLog(tradeNo);
+	}
+
 }

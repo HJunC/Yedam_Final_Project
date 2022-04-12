@@ -60,9 +60,12 @@ public class MentoController {
     }
     
     @PostMapping("/mentoInsert.do")
-    public String mentoInsert(MentoVO mento, MultipartFile file) {
-		MemberVO user = (MemberVO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	mento.setMentoId(user.getUsername());
+    public String mentoInsert(MentoVO mento, MultipartFile file, Principal principal) {
+		//MemberVO user = (MemberVO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	MemberVO user = new MemberVO();
+    	if(principal != null) {
+    		mento.setMentoId(principal.getName());
+    	}
     	System.out.println(file.getOriginalFilename()+ "==========");
     	String originalName = file.getOriginalFilename();
     	String fileType = originalName.substring(originalName.lastIndexOf(".") + 1, originalName.length());

@@ -16,4 +16,8 @@
 									#{ownerId},
 									#{entryId})
 	</insert>
+	<select id="selectChatRoom" resultType="co.yd.deval.chat.service.ChatRoomVO">
+		SELECT * FROM CHATROOM
+		WHERE ROOM_ID = #{roomId}
+	</select>
 </mapper>

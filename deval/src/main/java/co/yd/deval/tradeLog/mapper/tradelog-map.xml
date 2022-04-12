@@ -39,4 +39,9 @@
 		SET STATE = '환불'
 		WHERE TRADE_LOG_NO = #{tradeLogNo}
 	</update>
+	<update id="AcceptTradeLog" parameterType="int">
+		UPDATE TRADE_LOG
+		SET STATE = '처리중'
+		WHERE TRADE_LOG_NO = #{tradeLogNo}
+	</update>
 </mapper>

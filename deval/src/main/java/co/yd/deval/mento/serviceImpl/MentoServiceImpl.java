@@ -35,8 +35,8 @@ public class MentoServiceImpl implements MentoService{
 	}
 
 	@Override
-	public int mentoUpdate(MentoVO vo) {
-		return map.mentoUpdate(vo);
+	public int mentoUpdate(String id) {
+		return map.mentoUpdate(id);
 	}
 
 	@Override

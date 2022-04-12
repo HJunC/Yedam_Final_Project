@@ -204,6 +204,7 @@
             			var startTm = td.eq(12).find('input').val();
             			var endTm = td.eq(13).find('input').val();
             			var mentiId = $('#mentiId').val();
+            			var tradeLogNo = $('#tradeLogNo').val();
             			obj["mentoServiceNo"] = serviceNo;
             			obj["startDate"] = startDate;
             			obj["endDate"] = endDate;
@@ -211,6 +212,7 @@
             			obj["endTm"] = endTm;
             			obj["mentoId"] = '${mentis[0].mentoId}';
             			obj["mentiId"] = mentiId;
+            			obj["tradeLogNo"] = tradeLogNo;
             			list.push(obj);
             		});
             		if(list.length != 0){
@@ -221,7 +223,7 @@
             				data : JSON.stringify(list),
             				contentType : 'application/json',
             				success : function(data) {
-            					as.send
+            					
             				}
             			});
             			

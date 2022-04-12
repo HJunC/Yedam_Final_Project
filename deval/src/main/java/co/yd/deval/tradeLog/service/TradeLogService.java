@@ -10,4 +10,6 @@ public interface TradeLogService {
 	
 	//환불 후 상태 변경
 	int updateRefuse(int tradeNo);
+	//수락 후 상태변경
+	int AcceptTradeLog(int tradeNo);
 }

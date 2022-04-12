@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import co.yd.deval.chat.service.ChatRoomService;
+import co.yd.deval.member.service.MemberVO;
 
 /**
 * @package : co.yd.deval
@@ -22,8 +24,7 @@ import co.yd.deval.chat.service.ChatRoomService;
 **/
 @Controller
 public class HomeController {
-	@Autowired
-	private ChatRoomService chatRoomDAO;
+	
 	
 	public String mainPage() {
 		return "home/home";
@@ -39,16 +40,6 @@ public class HomeController {
 		return mainPage();
 	}
 	
-	@RequestMapping("/chat.do")
-	public String chat() {
-		return "chat/chat";
-	}
-	@GetMapping("/chatList.do")
-	public String chatList(Model model, Principal principal) { 
-		
-		model.addAttribute("list", chatRoomDAO.selectListChat(principal.getName()));
-		
-		return "chat/chatList";
-	}
+	
 	
 }

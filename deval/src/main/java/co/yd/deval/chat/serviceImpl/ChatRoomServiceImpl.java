@@ -24,4 +24,9 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 		return map.selectListChat(id);
 	}
 
+	@Override
+	public ChatRoomVO selectChatRoom(int roomId) {
+		return map.selectChatRoom(roomId);
+	}
+
 }

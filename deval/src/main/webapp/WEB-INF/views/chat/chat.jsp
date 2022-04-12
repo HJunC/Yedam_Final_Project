@@ -107,19 +107,38 @@
 	<br><br><br><br><br><br><br><br><br>
 	<div id="main-container">
 		<div id="chat-container">
-			
+		<c:forEach items="${chats}" var="chat">
+			<c:if test="${chat.writer == userId}">
+			<div class='my-chat-box'>
+				<div class='chat my-chat'>${chat.subject}</div>
+				<div class='chat-info'>${chat.logDate}</div>
+			</div>
+			</c:if>
+			<c:if test="${chat.writer != userId}">
+			<div class='chat-box'>
+				<div class='chat'>${chat.writer}:${chat.subject}</div>
+				<div class='chat-info chat-box'>${chat.logDate}</div>
+			</div>
+			</c:if>
+		</c:forEach>
 		</div>
 		<div id="bottom-container">
 			<input id="inputMessage" type="text">
 			<input id="btn-submit" type="submit" value="전송" >
 		</div>
 	</div>
+	<input type="hidden" id="roomId" value="${roomId}">
+	<input type="hidden" id="userId" value="${userId}">
+	
 </body>
 <script type="text/javascript">
-	
+	//스크롤 자동 내리가 처리
+	$('#chat-container').scrollTop($('#chat-container')[0].scrollHeight);
 
+	var roomId = $('#roomId').val();
+	var userId = $('#userId').val();
 	var textarea = document.getElementById("messageWindow");
-	var webSocket = new WebSocket('WS://localhost/deval/chat?roomId=1');
+	var webSocket = new WebSocket('WS://localhost/deval/chat?roomId=${roomId}');
 	
 	// 로컬에서 테스트할 때 사용하는 URL입니다.
 	var inputMessage = document.getElementById('inputMessage');
@@ -134,9 +153,12 @@
 		onMessage(e);
 	};
 	
+	webSocket.onclose = function(e) {console.log(e)}
 	
 	function onMessage(e){
-		var chatMsg = event.data;
+		var chatMsg = e.data;
+		console.log(chatMsg);
+		console.log(chatMsg.subject);
 		var date = new Date();
 		var dateInfo = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
 		if(chatMsg.substring(0,6) == 'server'){
@@ -146,13 +168,12 @@
 			var $chat = $("<div class='chat-box'><div class='chat'>" + chatMsg + "</div><div class='chat-info chat-box'>"+ dateInfo +"</div></div>");
 			$('#chat-container').append($chat);
 		}
+		$('#chat-container').scrollTop($('#chat-container')[0].scrollHeight);
 		
-		
-		$('#chat-container').scrollTop($('#chat-container')[0].scrollHeight+20);
 	}
 	
 	function onOpen(e){
-		
+		console.log(e);
 	}
 	
 	function onError(e){
@@ -160,8 +181,6 @@
 	}
 	
 	function send(roomNum){
-		var roomId = roomNum;
-		var writer = "${id}";
 		var chatMsg = inputMessage.value;
 		if(chatMsg == ''){
 			return;
@@ -170,10 +189,17 @@
 		var dateInfo = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
 		var $chat = $("<div class='my-chat-box'><div class='chat my-chat'>" + chatMsg + "</div><div class='chat-info'>"+ dateInfo +"</div></div>");
 		$('#chat-container').append($chat);
-		webSocket.send(chatMsg + "," +roomId + "," + writer + "," + entryId);
+		chatMsg = {
+				subject :chatMsg,
+				writer : userId,
+				roomId : roomId
+		}
+		webSocket.send(JSON.stringify(chatMsg));
 		inputMessage.value = "";
-		$('#chat-container').scrollTop($('#chat-container')[0].scrollHeight+20);
+		$('#chat-container').scrollTop($('#chat-container')[0].scrollHeight);
 	}
+	//window.scroll(0, document.documentElement.scrollHeight);
+		$('#chat-container').scrollTop($('#chat-container')[0].scrollHeight);
 	
 </script>
 

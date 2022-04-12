@@ -25,6 +25,7 @@ import co.yd.deval.member.service.MemberService;
 import co.yd.deval.member.service.MemberVO;
 import co.yd.deval.mento.service.MentoServService;
 import co.yd.deval.mento.service.MentoServVO;
+import co.yd.deval.mento.service.MentoService;
 import co.yd.deval.mento.service.MentoVO;
 import co.yd.deval.mento.service.TestService;
 import co.yd.deval.tradeLog.service.TradeLogService;
@@ -43,6 +44,8 @@ public class MentoServController {
 	private MemberService memberDao;
 	@Autowired
 	private ChatRoomService chatRoomDAO;
+	@Autowired
+	private MentoService mentoDAO;
 	
 	@GetMapping("/mentoServChart.do")
 	@ResponseBody
@@ -142,11 +145,15 @@ public class MentoServController {
 			int n = testDAO.timeCheck(vo);
 			System.out.println(vo);
 			if(n == 0) {
+				//수락시 피블 + 1
+				mentoDAO.mentoUpdate(vo.getMentoId());
 				//수락시 채팅방 생성
 				ChatRoomVO chatVo = new ChatRoomVO();
 				chatVo.setOwnerId(vo.getMentoId());
 				chatVo.setEntryId(vo.getMentiId());
 				chatRoomDAO.makeChatRoom(chatVo);
+				// tradeLog 상태 변경 '처리전'-> '처리중'
+				tradeDAO.AcceptTradeLog(vo.getTradeLogNo());
 				//해당 서비스의 시작날짜 부터 종료날짜까지 for문을 돌립니다.
 				for(Date sDate = vo.getStartDate(); sDate.before(datePuls(vo.getEndDate(), 1)); sDate = datePuls(sDate, 1)) {
 					//해당 서비스의 선택날짜의 시작시간 부터 종료시간까지 for문을 돌립니다.
