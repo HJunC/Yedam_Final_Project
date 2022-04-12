@@ -97,9 +97,10 @@ public class RestProjectController {
      * @return
      */
     @PostMapping("/start")
-    public ResponseEntity<ProjectVO> startProject(ProjectVO vo, Principal principal) {
+    public ResponseEntity<ProjectVO> startProject(ProjectVO vo, Principal principal, HttpSession session) {
         if (principal.getName().equals(vo.getLeaderId())) {
-            // todo 프로젝트 시작
+            projectService.startProject(vo);
+            session.setAttribute("isWait", false);
             return ResponseEntity.ok().body(vo);
         } else {
             return ResponseEntity.badRequest().body(vo);
@@ -193,8 +194,4 @@ public class RestProjectController {
         return ResponseEntity.ok().body(vo);
     }
 
-    @GetMapping("/test")
-    public ResponseEntity<ProjectVO> test(ProjectVO vo) {
-        return ResponseEntity.ok().body(vo);
-    }
 }

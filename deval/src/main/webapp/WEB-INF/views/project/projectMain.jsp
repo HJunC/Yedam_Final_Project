@@ -59,16 +59,22 @@
             <c:choose>
                 <c:when test="${not empty requestList}">
                     <c:forEach items="${requestList}" var="item">
-                        <p>
-                        ${item.projectNo } /
-                        ${item.memberId } /
-                        ${item.state } /
-                        ${item.subject } /
-                        ${item.position } /
-                        ${item.requestDt }
-                        <button type="button" class="btn btn-mod btn-w btn-medium btn-round" onclick="approveRequest('${item.memberId }', '${item.projectNo }', '${item.position }')">수락</button>
-                        <button type="button" class="btn btn-mod btn-w btn-medium btn-round" onclick="refuseRequest('${item.memberId }', '${item.projectNo }')">거절</button>
-                        </p>
+                        <div class="table-responsive">
+                            <table class="table shopping-cart-table">
+                                <tbody>
+                                    <tr class="active">
+                                        <td>${item.projectNo }</td>
+                                        <td>${item.memberId }</td>
+                                        <td>${item.state }</td>
+                                        <td>${item.subject }</td>
+                                        <td>${item.position }</td>
+                                        <td>${item.requestDt }</td>
+                                        <td><button type="button" class="btn btn-mod btn-w btn-medium btn-round" onclick="approveRequest('${item.memberId }', '${item.projectNo }', '${item.position }')">수락</button></td>
+                                        <td><button type="button" class="btn btn-mod btn-w btn-medium btn-round" onclick="refuseRequest('${item.memberId }', '${item.projectNo }')">거절</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </c:forEach>
                 </c:when>
 

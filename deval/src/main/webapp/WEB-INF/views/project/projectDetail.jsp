@@ -66,6 +66,11 @@
             </div>
         </div>
         <!-- End Bar Item -->
+
+        <c:if test="${project.state eq '2'}">
+            <button type="button" class="btn btn-mod btn-w btn-round btn-large" style="background-color: aqua;">프로젝트 시작하기</button>
+        </c:if>
+
     </div>
 </section>
 <!-- End Home Section -->
@@ -113,7 +118,12 @@
                                 </a>
                                 <div class="media-body">
                                     <div class="comment-item-data">
-                                        <div class="comment-author">${item.memberId}</div>${item.position}
+                                        <div class="comment-author">${item.memberId}</div>
+                                        ${item.position eq 'FE' ? '프론트엔드 개발자' : null}
+                                        ${item.position eq 'BE' ? '백엔드 개발자' : null}
+                                        ${item.position eq 'FS' ? '풀스택 개발자' : null}
+                                        ${item.position eq 'DE' ? '디자이너' : null}
+                                        ${item.position eq 'PL' ? '기획자' : null}
                                     </div>
                                 </div>
                             </li>
@@ -262,16 +272,11 @@
                             <div class="widget">
                                 <h3 class="widget-title">포지션 정보</h3>
                                 <div class="widget-body">
-                                    <p class="mb-1">프론트엔드 개발자</p>
-                                    <p class="badge bg-secondary">코장</p>
-                                    <p class="mb-1">백엔드 개발자</p>
-                                    <p class="badge bg-secondary">브랜든</p>
-                                    <p class="mb-1">풀스택 개발자</p>
-                                    <p class="badge bg-secondary">코딩이뭐야</p>
-                                    <p class="mb-1">디자이너</p>
-                                    <p class="badge bg-secondary">한글</p>
-                                    <p class="mb-1">기획자</p>
-                                    <p class="badge bg-secondary">한국어</p>
+                                    <p class="mb-1">프론트엔드 개발자 <span class="badge bg-info" id="feCount"></span></p>
+                                    <p class="mb-1">백엔드 개발자  <span class="badge bg-info" id="beCount"></span></p>
+                                    <p class="mb-1">풀스택 개발자  <span class="badge bg-info" id="fsCount"></span></p>
+                                    <p class="mb-1">디자이너  <span class="badge bg-info" id="deCount"></span></p>
+                                    <p class="mb-1">기획자  <span class="badge bg-info" id="plCount"></span></p>
                                 </div>
                             </div>
                         </c:otherwise>
@@ -425,7 +430,7 @@
       type: "POST",
       data: {
         "projectNo": ${project.projectNo},
-        "leaderId": ""
+        "leaderId": '${project.leaderId}'
       },
       dataType: "json",
       success: function(res) {
@@ -439,4 +444,46 @@
     })
   }
 
+  /**
+   * 프로젝트 시작
+   */
+  function startProject(projectSdt, projectEdt) {
+    $.ajax({
+      url: "../api/project/start",
+      type: "POST",
+      data: {
+        "projectNo": ${project.projectNo},
+        projectSdt,
+        projectEdt,
+      },
+      dataType: "json",
+      success: function(res) {
+        console.log(res);
+        alert("프로젝트가 시작되었습니다.");
+        location.reload();
+      },
+      error: function (error) {
+        alert("에러입니다.")
+        console.log(error);
+      }
+    })
+  }
+
+  var feCount = 0;
+  var beCount = 0;
+  var fsCount = 0;
+  var deCount = 0;
+  var plCount = 0;
+  <c:forEach items="${team }" var="item">
+  <c:if test="${item.position eq 'FE'}">feCount++</c:if>
+  <c:if test="${item.position eq 'BE'}">beCount++</c:if>
+  <c:if test="${item.position eq 'FS'}">fsCount++</c:if>
+  <c:if test="${item.position eq 'DE'}">deCount++</c:if>
+  <c:if test="${item.position eq 'PL'}">plCount++</c:if>
+  </c:forEach>
+  $("#feCount").html(feCount);
+  $("#beCount").html(beCount);
+  $("#fsCount").html(fsCount);
+  $("#deCount").html(deCount);
+  $("#plCount").html(plCount);
 </script>
