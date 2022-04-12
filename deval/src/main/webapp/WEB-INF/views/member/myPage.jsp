@@ -50,7 +50,7 @@
 					<h2>나의 정보</h2>
 					<hr>
 					<div>
-						<img src="upload/${member.profileImg}" alt="..">
+						<img src="upload/profile/${member.profileImg}" alt="..">
 						<table class="table">
 							<tr>
 								<th>아이디</th>
@@ -72,17 +72,6 @@
 								<th>포인트</th>
 								<td>${member.cashPt}</td>
 							</tr>
-							<tr>
-								<th>이력서</th>
-								<td colspan="5">
-									<c:if test="${empty member.resume}">
-									등록된 이력서가 없습니다.
-									</c:if>
-									<c:if test="${not empty member.resume}">
-									${member.resume}
-									</c:if>
-								</td>
-							</tr>
 						</table>
 					</div>
 				</div>
@@ -92,7 +81,7 @@
 					<h2>정보 수정</h2>
 					<hr>
 					<div>
-						<form id="infoUpdFrm" action="myInfoUpdate.do" method="post" enctype="multipart/form-data">
+						<form id="infoUpdFrm" action="myInfoUpdate.do" method="post" enctype="multipart/form-data" onsubmit="return infoInputCheck()">
 							<table class="table">
 								<tr>
 									<th>아이디</th>
@@ -103,11 +92,11 @@
 								<tr>
 									<th>이메일</th>
 									<td colspan="3">
-										<input class="form-control" type="email" id="mail" name="mail" value="">
+										<input class="form-control" type="email" id="mail" name="mail">
 									</td>
 									<th>이름</th>
 									<td>
-										<input class="form-control" type="text" id="name" name="name" value="">
+										<input class="form-control" type="text" id="name" name="name">
 									</td>
 								</tr>
 								<tr>
@@ -128,17 +117,6 @@
 									<th id="pwdChk" colspan="6"></th>
 								</tr>
 								<tr>
-									<th>이력서</th>
-									<td colspan="5">
-										<c:if test="${empty member.resume}">
-											<input type="file" name="file" id="resumeFile">
-										</c:if>
-										<c:if test="${not empty member.resume}">
-											<input type="file" name="file" id="resumeFile">
-										</c:if>
-									</td>
-								</tr>
-								<tr>
 									<th>프로필 사진 변경</th>
 									<td colspan="5">
 										<input type="file" name="imgFile" id="profileImg">
@@ -148,24 +126,6 @@
 							<input type="submit" class="btn btn-primary" value="수정">
 							<input type="reset" class="btn btn-danger" value="취소">
 						</form>
-					</div>
-				</div>
-			
-				<!-- 구인 신청 이력을 보여주는 div -->
-				<div id="offer_rec" class="border border-white" style="height:1000px;display:none">
-					<h2>구인 신청 이력</h2>
-					<hr>
-					<div>
-						<div>
-						<c:if test="${empty offers}">
-							구인 신청 이력이 없습니다.
-						</c:if>
-						<c:if test="${not empty offers}">
-							<c:forEach items="${offers}" var="offer">
-							
-							</c:forEach>
-						</c:if>
-						</div>					
 					</div>
 				</div>
 				
@@ -245,7 +205,6 @@
                             </li>
                                	<ul id="tag">
                                		<li id="info_update">정보수정</li>
-                               		<li id="offer_record">구인 신청 이력</li>
                                	</ul>
                             <li id="myProject">
                                 마이 프로젝트
@@ -286,6 +245,7 @@
 						$('#my_info_box').css('display','block');
 					});
 	
+	// 마이프로젝트를 누를 시 ajax를 통해 나의 프로젝트 현황을 보여줌
 	$('#myProject').on('click',function(){
 						$('#tag').children().css('display','none');
 						$('#info_box').children().css('display','none');
@@ -323,6 +283,7 @@
 						});
 					   });
 	
+	// 마이스터디를 누를 시 ajax를 통해 나의 스터디 현황을 보여줌
 	$('#myStudy').on('click',function(){
 						$('#tag').children().css('display','none');
 						$('#info_box').children().css('display','none');
@@ -366,12 +327,6 @@
 							$('#info_update_box').css('display','block');
 						})
 	
-	$('#offer_record').on('click',function(){
-							$('#info_box').children().css('display','none');
-							$('#offer_rec').css('display','block');
-						  })
-	
-	
 	// 비밀번호 변경시 입력한 비밀번호가 비밀번호 확인에 입력한 비밀번호와 일치하는지 확인하는 function					
 	$('#pwdCheck').on('change',function(){
 		if($('#pwd').val() == $('#pwdCheck').val()){
@@ -382,6 +337,16 @@
 			$('#pwdChk').text('비밀번호가 일치하지 않습니다.').css('color','red');
 		}
 	});
+	
+	// 정보 변경시 미입력한 값이 존재하는지 확인
+	function infoInputCheck(){
+		if($('#mail').val() == "" && $('#name').val() == "" && $('#profileImg').val() == "" && $('#pwdChk').css('color') == 'rgb(255, 255, 255)'){
+			alert('변경하는 값이 존재하지 않습니다.')
+			return false;
+		} else {
+			return true;
+		}
+	}
 	
 	function makeNotTr(n){
 		var tr = $('<tr>');

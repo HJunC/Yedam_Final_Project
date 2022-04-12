@@ -36,6 +36,7 @@
 						<div class="form-group">
 							<label for="memberId">아이디</label>
 							<input type="text" name="memberId" id="memberId" class="input-lg round form-control" placeholder="Enter id">
+							<button type="button" id="btn" class="btn btn-outline-primary" onclick="idDuplecatedCheck()">중복 확인</button>
 						</div>
 						<div class="form-group">
 							<label for="memberPassword">비밀번호</label>
@@ -48,11 +49,11 @@
 						</div>
 						<div class="form-group">
 							<label for="memberMail">이메일</label>
-							<input type="email" name="mail" id="memberMail" class="input-lg round form-control" placeholder="Enter email">
+							<input type="email" name="mail" id="memberMail" class="input-lg round form-control" placeholder="Enter email" required="required">
 						</div>
 						<div class="form-group">
 							<label for="memberName">이름</label>
-							<input type="text" name="name" id="memberName" class="input-lg round form-control" placeholder="Enter name">
+							<input type="text" name="name" id="memberName" class="input-lg round form-control" placeholder="Enter name" required="required">
 						</div>
 
 					</div>
@@ -86,6 +87,10 @@
 			}
 			return false;
 		}
+		if(btn.value == '') {
+			alert('아이디 중복을 확인해주세요');
+			return false;
+		}
 	}
 
 	function pwdCheck(){
@@ -101,5 +106,29 @@
 			checkWord.innerText = '비밀번호가 일치하지 않습니다.';
 		}
 
+	}
+	
+	function idDuplecatedCheck(){
+		btn.value == '';
+		var id = memberId.value;
+		if (id == ''){
+			alert('아이디를 입력해주세요');
+			memberId.focus();
+		} else {
+			$.ajax({
+				url:"idCheck.do",
+				data : {id : id},
+				success : function(data){
+					if(data){
+						alert('사용가능한 아이디입니다.');
+						btn.value = 'yes';
+					} else {
+						alert('이미 존재하는 아이디입니다.');
+						memberId.value = '';
+						memberId.focus();
+					}
+				}
+			})
+		}
 	}
 </script>

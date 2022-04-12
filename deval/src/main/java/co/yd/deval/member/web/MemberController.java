@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import co.yd.deval.member.service.LoginService;
 import co.yd.deval.member.service.MemberService;
 import co.yd.deval.member.service.MemberVO;
 import co.yd.deval.project.service.ProjectService;
@@ -31,7 +32,7 @@ import co.yd.deval.study.service.StudyVO;
 
 @Controller
 public class MemberController {
-	
+
 	@Autowired
 	private MemberService memberDao;
 	@Autowired
@@ -39,9 +40,11 @@ public class MemberController {
 	@Autowired
 	private StudyService studyDao;
 	@Autowired
+	private LoginService loginDAO;
+	@Autowired
 	private String uploadPath;
 	
-	
+	//로그인 화면으로 이동
 	@RequestMapping("/loginForm.do")
 	public String loginForm(HttpServletRequest request) {
 		String referer = (String) request.getHeader("REFERER");
@@ -49,12 +52,21 @@ public class MemberController {
 		return "member/loginForm";
 	}
 	
-
+	//회원가입 화면으로 이동
 	@RequestMapping("/signUpForm.do")
 	public String signUpForm() {
 		return "member/signUpForm";
 	}
 	
+	//아이디 중복체크 기능
+	@GetMapping("idCheck.do")
+	@ResponseBody
+	public ResponseEntity<Boolean> idCheck(String id) {
+		boolean result = loginDAO.idCheck(id);
+		return ResponseEntity.ok().body(result);
+	}
+	
+	//회원가입 실행
 	@PostMapping("/signUp.do")
 	public String signUp(MemberVO vo) {
 		int r = memberDao.memberInsert(vo);
@@ -62,63 +74,67 @@ public class MemberController {
 			return "redirect:loginForm.do";
 		}
 		return "redirect:signUpForm.do";
-		
-	}
 
+	}
+	
+	//마이페이지로 이동
 	@GetMapping("/myPage.do")
 	public String myPage(Model model, Principal user) {
 		MemberVO vo = new MemberVO();
 		vo.setMemberId(user.getName());
-		model.addAttribute("member",memberDao.memberSelect(vo));
+		model.addAttribute("member", memberDao.memberSelect(vo));
 		return "member/myPage";
 	}
-	
+
+	//마이페이지에서 내 정보 수정
 	@PostMapping("/myInfoUpdate.do")
-	@ResponseBody
-	public ResponseEntity<Integer> myInfoUpdate(MemberVO vo, MultipartFile imgFile){
+	public String myInfoUpdate(MemberVO vo, MultipartFile imgFile) {
 		String originalName = imgFile.getOriginalFilename();
-    	String fileType = originalName.substring(originalName.lastIndexOf(".") + 1, originalName.length());
-    	String fileName = UUID.randomUUID().toString() + "." + fileType;
-    	String pathName = uploadPath + "profile/" + fileName;
-    	File dest = new File(pathName);
-    	try {
-    		FileCopyUtils.copy(imgFile.getBytes(), dest);
-    	} catch (IllegalStateException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (!originalName.equals("")) {
+			String fileType = originalName.substring(originalName.lastIndexOf(".") + 1, originalName.length());
+			String fileName = UUID.randomUUID().toString() + "." + fileType;
+			String pathName = uploadPath + "profile/" + fileName;
+			File dest = new File(pathName);
+			try {
+				FileCopyUtils.copy(imgFile.getBytes(), dest);
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			vo.setProfileImg(fileName);
 		}
-    	vo.setProfileImg(fileName);
-    	int r = memberDao.memberUpdate(vo);
-    	if (r != 0) {
-    		return ResponseEntity.ok().body(1);
-    	}
-		return ResponseEntity.ok().body(0);
+		int r = memberDao.memberUpdate(vo);
+		return "redirect:myPage.do";
 	}
-	
+
+	// 마이페이지에서 내가 참여한 스터디 이력들 불러오는 ajax
 	@GetMapping("/myStudies.do")
 	@ResponseBody
-	public ResponseEntity<Map<String,Object>> myStudies(Principal user) {
-		Map<String,Object> map = new HashMap<>();
+	public ResponseEntity<Map<String, Object>> myStudies(Principal user) {
+		Map<String, Object> map = new HashMap<>();
 		map.put("wait", studyDao.findWaitingStudy(user.getName()));
 		map.put("study", studyDao.findStudyByNo(user.getName()));
 		return ResponseEntity.ok().body(map);
 	}
-	
+
+	// 마이페이지에서 내가 참여한 프로젝트 이력을 불러오는 ajax
 	@GetMapping("/myProjects.do")
 	@ResponseBody
-	public ResponseEntity<List<ProjectVO>> myProjects(Principal user){
-		Map<String,Object> map = new HashMap<>();
+	public ResponseEntity<List<ProjectVO>> myProjects(Principal user) {
+		Map<String, Object> map = new HashMap<>();
 		map.put("wait", projectDao.findWaitingProject(user.getName()));
 		map.put("project", projectDao.findProjectByNo(user.getName()));
 		return ResponseEntity.ok().body(null);
 	}
-
+	
+	//기업페이지로 이동
 	@GetMapping("/coPage.do")
 	public String coPage() {
 		return "member/coPage";
 	}
-	
+
+	//멤버의 캐쉬포인트 충전
 	@PostMapping("/updatePoint.do")
 	@ResponseBody
 	public void updatePoint(@RequestParam("cashPt") int cashPt, @RequestParam("memberId") String memberId) {
@@ -127,16 +143,5 @@ public class MemberController {
 		map.put("cashPt", cashPt);
 		memberDao.memberCashUpdate(map);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }
