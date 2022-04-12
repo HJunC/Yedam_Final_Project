@@ -1,5 +1,7 @@
 package co.yd.deval.comment.web;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -56,5 +58,24 @@ public class CommentController {
 		vo.setCommentNo(commentNo);
 		int r = commentDAO.commentDelete(vo);
 		return "1";
+	}
+	
+	// ¿Ã¿∫øÏ
+//  @GetMapping("/boardDetail.do")
+//	public String  boardDetail(Model model) {
+//		model.addAttribute("commentList");
+//		System.out.println(model);
+//		return "board/boardDetail";
+//	}
+
+	@PostMapping("/commentPost.do")
+	@ResponseBody
+	public List<CommentVO> boardDetail(CommentVO vo, Model model) {
+		System.out.println("============================" + vo);
+		int n = commentDAO.commentInsert(vo);
+		if (n > 0) {
+			return commentDAO.commentSelectList(vo);
+		}
+		return null;
 	}
 }

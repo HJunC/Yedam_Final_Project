@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
+<c:set var="resources" value="${pageContext.request.contextPath }/resources" />
 
 <!DOCTYPE html>
 <html>
@@ -13,6 +15,7 @@
 	content="https://themeforest.net/user/bestlooker/portfolio">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>write here</title>
+<link rel="stylesheet" type="text/css" href="${resources }/css/custom/team-project-style.css">
 
 <style>
 @import url('https://fonts.googleapis.com/css?family=Varela+Round');
@@ -87,14 +90,13 @@ td {
 									name="subject" required="required"
 									class="input-mx square form-control"
 									placeholder="Enter subject" maxlength="400"> </textarea></td>
-						<tr>
-						 
-						  <td>파일선택</td>
-		      <td><input type="file" name="uploadFile" class="btn btn-warning"/></td>
-		   
-		   </tr>
+				 
 
-
+<tr>
+							<td >file</td>
+							<td> <input type="file" id="photo" name="file" accept="image/*"></td>
+	
+						</tr>
 					</table>
 
 					<h1 class="blog-page-title"></h1>
@@ -102,9 +104,8 @@ td {
 					<button class="btn btn-secondary" onclick="location.href='free.do'">목록으로</button>
 
 				</form>
-
-
-				<!-- Send Button -->
+				
+ 	<!-- Send Button -->
 				<div class="container relative">
 
 
@@ -129,7 +130,11 @@ td {
 
 			</div>
 		</div>
+		
+		
 	</section>
+
+
 
 </body>
 

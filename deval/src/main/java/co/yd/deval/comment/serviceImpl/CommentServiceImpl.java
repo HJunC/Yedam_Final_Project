@@ -13,21 +13,27 @@ import co.yd.deval.comment.service.CommentVO;
 public class CommentServiceImpl implements CommentService {
 
 	@Autowired
-	private CommentMapper map2;
+	private CommentMapper map;
 	
 	@Override
 	public List<CommentVO> commentSelectList(CommentVO vo) {
-		return map2.commentSelectList(vo);
+		return map.comSelectList(vo);
 	}
 
 	@Override
 	public int commentInsert(CommentVO vo) {
-		return map2.commentInsert(vo);
+		return map.comInsert(vo);
 	}
 
 	@Override
 	public int commentDelete(CommentVO vo) {
-		return map2.commentDelete(vo);
+		return map.comDelete(vo);
+	}
+
+	@Override
+	public CommentVO commentSelect(CommentVO vo) {
+		// TODO Auto-generated method stub
+		return map.comSelect(vo);
 	}
 
 }
