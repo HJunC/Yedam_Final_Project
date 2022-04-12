@@ -17,3 +17,33 @@
 .project-list a:hover {
     background-color: #3d3d3d;
 }
+.tags label {
+    display: inline-block;
+    margin: 0 2px 8px 0;
+    padding: 5px 7px 6px 7px;
+    border: 1px solid #ddd;
+    font-weight: normal;
+    color: #ccc;;
+    font-size: 15px;
+    text-decoration: none;
+    border-radius: 3px;
+    -webkit-transition: all 0.27s cubic-bezier(0.000, 0.000, 0.580, 1.000);
+    transition: all 0.27s cubic-bezier(0.000, 0.000, 0.580, 1.000);
+}
+.pagination {
+    padding: 24px 0;
+    display: flex;
+    justify-content: center;
+}
+.page-link {
+    background-color: #1b1b1b;
+}
+.page-link:hover {
+    background-color: #444444;
+}
+.page-item.disabled .page-link {
+    color: #545454;
+    pointer-events: none;
+    background-color: #1b1b1b;
+    border-color: #5f5f5f;
+}

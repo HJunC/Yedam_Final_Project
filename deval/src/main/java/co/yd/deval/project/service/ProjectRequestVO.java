@@ -1,10 +1,15 @@
 package co.yd.deval.project.service;
 
-import lombok.Data;
+import lombok.*;
 
 import java.sql.Date;
 
-@Data
+@Getter
+@Setter
+@ToString
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProjectRequestVO {
     private int projectNo;
     private String memberId;
@@ -12,4 +17,7 @@ public class ProjectRequestVO {
     private String subject;
     private String position;
     private Date requestDt;
+
+    private String updateState;
+    private int exceptionProjectNo;
 }
