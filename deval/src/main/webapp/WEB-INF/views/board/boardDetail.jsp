@@ -85,24 +85,23 @@ head
 									<tr>
 										<td>조회수 <input type="hidden" value="${board.hit}"
 											name="hit" id="hit">${board.hit}</td>
-									
+
 										<td>추천수 <input type="hidden" value="${board.recommend}"
 											name="recommend" id="recommend">${board.recommend}</td>
 									</tr>
-									<tr>
+									<%-- 	<tr>
 										<td>file</td>
 										<td class="post-prev-img" style="border-radius: 70%;"><a
 											href="#" img src="images/${board.photo}" id="photo"
 											alt="이미지 미리보기" width="100" height="200"></a></td>
-									</tr>
+									</tr> --%>
 									<tr>
 										<td scope="cols">Title <input type="hidden"
 											value="${board.title}" name="title" id="title">${board.title}</td>
 									</tr>
 
 									<tr>
-										<td scope="cols">Subject
-										<input type="hidden"
+										<td scope="cols">Subject <input type="hidden"
 											value="${board.subject}" name="subject" id="subject">${board.subject}</td>
 									</tr>
 									<%-- <tr>
@@ -125,11 +124,13 @@ head
 
 
 						<h4 class="blog-page-title"></h4>
-						<input class="btn btn-mod btn-round btn-border-w btn-small"
-							type="submit" value="게시글 추천" name="recommend" id="recommend">
-						<div class="mb-60 mb-md-30"></div>
+						<br>
 
+
+						<p class="btn btn-success" id="recommenBtn">게시글추천</p>
+						<div class="mb-60 mb-md-30"></div>
 						<div align="center">
+
 							<form action="commentPost.do" method="post">
 								<textarea style="width: 50%" rows="2" cols="400" id="commentSub"
 									name="commentSub" required="required"
@@ -198,31 +199,40 @@ head
 					makeTr(data);
 				},
 				error : function() {
-					alert("다시 작성하세요.");
+					alert("다시");
 				}
 
 			})
 		});
 
+		$("#recommenBtn").on("click", function() {
+			$.ajax({
+				url : "recommend.do",
+				type : "POST",
+				data : {
+					"boardNo" : $("#boardNo").val()
+				},
+				dataType : "json",
+				success : function(data) {
+					document.getElementById('recommend').text = data;
+				}
+			})
+		});
+
 		function makeTr(data) {
 			$("#tbl").empty();
-			// 						<tr>
-			// 						
-			// 						<td></td>
-			// 						<td>안녕하세요</td>
-			// 						</tr>
-
 			$.each(data, function(idx, item) {
-				// 							console.log(item);
 				let tr = $("<tr>");
 				tr.append($("<th>").text("나도 한마디"), $("<td>").text(
-						item.commentDate), $("<td>").text(item.commentSub));
+					     item.commentDate), $("<td>").text(
+		                           item.commentSub));
 				$("#tbl").append(tr);
 			});
 		}
 	</script>
 
 	<script src="http://madalla.kr/js/jquery-1.8.3.min.js"></script>
+	
 	<script type="text/javascript">
 		$(function() {
 			$("#file").on('change', function() {

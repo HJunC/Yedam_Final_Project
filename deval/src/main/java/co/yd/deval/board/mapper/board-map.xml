@@ -12,15 +12,12 @@
 	</select>
 
 
-
-
 	<select id="boardSelect"
 		resultType="co.yd.deval.board.service.BoardVO">
 		select *
 		from board
 		where board_no = #{boardNo}
 	</select>
-
 
 	<insert id="boardInsert"
 		parameterType="co.yd.deval.board.service.BoardVO">
@@ -111,8 +108,10 @@
 	<update id="boardRecUp" parameterType="int">
 		UPDATE BOARD
 		SET
-		RECOMMEND =
-		RECOMMEND +1
+		RECOMMEND = RECOMMEND+1
 		where board_no=#{boardNo}
 	</update>
+	
+	
+	
 </mapper>
