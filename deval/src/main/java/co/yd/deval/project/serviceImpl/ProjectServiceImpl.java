@@ -6,6 +6,7 @@ import co.yd.deval.project.mapper.ProjectTeamMapper;
 import co.yd.deval.project.service.*;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -124,6 +125,21 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public int getTotalCount(ProjectVO vo) {
         return mapper.getTotalCount(vo);
+    }
+
+    @Override
+    @Transactional
+    public int startProject(ProjectVO vo) {
+        // 팀원들 상태 변경
+        ProjectTeamVO teamVO = ProjectTeamVO.builder()
+                .projectNo(vo.getProjectNo())
+                .updateState("2").build();
+        teamMapper.updateProjectTeam(teamVO);
+        // 프로젝트 상태 변경
+        // 프로젝트 시작날짜, 종료날짜
+        vo.setUpdateState("3");
+        if (vo.getProjectSdt() == null || vo.getProjectEdt() == null) return 0;
+        return mapper.updateProject(vo);
     }
 
     @Override

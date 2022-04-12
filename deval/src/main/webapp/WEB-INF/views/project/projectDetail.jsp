@@ -4,9 +4,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <c:set var="resources" value="${pageContext.request.contextPath}/resources"/>
+<link rel="stylesheet" href="${resources}/css/common/toastui-editor.min.css" />
+<link rel="stylesheet" href="${resources}/css/common/toastui-editor-dark.min.css" />
 
 <!-- Home Section -->
-<section class="small-section bg-dark-alfa-50 bg-scroll light-content" data-background="images/full-width-images/section-bg-19.jpg" id="home">
+<section class="small-section bg-dark-alfa-50 bg-scroll light-content" data-background="${resources}/images/full-width-images/section-bg-19.jpg" id="home">
     <div class="container relative pt-70">
 
         <div class="row">
@@ -68,7 +70,15 @@
 </section>
 <!-- End Home Section -->
 
-
+<style>
+    .team-list {
+        display: flex;
+        padding-bottom: 20px !important;
+    }
+    .team-list:last-child {
+        padding: 0 !important;
+    }
+</style>
 <!-- Section -->
 <section class="page-section bg-dark light-content">
     <div class="container relative">
@@ -81,20 +91,26 @@
                 <h4 class="blog-page-title">프로젝트 설명</h4>
 
                 <!-- Post -->
-                <div class="blog-item mb-80 mb-xs-40">${project.subject}</div>
+                <div class="blog-item mb-80 mb-xs-40">
+                    <div id="viewer"></div>
+                </div>
+                <script src="${resources}/js/common/toastui-editor-all.min.js"></script>
+
                 <!-- End Post -->
 
                 <!-- Comments -->
                 <div class="mb-80 mb-xs-40">
 
-                    <h4 class="blog-page-title">팀원 <small class="number">(${fn:length(team)})</small></h4>
+                    <h4 class="blog-page-title">팀원 <small class="number">(${fn:length(team)}/${project.totalRcnt})</small></h4>
 
                     <ul class="media-list comment-list clearlist">
 
                         <c:forEach items="${team }" var="item">
                             <!-- Comment Item -->
-                            <li class="media comment-item">
-                                <a class="float-start" href="#"><img class="media-object comment-avatar" src="${resources}/images/user-avatar.png" alt="" width="50" height="50"></a>
+                            <li class="team-list">
+                                <a class="float-start" href="#">
+                                    <img class="media-object comment-avatar" src="${resources}/images/user-avatar.png" alt="" width="50" height="50">
+                                </a>
                                 <div class="media-body">
                                     <div class="comment-item-data">
                                         <div class="comment-author">${item.memberId}</div>${item.position}
@@ -127,7 +143,8 @@
                     <c:if test="${sessionScope.userProjectState ne '팀장'
                                 and sessionScope.userProjectState ne '팀원'
                                 and project.state eq '1'
-                                and !isRequest}">
+                                and !isRequest
+                                and (project.frontRcnt + project.backRcnt + project.fullRcnt + project.designRcnt + project.plannerRcnt) != 0}">
                         <!-- Add Comment -->
                         <div class="mb-80 mb-xs-40">
 
@@ -214,7 +231,7 @@
                     <!-- 언어 -->
                     <div class="widget">
 
-                        <h3 class="widget-title">언어</h3>
+                        <h3 class="widget-title">사용 기술</h3>
 
                         <div class="widget-body">
                             <div class="tags">
@@ -335,6 +352,13 @@
 <script src="${resources}/js/moment.min.js"></script>
 <script src="${resources}/js/moment-with-locales.min.js"></script>
 <script>
+
+  const viewer = new toastui.Editor.factory({
+    el: document.querySelector("#viewer"),
+    viewer: true,
+    initialValue: '${project.subject}',
+    theme: 'dark'
+  });
 
   /**
    * 작성시간 설정

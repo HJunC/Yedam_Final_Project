@@ -66,7 +66,7 @@
                         ${item.subject } /
                         ${item.position } /
                         ${item.requestDt }
-                        <button type="button" class="btn btn-mod btn-w btn-medium btn-round" onclick="approveRequest('${item.memberId }', '${item.projectNo }')">수락</button>
+                        <button type="button" class="btn btn-mod btn-w btn-medium btn-round" onclick="approveRequest('${item.memberId }', '${item.projectNo }', '${item.position }')">수락</button>
                         <button type="button" class="btn btn-mod btn-w btn-medium btn-round" onclick="refuseRequest('${item.memberId }', '${item.projectNo }')">거절</button>
                         </p>
                     </c:forEach>
@@ -282,13 +282,14 @@
    * @param memberId
    * @param projectNo
    */
-  function approveRequest(memberId, projectNo) {
+  function approveRequest(memberId, projectNo, position) {
     $.ajax({
       url: "../api/project/approveRequest",
       type: "POST",
       data: {
         memberId,
-        projectNo
+        projectNo,
+        position
       },
       success: function (res) {
         console.log(res);

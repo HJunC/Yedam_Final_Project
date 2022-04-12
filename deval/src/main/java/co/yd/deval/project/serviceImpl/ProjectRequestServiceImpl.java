@@ -42,7 +42,6 @@ public class ProjectRequestServiceImpl implements ProjectRequestService {
     public int request(ProjectRequestVO vo) {
         // 지원자수 증가
         projectMapper.updateApplyCount(vo.getProjectNo());
-        // todo 같은 지원자 인지 체크
         return mapper.insertProjectRequest(vo);
     }
 
@@ -86,7 +85,7 @@ public class ProjectRequestServiceImpl implements ProjectRequestService {
         teamMapper.insertProjectTeam(teamVO);
 
         // 요청 상태 변경
-        vo.setUpdateState("3");
+        vo.setUpdateState("2"); // 승인
         return mapper.updateProjectRequest(vo);
     }
 

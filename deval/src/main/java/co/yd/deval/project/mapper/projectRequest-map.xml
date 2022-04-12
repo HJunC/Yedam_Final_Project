@@ -20,7 +20,7 @@
     <update id="updateProjectRequest">
         UPDATE PROJECT_REQUEST
         <set>
-            <if test="state != null">STATE = #{updateState},</if>
+            <if test="updateState != null">STATE = #{updateState},</if>
             <if test="subject != null">SUBJECT = #{subject},</if>
             <if test="position != null">POSITION = #{position},</if>
         </set>

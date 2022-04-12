@@ -1,5 +1,5 @@
 begin
-  for i in 1..30 LOOP
+  for i in 30..100 LOOP
     INSERT INTO DEVAL.PROJECT (PROJECT_NO, PROJECT_NAME, STATE, PROCESS, RECRUIT_SDT, RECRUIT_EDT, SUBJECT, LANG, TOTAL_RCNT, PROJECT_SDT, FRONT_RCNT, BACK_RCNT, DESIGN_RCNT, PROJECT_EDT, FULL_RCNT, PLANNER_RCNT, PROJECT_TERM, HIT, APPLY_RCNT, LEADER_ID)
     VALUES (i, '테스트 프로젝트'||i, '1', 'ON', sysdate, '2022-04-23 13:00:00', '아무나 신청', 'React, node', 3, null, 1, 1, 1, null, '0', 0, 20, 0, 0, 'test'||i);
   end loop;

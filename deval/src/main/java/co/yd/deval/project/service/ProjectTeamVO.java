@@ -14,4 +14,6 @@ public class ProjectTeamVO {
     private String position;
     private String isLeader;
     private String state;
+
+    private String updateState;
 }

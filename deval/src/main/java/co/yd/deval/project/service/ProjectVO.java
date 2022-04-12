@@ -59,5 +59,5 @@ public class ProjectVO {
     private Criteria criteria;
 
     private List<String> langArray;
-
+    private String updateState;
 }

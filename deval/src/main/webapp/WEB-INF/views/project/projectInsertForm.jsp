@@ -3,6 +3,8 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <c:set var="resources" value="${pageContext.request.contextPath}/resources"/>
+<link rel="stylesheet" href="${resources}/css/common/toastui-editor.min.css" />
+<link rel="stylesheet" href="${resources}/css/common/toastui-editor-dark.min.css" />
 
 <!-- Home Section -->
 <section class="page-section bg-dark-alfa-50 bg-scroll" data-background="${resources}/images/full-width-images/section-bg-11.jpg" id="home">
@@ -169,7 +171,10 @@
                         </div>
                         <div class="form-group">
                             <label for="subject">프로젝트 설명</label>
-                            <textarea name="subject" id="subject" class="input-lg round form-control bg-dark-input" required aria-required="true"></textarea>
+
+                            <div id="editor"></div>
+                            <script src="${resources}/js/common/toastui-editor-all.min.js"></script>
+
                         </div>
 
                     </div>
@@ -188,8 +193,24 @@
     </div>
 </section>
 <!-- End Section -->
+
 <script src="${resources}/js/moment.min.js"></script>
 <script>
+  /**
+   * toast 에디터 적용
+   */
+  const { Editor } = toastui;
+
+  const editorObject = new Editor({
+    el: document.querySelector('#editor'),
+    previewStyle: 'vertical',
+    height: '500px',
+    initialEditType: 'wysiwyg',
+    theme: 'dark'
+  });
+
+  editorObject.getMarkdown();
+
   var today = new Date();
   const recruitEdt = document.getElementById("recruitEdt");
   recruitEdt.setAttribute("value", moment(today).format("YYYY-MM-DD"));
@@ -198,6 +219,9 @@
 
   $("input[name=langArray]").on("change", handleLangCheckbox);
 
+  /**
+   * 기술 체크박스 관련
+   */
   function handleLangCheckbox() {
     var lang = "";
     var list = $("input[name=langArray]:checked");
@@ -212,8 +236,12 @@
     $("input[name=lang]").val(lang);
   }
 
+
   document.getElementById("positionCountBox").addEventListener("change", handlePositionCount);
 
+  /**
+   * 인원수 체크
+   */
   function handlePositionCount(e) {
     var f = parseInt($("#frontRcnt").val());
     var b = parseInt($("#backRcnt").val());
@@ -229,6 +257,9 @@
     $("#totalRcnt").val(total);
   }
 
+  /**
+   * 프로젝트 생성 요청
+   */
   function handleSubmit() {
     var data = $("#insertForm").serializeObject();
     var isDone = true;
@@ -244,7 +275,7 @@
     }
     delete data.langArray;
     data.recruitEdt = data.recruitEdt + " " + $("#recruitEdtTime").val() + ":00";
-
+    data.subject = editorObject.getHTML();
     if (isDone) {
         $.ajax({
           type: "POST",
@@ -268,5 +299,4 @@
         })
     }
   }
-
 </script>

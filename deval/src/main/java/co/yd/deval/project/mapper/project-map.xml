@@ -53,7 +53,7 @@
         UPDATE PROJECT
         <set>
             <if test="projectName != null">PROJECT_NAME = #{projectName},</if>
-            <if test="state != null">STATE = #{state},</if>
+            <if test="updateState != null">STATE = #{updateState},</if>
             <if test="process != null">PROCESS = #{process},</if>
             <if test="recruitEdt != null">RECRUIT_EDT = #{recruitEdt},</if>
             <if test="subject != null">SUBJECT = #{subject},</if>
@@ -66,9 +66,7 @@
             <if test="projectEdt != null">PROJECT_EDT = #{projectEdt},</if>
             <if test="fullRcnt != 0">FULL_RCNT = #{fullRcnt},</if>
             <if test="plannerRcnt != 0">PLANNER_RCNT = #{plannerRcnt},</if>
-            <if test="projectTerm != null">PROJECT_TERM = #{projectTerm},</if>
-            <if test="applyRcnt != null">APPLY_RCNT = #{applyRcnt},</if>
-            <if test="leaderId != null">LEADER_ID = #{leaderId},</if>
+            <if test="projectTerm != 0">PROJECT_TERM = #{projectTerm},</if>
         </set>
         WHERE PROJECT_NO = #{projectNo}
     </update>
