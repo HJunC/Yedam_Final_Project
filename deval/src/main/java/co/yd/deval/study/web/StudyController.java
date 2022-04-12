@@ -113,6 +113,11 @@ public class StudyController {
     // 스터디 검색 찾기 -> 전체목록
     @GetMapping("/studyList.do")
     public String studyList(StudyVO vo, Model model, Principal User, Criteria cri) {
+    	if (vo.getLocation() == null || vo.getLocation().equals("")) vo.setLocation(null);
+    	if (vo.getDefficulty() == null || vo.getDefficulty().equals("")) vo.setDefficulty(null);
+    	if (vo.getLang1() == null || vo.getLang1().equals("")) vo.setLang1(null);
+    	if (cri.getPageNum() == 0) cri.setPageNum(1);
+        if (cri.getAmount() == 0) cri.setAmount(10);
     	vo.setCriteria(cri);
     	model.addAttribute("study", studyDao.getListWithPaging(vo));
     	model.addAttribute("pageMaker", new PageDTO(cri, studyDao.getTotalCount(vo)));
@@ -204,8 +209,12 @@ public class StudyController {
     
 	 @RequestMapping("/studyReqRefuse.do")
 	 @ResponseBody
-	 public ResponseEntity<Integer> studyReqRefuse(StudyReqVO vo) {
+	 public ResponseEntity<Integer> studyReqRefuse(StudyReqVO vo) throws Exception {
 		 int n = studyDao.studyTeamMemberUpdateRefuse(vo);
+		 
+		 if (n != 0) {
+			 mail.sendMailTest(memberDao.memberMailGet(vo.getMemberId()));
+		 }
 		 
 		 return ResponseEntity.ok().body(n);
 	 }
@@ -217,7 +226,7 @@ public class StudyController {
 		 vo.setStudyNo(rvo.getStudyNo());
 		 vo = studyDao.studySelectNo(vo);
 		 
-		 if(vo.getRcnt() >= vo.getMaxRcnt()) {
+		 if(vo.getRcnt() == vo.getMaxRcnt()) {
 			 int r = studyDao.studyEnd(vo);
 			 
 			 if(r != 0) {
@@ -228,13 +237,19 @@ public class StudyController {
 		 } else {
 			 studyDao.rcntMember(vo);
 			 int n= studyDao.studyTeamMemberUpdateAccept(rvo);
+			  if(vo.getRcnt()+1 == vo.getMaxRcnt()) {
+				  
+				  int r = studyDao.studyEnd(vo);
+				  
+				  if(r != 0) {
+						 studyDao.studyTeamMemberDelete(rvo);
+					 }
+			  }
 			 
 			 // 메일발송 시간 지연으로 인해 디자인 로딩창 넣기
 			 if (n != 0) {
-				
-				 mail.sendMailTest();
+				 mail.sendMailTest(memberDao.memberMailGet(rvo.getMemberId()));
 			 }
-			 
 			 return ResponseEntity.ok().body(n);
 		 }
 	 }

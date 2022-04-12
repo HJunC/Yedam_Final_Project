@@ -36,6 +36,8 @@ function drawMap(target) {
 			var loc = id.substr(sp, id.length);
 			var location;
 
+			
+
 			if (loc == 'Seoul') {
 				location = '서울특별시';
 
@@ -87,27 +89,13 @@ function drawMap(target) {
 			} else {
 				location = '제주특별자치도';
 			}
+			
+			console.log(location);
 			// 아작스에서 필요한 정보
 			// return 검색 값, 페이징처리
-			$.ajax({
-				url: "locationList.do",
-				data: { location: location },
-				dataType: "json",
-				success: function(data) {
-					console.log(data);
-					$('#locSearch>tbody').empty()
-					$.each(data, function(a, b) {
-						$('#locSearch>tbody').append(locSearch(b));
-					})
-				}
-
-			});
+			$("input[name=location]").val(location);
 
 		});
-
-
-
-
 	var states = svg
 		.append('g')
 		.attr('id', 'states')
@@ -188,7 +176,12 @@ function locSearch(idx) {
 	var td6 = $("<td>").text(idx.defficulty)
 	var td7 = $("<td>").text(idx.maxRcnt)
 	var td8 = $("<td>").text(idx.studySdt + "~" + idx.studyEdt)
+	if(idx.state == 2){
+		var td9 = $("<td>").html('<p class="badge bg-warning text-dark">모집완료</p>')
+	} else if(idx.state == 0) {
+		var td9 = $("<td>").html('<p class="badge bg-success">모집중</p>')
+	}
 
-	tr.append(td1, td2, td3, td4, td5, td6, td7, td8);
+	tr.append(td1, td2, td3, td4, td5, td6, td7, td8, td9);
 	return tr;
 }

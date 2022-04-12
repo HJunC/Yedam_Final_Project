@@ -274,9 +274,8 @@
 	<delete id="studyTeamMemberDelete" parameterType="co.yd.deval.study.service.StudyReqVO">
 		DELETE
 		FROM STUDY_REQUEST
-		WHERE MEMBER_ID = #{memberId}
-		AND
-		STUDY_NO = #{studyNo}
+		WHERE STUDY_NO = #{studyNo}
+		AND STATE = 0
 	</delete>
 	
 	<!-- Study Team VIEW -->
@@ -297,17 +296,30 @@
 	
 	<!-- Paging -->
 	<sql id="option">
+	
+		<if test="defficulty != null">
+			AND DEFFICULTY =#{defficulty}
+		</if>
+		<if test="location != null">
+			AND LOCATION = #{location}
+		</if>
+		<if test="lang1 != null">
+			AND (lang1 LIKE '%'||#{lang1}||'%'
+			OR lang2 LIKE '%'||#{lang1}||'%')
+		</if>
+	
     </sql>
+    
     <select id="getListWithPaging" resultType="co.yd.deval.study.service.StudyVO">
         <![CDATA[
         SELECT * FROM (
-            SELECT ROWNUM rn, t.*
+              SELECT ROWNUM rn, t.*
               FROM STUDY t
         ]]>
-	        <where>
-	            <include refid="option"></include>
-	            AND rownum <![CDATA[<=]]> #{criteria.pageNum} * #{criteria.amount}
-	        </where>
+        <where>
+            <include refid="option"></include>
+            AND rownum <![CDATA[<=]]> #{criteria.pageNum} * #{criteria.amount}
+        </where>
         )
         <![CDATA[
         WHERE rn > (#{criteria.pageNum} - 1) * #{criteria.amount}
@@ -318,7 +330,7 @@
         SELECT COUNT(*) FROM STUDY
         <where>
 	        <include refid="option"></include>
-	        AND study_no > 0        
+	        AND study_no > 0
         </where>
     </select>
 </mapper>

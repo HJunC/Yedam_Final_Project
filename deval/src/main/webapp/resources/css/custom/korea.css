@@ -3,8 +3,8 @@
 #container {
     width: 700px;
     min-height: 700px;
-    float: left;
     margin: 15px 35px;
+    padding: 20px;
 }
 #states path {
     fill: #585858;

@@ -54,4 +54,9 @@ public class MemberServiceImpl implements MemberService {
 		return 0;
 	}
 
+	@Override
+	public String memberMailGet(String id) {
+		return map.memberMailGet(id);
+	}
+
 }

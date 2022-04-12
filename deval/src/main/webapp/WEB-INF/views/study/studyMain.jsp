@@ -42,19 +42,17 @@
 			</div>
 		</div>
 		<!-- End Hero Content -->
-		<!-- Scroll Down -->
-			<div class="local-scroll scroll-down-wrap wow fadeInUpShort"
-				data-wow-offset="0">
-				<a href="#about" class="scroll-down"><i class="scroll-down-icon"></i>
-				<span class="sr-only">Scroll to the next section</span></a>
-			</div>
-		<!-- End Scroll Down -->
+	 	<!-- Scroll Down -->
+           <div class="local-scroll scroll-down-wrap wow fadeInUpShort" data-wow-offset="0">
+               <a href="#about" class="scroll-down"><i class="scroll-down-icon"></i><span class="sr-only">Scroll to the next section</span></a>
+           </div>
+        <!-- End Scroll Down -->
 		</div>
 	</section>
 					<!-- Main Body LANG Icon -->
 	  				<div class="container relative">
                         <!-- Works Grid -->
-                        <ul class="works-grid work-grid-5 clearfix hide-titles" id="work-grid"> 
+                        <ul class="works-grid work-grid-5 clearfix hide-titles" id="work-grid" style=""> 
                             
                          	<li class="work-item mix branding" style="width: 100px; padding: 10px;">
                                  <img src="${resources }/images/studyimg/main/01 (1).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     

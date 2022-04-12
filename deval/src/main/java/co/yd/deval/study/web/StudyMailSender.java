@@ -1,7 +1,6 @@
 package co.yd.deval.study.web;
 
 import javax.mail.internet.MimeMessage;
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -9,6 +8,8 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import co.yd.deval.member.service.MemberVO;
 
 /* 구현자: 김도연
  * 계정 정보 
@@ -24,17 +25,18 @@ public class StudyMailSender {
 	private JavaMailSender mailSender;
 	
 	@RequestMapping(value = "/sendMail", method = RequestMethod.GET)
-    public void sendMailTest() throws Exception{
+    public void sendMailTest(String email) throws Exception{
         
         String subject = "DevalVally_스터디참가";
         String content = "축하합니다! 스터디 참가가 완료되었습니다!";
         String from = "devalkims@gmail.com";
-        String to = "받는이@email.com";
+        String to = email; 
         
         try {
             MimeMessage mail = mailSender.createMimeMessage();
             MimeMessageHelper mailHelper = new MimeMessageHelper(mail,"UTF-8"); //단순히 텍스트만
-              
+           
+            
             /*
              * 이미지 등 멀티로 사용시엔 아래의 코드 사용 
              * MimeMessageHelper mailHelper = new MimeMessageHelper(mail,true,"UTF-8");
@@ -49,7 +51,7 @@ public class StudyMailSender {
             mailHelper.setSubject(subject);
             mailHelper.setText(content, true);
             // true는 html을 사용하겠다는 의미입니다.
-            
+             
             /*
              * 단순한 텍스트만 사용하신다면 다음의 코드를 사용하셔도 됩니다. mailHelper.setText(content);
              */

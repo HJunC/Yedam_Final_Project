@@ -1,10 +1,8 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: admin
-  Date: 2022-03-25
-  Time: 오전 11:53
-  To change this template use File | Settings | File Templates.
---%>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
@@ -15,11 +13,11 @@
 
 <!-- 지도 -->
 <link rel="stylesheet" href="${resources}/css/custom/korea.css" />
-	<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
-	<script src="${resources}/js/study/common.js"></script>
-
-<html>
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+<script src="${resources}/js/study/common.js"></script>
+</head>
 <body>
+
 	<!-- Title -->
                 <section class="small-section bg-dark-alfa-50" data-background="images/full-width-images/section-bg-19.jpg">
                     <div class="container relative">
@@ -39,67 +37,166 @@
                 </section>
       <!-- End Title -->
       
-      <!-- Start Study Map -->
-     <script type="text/javascript" src="${resources}/js/study/d3.js"></script>
-    <script type="text/javascript" src="${resources}/js/study/korea.js"></script>
-     <div id="container"></div>
+     <!-- Start Study Map -->
+     <div class="d-flex justify-content-center" style="padding: 40px;">
+     	<script type="text/javascript" src="${resources}/js/study/d3.js"></script>
+    	<script type="text/javascript" src="${resources}/js/study/korea.js"></script>
+    	<div id="container" align="center"></div>
+     </div>	
      <!-- End Study Map -->
-                
-      <!-- Start Search List -->
-      <form class="form" id="searchForm" action="studyList.do" style="position: sticky; top: 100px" method="get">
-      
-                    <input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
-					<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
-      </form>
-                
-    <!-- Start Study List -->
-	<div align="center">
-		<table id="locSearch" style="width: 100%;">
-			<thead>
-				<tr class="row100 head">
-					<th>스터디번호</th>
-					<th>지역</th>
-					<th>언어</th>
-					<th>스터디명</th>
-					<th>스터디장</th>
-					<th>난이도</th>
-					<th>인원</th>
-					<th>학습기간</th>
-				</tr>
-			</thead>
-			
-			<tbody>
-				<c:forEach items="${study}" var="std">
-					<tr onclick="studySearch('${std.studyNo }')">
-						<td>${std.studyNo }</td>
-						<td>${std.location }</td>
-						<td>${std.lang1 }<c:if test="${not empty std.lang2 }">
-						/ ${std.lang2 }
-						</c:if></td>
-						<td>${std.studyNm }</td>
-						<td>${std.leaderId }</td>
-						<td>${std.defficulty }</td>
-						<td>${std.rcnt}/${std.maxRcnt }</td>
-						<td>${std.studySdt }~${std.studyEdt }</td>
-					</tr>
-				</c:forEach>
-			</tbody>
-		</table>
-		 <!-- End Study List -->
+     
+     
+     <!-- Start Search List -->
+      	<div align="center">
+		<section class="page-section bg-dark light-content pt-0">
+			<div class="container relative">
+					<div class="row">
+						<div>
+							<form class="form" id="searchForm" action="studyList.do" style="position: sticky; top: 100px" method="get">
+							<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
+	  						<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
+	  						<input type="hidden" name="location" >
+	  						
+								<label for="lang">언어</label> 
+								<select id="cqLang" name="lang1" class="input-md round form-control" style="width: 100px; height: 40px;">
+									<option value="">전체</option>
+									<option>Apache Groovy</option>
+									<option>C</option>
+									<option>C#</option>
+									<option>C++</option>
+									<option>Crystal</option>
+									<option>Clojure</option>
+									<option>Dart</option>
+									<option>Elixir</option>
+									<option>Elm</option>
+									<option>Erlang</option>
+									<option>Fortran</option>
+									<option>Go</option>
+									<option>GraphQL</option>
+									<option>Haskell</option>
+									<option>Java</option>
+									<option>Javascript</option>
+									<option>Julia</option>
+									<option>Kotlin</option>
+									<option>LaTeX</option>
+									<option>Lua</option>
+									<option>Markdown</option>
+									<option>Nim</option>
+									<option>Octave</option>
+									<option>PHP</option>
+									<option>Perl</option>
+									<option>Python</option>
+									<option>R</option>
+									<option>Ruby</option>
+									<option>Rust</option>
+									<option>Scala</option>
+									<option>Shell Script</option>
+									<option>Solidity</option>
+									<option>Swift</option>
+									<option>TypeScript</option>
+									<option>Zig</option>
+								</select>&nbsp;&nbsp;&nbsp;&nbsp; 
+								<label for="type">난이도</label> 
+								<select id="cqType" name="defficulty" class="input-md round form-control" style="width: 100px; height: 40px;">
+									<option value="">전체</option>
+									<option value="상">상</option>
+									<option value="중">중</option>
+									<option value="하">하</option>
+								</select>&nbsp;&nbsp;&nbsp;&nbsp; 
+								<input type="text" name="codeSearch" id="codeSearch" 
+								class="input-sm round" placeholder="검색" 
+								style="width: 300px; height: 40px;" />
+								&nbsp;
+								<button type="submit" class="btn btn-mod btn-round btn-border-w btn-small">검색</button>
+							</form>
+						</div>
+					</div><br>
+					<!-- End Search List -->
+
+					<!-- Start Study List -->
+					<div class="table-responsive" >
+					<div class="container relative text-center" >
+						<table id="locSearch" class="table shopping-cart-table" >
+						  <thead>
+							<tr align="center">
+								<th width="120">팀번호</th>
+								<th width="250">지역</th>
+								<th width="300">언어</th>
+								<th width="500">스터디명</th>
+								<th width="150">스터디장</th>
+								<th width="150">난이도</th>
+								<th width="150">인원</th>
+								<th width="400">학습기간</th>
+								<th width="150">현재상태</th>
+							 </tr>
+							</thead>
+							<c:forEach items="${study }" var="std">
+								<tr onclick="studySearch('${std.studyNo }')">
+									<td>${std.studyNo }</td>
+									<td>${std.location }</td>
+									<td>${std.lang1 }<c:if test="${not empty std.lang2 }"> / ${std.lang2 }</c:if></td>
+									<td>${std.studyNm }</td>
+									<td>${std.leaderId }</td>
+									<td>${std.defficulty }</td>
+									<td>${std.rcnt}/${std.maxRcnt }</td>
+									<td>${std.studySdt }~${std.studyEdt }</td>
+									<c:choose>
+					                    <c:when test="${std.state eq '0'}">
+					                    	<td><p class="badge bg-success">모집중</p></td>
+					                    </c:when>
+					                    <c:when test="${std.state eq '2'}">
+					                    	<td><p class="badge bg-warning text-dark">모집완료</p></td>
+					                    </c:when>
+                					</c:choose>
+								</tr>
+							</c:forEach>
+							</table>
+						</div>
+						<!-- End Study List -->
+						
+						
+						<!-- Study Add button -->
+						<div align="right">
+							<c:if test="${studyfind.leaderId ne member.name}">
+		 						<c:if test="${empty list[0]}">
+									<input class="btn btn-mod btn-round btn-w btn-small" type="button" value="모집" onclick="location.href='addStudy.do'">
+								</c:if>
+							</c:if>
+							<a href="#mod_myinfo" id="mod_open" class="btn btn-mod btn-round btn-w btn-small lightbox-gallery-5 mfp-inline">내정보</a>
+						</div> 
+								
+								
+						
+						<!-- Pagination -->
+					       <div class="pagination" align="center">
+					          <ul class="pagination" id="pagination"></ul>
+					       </div>
+    				   <!-- End Pagination -->
+					</div>
+				</div>
+		</section>
+		<br>
 		
-		<c:if test="${studyfind.leaderId ne member.name}">
-		 <c:if test="${empty list[0]}">
-		  <div class="col-sm-6 col-md-3 col-lg-3 mb-40">
-               <div class="mb-10">
-               		<a href="addStudy.do" class="btn btn-mod btn-w btn-round btn-small">모집</a>
-               </div>
-          </div>
-		 </c:if>
-		</c:if>
+		<style>
+			.pagination {
+		    display: flex;
+		    padding-left: 0;
+		    list-style: none;
+		    justify-content: space-evenly;
+		}
+		</style>
 		
-		<!-- Modal Start -->
-		<a href="#mod_myinfo" id="mod_open"
-			class="btn btn-mod btn-w btn-medium round mt-10 lightbox-gallery-5 mfp-inline">내정보</a>
+		<style>
+			.page-item.active .page-link {
+    		z-index: 3;
+    		color: #fff;
+		    background-color: black;
+		    border-color: black;
+}
+		</style>
+	
+	
+	<!-- Modal Start -->
 		<style>
 		.mfp-content {
 			border: 1px solid #ddd;
@@ -233,7 +330,7 @@
 		</div>
 	<!-- End Modal -->
 	</div>
-	
+	${param.defficulty}
 	<!-- 게시글 번호 값으로 상세글 넘기기 -->
 	<div>
 		<form id="selfrm" action="studySelect.do" method="post">
@@ -247,34 +344,14 @@
 			document.forms.selfrm.submit();
 		}
 	</script>
-	
-		<!-- Pagination 페이징처리 시작-->
-<!-- 	<div class="pagination mt-30 mt-xs-10">
-		<a href=""><i class="fa fa-chevron-left"></i></a>
-		<a href="" class="active">1</a> <a href="">2</a>
-		<a href="">3</a>
-		<a href="">4</a>
-		<a href="">5</a>
-		<a href="">
-		<i class="fa fa-chevron-right"></i></a>
-	</div> -->
-	<!-- End Pagination 페이징처리 끝-->
-	  <!-- Pagination -->
-       <div class="pagination">
-          <ul class="pagination" id="pagination"></ul>
-       </div>
-      <!-- End Pagination -->
-
-<!-- ?pageNum=3&amount=3 -->
-
-
-<script src="${resources}/js/common/jQueryPage.js"></script>
-<script>
-    var total = ${pageMaker.total}
+    
+    <script src="${resources}/js/common/jQueryPage.js"></script>
+	<script>
+    var endPage = ${pageMaker.endPage}
     var current = ${pageMaker.cri.pageNum}
 
     window.pagObj = $('#pagination').twbsPagination({
-      totalPages: total,
+      totalPages: endPage,
       startPage: current,
       visiblePages: 5, // 최대로 보여줄 페이지
       prev: "<i class='fa fa-chevron-left'></i>", // Previous Button Label
@@ -297,8 +374,13 @@
   window.onload = function() {
 		console.log('test')
 	    drawMap('#container');
+		
 	};
-
+$(document).ready(function() {
+	$("select[name=defficulty]").val('${param.defficulty}');
+	$("select[name=lang1]").val('${param.lang1}');
+});
+	
 </script>
 </body>
 </html>
