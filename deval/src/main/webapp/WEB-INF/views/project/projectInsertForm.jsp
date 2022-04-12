@@ -3,6 +3,8 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <c:set var="resources" value="${pageContext.request.contextPath}/resources"/>
+<link rel="stylesheet" href="${resources}/css/common/toastui-editor.min.css" />
+<link rel="stylesheet" href="${resources}/css/common/toastui-editor-dark.min.css" />
 
 <!-- Home Section -->
 <section class="page-section bg-dark-alfa-50 bg-scroll" data-background="${resources}/images/full-width-images/section-bg-11.jpg" id="home">
@@ -58,7 +60,7 @@
 
                             <div class="row" id="positionCountBox">
                                 <div class="col input-group me-3">
-                                    <span class="input-group-text bg-dark" style="border-color: #5e646a;">프론트엔드</span>
+                                    <span class="input-group-text bg-dark" style="border-color: #5e646a;">프론트</span>
                                     <input type="number" id="frontRcnt" name="frontRcnt" class="input-lg round form-control bg-dark-input" min="0" max="7" value="0" >
                                     <div class="input-group-text bg-dark" style="border-color: #5e646a;">
                                         <input class="form-check-input mt-0" type="radio" value="FE" name="leaderPosition" checked required>
@@ -101,8 +103,45 @@
                             <input type="number" name="projectTerm" id="projectTerm" class="input-lg round form-control bg-dark-input" required aria-required="true" min="0" max="365" value="3">
                         </div>
                         <div class="form-group">
-                            <label for="lang">사용언어</label>
-                            <input type="text" name="lang" id="lang" class="input-lg round form-control bg-dark-input" placeholder="JAVA, Spring, React ..." required aria-required="true">
+                            <label for="lang">사용 기술<h6 id="viewLang"></h6></label>
+                            <script src="${resources}/js/common/Languages.js"></script>
+
+                            <div>
+                                <div class="tags" id="languagesBox"><p class="input-info mb-1">언어</p></div>
+                                <div class="tags" id="fplBox"><p class="input-info mb-1">프레임워크</p></div>
+                                <div class="tags" id="versionControlBox"><p class="input-info mb-1">버전관리</p></div>
+                                <div class="tags" id="databaseBox"><p class="input-info mb-1">DB</p></div>
+                            </div>
+                            <input type="hidden" name="lang" value="">
+
+                            <script>
+                              var checkBox = "";
+                              Language.forEach(item => {
+                                checkBox += '<input type="checkbox" class="btn-check" id="btncheck'+item+'" name="langArray" value="' + item + '">';
+                                checkBox += '<label class="btn btn-outline-primary" for="btncheck'+item+'">' + item + '</label>';
+                              })
+                              $("#languagesBox").append(checkBox);
+                              checkBox = "";
+                              FPL.forEach(item => {
+                                checkBox += '<input type="checkbox" class="btn-check" id="btncheck'+item+'" name="langArray" value="' + item + '">';
+                                checkBox += '<label class="btn btn-outline-primary" for="btncheck'+item+'">' + item + '</label>';
+                              })
+                              $("#fplBox").append(checkBox);
+                              checkBox = "";
+                              versionControl.forEach(item => {
+                                checkBox += '<input type="checkbox" class="btn-check" id="btncheck'+item+'" name="langArray" value="' + item + '">';
+                                checkBox += '<label class="btn btn-outline-primary" for="btncheck'+item+'">' + item + '</label>';
+                              })
+                              $("#versionControlBox").append(checkBox);
+                              checkBox = "";
+                              Database.forEach(item => {
+                                checkBox += '<input type="checkbox" class="btn-check" id="btncheck'+item+'" name="langArray" value="' + item + '">';
+                                checkBox += '<label class="btn btn-outline-primary" for="btncheck'+item+'">' + item + '</label>';
+                              })
+                              $("#databaseBox").append(checkBox);
+                              checkBox = "";
+                            </script>
+
                         </div>
                         <div class="form-group">
                             <label>진행방식</label>
@@ -132,7 +171,10 @@
                         </div>
                         <div class="form-group">
                             <label for="subject">프로젝트 설명</label>
-                            <textarea name="subject" id="subject" class="input-lg round form-control bg-dark-input" required aria-required="true"></textarea>
+
+                            <div id="editor"></div>
+                            <script src="${resources}/js/common/toastui-editor-all.min.js"></script>
+
                         </div>
 
                     </div>
@@ -151,16 +193,55 @@
     </div>
 </section>
 <!-- End Section -->
+
 <script src="${resources}/js/moment.min.js"></script>
 <script>
+  /**
+   * toast 에디터 적용
+   */
+  const { Editor } = toastui;
+
+  const editorObject = new Editor({
+    el: document.querySelector('#editor'),
+    previewStyle: 'vertical',
+    height: '500px',
+    initialEditType: 'wysiwyg',
+    theme: 'dark'
+  });
+
+  editorObject.getMarkdown();
+
   var today = new Date();
   const recruitEdt = document.getElementById("recruitEdt");
   recruitEdt.setAttribute("value", moment(today).format("YYYY-MM-DD"));
   recruitEdt.setAttribute("min", moment(today).format("YYYY-MM-DD"));
   recruitEdt.setAttribute("max", moment(today.setDate(today.getDate() + 15)).format("YYYY-MM-DD")); // 프로젝트 모집 최대 마감일
 
+  $("input[name=langArray]").on("change", handleLangCheckbox);
+
+  /**
+   * 기술 체크박스 관련
+   */
+  function handleLangCheckbox() {
+    var lang = "";
+    var list = $("input[name=langArray]:checked");
+    for(var i = 0; i < list.length; i++) {
+      if(i + 1 !== list.length) {
+        lang += list[i].value + ", ";
+      } else {
+        lang += list[i].value;
+      }
+    }
+    $("#viewLang").html(lang);
+    $("input[name=lang]").val(lang);
+  }
+
+
   document.getElementById("positionCountBox").addEventListener("change", handlePositionCount);
 
+  /**
+   * 인원수 체크
+   */
   function handlePositionCount(e) {
     var f = parseInt($("#frontRcnt").val());
     var b = parseInt($("#backRcnt").val());
@@ -176,42 +257,46 @@
     $("#totalRcnt").val(total);
   }
 
+  /**
+   * 프로젝트 생성 요청
+   */
   function handleSubmit() {
     var data = $("#insertForm").serializeObject();
     var isDone = true;
 
-    if (data.leaderId == "") {
+    if (data.leaderId === "") {
       alert("error");
       isDone = false;
     }
 
-    if (data.totalRcnt == 0) {
+    if (data.totalRcnt === 0) {
       alert("인원수를 입력해주세요");
       isDone = false;
     }
-
-
-    data.recruitEdt = data.recruitEdt + " " + $("#recruitEdtTime").val();
-
+    delete data.langArray;
+    data.recruitEdt = data.recruitEdt + " " + $("#recruitEdtTime").val() + ":00";
+    data.subject = editorObject.getHTML();
     if (isDone) {
         $.ajax({
           type: "POST",
           url: "../api/project/insert",
           data: data,
           dataType: "json",
-          success: function(json) {
-            if (json.result == 'success') {
+          success: function(res) {
+            if (res.result === "success") {
+              console.log(res);
               alert("등록완료하였습니다.");
               location.href = "main.do";
             } else {
-              alert(json.errorMessage);
+              console.log(res);
+              alert(res.message);
             }
           },
-          error: function(json) {
-            alert(json.errorMessage);
+          error: function(res) {
+            console.log(res);
+            alert(res.message)
           }
         })
     }
   }
-
 </script>

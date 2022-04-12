@@ -36,18 +36,6 @@
     .widget {
         margin-bottom: 24px;
     }
-    .tags label {
-        display: inline-block;
-        margin: 0 2px 8px 0;
-        padding: 5px 7px 6px 7px;
-        border: 1px solid #ddd;
-        color: #555;
-        font-size: 15px;
-        text-decoration: none;
-        border-radius: 3px;
-        -webkit-transition: all 0.27s cubic-bezier(0.000, 0.000, 0.580, 1.000);
-        transition: all 0.27s cubic-bezier(0.000, 0.000, 0.580, 1.000);
-    }
 </style>
 <!-- Section -->
 <section class="page-section bg-dark light-content" style="overflow: initial;">
@@ -59,24 +47,27 @@
             <div class="col-md-8 offset-lg-1 mb-sm-80 order-first order-md-last">
 
                 <div class="list-group project-list">
-
-                    <c:forEach items="${projectList }" var="item">
-                        <a href="projectDetail.do?no=${item.projectNo}" class="list-group-item d-flex justify-content-between align-items-start" aria-current="true">
-                            <div class="ms-2 me-auto">
-                                <div class="fw-bold">${item.projectName}</div>
-                                모집일
-                                <fmt:formatDate value="${item.recruitSdt}" type="both" pattern="yyyy-MM-dd"/>
-                                ~
-                                <fmt:formatDate value="${item.recruitEdt}" type="both" pattern="yyyy-MM-dd"/>
-                            </div>
-                            <span class="badge me-1 ${item.frontRcnt > 0 ? 'bg-primary' : 'bg-dark'}">프론트엔드 ${item.frontRcnt}</span>
-                            <span class="badge me-1 ${item.backRcnt > 0 ? 'bg-primary' : 'bg-dark'}">백엔드 ${item.backRcnt}</span>
-                            <span class="badge me-1 ${item.fullRcnt > 0 ? 'bg-primary' : 'bg-dark'}">풀스택 ${item.fullRcnt}</span>
-                            <span class="badge me-1 ${item.designRcnt > 0 ? 'bg-primary' : 'bg-dark'}">디자인 ${item.designRcnt}</span>
-                            <span class="badge me-1 ${item.plannerRcnt > 0 ? 'bg-primary' : 'bg-dark'}">기획 ${item.plannerRcnt}</span>
-                        </a>
-                    </c:forEach>
-
+                    <c:if test="${not empty projectList}">
+                        <c:forEach items="${projectList }" var="item">
+                            <a href="projectDetail.do?no=${item.projectNo}" class="list-group-item d-flex justify-content-between align-items-start" aria-current="true">
+                                <div class="ms-2 me-auto">
+                                    <div class="fw-bold">${item.projectName}</div>
+                                    모집일
+                                    <fmt:formatDate value="${item.recruitSdt}" type="both" pattern="yyyy-MM-dd"/>
+                                    ~
+                                    <fmt:formatDate value="${item.recruitEdt}" type="both" pattern="yyyy-MM-dd"/>
+                                </div>
+                                <span class="badge me-1 ${item.frontRcnt > 0 ? 'bg-primary' : 'bg-dark'}">프론트엔드 ${item.frontRcnt}</span>
+                                <span class="badge me-1 ${item.backRcnt > 0 ? 'bg-primary' : 'bg-dark'}">백엔드 ${item.backRcnt}</span>
+                                <span class="badge me-1 ${item.fullRcnt > 0 ? 'bg-primary' : 'bg-dark'}">풀스택 ${item.fullRcnt}</span>
+                                <span class="badge me-1 ${item.designRcnt > 0 ? 'bg-primary' : 'bg-dark'}">디자인 ${item.designRcnt}</span>
+                                <span class="badge me-1 ${item.plannerRcnt > 0 ? 'bg-primary' : 'bg-dark'}">기획 ${item.plannerRcnt}</span>
+                            </a>
+                        </c:forEach>
+                    </c:if>
+                    <c:if test="${empty projectList}">
+                        <h3 class="call-action-1-heading" style="font-size: 30px; color: rgba(255, 255, 255, 0.3);">검색 결과가 없습니다.</h3>
+                    </c:if>
                 </div>
 
                 <!-- Pagination -->
@@ -91,7 +82,7 @@
             <!-- Sidebar -->
             <div class="col-md-4 col-lg-3 mt-10">
 
-                <form class="form" id="searchForm" action="/project/search" style="position: sticky; top: 100px" method="get">
+                <form class="form" id="searchForm" action="../project/search.do" style="position: sticky; top: 100px" method="get">
 
                     <!-- Search Widget -->
                     <div class="widget">
@@ -101,7 +92,7 @@
                             <button class="search-button animate" type="submit" title="Start Search">
                                 <i class="fa fa-search"></i>
                             </button>
-                            <input type="text" class="form-control search-field round" name="projectName" placeholder="Search..." value="<c:out value='${search.projectName}'/>">
+                            <input type="text" class="form-control search-field round" name="projectName" placeholder="Search..." value="">
                         </div>
                     </div>
                     <!-- End Search Widget -->
@@ -121,7 +112,7 @@
                           var languages = $("#languages");
                           var checkBox = "";
                           mostUsed.forEach((item, index) => {
-                            checkBox += '<input type="checkbox" class="btn-check" id="btncheck'+index+'" autocomplete="off">';
+                            checkBox += '<input type="checkbox" class="btn-check" id="btncheck'+index+'" name="langArray" value="' + item + '">';
                             checkBox += '<label class="btn btn-outline-primary" for="btncheck'+index+'">' + item + '</label>';
                           })
                           languages.append(checkBox);
@@ -136,11 +127,16 @@
 
                         <div class="widget-body">
                             <div class="tags">
-                                <a href="">프론트엔드</a>
-                                <a href="">백엔드</a>
-                                <a href="">풀스택</a>
-                                <a href="">디자이너</a>
-                                <a href="">기획자</a>
+                                <input type="checkbox" class="btn-check" id="FE" name="frontRcnt" value="1">
+                                <label class="btn btn-outline-primary" for="FE">프론트엔드</label>
+                                <input type="checkbox" class="btn-check" id="BE" name="backRcnt" value="1">
+                                <label class="btn btn-outline-primary" for="BE">백엔드</label>
+                                <input type="checkbox" class="btn-check" id="FS" name="fullRcnt" value="1">
+                                <label class="btn btn-outline-primary" for="FS">풀스택</label>
+                                <input type="checkbox" class="btn-check" id="DE" name="designRcnt" value="1">
+                                <label class="btn btn-outline-primary" for="DE">디자이너</label>
+                                <input type="checkbox" class="btn-check" id="PL" name="plannerRcnt" value="1">
+                                <label class="btn btn-outline-primary" for="PL">기획자</label>
                             </div>
                         </div>
 
@@ -153,7 +149,7 @@
                         <h3 class="widget-title">프로젝트 기간</h3>
 
                         <div class="widget-body">
-                            <input type="number" name="projectTerm" class="input-lg round form-control bg-dark-input" value="<c:out value='${search.projectTerm}'/>">
+                            <input type="number" name="projectTerm" class="input-lg round form-control bg-dark-input" min="3" max="365" value="3">
                         </div>
 
                     </div>
@@ -190,11 +186,11 @@
 <script src="${resources}/js/common/jQueryPage.js"></script>
 
 <script>
-    var total = ${pageMaker.total}
+    var endPage = ${pageMaker.endPage}
     var current = ${pageMaker.cri.pageNum}
 
     window.pagObj = $('#pagination').twbsPagination({
-      totalPages: total,
+      totalPages: endPage,
       startPage: current,
       visiblePages: 5, // 최대로 보여줄 페이지
       prev: "<i class='fa fa-chevron-left'></i>", // Previous Button Label
