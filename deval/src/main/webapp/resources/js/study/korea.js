@@ -35,12 +35,14 @@ function drawMap(target) {
 			var sp = id.indexOf('-') + 1;
 			var loc = id.substr(sp, id.length);
 			var location;
-
+			console.log(id);
 			
-
+			$(".active").removeClass();
+			$("#"+id).addClass("active");
+			
 			if (loc == 'Seoul') {
 				location = '서울특별시';
-
+				
 			} else if (loc == 'Gyeonggi-do') {
 				location = '경기도';
 

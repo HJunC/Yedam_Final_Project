@@ -28,9 +28,13 @@ public class StudyMailTest {
 				비번 : dPekachlwhd!@
 	         * */
 	        String subject = "스터디 메일 전송 테스트";
-	        String content = "메일내용을 테스트 합니다. 테스트 성공 기원";
+	        String content = "<div align='center' style='border:1px solid black; font-family:verdana'>";
+	        content += "<h3 style='color: blue;'>";
+	        content += "님의 임시 비밀번호 입니다. 비밀번호를 변경하여 사용하세요.</h3>";
+	        content += "<p>임시 비밀번호 : ";
+	        content += "</p></div>";
 	        String from = "devalkims@gmail.com";
-	        String to = "impact9604@naver.com";
+	        String to = "devalkims@gmail.com";
 	        
 	        try {
 	            MimeMessage mail = mailSender.createMimeMessage();

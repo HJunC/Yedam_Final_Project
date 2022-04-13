@@ -110,12 +110,13 @@ public class StudyController {
     // 스터디 검색 찾기 -> 전체목록
     @GetMapping("/studyList.do")
     public String studyList(StudyVO vo, Model model, Principal User, Criteria cri) {
-    	if (vo.getLocation() == null || vo.getLocation().equals("")) vo.setLocation(null);
-    	if (vo.getDefficulty() == null || vo.getDefficulty().equals("")) vo.setDefficulty(null);
-    	if (vo.getLang1() == null || vo.getLang1().equals("")) vo.setLang1(null);
+    	// 페이지 처리
     	if (cri.getPageNum() == 0) cri.setPageNum(1);
         if (cri.getAmount() == 0) cri.setAmount(10);
     	vo.setCriteria(cri);
+    	if (vo.getStudyNm() != null) {
+    		vo.setStudyNm(vo.getStudyNm().trim());
+    	}
     	model.addAttribute("study", studyDao.getListWithPaging(vo));
     	model.addAttribute("pageMaker", new PageDTO(cri, studyDao.getTotalCount(vo)));
     	model.addAttribute("list", studyDao.studyMemberFind(User.getName()));

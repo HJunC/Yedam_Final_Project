@@ -297,15 +297,21 @@
 	<!-- Paging -->
 	<sql id="option">
 	
-		<if test="defficulty != null">
-			AND DEFFICULTY =#{defficulty}
+		<if test="defficulty != null and !defficulty.equals('')">
+			AND DEFFICULTY = #{defficulty}
 		</if>
-		<if test="location != null">
+		<if test="location != null and !location.equals('')">
 			AND LOCATION = #{location}
 		</if>
-		<if test="lang1 != null">
-			AND (lang1 LIKE '%'||#{lang1}||'%'
-			OR lang2 LIKE '%'||#{lang1}||'%')
+		<if test="lang1 != null and !lang1.equals('')">
+			AND (lang1 = #{lang1}
+			OR lang2 = #{lang1})
+		</if>
+		<if test="state != null and !state.equals('')">
+			AND STATE = #{state}
+		</if>
+		<if test="studyNm != null and !studyNm.equals('')">
+			AND STUDY_NM LIKE '%'||#{studyNm}||'%'
 		</if>
 	
     </sql>

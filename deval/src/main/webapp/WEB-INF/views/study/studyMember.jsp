@@ -3,13 +3,39 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <c:set var="resources" value="${pageContext.request.contextPath}/resources" />
 	<!DOCTYPE html>
-	<html>
-	<head>
+<html>
+<head>
 	<meta charset="UTF-8">
 	<title>studyMember.jsp</title>
-	</head>
+	
+	<!-- image 반복 -->
+	<script type="text/javascript">
+        var imgArray= new Array();
+        imgArray[0]="${resources}/images/studyimg/devalProfile/deval01.jpg";
+        imgArray[1]="${resources}/images/studyimg/devalProfile/deval02.png";
+        imgArray[2]="${resources}/images/studyimg/devalProfile/deval03.jpg";
+        imgArray[3]="${resources}/images/studyimg/devalProfile/deval04.png";
+        imgArray[4]="${resources}/images/studyimg/devalProfile/deval05.jpg";
+        imgArray[5]="${resources}/images/studyimg/devalProfile/deval06.png";
+        imgArray[6]="${resources}/images/studyimg/devalProfile/deval07.jpg";
+        imgArray[7]="${resources}/images/studyimg/devalProfile/deval08.png";
+        imgArray[8]="${resources}/images/studyimg/devalProfile/deval09.jpg";
+        imgArray[9]="${resources}/images/studyimg/devalProfile/deval10.jpg";
+ 
+        function showImage() {
+            var objImg=document.getElementsByClassName("introImg");
+            for(var i=0; i<objImg.length; i++) {
+           		objImg[i].src=imgArray[Math.round(Math.random()*9)];
+            }
+            
+        }
+
+        document.addEventListener("DOMContentLoaded", showImage);
+
+    </script>
+</head>
 	<body>
-                <!-- Home Section -->
+           <!-- Home Section -->
                 <section class="page-section bg-dark light-content" id="home">
                     <div class="container relative text-center">
                         <div class="row">
@@ -20,8 +46,8 @@
                         </div>
                     </div>
                 </section>
-                <!-- End Home Section -->\
-                <!-- Section -->
+            <!-- End Home Section -->
+            <!-- Section -->
                <section class="page-section bg-dark light-content pt-0">
                     <div class="container relative">
                         <div class="row mb-120 mb-sm-50">
@@ -30,10 +56,11 @@
                             <c:forEach items="${study}" var="std">
                             <div class="col-md-4 mb-xs-30">
                                 <div class="team-item-wrap wow fadeInUp" data-wow-delay=".1s" data-wow-duration="1.2s">
-                                    <div class="team-item-decoration" style="background-image: url(${resources}/images/team/team-decoration-1.jpg);"></div>
+                                    <div class="team-item-decoration" style="background-image: url(${resources}/images/team/blackbar.jpg);"></div>
                                     <div class="team-item">
                                         <div class="team-item-image">
-                                            <img src="${resources}/images/team/team-1.jpg" alt="" />
+                                        <!-- src="${resources}/images/studyimg/devalProfile/deval01.jpg" -->
+                                            <img class="introImg" border="0"  alt="" />
                                             <div class="team-item-detail">
                                                 <p class="team-item-detail-title">
                                                     ${std.present }
@@ -66,7 +93,8 @@
                      </div>
                     </div>
                 </section>
-                <!-- End Section -->     
+                <!-- End Section --> 
+                 
                 
                 <!-- Divider -->
                 <hr class="mt-0 mb-0 white" />

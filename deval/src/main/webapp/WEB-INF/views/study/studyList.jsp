@@ -102,12 +102,19 @@
 									<option value="상">상</option>
 									<option value="중">중</option>
 									<option value="하">하</option>
-								</select>&nbsp;&nbsp;&nbsp;&nbsp; 
-								<input type="text" name="codeSearch" id="codeSearch" 
+								</select>&nbsp;&nbsp;&nbsp;&nbsp;
+								<label for="type" style="font-size: 17px;">상태</label> 
+								<select id="cqType" name="state" class="input-md round form-control" style="width: 100px; height: 30px; font-size: 13px;">
+									<option value="">전체</option>
+									<option value="0">모집중</option>
+									<option value="2">모집완료</option>
+								</select>&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="text" name="studyNm" id="studyNm" 
 								class="input-sm round" placeholder="검색" 
-								style="width: 300px; height: 30px; font-size: 13px;" />
+								style="width: 300px; height: 30px; font-size: 13px;" 
+								value="${studyfind.studyNm}" >
 								&nbsp;
-								<button type="submit" class="btn btn-mod btn-round btn-border-w btn-small">검색</button>
+								<button type="button" onclick="search()" class="btn btn-mod btn-round btn-border-w btn-small">검색</button>
 							</form>
 						</div>
 					</div><br>
@@ -213,7 +220,7 @@
 				<div class="wrapper bg-white mt-sm-5" id="test-modal">
 					<h4 class="pb-4 border-bottom">MY INFO</h4>
 					<div class="d-flex align-items-start py-3 border-bottom">
-						<img src="https://images.pexels.com/photos/1037995/pexels-photo-1037995.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" class="img" alt="">
+						<img src="${resources}/images/studyimg/main/deval.jpg" class="img" alt="">
 						<div class="pl-sm-4 pl-2 ms-4" id="img-section">
 							<b>#STUDY</b>
 							<h3 style="margin: 0" id="memberId"></h3>
@@ -332,7 +339,6 @@
 		</div>
 	<!-- End Modal -->
 	</div>
-	${param.defficulty}
 	<!-- 게시글 번호 값으로 상세글 넘기기 -->
 	<div>
 		<form id="selfrm" action="studySelect.do" method="post">
@@ -363,13 +369,19 @@
       onPageClick: function (event, page) { // Page Click event
         console.info("current page : " + page);
       } }).on('page', function (event, page) {
-      searchDateList(page);
+      searchPage(page);
     });
 
-  function searchDateList(page) {
+  function searchPage(page) {
     var searchForm = $("#searchForm");
     console.log(page);
     searchForm.find("input[name='pageNum']").val(page);
+    searchForm.submit();
+  }
+  
+  function search() {
+  	var searchForm = $("#searchForm");
+    searchForm.find("input[name='pageNum']").val("1");
     searchForm.submit();
   }
   

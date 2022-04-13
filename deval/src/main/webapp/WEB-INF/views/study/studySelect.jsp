@@ -13,7 +13,7 @@
 </head>
 <body>
 				<!-- Title -->
-               <section class="small-section bg-dark-alfa-50 bg-scroll light-content" data-background="images/full-width-images/section-bg-19.jpg" id="home">
+               <section class="small-section bg-dark-alfa-50 bg-scroll light-content" data-background="${resources}/images/full-width-images/section-bg-19.jpg" id="home">
     			<div class="container relative pt-70">
                      <div class="row">
                         <div class="col-md-8">
@@ -113,7 +113,7 @@
 				<div class="wrapper bg-white mt-sm-5" id="test-modal">
 					<h4 class="pb-4 border-bottom">MY INFO</h4>
 					<div class="d-flex align-items-start py-3 border-bottom">
-						<img src="https://images.pexels.com/photos/1037995/pexels-photo-1037995.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" class="img" alt="">
+					<img src="${resources}/images/studyimg/main/deval.jpg" class="img" alt="">
 						<div class="pl-sm-4 pl-2 ms-4" id="img-section">
 							<b>#STUDY</b>
 							<h3 style="margin: 0" id="memberId"></h3>

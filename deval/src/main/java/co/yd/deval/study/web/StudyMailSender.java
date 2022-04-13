@@ -27,14 +27,22 @@ public class StudyMailSender {
 	@RequestMapping(value = "/sendMail", method = RequestMethod.GET)
     public void sendMailTest(String email) throws Exception{
         
-        String subject = "DevalVally_스터디참가";
-        String content = "축하합니다! 스터디 참가가 완료되었습니다!";
+        String subject = "[Devaloper Vally] 스터디 신청";
+        
+        String content = "<div align='center' style='border:1px solid black; font-family:verdana'>";
+        content += "<h3 style='color: blue;'>";
+        content += "님의 임시 비밀번호 입니다. 비밀번호를 변경하여 사용하세요.</h3>";
+        content += "<p>임시 비밀번호 : ";
+        content += "</p></div>";
+        	  	  
         String from = "devalkims@gmail.com";
+       
         String to = email; 
         
         try {
             MimeMessage mail = mailSender.createMimeMessage();
             MimeMessageHelper mailHelper = new MimeMessageHelper(mail,"UTF-8"); //단순히 텍스트만
+           
            
             
             /*
