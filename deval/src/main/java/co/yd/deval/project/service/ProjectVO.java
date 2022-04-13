@@ -1,15 +1,20 @@
 package co.yd.deval.project.service;
 
 import co.yd.deval.common.Criteria;
-import co.yd.deval.common.PageDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
-@Data
+@Getter
+@Setter
+@ToString
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class ProjectVO {
     private int projectNo;
@@ -21,8 +26,8 @@ public class ProjectVO {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+9")
     private Date recruitSdt;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+9")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+9")
     private Date recruitEdt;
 
     private String subject;
@@ -30,6 +35,7 @@ public class ProjectVO {
     private int totalRcnt;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+9")
     private Date projectSdt;
 
     private int frontRcnt;
@@ -37,6 +43,7 @@ public class ProjectVO {
     private int designRcnt;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+9")
     private Date projectEdt;
 
     private int fullRcnt;
@@ -50,4 +57,7 @@ public class ProjectVO {
     private String leaderPosition;
     private int rn;
     private Criteria criteria;
+
+    private List<String> langArray;
+    private String updateState;
 }

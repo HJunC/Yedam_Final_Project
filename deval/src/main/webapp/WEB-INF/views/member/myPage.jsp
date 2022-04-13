@@ -409,5 +409,6 @@
 		}
 		return $('<tbody>').append(tr);
 	}
+	});
 </script>
 

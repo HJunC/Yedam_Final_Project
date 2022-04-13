@@ -21,12 +21,24 @@
 			<br>
 
 			<!-- 지역선택 -->
-			<select class="input-md round form-control" id="location"
-				name="location">
-				<option <c:if test="${study.location=='One'}">selected </c:if>>One</option>
-				<option <c:if test="${study.location=='Two'}">selected </c:if>>Two</option>
-				<option <c:if test="${study.location=='Three'}">selected </c:if>>Three</option>
-
+			<select class="input-md round form-control" id="location" name="location">
+				<option <c:if test="${study.location=='서울특별시'}">selected </c:if>>서울특별시</option>
+				<option <c:if test="${study.location=='인천광역시'}">selected </c:if>>인천광역시</option>
+				<option <c:if test="${study.location=='경기도'}">selected </c:if>>경기도</option>
+				<option <c:if test="${study.location=='강원도'}">selected </c:if>>강원도</option>
+				<option <c:if test="${study.location=='충청북도'}">selected </c:if>>충청북도</option>
+				<option <c:if test="${study.location=='충청남도'}">selected </c:if>>충청남도</option>
+				<option <c:if test="${study.location=='세종특별자치시'}">selected </c:if>>세종특별자치시</option>
+				<option <c:if test="${study.location=='대전광역시'}">selected </c:if>>대전광역시</option>
+				<option <c:if test="${study.location=='대구광역시'}">selected </c:if>>대구광역시</option>
+				<option <c:if test="${study.location=='경상북도'}">selected </c:if>>경상북도</option>
+				<option <c:if test="${study.location=='경상남도'}">selected </c:if>>경상남도</option>
+				<option <c:if test="${study.location=='부산광역시'}">selected </c:if>>부산광역시</option>
+				<option <c:if test="${study.location=='울산광역시'}">selected </c:if>>울산광역시</option>
+				<option <c:if test="${study.location=='전라북도'}">selected </c:if>>전라북도</option>
+				<option <c:if test="${study.location=='광주광역시'}">selected </c:if>>광주광역시</option>
+				<option <c:if test="${study.location=='전라남도'}">selected </c:if>>전라남도</option>
+				<option <c:if test="${study.location=='제주특별자치도'}">selected </c:if>>제주특별자치도</option>
 			</select><br>
 			<br>
 
@@ -43,29 +55,6 @@
 
 			<!-- 언어선택 -->
 			<div id="langSelect"></div>
-		<%-- 	<label class="checkbox-inline"> <input type="checkbox"
-				name="ck_lang" onclick="count_ck(this);" id="lang1" value="C"
-				<c:if test="${study.lang1=='C' or study.lang2=='C'}">checked</c:if>>
-				<span class="small">C</span>
-			</label> <label class="checkbox-inline"> <input type="checkbox"
-				name="ck_lang" onclick="count_ck(this);" id="lang2" value="C++"
-				<c:if test="${study.lang1=='C++' or study.lang2=='C++'}">checked</c:if>>
-				<span class="small">C++</span>
-			</label> <label class="checkbox-inline"> <input type="checkbox"
-				name="ck_lang" onclick="count_ck(this);" id="lang3" value="Java"
-				<c:if test="${study.lang1=='Java' or study.lang2=='Java'}">checked</c:if>>
-				<span class="small">Java</span>
-			</label> <label class="checkbox-inline"> <input type="checkbox"
-				name="ck_lang" onclick="count_ck(this);" id="lang4"
-				value="JavaScript"
-				<c:if test="${study.lang1=='JavaScript' or study.lang2=='JavaScript'}">checked</c:if>>
-				<span class="small">JavaScript</span>
-			</label> <label class="checkbox-inline"> <input type="checkbox"
-				name="ck_lang" onclick="count_ck(this);" id="lang4" value="Python"
-				<c:if test="${study.lang1=='Python' or study.lang2=='Python'}">checked</c:if>>
-				<span class="small">Python</span>
-			</label><br>
-			<br> --%>
 			
 			<!-- 난이도선택 -->
 			<label class="radio-inline"> <input type="radio"

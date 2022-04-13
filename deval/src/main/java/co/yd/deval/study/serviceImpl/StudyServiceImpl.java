@@ -9,6 +9,7 @@ import co.yd.deval.study.mapper.StudyMapper;
 import co.yd.deval.study.service.StudyInfoVO;
 import co.yd.deval.study.service.StudyReqVO;
 import co.yd.deval.study.service.StudyService;
+import co.yd.deval.study.service.StudyTeamVO;
 import co.yd.deval.study.service.StudyVO;
 
 
@@ -39,6 +40,20 @@ public class StudyServiceImpl implements StudyService {
 		return map.studySelectAll();
 	}
 	
+	@Override
+	public int findMaxStudyNo() {
+		return map.findMaxStudyNo();
+	}
+	
+	@Override
+	public List<StudyReqVO> studyMemberFind(String id) {
+		return map.studyMemberFind(id);
+	}
+	
+	@Override
+	public List<StudyReqVO> studyUnfinedTeamBtn(String id) {
+		return map.studyUnfinedTeamBtn(id);
+	}
 	
 	// 모달창 회원정보
 	@Override
@@ -76,15 +91,78 @@ public class StudyServiceImpl implements StudyService {
 	public int studyTeamMemberInsert(StudyReqVO vo) {
 		return map.studyTeamMemberInsert(vo);
 	}
+	
+	@Override
+	public int studyTeamLeaderInsert(StudyReqVO vo) {
+		return map.studyTeamLeaderInsert(vo);
+	}
 
 	@Override
-	public int studyTeamMemberUpdate(StudyReqVO vo) {
-		return map.studyTeamMemberUpdate(vo);
+	public int studyTeamMemberUpdateAccept(StudyReqVO vo) {
+		return map.studyTeamMemberUpdateAccept(vo);
+	}
+
+	@Override
+	public int studyTeamMemberUpdateRefuse(StudyReqVO vo) {
+		return map.studyTeamMemberUpdateRefuse(vo);
 	}
 
 	@Override
 	public int studyTeamMemberDelete(StudyReqVO vo) {
 		return map.studyTeamMemberDelete(vo);
+	}
+	
+	// 신청자 페이지
+	@Override
+	public List<StudyReqVO> studyLeaderBtn(String id) {
+		return map.studyLeaderBtn(id);
+	}
+
+	@Override
+	public List<StudyReqVO> studyLeaderReqPage(String leaderId) {
+		return map.studyLeaderReqPage(leaderId);
+	}
+	
+	// 스터디 팀 VIEW
+	@Override
+	public List<StudyTeamVO> studyTeamMember(String memberId) {
+		return map.studyTeamMember(memberId);
+	}
+	
+	// 페이징 처리
+	@Override
+	public List<StudyVO> getListWithPaging(StudyVO vo) {
+		return map.getListWithPaging(vo);
+	}
+
+	@Override
+	public int getTotalCount(StudyVO vo) {
+		return map.getTotalCount(vo);
+	}
+
+	@Override
+	public List<StudyVO> studyLocSearch(String loc) {
+		return map.studyLocSearch(loc);
+	}
+
+	@Override
+	public int studyRcntSelect(StudyVO vo) {
+		return map.studyRcntSelect(vo);
+	}
+
+	@Override
+	public int rcntLeader(StudyVO vo) {
+		return map.rcntLeader(vo);
+	}
+
+	@Override
+	public int rcntMember(StudyVO vo) {
+		return map.rcntMember(vo);
+	}
+
+	@Override
+	public int studyEnd(StudyVO vo) {
+		return map.studyEnd(vo);
 	}
 
 }

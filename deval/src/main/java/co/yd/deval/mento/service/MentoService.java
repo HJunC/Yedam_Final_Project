@@ -7,7 +7,7 @@ public interface MentoService {
 	MentoVO mentoSelectOne(MentoVO vo);
 	int mentoInsert(MentoVO vo);
 	int mentoDelete(MentoVO vo);
-	int mentoUpdate(MentoVO vo);
+	int mentoUpdate(String id);
 	
 	//멘토메인화면 정보
 	int mentoCount();

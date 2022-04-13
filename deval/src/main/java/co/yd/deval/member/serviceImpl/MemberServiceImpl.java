@@ -53,4 +53,14 @@ public class MemberServiceImpl implements MemberService {
 		return map.memberCashUpdate(cash);
 	}
 
+	@Override
+	public int refund(Map<String, Object> cash) {
+		return map.refund(cash);
+	}
+		
+  @Override
+	public String memberMailGet(String id) {
+		return map.memberMailGet(id);
+	}
+
 }

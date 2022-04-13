@@ -6,10 +6,12 @@ import org.springframework.stereotype.Service;
 
 import co.yd.deval.project.mapper.ProjectMapper;
 import co.yd.deval.project.mapper.ProjectTeamMapper;
-import co.yd.deval.project.service.ProjectInfoDTO;
-import co.yd.deval.project.service.ProjectService;
-import co.yd.deval.project.service.ProjectTeamVO;
-import co.yd.deval.project.service.ProjectVO;
+import co.yd.deval.project.service.*;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
 * @package : co.yd.deval.project.serviceImpl
@@ -25,24 +27,16 @@ public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectMapper mapper;
     private final ProjectTeamMapper teamMapper;
+    private final ProjectRequestMapper requestMapper;
 
-    public ProjectServiceImpl(ProjectMapper mapper, ProjectTeamMapper teamMapper) {
+    public ProjectServiceImpl(ProjectMapper mapper, ProjectTeamMapper teamMapper, ProjectRequestMapper requestMapper) {
         this.mapper = mapper;
         this.teamMapper = teamMapper;
+        this.requestMapper = requestMapper;
     }
 
     @Override
-    public List<ProjectVO> selectProjectAll() {
-        return mapper.selectProjectAll();
-    }
-
-    @Override
-    public ProjectVO selectProject(int projectNo) {
-        return mapper.selectProject(projectNo);
-    }
-
-    @Override
-    public int insertProject(ProjectVO vo) {
+    public int create(ProjectVO vo) {
         switch (vo.getLeaderPosition()) {
             case "FE":
                 vo.setFrontRcnt(vo.getFrontRcnt() - 1);
@@ -59,20 +53,36 @@ public class ProjectServiceImpl implements ProjectService {
             case "PL":
                 vo.setPlannerRcnt(vo.getPlannerRcnt() - 1);
                 break;
+            default:
+                return 0;
         }
-        int result = mapper.insertProject(vo);
-        ProjectTeamVO teamVo = new ProjectTeamVO();
-        teamVo.setProjectNo(vo.getProjectNo());
-        teamVo.setMemberId(vo.getLeaderId());
-        teamVo.setIsLeader("1"); // true
-        teamVo.setPosition(vo.getLeaderPosition());
-        teamVo.setState("0"); // 팀장 대기
+
+        // 검토중인 모든 참여요청 취소처리
+        cancelRequest(vo.getLeaderId(), 0);
+
+        // 프로젝트 등록
+        mapper.insertProject(vo);
+
+        // 프로젝트 팀 등록
+        ProjectTeamVO teamVo = ProjectTeamVO.builder()
+                                .projectNo(vo.getProjectNo())
+                                .memberId(vo.getLeaderId())
+                                .isLeader("1") // true
+                                .position(vo.getLeaderPosition())
+                                .state("0") // 팀장 대기
+                                .build();
         return (teamMapper.insertProjectTeam(teamVo) == 1) ? teamVo.getProjectNo() : 0;
     }
 
     @Override
-    public int deleteProject(ProjectVO vo) {
-        // todo 팀을 먼저 지우고 지워야함
+    public int remove(ProjectVO vo) {
+        ProjectTeamVO teamVO = ProjectTeamVO.builder()
+                                .projectNo(vo.getProjectNo())
+                                .build();
+        teamMapper.deleteProjectTeam(teamVO);
+        ProjectRequestVO requestVO = ProjectRequestVO.builder()
+                                     .projectNo(vo.getProjectNo()).build();
+        requestMapper.deleteProjectRequest(requestVO);
         return mapper.deleteProject(vo);
     }
 
@@ -92,12 +102,21 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public ProjectInfoDTO getProjectInfo(int projectNo) {
-        mapper.updateHit(projectNo);
+    public ProjectVO selectProject(int projectNo) {
+        return mapper.selectProject(projectNo);
+    }
+
+    @Override
+    public ProjectInfoDTO getProject(int projectNo) {
         ProjectInfoDTO dto = mapper.getProject(projectNo);
-        ProjectTeamVO searchTeamVo = new ProjectTeamVO();
-        searchTeamVo.setProjectNo(projectNo);
+        ProjectTeamVO searchTeamVo = ProjectTeamVO.builder()
+                                    .projectNo(projectNo)
+                                    .build();
+        ProjectRequestVO searchRequestVo = ProjectRequestVO.builder()
+                                            .projectNo(projectNo)
+                                            .build();
         dto.setProjectTeam(teamMapper.selectProjectTeam(searchTeamVo));
+        dto.setRequestList(requestMapper.selectProjectRequest(searchRequestVo));
         return dto;
     }
 
@@ -111,6 +130,32 @@ public class ProjectServiceImpl implements ProjectService {
         return mapper.getTotalCount(vo);
     }
 
+    @Override
+    @Transactional
+    public int startProject(ProjectVO vo) {
+        // 팀원들 상태 변경
+        ProjectTeamVO teamVO = ProjectTeamVO.builder()
+                .projectNo(vo.getProjectNo())
+                .updateState("2").build();
+        teamMapper.updateProjectTeam(teamVO);
+        // 프로젝트 상태 변경
+        // 프로젝트 시작날짜, 종료날짜
+        vo.setUpdateState("3");
+        if (vo.getProjectSdt() == null || vo.getProjectEdt() == null) return 0;
+        return mapper.updateProject(vo);
+    }
+
+    @Override
+    public void updateHit(int projectNo) {
+        mapper.updateHit(projectNo);
+    }
+
+    @Override
+    public void updateApplyCount(int projectNo) {
+        mapper.updateApplyCount(projectNo);
+    }
+
+
 	@Override
 	public List<ProjectVO> findProjectByNo(String id) {
 		return mapper.findProjectByNo(id);
@@ -121,4 +166,17 @@ public class ProjectServiceImpl implements ProjectService {
 		return mapper.findWaitingProject(id);
 	}
 
+    /***
+     * 유저의 검토중인 요청을 취소 처리
+     * @param memberId 유저 아이디
+     * @param exceptionProjectNo 프로젝트 번호를 제외
+     */
+    public void cancelRequest(String memberId, int exceptionProjectNo) {
+        ProjectRequestVO requestVO = new ProjectRequestVO();
+        requestVO.setMemberId(memberId);
+        requestVO.setState("1");
+        requestVO.setUpdateState("9");
+        if (exceptionProjectNo != 0) requestVO.setExceptionProjectNo(exceptionProjectNo);
+        requestMapper.updateProjectRequest(requestVO);
+    }
 }

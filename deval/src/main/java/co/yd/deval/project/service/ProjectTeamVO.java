@@ -1,9 +1,12 @@
 package co.yd.deval.project.service;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@ToString
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class ProjectTeamVO {
     private int projectNo;
@@ -11,4 +14,6 @@ public class ProjectTeamVO {
     private String position;
     private String isLeader;
     private String state;
+
+    private String updateState;
 }

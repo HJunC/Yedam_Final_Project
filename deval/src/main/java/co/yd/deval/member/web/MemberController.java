@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +28,9 @@ import co.yd.deval.project.service.ProjectService;
 import co.yd.deval.project.service.ProjectVO;
 import co.yd.deval.study.service.StudyService;
 import co.yd.deval.study.service.StudyVO;
+import co.yd.deval.setleLog.service.SetleLogService;
+import co.yd.deval.setleLog.service.SetleLogVO;
+import co.yd.deval.study.service.StudyService;
 
 @Controller
 public class MemberController {
@@ -44,7 +46,10 @@ public class MemberController {
 	@Autowired
 	private String uploadPath;
 	
-	//로그인 화면으로 이동
+  @Autowired
+	private SetleLogService setleDAO;
+	
+  	//로그인 화면으로 이동
 	@RequestMapping("/loginForm.do")
 	public String loginForm(HttpServletRequest request) {
 		String referer = (String) request.getHeader("REFERER");
@@ -134,14 +139,20 @@ public class MemberController {
 		return "member/coPage";
 	}
 
-	//멤버의 캐쉬포인트 충전
+	//포인트 등록
 	@PostMapping("/updatePoint.do")
 	@ResponseBody
-	public void updatePoint(@RequestParam("cashPt") int cashPt, @RequestParam("memberId") String memberId) {
+	public void updatePoint(@RequestParam("cashPt") int cashPt, @RequestParam("memberId") String memberId, SetleLogVO svo) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("id", memberId);
 		map.put("cashPt", cashPt);
-		memberDao.memberCashUpdate(map);
+		int r = memberDao.memberCashUpdate(map);
+		if(r != 0) {
+			svo.setMemberId(memberId);
+			svo.setSetleAmount(cashPt);
+			setleDAO.setelLogInsert(svo);
+			
+		}
 	}
 
 }

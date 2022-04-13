@@ -4,6 +4,7 @@ import java.sql.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import co.yd.deval.common.Criteria;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,4 +31,9 @@ public class StudyVO {
 	private String studyNm;
 	private String lang2;
 	private String[] ck_lang;
+	private int rcnt;
+	
+	//페이징
+    private int rn;
+    private Criteria criteria;
 }

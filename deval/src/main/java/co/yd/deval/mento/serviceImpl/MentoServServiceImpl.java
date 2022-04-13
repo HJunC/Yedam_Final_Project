@@ -27,8 +27,8 @@ public class MentoServServiceImpl implements MentoServService {
 	}
 
 	@Override
-	public List<MentoServVO> mentoServList(String mentoId, int state) {
-		return map.mentoServList(mentoId, state);
+	public List<MentoServVO> mentoServList(String mentoId) {
+		return map.mentoServList(mentoId);
 	}
 
 	@Override
@@ -42,13 +42,13 @@ public class MentoServServiceImpl implements MentoServService {
 	}
 
 	@Override
-	public int mentoServUpdate(MentoServVO vo) {
-		return map.mentoServUpdate(vo);
+	public int mentoServUpdate(int mentoServiceNo) {
+		return map.mentoServUpdate(mentoServiceNo);
 	}
 
 	@Override
-	public int mentoServDelete(MentoServVO vo) {
-		return map.mentoServDelete(vo);
+	public int mentoServDelete(int mentoServiceNo) {
+		return map.mentoServDelete(mentoServiceNo);
 	}
 
 	@Override
@@ -58,8 +58,19 @@ public class MentoServServiceImpl implements MentoServService {
 
 	@Override
 	public int buyerPayment(Map<String, Object> buyer) {
-		// TODO Auto-generated method stub
 		return map.buyerPayment(buyer);
+	}
+
+	@Override
+	public int mentoServAccept(List<MentoServVO> mentoServiceNo) {
+		int i = 0;
+		for (MentoServVO serv : mentoServiceNo) {
+			int n = map.mentoServAccept(serv);
+			if(n != 0) {
+				i++;
+			}
+		}
+		return i;
 	}
 
 }
