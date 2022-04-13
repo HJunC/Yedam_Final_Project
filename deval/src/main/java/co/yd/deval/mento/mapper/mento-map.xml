@@ -37,8 +37,10 @@
 	<delete id="mentoDelete" parameterType="co.yd.deval.mento.service.MentoVO">
 	
 	</delete>
-	<update id="mentoUpdate" parameterType="co.yd.deval.mento.service.MentoVO">
-	
+	<update id="mentoUpdate" parameterType="String">
+		UPDATE MENTO
+		SET PEOPLE = PEOPLE + 1
+		WHERE MENTO_ID = #{Id}
 	</update>
 	<select id="mentoCount" resultType="int">
 		SELECT COUNT(MENTO_ID) 

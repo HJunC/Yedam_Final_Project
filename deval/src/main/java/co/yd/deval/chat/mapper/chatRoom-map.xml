@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.yd.deval.chat.mapper.ChatRoomMapper">
+	<select id="selectListChat" resultType="co.yd.deval.chat.service.ChatRoomVO">
+		SELECT * FROM CHATROOM 
+		WHERE OWNER_ID = #{id} OR ENTRY_ID = #{id}
+	</select>
+	<insert id="makeChatRoom" parameterType="co.yd.deval.chat.service.ChatRoomVO">
+		<selectKey keyProperty="roomId" order="BEFORE" resultType="int">
+			SELECT NVL(MAX(ROOM_ID),0) + 1 FROM CHATROOM
+		</selectKey>
+		INSERT INTO CHATROOM(		ROOM_ID,
+									OWNER_ID,
+									ENTRY_ID)
+		VALUES(						#{roomId},
+									#{ownerId},
+									#{entryId})
+	</insert>
+	<select id="selectChatRoom" resultType="co.yd.deval.chat.service.ChatRoomVO">
+		SELECT * FROM CHATROOM
+		WHERE ROOM_ID = #{roomId}
+	</select>
+</mapper>

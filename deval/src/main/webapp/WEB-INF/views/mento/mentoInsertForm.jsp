@@ -96,7 +96,7 @@
                         </c:forEach>
                     </select>
                     <!-- 모달창 띄우기 -->
-                       	<a href="#test-modal" class="btn btn-mod btn-w btn-medium round mt-10 lightbox-gallery-5 mfp-inline">기간정하기</a>
+                       	<a href="#test-modal" class="btn btn-mod btn-w btn-medium round mt-10 lightbox-gallery-5 mfp-inline" onclick="insertButton()">기간정하기</a>
                                 <div id="test-modal" class="mfp-hide">
                                     <p>
                                         선택하신 기간이 확실합니까?
@@ -120,10 +120,10 @@
                     시작시간
                     <select class="input-md round form-control" style="width: 170px;" id="serviceStt" name="serviceStt" onchange="endTime(this)">
                     	<c:forEach var="i" begin="0" end="9">
-                        <option value="0${i}:00">0${i}:00</option>
+                        <option value="${i}">0${i}:00</option>
                         </c:forEach>
                         <c:forEach var="i" begin="10" end="23">
-                        <option value="${i}:00">${i}:00</option>
+                        <option value="${i}">${i}:00</option>
                         </c:forEach>
                     </select>
                 </div>
@@ -134,7 +134,7 @@
                     </select>
                 </div>
             </div>
-            <input type="button" class="btn btn-mod btn-w btn-round btn-large" value="등록" onclick="mentoInsert()">
+            <input type="hidden" id="btn" class="btn btn-mod btn-w btn-round btn-large" value="등록" onclick="mentoInsert()">
                 
             </form>
 
@@ -196,10 +196,10 @@
         	for(var i = startTime+1; i<=24; i++) {
 	        	var option = document.createElement('option');
         		if(i < 10) {
-        			option.value = '0' + i + ':00';
+        			option.value = i;
         			option.innerText = '0' + i + ':00';
         		}else if(i > 9) {
-        			option.value = i + ':00';
+        			option.value = i;
         			option.innerText = i + ':00';
         		}
 	        		selectId.appendChild(option);
@@ -234,6 +234,11 @@
         }
         function closeModal() {
         	$.magnificPopup.close();
+        }
+        /* 기간정하기시 등록버튼생성 */
+        function insertButton() {
+        	var btn = document.getElementById('btn');
+        	btn.type = 'button';
         }
         
     </script>

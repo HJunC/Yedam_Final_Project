@@ -429,7 +429,7 @@
 <script>
 	
 	// div들 display에 관한 기능들
-	$('#myInfo').on('click',function(){
+	/* $('#myInfo').on('click',function(){
 						$('#tag').children().css('display','block')
 						$('#info_box').children().css('display','none');
 						$('#my_info_box').css('display','block');
@@ -469,6 +469,6 @@
 			$('#pwdChk').text('');
 			$('#pwdChk').text('비밀번호가 일치하지 않습니다.').css('color','red');
 		}
-	});
+	}); */
 </script>
 
