@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,14 +13,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-
 import co.yd.deval.board.service.BoardService;
 import co.yd.deval.board.service.BoardVO;
 import co.yd.deval.comment.service.CommentService;
 import co.yd.deval.comment.service.CommentVO;
 import co.yd.deval.common.Criteria;
 import co.yd.deval.common.PageDTO;
-import co.yd.deval.review.service.ReviewVO;
 
 @Controller
 @RequestMapping("/board")
@@ -35,22 +32,13 @@ public class BoardController {
 
 	@Autowired
 	private String uploadPath;
-
 	/**
 	 * 자유게시판 목록
 	 * 
 	 * @param model
 	 */
 	@GetMapping("/free.do")
-	
-	
-	
-	
-	
-	
-	
-	
-	public String free(Model model, BoardVO vo, Criteria cri) {
+	 public String free(Model model, BoardVO vo, Criteria cri) {
 		if (cri.getPageNum() == 0)
 			cri.setPageNum(1);
 		if (cri.getAmount() == 0)
@@ -92,7 +80,6 @@ public class BoardController {
 	 */
 
 	@PostMapping("/writePost.do")
-
 	public String write(BoardVO vo, MultipartFile file) {
 		String originalName = file.getOriginalFilename();
 		String fileType = originalName.substring(originalName.lastIndexOf(".") + 1, originalName.length());
@@ -116,11 +103,8 @@ public class BoardController {
 		} else if (vo.getBoardTypeNo() == 2) {
 			return "redirect:notice.do";
 		} else {
-
 			return "redirect:technical.do";
-
 		}
-
 	}
 
 	/**
@@ -177,13 +161,15 @@ public class BoardController {
 	}
 
 	/*
-	 * @PostMapping("/boardSelect.do") public String boardSelect(BoardVO vo, Model
-	 * model, CommentVO cvo) { vo = boardDao.boardSelect(vo);
-	 * model.addAttribute("board", vo); boardDao.boardHitUp(1); return
-	 * "board/boardDetail";
-	 * 
+	 * @PostMapping("/boardSelect.do")
+	 *  public String boardSelect(BoardVO vo, Model model, CommentVO cvo) {
+	 *  vo = boardDao.boardSelect(vo);
+	 * model.addAttribute("board", vo); 
+	 * boardDao.boardHitUp(1); 
+	 * return "board/boardDetail";
 	 * }
 	 */
+	
 	@ResponseBody
 	@PostMapping("/recommend.do")
 	public int recommend(BoardVO vo) {
@@ -243,4 +229,5 @@ public class BoardController {
 		return "board/boardDetail";
 	}
 
+	
 }

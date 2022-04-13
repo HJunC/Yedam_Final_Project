@@ -22,7 +22,7 @@
 		parameterType="co.yd.deval.comment.service.CommentVO">
 		INSERT INTO
 		COMMENTS( COMMENT_NO
-		, COMMENT_SUB
+		, COMMENT_SUBJECT
 		, WRITER
 		, BOARD_NO
 		)

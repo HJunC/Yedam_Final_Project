@@ -1,69 +1,43 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
-<c:set var="resources" value="${pageContext.request.contextPath }/resources" />
-
-<!DOCTYPE html>
-<html>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
+<c:set var="resources"
+	value="${pageContext.request.contextPath}/resources" />
+<link rel="stylesheet"
+	href="${resources}/css/common/toastui-editor.min.css" />
+<link rel="stylesheet"
+	href="${resources}/css/common/toastui-editor-dark.min.css" />
 <head>
-<meta charset="UTF-8">
-<meta name="description"
-	content="Rhythm &mdash; One & Multi Page Creative Template">
-<meta name="author"
-	content="https://themeforest.net/user/bestlooker/portfolio">
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>write here</title>
-<link rel="stylesheet" type="text/css" href="${resources }/css/custom/team-project-style.css">
-
 <style>
-@import url('https://fonts.googleapis.com/css?family=Varela+Round');
-
-body {
-	background: @BACKGROUND;
-	font-family: "Varela Round", Nunito, Montserrat, sans-serif;
-	margin: 0;
-	padding: 0;
-	text-transform: capitalize;
-}
-
-tr {
-	border: 1px;
-	line-height: 50px;
-}
-
-td {
-	width: 250px;
-}
-
-.button {
-	background-color: orange;
-	width: 80px;
-	height: 30px;
-	border: none;
-	border-radius: 2px;
-	padding: 2px 1px;
-	text-align: center;
-	text-decoration: none;
-	display: inline-block;
-	font-size: 15px;
-	margin: 10px 1px;
-	cursor: pointer;
-	float: center;
+.input-info {
+	font-size: 14px;
+	color: #c0c0c0;
 }
 </style>
 </head>
 <body>
+					   <div align="center">
 
-	<section class="page-section bg-dark light-content">
-		<div align="center" class="container">
-			<div class="col-md-6 mb-md-20">
-				<h1 class="blog-page-title">write .</h1>
-				<form action="writePost.do" enctype="multipart/form-data" method="post">
-					<!-- <input type="number" name="boardTypeNo" value="1">	  -->
+	<section class="page-section bg-dark-alfa-50 bg-scroll"
+		data-background="${resources}/images/full-width-images/section-bg-11.jpg" id="home">
+		<div class="container relative">
+			<div class="row">
+				<div class="col-md-8">
+					<div class="wow fadeInUpShort" data-wow-delay=".1s">
+						<h1 class="hs-line-7 mb-20 mb-xs-10">
+							🌵<br> 글쓰기
+						</h1>
+					</div>
+					<div class="wow fadeInUpShort" data-wow-delay=".2s"></div>
+				</div>
+
+				<form action="writePost.do" enctype="multipart/form-data"method="post">
+					<sec:csrfInput />
 					<c:set var="ymd" value="<%=new java.util.Date()%>" />
-
 					<table>
 						<tr>
 							<td>type_no.</td>
@@ -72,8 +46,8 @@ td {
 							<td>
 						</tr>
 						<tr>
-							<td>등록날짜</td>
-							<td><fmt:formatDate value="${ymd}" pattern="yyyy-MM-dd" />
+							<td>등록날짜 </td>
+							<td><fmt:formatDate value="${ymd}" pattern="yyyy-MM-dd"/>
 							<td>
 						</tr>
 
@@ -86,56 +60,57 @@ td {
 
 						<tr>
 							<td>Subject</td>
-							<td><textarea rows="4" cols="200" id="subject"
-									name="subject" required="required"
-									class="input-mx square form-control"
-									placeholder="Enter subject" maxlength="400"> </textarea></td>
-				 
-
-<tr>
-							<td >file</td>
-							<td> <input type="file" id="photo" name="file" accept="image/*"></td>
-	
+							<td><div id="editor"></div></td>
+							<script src="${resources}/js/common/toastui-editor-all.min.js"></script>
+						<tr>
+							<td>file</td>
+							<td><input type="file" id="photo" name="file"
+								accept="image/*"></td>
 						</tr>
 					</table>
-
-					<h1 class="blog-page-title"></h1>
-					<button type="submit" class="btn btn-warning">submit</button>
-					<button class="btn btn-secondary" onclick="location.href='free.do'">목록으로</button>
-
+                    <button type="submit" class="submit_btn btn btn-mod btn-w btn-large btn-round">작성하기</button>
+					<button  class="submit_btn btn btn-mod btn-w btn-large btn-round" onclick="location.href='free.do'">목록으로</button>
 				</form>
 				
- 	<!-- Send Button -->
 				<div class="container relative">
-
-
 					<c:if test="${board.boardTypeNo == 1}">
-						<a href="free.do" class="btn btn-mod btn-g btn-small btn-round">목록으로</a>
+						<a href="free.do" class="submit_btn btn btn-mod btn-w btn-large btn-round">목록으로</a>
 					</c:if>
-					<br>
-
-
+					
 					<c:if test="${board.boardTypeNo == 2}">
-						<a href="notice.do" class="btn btn-mod btn-g btn-small btn-round">목록으로</a>
+						<a href="notice.do"  class="submit_btn btn btn-mod btn-w btn-large btn-round">목록으로</a>
 					</c:if>
-
 
 					<c:if test="${board.boardTypeNo == 3}">
 						<a href="technical.do"
-							class="btn btn-mod btn-g btn-small btn-round">목록으로</a>
+							 class="submit_btn btn btn-mod btn-w btn-large btn-round">목록으로</a>
 					</c:if>
-
 				</div>
-
+</div>
 
 			</div>
-		</div>
-		
-		
-	</section>
 
+	</section>
+		</div>
+
+<script>
+  /**
+   * toast 에디터 적용
+   */
+  const { Editor } = toastui;
+
+  const editorObject = new Editor({
+    el: document.querySelector('#editor'),
+    previewStyle: 'vertical',
+    height: '500px',
+    initialEditType: 'wysiwyg',
+    theme: 'dark'
+  });
+
+  editorObject.getMarkdown();
+
+</script>
 
 
 </body>
-
 </html>

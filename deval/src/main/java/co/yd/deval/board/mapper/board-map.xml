@@ -2,116 +2,119 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.yd.deval.board.mapper.BoardMapper">
 
-	<select id="boardSelectList"
-		resultType="co.yd.deval.board.service.BoardVO">
-		select *
-		from board
-		where board_type_no = #{b}
-		ORDER BY
-		BOARD_NO DESC
-	</select>
+<select id="boardSelectList" resultType="co.yd.deval.board.service.BoardVO">
+	select *
+	from board
+	where board_type_no = #{b}
+	ORDER BY
+	BOARD_NO DESC
+</select>
 
 
-	<select id="boardSelect"
-		resultType="co.yd.deval.board.service.BoardVO">
-		select *
-		from board
-		where board_no = #{boardNo}
-	</select>
+<select id="boardSelect"
+	resultType="co.yd.deval.board.service.BoardVO">
+	select *
+	from board
+	where board_no = #{boardNo}
+</select>
 
-	<insert id="boardInsert"
-		parameterType="co.yd.deval.board.service.BoardVO">
-		INSERT INTO BOARD
-		(BOARD_NO,
-		BOARD_TYPE_NO,
-		TITLE,
-		SUBJECT,
-		WRITER,
-		CATEGORY,
-		HIT,
-		RECOMMEND
-		)
+<insert id="boardInsert"
+	parameterType="co.yd.deval.board.service.BoardVO">
+	INSERT INTO BOARD
+	(BOARD_NO,
+	BOARD_TYPE_NO,
+	TITLE,
+	SUBJECT,
+	WRITER,
+	CATEGORY,
+	HIT,
+	RECOMMEND
+	)
 
-		VALUES
-		(BOARD_NO_COUNT_SEQ.NEXTVAL,
-		#{boardTypeNo},
-		#{title},
-		#{subject},
-		#{writer},
-		#{category},
-		0,
-		0
-		)
-
-	</insert>
+	VALUES
+	(BOARD_NO_COUNT_SEQ.NEXTVAL,
+	#{boardTypeNo},
+	#{title},
+	#{subject},
+	#{writer},
+	#{category},
+	0,
+	0
+	)
+</insert>
 
 
 
-	<!-- 수정 -->
-	<update id="boardUpdate"
-		parameterType="co.yd.deval.board.service.BoardVO">
-		update board
-		<set>
-			<if test="title !=null"> title=#{title},</if>
-			<if test="subject!=null"> subject=#{subject},</if>
-			<if test="category!=null"> category=#{category},</if>
-		</set>
-		where board_no=#{boardNo}
-	</update>
+<!-- 수정 -->
+<update id="boardUpdate"
+	parameterType="co.yd.deval.board.service.BoardVO">
+	update board
+	<set>
+		<if test="title !=null"> title=#{title},</if>
+		<if test="subject!=null"> subject=#{subject},</if>
+		<if test="category!=null"> category=#{category},</if>
+	</set>
+	where board_no=#{boardNo}
+</update>
 
 
 
 	<!-- 삭제 -->
-	<delete id="boardDelete"
-		parameterType="co.yd.deval.board.service.BoardVO">
-		delete from board
-		where board_no=#{boardNo}
-	</delete>
+<delete id="boardDelete"
+	parameterType="co.yd.deval.board.service.BoardVO">
+	delete from board
+	where board_no=#{boardNo}
+</delete>
 
-	<sql id="option">
-		<where>
-			board_type_no = #{boardTypeNo}
-		</where>
-	</sql>
+<sql id="option">
+	<where>
+		board_type_no = #{boardTypeNo}
+		<if test="title != null">
+			AND (Title LIKE '%'||#{title}||'%'
+			OR subject LIKE '%'||#{title}||'%')
+		</if>
+	</where>
+</sql>
 
-	<select id="getListWithPaging" resultType="co.yd.deval.board.service.BoardVO">
-        <![CDATA[
-        SELECT * FROM (
-            SELECT ROWNUM rn, t.*
-              FROM BOARD t
+<select id="getListWithPaging"
+	resultType="co.yd.deval.board.service.BoardVO">
+       <![CDATA[
+       SELECT * FROM (
+           SELECT ROWNUM rn, t.*
+             FROM BOARD t
 
-        ]]>
-			<include refid="option"></include>
-			AND rownum <![CDATA[<=]]> #{criteria.pageNum} * #{criteria.amount}
-		)
-        <![CDATA[
-        WHERE rn > (#{criteria.pageNum} - 1) * #{criteria.amount}
-        ]]>
-	</select>
+       ]]>
+	<include refid="option"></include>
+	AND rownum <![CDATA[<=]]>
+	#{criteria.pageNum} * #{criteria.amount}
+	)
+       <![CDATA[
+       WHERE rn > (#{criteria.pageNum} - 1) * #{criteria.amount}
+       ]]>
+</select>
 
-	<select id="getTotalCount" resultType="java.lang.Integer">
-		SELECT COUNT(*) FROM BOARD
-		<include refid="option"></include>
-		AND board_no > 0
-	</select>
-
-
-
-	<update id="boardHitUp" parameterType="int">
-		UPDATE BOARD
-		SET
-		HIT = HIT+1
-		where board_no=#{boardNo}
-	</update>
+<select id="getTotalCount" resultType="java.lang.Integer">
+	SELECT COUNT(*) FROM BOARD
+	<include refid="option"></include>
+	AND board_no > 0
+</select>
 
 
-	<update id="boardRecUp" parameterType="int">
-		UPDATE BOARD
-		SET
-		RECOMMEND = RECOMMEND+1
-		where board_no=#{boardNo}
-	</update>
-	
-	
-	
+
+<update id="boardHitUp" parameterType="int">
+	UPDATE BOARD
+	SET
+	HIT = HIT+1
+	where board_no=#{boardNo}
+</update>
+
+
+<update id="boardRecUp" parameterType="int">
+	UPDATE BOARD
+	SET
+	RECOMMEND = RECOMMEND+1
+	where board_no=#{boardNo}
+</update>
+
+
 </mapper>
