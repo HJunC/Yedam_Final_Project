@@ -94,19 +94,9 @@
 				<li>
 					<a href="${root}/project/main.do" class="mn-has-sub">팀 프로젝트</a>
 				</li>
-
+				
 				<li>
-					<a href="${root}/study/studyMain.do" class="mn-has-sub">스터디 <i class="mn-has-sub-icon"></i></a>
-               	<ul class="mn-sub mn-has-multi">
-                  	<li class="mn-sub-multi">
-                  	<ul>
-                     <li><a href="${root}/study/studyList.do">스터디 검색</a></li>
-                     <li><a href="${root}/study/addStudy.do">스터디 등록</a></li>
-                     <li><a href="${root}/study/studyReq.do">신청자 정보</a></li>
-                     <li><a href="${root}/study/studyMember.do">그룹원 정보</a></li>
-                  </ul>
-                  </li>   
-               </ul>
+					<a href="${root}/study/studyMain.do" class="mn-has-sub">스터디</a>
 				</li>
 
 				<li>
@@ -144,7 +134,6 @@
 			</ul>
 		</div>
 		<!-- End Main Menu -->
-
 	</div>
 </nav>
 <!-- End Navigation panel -->

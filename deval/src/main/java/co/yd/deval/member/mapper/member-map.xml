@@ -62,5 +62,10 @@
 		WHERE MEMBER_ID = #{id}
 	</update>
 	
+	<select id="memberMailGet" resultType="String">
+		select mail
+		from member
+		where member_id = #{id}
+	</select>
 	
 </mapper>

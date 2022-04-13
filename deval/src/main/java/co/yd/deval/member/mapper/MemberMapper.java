@@ -13,5 +13,7 @@ public interface MemberMapper {
 	
 	MemberVO memberLogin(String id);
 	int memberExpUp(HashMap<String, Object> exp);
-	int memberCashUpdate(Map<String, Object> cash);
+	int memberCashUpdate(HashMap<String, Object> cash);
+	
+	String memberMailGet(String id);
 }
