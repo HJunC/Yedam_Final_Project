@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,12 +21,6 @@ import co.yd.deval.project.service.ProjectService;
 import co.yd.deval.setleLog.service.SetleLogService;
 import co.yd.deval.setleLog.service.SetleLogVO;
 import co.yd.deval.study.service.StudyService;
-
-import co.yd.deval.study.service.StudyReqVO;
-import co.yd.deval.study.service.StudyService;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 @Controller
 public class MemberController {
@@ -40,9 +33,6 @@ public class MemberController {
 	private StudyService studyDao;
 	@Autowired
 	private SetleLogService setleDAO;
-	@Autowired
-	private ChatRoomService chatRoomDAO;
-	
 	
 	@RequestMapping("/loginForm.do")
 	public String loginForm(HttpServletRequest request) {
