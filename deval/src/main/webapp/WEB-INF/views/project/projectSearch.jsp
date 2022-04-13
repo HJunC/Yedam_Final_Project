@@ -3,6 +3,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form"   uri="http://www.springframework.org/tags/form" %>
 <c:set var="resources" value="${pageContext.request.contextPath}/resources"/>
+<script src="${resources}/js/moment.min.js"></script>
+<script src="${resources}/js/moment-with-locales.min.js"></script>
 <!-- Home Section -->
 <section class="small-section bg-dark-alfa-50 bg-scroll light-content" data-background="images/full-width-images/section-bg-19.jpg" id="home">
     <div class="container relative pt-70">
@@ -48,22 +50,75 @@
 
                 <div class="list-group project-list">
                     <c:if test="${not empty projectList}">
+                        <script>
+                          var timeArray = [];
+                        </script>
                         <c:forEach items="${projectList }" var="item">
-                            <a href="projectDetail.do?no=${item.projectNo}" class="list-group-item d-flex justify-content-between align-items-start" aria-current="true">
+                            <a href="projectDetail.do?no=${item.projectNo}" class="list-group-item d-flex justify-content-between align-items-start pt-3 pb-3" aria-current="true">
                                 <div class="ms-2 me-auto">
-                                    <div class="fw-bold">${item.projectName}</div>
-                                    모집일
-                                    <fmt:formatDate value="${item.recruitSdt}" type="both" pattern="yyyy-MM-dd"/>
-                                    ~
-                                    <fmt:formatDate value="${item.recruitEdt}" type="both" pattern="yyyy-MM-dd"/>
+                                    <div class="countdown-search-list mb-2">
+                                        <i class="fa fa-users"></i> (${item.crntRcnt}/${item.totalRcnt})&nbsp;&nbsp;&nbsp;
+                                        <i class="fa fa-stopwatch"></i> 마감 <span id="timer${item.projectNo}"></span>
+                                    </div>
+                                    <div>
+                                        <h5 class="mb-2">${item.projectName} <span class="fs-6" style="color: #727272">(${item.projectTerm}일)</span></h5>
+                                        <div class="lang-search-list">${item.lang}</div>
+                                    </div>
                                 </div>
-                                <span class="badge me-1 ${item.frontRcnt > 0 ? 'bg-primary' : 'bg-dark'}">프론트엔드 ${item.frontRcnt}</span>
-                                <span class="badge me-1 ${item.backRcnt > 0 ? 'bg-primary' : 'bg-dark'}">백엔드 ${item.backRcnt}</span>
-                                <span class="badge me-1 ${item.fullRcnt > 0 ? 'bg-primary' : 'bg-dark'}">풀스택 ${item.fullRcnt}</span>
-                                <span class="badge me-1 ${item.designRcnt > 0 ? 'bg-primary' : 'bg-dark'}">디자인 ${item.designRcnt}</span>
-                                <span class="badge me-1 ${item.plannerRcnt > 0 ? 'bg-primary' : 'bg-dark'}">기획 ${item.plannerRcnt}</span>
+                                <script>
+                                  timeArray.push({
+                                    "id": 'timer' + '${item.projectNo}',
+                                    "endDate": '<fmt:formatDate value="${item.recruitEdt}" type="both" pattern="yyyy-MM-dd HH:mm:ss"/>'
+                                  })
+                                </script>
+                                <div>
+                                    <div>
+                                        <span class="badge me-1 ${item.frontRcnt > 0 ? 'bg-custom-primary' : 'bg-dark'}">프론트엔드 ${item.frontRcnt}</span>
+                                        <span class="badge me-1 ${item.backRcnt > 0 ? 'bg-custom-primary' : 'bg-dark'}">백엔드 ${item.backRcnt}</span>
+                                        <span class="badge me-1 ${item.fullRcnt > 0 ? 'bg-custom-primary' : 'bg-dark'}">풀스택 ${item.fullRcnt}</span>
+                                        <span class="badge me-1 ${item.designRcnt > 0 ? 'bg-custom-primary' : 'bg-dark'}">디자인 ${item.designRcnt}</span>
+                                        <span class="badge ${item.plannerRcnt > 0 ? 'bg-custom-primary' : 'bg-dark'}">기획 ${item.plannerRcnt}</span>
+                                    </div>
+                                    <div class="info-search-list mt-40">
+                                        <i class="fa fa-eye"></i> ${item.hit}&nbsp;&nbsp;&nbsp;
+                                        <i class="fa fa-user-clock"></i> ${item.applyRcnt} 지원</span>
+                                    </div>
+                                </div>
                             </a>
                         </c:forEach>
+                        <script>
+                          function countDate(id, endDate) {
+                            var getCurrentTime = moment();
+                            var targetTime = moment(endDate);
+                            var getCurrentTimeUnix = getCurrentTime.unix();
+                            var targetTimeUnix = targetTime.unix();
+                            var leftTime = targetTimeUnix - getCurrentTimeUnix;
+                            var duration = moment.duration(leftTime, 'seconds');
+                            var interval = 1000;
+                            var intv = setInterval(function(){
+                              if (duration.asSeconds() <= 1 || getCurrentTimeUnix >= targetTimeUnix ) {
+                                $("#"+id).html('-');
+                                clearInterval(intv);
+                              }else{
+                                duration = moment.duration(duration.asSeconds() - 1, 'seconds');
+                                var timer = {
+                                  hours : (duration.hours() < 10) ? '0' + duration.hours() : duration.hours(),
+                                  minutes : (duration.minutes() < 10) ? '0' + duration.minutes() : duration.minutes(),
+                                  seconds : (duration.seconds() < 10) ? '0' + duration.seconds() : duration.seconds()
+                                }
+                                $("#"+id).html(
+                                  targetTime.diff(getCurrentTime, 'days') + '일 ' +
+                                  timer.hours + ' : ' + timer.minutes + ' : ' +  timer.seconds
+                                );
+                              }
+                            }, interval);
+                          }
+
+                          timeArray.forEach(value => {
+                            console.log(value)
+                            countDate(value.id, value.endDate);
+                          });
+                        </script>
                     </c:if>
                     <c:if test="${empty projectList}">
                         <h3 class="call-action-1-heading" style="font-size: 30px; color: rgba(255, 255, 255, 0.3);">검색 결과가 없습니다.</h3>

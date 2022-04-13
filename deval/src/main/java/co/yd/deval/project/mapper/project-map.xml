@@ -89,6 +89,7 @@
             <if test="designRcnt == 1">DESIGN_RCNT = DESIGN_RCNT - 1,</if>
             <if test="fullRcnt == 1">FULL_RCNT = FULL_RCNT - 1,</if>
             <if test="plannerRcnt == 1">PLANNER_RCNT = PLANNER_RCNT - 1,</if>
+            CRNT_RCNT = CRNT_RCNT + 1
         </set>
         WHERE PROJECT_NO = #{projectNo}
     </update>

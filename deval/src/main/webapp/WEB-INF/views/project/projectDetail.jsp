@@ -38,7 +38,7 @@
                                 <fmt:formatDate value="${project.recruitEdt}" type="both" pattern="yyyy-MM-dd"/>
                             </span>
                             <span class="separator">&nbsp;</span>
-                            <span><i class="fa fa-comments"></i> ${project.applyRcnt} 신청자 수</span>
+                            <span><i class="fa fa-user-clock"></i> ${project.applyRcnt} 신청자 수</span>
                             <span class="separator">&nbsp;</span>
                             <span><i class="fa fa-eye"></i> ${project.hit} 조회수</span>
                             <span class="separator">&nbsp;</span>
@@ -225,9 +225,9 @@
                                 <div class="mb-30 mb-md-20">
                                     <!-- Website -->
                                     <h6>지원 포지션</h6>
-                                    <div class="d-flex justify-content-between">
+                                    <div class="d-flex justify-content-start">
                                         <c:if test="${project.frontRcnt > 0}">
-                                            <div class="col input-group justify-content-center">
+                                            <div class="col input-group">
                                                 <span class="input-group-text bg-dark" style="border-color: #5e646a;">프론트엔드</span>
                                                 <div class="input-group-text bg-dark" style="border-color: #5e646a;">
                                                     <input class="form-check-input mt-0" type="radio" value="FE" name="position" required>
@@ -235,7 +235,7 @@
                                             </div>
                                         </c:if>
                                         <c:if test="${project.backRcnt > 0}">
-                                            <div class="col input-group justify-content-center">
+                                            <div class="col input-group">
                                                 <span class="input-group-text bg-dark" style="border-color: #5e646a;">백엔드</span>
                                                 <div class="input-group-text bg-dark" style="border-color: #5e646a;">
                                                     <input class="form-check-input mt-0" type="radio" value="BE" name="position" required>
@@ -243,7 +243,7 @@
                                             </div>
                                         </c:if>
                                         <c:if test="${project.fullRcnt > 0}">
-                                            <div class="col input-group justify-content-center">
+                                            <div class="col input-group">
                                                 <span class="input-group-text bg-dark" style="border-color: #5e646a;">풀스택</span>
                                                 <div class="input-group-text bg-dark" style="border-color: #5e646a;">
                                                     <input class="form-check-input mt-0" type="radio" value="FS" name="position" required>
@@ -251,7 +251,7 @@
                                             </div>
                                         </c:if>
                                         <c:if test="${project.designRcnt > 0}">
-                                            <div class="col input-group justify-content-center">
+                                            <div class="col input-group">
                                                 <span class="input-group-text bg-dark" style="border-color: #5e646a;">디자인</span>
                                                 <div class="input-group-text bg-dark" style="border-color: #5e646a;">
                                                     <input class="form-check-input mt-0" type="radio" value="DE" name="position" required>
@@ -259,7 +259,7 @@
                                             </div>
                                         </c:if>
                                         <c:if test="${project.plannerRcnt > 0}">
-                                            <div class="col input-group justify-content-center">
+                                            <div class="col input-group">
                                                 <span class="input-group-text bg-dark" style="border-color: #5e646a;">기획</span>
                                                 <div class="input-group-text bg-dark" style="border-color: #5e646a;">
                                                     <input class="form-check-input mt-0" type="radio" value="PL" name="position" required>

@@ -52,6 +52,7 @@ public class ProjectVO {
     private int hit;
     private int applyRcnt;
     private String leaderId;
+    private int crntRcnt;
 
     // 테이블에 없는 데이터
     private String leaderPosition;
