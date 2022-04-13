@@ -16,13 +16,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import co.yd.deval.chat.service.ChatRoomService;
 import co.yd.deval.member.service.MemberService;
 import co.yd.deval.member.service.MemberVO;
 import co.yd.deval.project.service.ProjectService;
 import co.yd.deval.setleLog.service.SetleLogService;
 import co.yd.deval.setleLog.service.SetleLogVO;
 import co.yd.deval.study.service.StudyService;
+
+import co.yd.deval.study.service.StudyReqVO;
+import co.yd.deval.study.service.StudyService;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class MemberController {

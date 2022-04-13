@@ -62,48 +62,267 @@
 
 </div>
 <!-- End Fullwidth Slider -->
-<section class="page-section bg-dark light-content">
+
+<style>
+    .notice-box {
+        margin-bottom: 80px;
+        width: 100%;
+        height: 52px;
+        border-radius: 8px;
+        background-color: #545353;
+        overflow: hidden;
+    }
+    .notice-box ul { width: 100%; }
+    .notice-box li {
+        padding: 0 16px;
+        height: 52px;
+    }
+    .notice-box a {text-decoration-line: none;}
+
+    .list-box li {}
+    .list-box a {text-decoration-line: none;}
+    .list-box:nth-child(2n-1) {padding-right: 40px}
+    .list-box:nth-child(2n) {padding-left: 40px}
+</style>
+
+<section class="page-section bg-dark light-content" style="padding-top: 52px;">
     <div class="container relative">
+
+        <div class="notice-box d-flex">
+            <i class="fa fa-bullhorn d-flex justify-content-center align-items-center" style="width: 52px; height: 52px;"></i>
+            <ul class="clearlist">
+                <li class="d-flex justify-content-between align-items-center">
+                    <a href="#">[업데이트] 프로젝트 검색 기능으로, 원하는 조건의 프로젝트만 편리하게 찾아보세요!</a>
+                    <span style="color: #919191">2022-03-20</span>
+                </li>
+                <li class="d-flex justify-content-between align-items-center">
+                    <a href="#">[업데이트] 프로젝트 검색 기능으로, 원하는 조건의 프로젝트만 편리하게 찾아보세요!</a>
+                    <span style="color: #919191">2022-03-20</span>
+                </li>
+            </ul>
+        </div>
+
         <div class="row">
 
             <!-- Col -->
-
-            <div class="col-sm-6 mb-40">
+            <div class="col-sm-6 mb-40 list-box">
 
                 <div class="text">
-                    <h5>자유게시판</h5>
-                    <ul>
-                        <li>어서오세여</li>
-                        <li>어서오세여</li>
-                        <li>어서오세여</li>
-                        <li>어서오세여</li>
-                        <li>어서오세여</li>
+                    <div class="blog-page-title d-flex justify-content-between align-center" style="margin-bottom: 16px;">
+                        <h5 class="mb-1"><i class="fa fa-comment"></i>&nbsp;&nbsp;자유게시판</h5>
+                        <a href="${pageContext.request.contextPath}/board/free.do" class="mb-1">더보기 <i class="fa fa-angle-right"></i></a>
+                    </div>
+                    <ul class="clearlist">
+                        <li class="d-flex justify-content-between">
+                            <a href="#">어서오세여</a>
+                            <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;0</span>
+                        </li>
+                        <li class="d-flex justify-content-between">
+                            <a href="#">어서오세여</a>
+                            <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;0</span>
+                        </li>
+                        <li class="d-flex justify-content-between">
+                            <a href="#">어서오세여</a>
+                            <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;0</span>
+                        </li>
+                        <li class="d-flex justify-content-between">
+                            <a href="#">어서오세여</a>
+                            <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;0</span>
+                        </li>
+                        <li class="d-flex justify-content-between">
+                            <a href="#">어서오세여</a>
+                            <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;0</span>
+                        </li>
                     </ul>
                 </div>
 
             </div>
-
             <!-- End Col -->
 
             <!-- Col -->
-
-            <div class="col-sm-6 mb-40">
+            <div class="col-sm-6 mb-40 list-box">
 
                 <div class="text">
-                    <h5>One Half</h5>
-                    <ul>
-                        <li>어서오세여</li>
-                        <li>어서오세여</li>
-                        <li>어서오세여</li>
-                        <li>어서오세여</li>
-                        <li>어서오세여</li>
+                    <div class="blog-page-title d-flex justify-content-between align-center" style="margin-bottom: 16px;">
+                        <h5 class="mb-1"><i class="fa fa-microchip"></i>&nbsp;&nbsp;최신기술</h5>
+                        <a href="${pageContext.request.contextPath}/board/technical.do" class="mb-1">더보기 <i class="fa fa-angle-right"></i></a>
+                    </div>
+                    <ul class="clearlist">
+                        <li class="d-flex justify-content-between">
+                            <a href="#">어서오세여</a>
+                            <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;0</span>
+                        </li>
+                        <li class="d-flex justify-content-between">
+                            <a href="#">어서오세여</a>
+                            <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;0</span>
+                        </li>
+                        <li class="d-flex justify-content-between">
+                            <a href="#">어서오세여</a>
+                            <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;0</span>
+                        </li>
+                        <li class="d-flex justify-content-between">
+                            <a href="#">어서오세여</a>
+                            <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;0</span>
+                        </li>
+                        <li class="d-flex justify-content-between">
+                            <a href="#">어서오세여</a>
+                            <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;0</span>
+                        </li>
                     </ul>
                 </div>
 
             </div>
-
             <!-- End Col -->
 
         </div>
+
+        <div class="row">
+
+            <!-- Col -->
+            <div class="col-sm-6 mb-40 list-box">
+
+                <div class="text">
+                    <div class="blog-page-title d-flex justify-content-between align-center" style="margin-bottom: 16px;">
+                        <h5 class="mb-1"><i class="fa fa-comment"></i>&nbsp;&nbsp;코드 공유</h5>
+                        <a href="${pageContext.request.contextPath}/board/free.do" class="mb-1">더보기 <i class="fa fa-angle-right"></i></a>
+                    </div>
+                    <ul class="clearlist">
+                        <li class="d-flex justify-content-between">
+                            <a href="#">어서오세여</a>
+                            <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;0</span>
+                        </li>
+                        <li class="d-flex justify-content-between">
+                            <a href="#">어서오세여</a>
+                            <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;0</span>
+                        </li>
+                        <li class="d-flex justify-content-between">
+                            <a href="#">어서오세여</a>
+                            <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;0</span>
+                        </li>
+                        <li class="d-flex justify-content-between">
+                            <a href="#">어서오세여</a>
+                            <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;0</span>
+                        </li>
+                        <li class="d-flex justify-content-between">
+                            <a href="#">어서오세여</a>
+                            <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;0</span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+            <!-- End Col -->
+
+            <!-- Col -->
+            <div class="col-sm-6 mb-40 list-box">
+
+                <div class="text">
+                    <div class="blog-page-title d-flex justify-content-between align-center" style="margin-bottom: 16px;">
+                        <h5 class="mb-1"><i class="fa fa-microchip"></i>&nbsp;&nbsp;코드 리뷰</h5>
+                        <a href="${pageContext.request.contextPath}/board/technical.do" class="mb-1">더보기 <i class="fa fa-angle-right"></i></a>
+                    </div>
+                    <ul class="clearlist">
+                        <li class="d-flex justify-content-between">
+                            <a href="#">어서오세여</a>
+                            <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;0</span>
+                        </li>
+                        <li class="d-flex justify-content-between">
+                            <a href="#">어서오세여</a>
+                            <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;0</span>
+                        </li>
+                        <li class="d-flex justify-content-between">
+                            <a href="#">어서오세여</a>
+                            <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;0</span>
+                        </li>
+                        <li class="d-flex justify-content-between">
+                            <a href="#">어서오세여</a>
+                            <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;0</span>
+                        </li>
+                        <li class="d-flex justify-content-between">
+                            <a href="#">어서오세여</a>
+                            <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;0</span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+            <!-- End Col -->
+
+        </div>
+
+        <div class="row">
+
+            <!-- Col -->
+            <div class="col-sm-6 mb-40 list-box">
+
+                <div class="text">
+                    <div class="blog-page-title d-flex justify-content-between align-center" style="margin-bottom: 16px;">
+                        <h5 class="mb-1"><i class="fa fa-comment"></i>&nbsp;&nbsp;질문</h5>
+                        <a href="${pageContext.request.contextPath}/board/free.do" class="mb-1">더보기 <i class="fa fa-angle-right"></i></a>
+                    </div>
+                    <ul class="clearlist">
+                        <li class="d-flex justify-content-between">
+                            <a href="#">어서오세여</a>
+                            <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;0</span>
+                        </li>
+                        <li class="d-flex justify-content-between">
+                            <a href="#">어서오세여</a>
+                            <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;0</span>
+                        </li>
+                        <li class="d-flex justify-content-between">
+                            <a href="#">어서오세여</a>
+                            <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;0</span>
+                        </li>
+                        <li class="d-flex justify-content-between">
+                            <a href="#">어서오세여</a>
+                            <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;0</span>
+                        </li>
+                        <li class="d-flex justify-content-between">
+                            <a href="#">어서오세여</a>
+                            <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;0</span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+            <!-- End Col -->
+
+            <!-- Col -->
+            <div class="col-sm-6 mb-40 list-box">
+
+                <div class="text">
+                    <div class="blog-page-title d-flex justify-content-between align-center" style="margin-bottom: 16px;">
+                        <h5 class="mb-1"><i class="fa fa-microchip"></i>&nbsp;&nbsp;답변</h5>
+                        <a href="${pageContext.request.contextPath}/board/technical.do" class="mb-1">더보기 <i class="fa fa-angle-right"></i></a>
+                    </div>
+                    <ul class="clearlist">
+                        <li class="d-flex justify-content-between">
+                            <a href="#">어서오세여</a>
+                            <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;0</span>
+                        </li>
+                        <li class="d-flex justify-content-between">
+                            <a href="#">어서오세여</a>
+                            <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;0</span>
+                        </li>
+                        <li class="d-flex justify-content-between">
+                            <a href="#">어서오세여</a>
+                            <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;0</span>
+                        </li>
+                        <li class="d-flex justify-content-between">
+                            <a href="#">어서오세여</a>
+                            <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;0</span>
+                        </li>
+                        <li class="d-flex justify-content-between">
+                            <a href="#">어서오세여</a>
+                            <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;0</span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+            <!-- End Col -->
+
+        </div>
+
     </div>
 </section>

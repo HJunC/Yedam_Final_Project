@@ -1,18 +1,9 @@
 package co.yd.deval;
 
 
-import java.security.Principal;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import co.yd.deval.chat.service.ChatRoomService;
-import co.yd.deval.member.service.MemberVO;
 
 /**
 * @package : co.yd.deval
@@ -32,12 +23,12 @@ public class HomeController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home() {
-		return mainPage();
+		return "home/home";
 	}
 	
 	@RequestMapping("/home.do")
 	public String main() {
-		return mainPage();
+		return "home/home";
 	}
 	
 	

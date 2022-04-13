@@ -19,13 +19,11 @@
         UPDATE PROJECT_TEAM
         <set>
             <if test="position != null">POSITION = #{position},</if>
-            <if test="memberId != null">MEMBER_ID = #{memberId},</if>
             <if test="isLeader != null">ISLEADER = #{isLeader},</if>
-            <if test="projectNo != null">PROJECT_NO = #{projectNo},</if>
-            <if test="state != null">STATE = #{state},</if>
+            <if test="updateState != null">STATE = #{updateState},</if>
         </set>
         WHERE PROJECT_NO = #{projectNo}
-          AND MEMBER_ID = #{memberId}
+        <if test="memberId != null">AND MEMBER_ID = #{memberId}</if>
     </update>
 
     <delete id="deleteProjectTeam">
@@ -52,6 +50,5 @@
          WHERE MEMBER_ID = #{memberId}
            AND STATE IN ('0', '1', '2')
     </select>
-
 
 </mapper>

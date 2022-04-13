@@ -7,5 +7,5 @@ public interface CommentService {
 	List<CommentVO> commentSelectList(CommentVO vo);
 	int commentInsert(CommentVO vo);
 	int commentDelete(CommentVO vo);
-	
+	CommentVO commentSelect(CommentVO vo);
 }

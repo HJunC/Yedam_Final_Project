@@ -17,4 +17,6 @@ public interface MemberMapper {
 	
 	//환불처리
 	int refund(Map<String, Object> cash);
+	
+	String memberMailGet(String id);
 }
