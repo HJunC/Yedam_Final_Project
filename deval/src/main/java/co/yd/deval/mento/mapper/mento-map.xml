@@ -5,6 +5,7 @@
 		SELECT * FROM MENTO 
 		WHERE LANG = #{lang}
 	</select>
+	
 	<select id="mentoSelectOne" resultType="co.yd.deval.mento.service.MentoVO">
 		SELECT * FROM MENTO 
 		WHERE MENTO_ID = #{mentoId}
@@ -16,7 +17,9 @@
 							history,
 							info,
 							price,
-							max_term,
+							TERM_DAY,
+							TERM_WEEK,
+							TERM_MONTH,
 							service_stt,
 							service_edt)
 		values(				#{mentoId},
@@ -25,7 +28,9 @@
 							#{history},
 							#{info},
 							#{price},
-							#{maxTerm},
+							#{termDay},
+							#{termWeek},
+							#{termMonth},
 							#{serviceStt},
 							#{serviceEdt})
 	</insert>
@@ -35,5 +40,18 @@
 	<update id="mentoUpdate" parameterType="co.yd.deval.mento.service.MentoVO">
 	
 	</update>
-	
+	<select id="mentoCount" resultType="int">
+		SELECT COUNT(MENTO_ID) 
+		FROM MENTO
+	</select>
+	<select id="kindOfLang"  resultType="int">
+		SELECT COUNT(COUNT(LANG)) 
+		FROM MENTO
+		GROUP BY LANG
+	</select>
+	<select id="kindOfAll" resultType="String">
+		SELECT LANG 
+		FROM MENTO
+		GROUP BY LANG
+	</select>
 </mapper>

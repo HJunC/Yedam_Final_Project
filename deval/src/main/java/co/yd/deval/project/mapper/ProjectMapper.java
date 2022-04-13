@@ -15,8 +15,10 @@ public interface ProjectMapper {
     int deleteProject(ProjectVO vo);
     int updateProject(ProjectVO vo);
 
+    int updatePositionCount(ProjectVO vo);
     int updateHit(int projectNo);
-    
+    int updateApplyCount(int projectNo);
+
     List<ProjectVO> findProjectImLeader(String id);
     List<ProjectVO> findProjectByNo(String id);
     List<ProjectVO> findWaitingProject(String id);

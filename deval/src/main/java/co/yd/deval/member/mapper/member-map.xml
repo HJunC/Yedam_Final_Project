@@ -56,9 +56,9 @@
 		WHERE MEMBER_ID = #{id}
 	</update>
 	
-	<update id="memberCashUpdate" parameterType="HashMap">
+	<update id="memberCashUpdate" parameterType="Map">
 		UPDATE MEMBER
-		SET CASH_PT = CASH_PT + #{cash}
+		SET CASH_PT = CASH_PT + #{cashPt}
 		WHERE MEMBER_ID = #{id}
 	</update>
 	

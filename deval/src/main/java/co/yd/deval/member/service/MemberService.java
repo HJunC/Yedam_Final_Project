@@ -1,6 +1,7 @@
 package co.yd.deval.member.service;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public interface MemberService {
 	MemberVO memberSelect(MemberVO vo);

@@ -460,7 +460,7 @@ p{
 ul, ol{
     margin: 0 0 1.5em 0;
 }
-blockquote{
+/*blockquote{
     margin: 0 0 3em 0;
     padding: 0;
     border: none;
@@ -472,7 +472,6 @@ blockquote{
 blockquote p{
     position: relative;
     margin-bottom: 1em;
-    font-size: 26px;
     font-style: normal;
     letter-spacing: -0.02em;
     line-height: 1.6;
@@ -480,7 +479,7 @@ blockquote p{
 blockquote footer{
     margin-top: -10px;
     font-size: 15px;
-    font-weight: 400; /*500*/
+    f*/ont-weight: 400; /*500*/
 }
 dl dt{
     font-weight: 600;

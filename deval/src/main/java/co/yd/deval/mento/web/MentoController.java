@@ -2,11 +2,11 @@ package co.yd.deval.mento.web;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.UUID;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import co.yd.deval.member.service.MemberService;
+import co.yd.deval.member.service.MemberVO;
+import co.yd.deval.mento.service.MentoServService;
 import co.yd.deval.mento.service.MentoService;
 import co.yd.deval.mento.service.MentoVO;
 
@@ -30,11 +32,19 @@ public class MentoController {
 	private MemberService memberDao;
 	
 	@Autowired
+	private MentoServService mentoServDAO;
+	
+	@Autowired
 	private String uploadPath;
 	
     @GetMapping("/main.do")
-    public String main() {
-        return "mento/mentoMain";
+    public String main(Model model) {
+    	model.addAttribute("mentoCount", mentoDAO.mentoCount());
+    	model.addAttribute("langCount", mentoDAO.kindOfLang());
+    	model.addAttribute("choice", mentoDAO.kindOfAll());
+    	model.addAttribute("servCount", mentoServDAO.serviceCount());
+    	model.addAttribute("stisfied", mentoServDAO.allSatisAvg());
+    	return "mento/mentoMain";
     }
     
     @RequestMapping("/mentoList.do")
@@ -51,8 +61,9 @@ public class MentoController {
     
     @PostMapping("/mentoInsert.do")
     public String mentoInsert(MentoVO mento, MultipartFile file) {
-	//	MemberVO user = (MemberVO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	mento.setMentoId("hong");
+		MemberVO user = (MemberVO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	mento.setMentoId(user.getUsername());
+    	System.out.println(file.getOriginalFilename()+ "==========");
     	String originalName = file.getOriginalFilename();
     	String fileType = originalName.substring(originalName.lastIndexOf(".") + 1, originalName.length());
     	String fileName = UUID.randomUUID().toString() + "." + fileType;
@@ -71,9 +82,17 @@ public class MentoController {
     }
     
     @GetMapping("/mentoSelect.do")
-    public String mentoSelect(Model model, MentoVO vo) {
-    	model.addAttribute("mento", mentoDAO.mentoSelectOne(vo));
-    	return "mento/mentoSelect";
+    public String mentoSelect(Model model, MentoVO vo, Principal principal) {
+    	
+    	  //추가
+		  MemberVO user = new MemberVO();
+		  if(principal != null) {
+			  user.setMemberId(principal.getName());
+			  model.addAttribute("member", memberDao.memberSelect(user));
+		  }
+		  
+		  model.addAttribute("mento", mentoDAO.mentoSelectOne(vo));
+		  return "mento/mentoSelect";
     }
 }
 

@@ -53,28 +53,43 @@
         UPDATE PROJECT
         <set>
             <if test="projectName != null">PROJECT_NAME = #{projectName},</if>
-            <if test="state != null">STATE = #{state},</if>
+            <if test="updateState != null">STATE = #{updateState},</if>
             <if test="process != null">PROCESS = #{process},</if>
             <if test="recruitEdt != null">RECRUIT_EDT = #{recruitEdt},</if>
             <if test="subject != null">SUBJECT = #{subject},</if>
             <if test="lang != null">LANG = #{lang},</if>
-            <if test="totalRcnt != null">TOTAL_RCNT = #{totalRcnt},</if>
+            <if test="totalRcnt != 0">TOTAL_RCNT = #{totalRcnt},</if>
             <if test="projectSdt != null">PROJECT_SDT = #{projectSdt},</if>
-            <if test="frontRcnt != null">FRONT_RCNT = #{frontRcnt},</if>
-            <if test="backRcnt != null">BACK_RCNT = #{backRcnt},</if>
-            <if test="designRcnt != null">DESIGN_RCNT = #{designRcnt},</if>
+            <if test="frontRcnt != 0">FRONT_RCNT = #{frontRcnt},</if>
+            <if test="backRcnt != 0">BACK_RCNT = #{backRcnt},</if>
+            <if test="designRcnt != 0">DESIGN_RCNT = #{designRcnt},</if>
             <if test="projectEdt != null">PROJECT_EDT = #{projectEdt},</if>
-            <if test="fullRcnt != null">FULL_RCNT = #{fullRcnt},</if>
-            <if test="plannerRcnt != null">PLANNER_RCNT = #{plannerRcnt},</if>
-            <if test="projectTerm != null">PROJECT_TERM = #{projectTerm},</if>
-            <if test="applyRcnt != null">APPLY_RCNT = #{applyRcnt},</if>
-            <if test="leaderId != null">LEADER_ID = #{leaderId},</if>
+            <if test="fullRcnt != 0">FULL_RCNT = #{fullRcnt},</if>
+            <if test="plannerRcnt != 0">PLANNER_RCNT = #{plannerRcnt},</if>
+            <if test="projectTerm != 0">PROJECT_TERM = #{projectTerm},</if>
         </set>
         WHERE PROJECT_NO = #{projectNo}
     </update>
 
-    <update id="updateHit" parameterType="co.yd.deval.project.service.ProjectVO">
+    <update id="updateHit">
         UPDATE PROJECT SET HIT = HIT + 1
+        WHERE PROJECT_NO = #{projectNo}
+    </update>
+
+    <update id="updateApplyCount">
+        UPDATE PROJECT SET APPLY_RCNT = APPLY_RCNT + 1
+        WHERE PROJECT_NO = #{projectNo}
+    </update>
+
+    <update id="updatePositionCount">
+        UPDATE PROJECT
+        <set>
+            <if test="frontRcnt == 1">FRONT_RCNT = FRONT_RCNT - 1,</if>
+            <if test="backRcnt == 1">BACK_RCNT = BACK_RCNT - 1,</if>
+            <if test="designRcnt == 1">DESIGN_RCNT = DESIGN_RCNT - 1,</if>
+            <if test="fullRcnt == 1">FULL_RCNT = FULL_RCNT - 1,</if>
+            <if test="plannerRcnt == 1">PLANNER_RCNT = PLANNER_RCNT - 1,</if>
+        </set>
         WHERE PROJECT_NO = #{projectNo}
     </update>
 
@@ -98,53 +113,43 @@
         SELECT * FROM (
             SELECT t.*
               FROM DEVAL.PROJECT t
-             WHERE STATE = '1'
-               AND RECRUIT_EDT >= sysdate - 1
-        <if test="lang != null">AND LANG LIKE '%'||#lang#||'%'</if>
-               AND FRONT_RCNT > 0
+             WHERE STATE IN ('1')
+               AND RECRUIT_EDT >= sysdate
+        <if test="langArray != null and langArray.size != 0">
+            <foreach collection="langArray" item="item" index="index">
+                AND LANG LIKE '%'||#{item}||'%'
+            </foreach>
+        </if>
+               AND  (FRONT_RCNT > 0
                 OR BACK_RCNT > 0
                 OR DESIGN_RCNT > 0
                 OR FULL_RCNT > 0
-                OR PLANNER_RCNT > 0
+                OR PLANNER_RCNT > 0)
              ORDER BY dbms_random.value
         ) WHERE ROWNUM <![CDATA[ <= ]]> 10
     </select>
 
-<!--    <select id="searchMainPageProject" resultType="co.yd.deval.project.service.ProjectVO">
-        SELECT * FROM (
-        SELECT t.*
-        FROM DEVAL.PROJECT t
-        WHERE STATE = '1'
-        AND RECRUIT_EDT >= sysdate - 1
-        <if test="lang != null">AND LANG LIKE '%'||#lang#||'%'</if>
-        <if test="projectName != null">AND PROJECT_NAME LIKE '%'||#projectName#||'%'</if>
-        <if test="process != null">AND PROCESS = #{process}</if>
-
-        <if test="totalRcnt != 0">AND TOTAL_RCNT = #{totalRcnt}</if>
-
-        <if test="frontRcnt != 0">AND FRONT_RCNT >= #{frontRcnt}</if>
-        <if test="backRcnt != 0">AND BACK_RCNT >= #{backRcnt}</if>
-        <if test="designRcnt != 0">AND DESIGN_RCNT >= #{designRcnt}</if>
-        <if test="fullRcnt != 0">AND FULL_RCNT >= #{fullRcnt}</if>
-        <if test="plannerRcnt != 0">AND PLANNER_RCNT >= #{plannerRcnt}</if>
-
-        <if test="projectTerm != 0">AND PROJECT_TERM BETWEEN 0 AND #{projectTerm}</if>
-        ORDER BY RECRUIT_EDT
-        ) WHERE ROWNUM <![CDATA[ <= ]]> 10
-    </select>-->
-
     <sql id="option">
         <where>
-            STATE = '1'
-            AND RECRUIT_EDT >= sysdate - 1
+            STATE IN ('1')
+            AND RECRUIT_EDT >= sysdate
             <choose>
                 <when test="state == null">AND STATE = '1'</when>
                 <when test="state != null">AND STATE = #{state}</when>
             </choose>
             <if test="projectName != null">AND PROJECT_NAME LIKE '%'||#{projectName}||'%'</if>
             <if test="process != null">AND PROCESS = #{process}</if>
-            <if test="lang != null">AND LANG LIKE '%'||#lang#||'%'</if>
-            <if test="projectTerm != 0">AND PROJECT_TERM = #{projectTerm}</if>
+            <if test="langArray != null and langArray.size != 0">
+                <foreach collection="langArray" item="item" index="index">
+                    AND LANG LIKE '%'||#{item}||'%'
+                </foreach>
+            </if>
+            <if test="frontRcnt == 1">AND FRONT_RCNT > 0</if>
+            <if test="backRcnt == 1">AND BACK_RCNT > 0</if>
+            <if test="designRcnt == 1">AND DESIGN_RCNT > 0</if>
+            <if test="fullRcnt == 1">AND FULL_RCNT > 0</if>
+            <if test="plannerRcnt == 1">AND PLANNER_RCNT > 0</if>
+            <if test="projectTerm != 0">AND PROJECT_TERM >= #{projectTerm}</if>
         </where>
     </sql>
 
