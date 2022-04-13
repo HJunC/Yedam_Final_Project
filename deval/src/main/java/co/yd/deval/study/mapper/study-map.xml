@@ -127,13 +127,6 @@
 		WHERE	MEMBER_ID = #{memberId}
 	</select>
 
-
-	<select id="findStudyImLeader" resultType="co.yd.deval.study.service.StudyVO">
-		SELECT  *
-		FROM    STUDY
-		WHERE   LEADER_ID = #{id}
-	</select>
-	
 	<select id="findStudyByNo" resultType="co.yd.deval.study.service.StudyVO">
 		SELECT  *
 		FROM    STUDY

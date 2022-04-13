@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 import co.yd.deval.study.mapper.StudyMapper;
 import co.yd.deval.study.service.StudyInfoVO;
 import co.yd.deval.study.service.StudyReqVO;
@@ -68,11 +69,6 @@ public class StudyServiceImpl implements StudyService {
 	@Override
 	public int studyUserUpdate(StudyInfoVO vo) {
 		return map.studyUserUpdate(vo);
-	}
-
-	@Override
-	public List<StudyVO> findStudyImLeader(String id) {
-		return map.findStudyImLeader(id);
 	}
 
 	@Override

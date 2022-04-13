@@ -1,7 +1,10 @@
 package co.yd.deval.project.serviceImpl;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import co.yd.deval.project.mapper.ProjectMapper;
-import co.yd.deval.project.mapper.ProjectRequestMapper;
 import co.yd.deval.project.mapper.ProjectTeamMapper;
 import co.yd.deval.project.service.*;
 
@@ -152,10 +155,6 @@ public class ProjectServiceImpl implements ProjectService {
         mapper.updateApplyCount(projectNo);
     }
 
-    @Override
-	public List<ProjectVO> findProjectImLeader(String id) {
-		return mapper.findProjectImLeader(id);
-	}
 
 	@Override
 	public List<ProjectVO> findProjectByNo(String id) {
