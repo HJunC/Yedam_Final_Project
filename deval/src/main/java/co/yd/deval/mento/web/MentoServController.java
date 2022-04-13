@@ -136,7 +136,7 @@ public class MentoServController {
 		return n;
 	}
 	
-	@RequestMapping("/serviceAccept.do")
+	@RequestMapping(value = "/serviceAccept.do",produces = "application/text; charset=UTF-8")
 	@ResponseBody
 	public String serviceAccept(@RequestBody List<MentoServVO> list) {
 		int count = 0;
@@ -186,7 +186,7 @@ public class MentoServController {
 			mentoServDAO.mentoServAccept(list);
 			return "서비스가 성공적으로 되었습니다";
 		} else {
-			return "시간 또는 기간이 겹칩니다!";
+			return "선택하신 회원이 시간 또는 기간이 겹칩니다!";
 		}
 	
 	}

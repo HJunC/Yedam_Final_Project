@@ -93,7 +93,7 @@
                                         	
                                         	<tr>
                                         	<td>
-                                        		<input type="checkbox" name="checkBox">
+                                        		<input type="checkbox" name="checkBox" id="checkBox">
                                         	</td>
                                             <td>
                                             <div>
@@ -186,8 +186,12 @@
             			} 
             		}).done(function(data) {
         				console.log(data);
+        				msg = {
+        					memberId : $('#mentiId').val(),
+        					subject : "신청하신 ${mentis[0].mentoId}의 멘토서비스가 거절됐습니다."
+        				}
+        				webSocket.send(JSON.stringify(msg));
         				tag.remove();
-        				
         			});
             	}
             	
@@ -221,9 +225,17 @@
             				type : "POST",
             				dataType: 'text',
             				data : JSON.stringify(list),
-            				contentType : 'application/json',
+            				contentType : 'application/json; charset:UFT-8',
             				success : function(data) {
-            					
+            					if(data == '서비스가 성공적으로 되었습니다') {
+            					msg = {
+                    					memberId : $('#mentiId').val(),
+                    					subject : "신청하신 ${mentis[0].mentoId}의 멘토서비스가 수랙됐습니다."
+                    				}
+                    				webSocket.send(JSON.stringify(msg));
+            						$("[name='checkBox']:checked").parent().parent().remove();
+            					}
+            					alert(data);
             				}
             			});
             			

@@ -11,39 +11,64 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import co.yd.deval.chat.service.AlarmService;
+import co.yd.deval.chat.service.AlarmVO;
 import co.yd.deval.chat.service.ChatLogService;
 import co.yd.deval.chat.service.ChatLogVO;
 
 public class Handler extends TextWebSocketHandler {
 	@Autowired
-	private ChatLogService chatLogDAO; 
-	
+	private ChatLogService chatLogDAO;
+
+	@Autowired
+	private AlarmService alarmDAO;
+
 	private final ObjectMapper objectMapper = new ObjectMapper();
-	
+
 	List<WebSocketSession> sessionList = new ArrayList<>();
+
+	String uri = "ws://localhost/deval/socket";
 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		System.out.println(session);
 		sessionList.add(session);
+		for(AlarmVO vo : alarmDAO.alarmList(session.getPrincipal().getName())) {
+			session.sendMessage(new TextMessage(vo.getSubject()));
+		}
+		alarmDAO.updateAlarm(session.getPrincipal().getName());
 	}
 
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		System.out.println(message.getPayload());
-		ChatLogVO chatvo = objectMapper.readValue(message.getPayload(), ChatLogVO.class);
-		for(WebSocketSession sess : sessionList) {
-			if(sess.getUri().equals(session.getUri()) && !sess.getPrincipal().getName().equals(session.getPrincipal().getName())) {
-				sess.sendMessage(new TextMessage(chatvo.getWriter() + ":" + chatvo.getSubject()));
+		String userId = session.getPrincipal().getName();
+
+		if (!session.getUri().toString().equals(uri)) {
+			ChatLogVO chatvo = objectMapper.readValue(message.getPayload(), ChatLogVO.class);
+			for (WebSocketSession sess : sessionList) {
+				if (sess.getUri().equals(session.getUri()) && !sess.getPrincipal().getName().equals(userId)) {
+					sess.sendMessage(new TextMessage(chatvo.getWriter() + ":" + chatvo.getSubject()));
+				}
 			}
+			chatLogDAO.insertChat(chatvo);
+			return;
 		}
-		
-		chatLogDAO.insertChat(chatvo);
+		String msg = message.getPayload();
+		AlarmVO alarmvo = objectMapper.readValue(msg, AlarmVO.class);
+		alarmDAO.insertAlarm(alarmvo);
+		for (WebSocketSession sess : sessionList) {
+			if (sess.getPrincipal().getName().equals(alarmvo.getMemberId())) {
+				sess.sendMessage(new TextMessage(alarmvo.getSubject()));
+				alarmDAO.updateAlarm(alarmvo.getMemberId());
+			}
+
+		}
+
 	}
-	
 
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		sessionList.remove(session);
 	}
+
 }
