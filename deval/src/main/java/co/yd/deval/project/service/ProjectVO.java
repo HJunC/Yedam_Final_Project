@@ -60,4 +60,7 @@ public class ProjectVO {
 
     private List<String> langArray;
     private String updateState;
+
+    private int termStart;
+    private int termEnd;
 }

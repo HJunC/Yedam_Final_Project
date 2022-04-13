@@ -89,10 +89,10 @@
                         <h3 class="widget-title">프로젝트 명</h3>
 
                         <div class="search-wrap">
-                            <button class="search-button animate" type="submit" title="Start Search">
+                            <button class="search-button animate" type="button" title="Start Search" onclick="search()">
                                 <i class="fa fa-search"></i>
                             </button>
-                            <input type="text" class="form-control search-field round" name="projectName" placeholder="Search..." value="">
+                            <input type="text" class="form-control search-field round" name="projectName" placeholder="Search..." value="${search.projectName}">
                         </div>
                     </div>
                     <!-- End Search Widget -->
@@ -149,7 +149,9 @@
                         <h3 class="widget-title">프로젝트 기간</h3>
 
                         <div class="widget-body">
-                            <input type="number" name="projectTerm" class="input-lg round form-control bg-dark-input" min="3" max="365" value="3">
+                            <input type="number" name="termStart" class="input-lg round form-control bg-dark-input" min="3" max="365" value="3">
+                            ~
+                            <input type="number" name="termEnd" class="input-lg round form-control bg-dark-input" min="3" max="365" value="15">
                         </div>
 
                     </div>
@@ -200,14 +202,18 @@
       onPageClick: function (event, page) { // Page Click event
         console.info("current page : " + page);
       } }).on('page', function (event, page) {
-      searchDateList(page);
+      searchPage(page);
     });
 
-  function searchDateList(page) {
+  function searchPage(page) {
     var searchForm = $("#searchForm");
-    console.log(page);
     searchForm.find("input[name='pageNum']").val(page);
     searchForm.submit();
   }
 
+  function search() {
+    var searchForm = $("#searchForm");
+    searchForm.find("input[name='pageNum']").val("1");
+    searchForm.submit();
+  }
 </script>

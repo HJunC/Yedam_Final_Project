@@ -85,18 +85,34 @@
         </c:if>
 
         <c:if test="${not empty userRequest}">
-            <h3>지원한 프로젝트</h3>
-            <c:forEach items="${userRequest}" var="item">
-                <p>
-                ${item.projectNo } /
-                ${item.memberId } /
-                ${item.state } /
-                ${item.subject } /
-                ${item.position } /
-                ${item.requestDt }
+            <h3 class="mt-50">지원한 프로젝트</h3>
+
+            <ul class="mt-4 mb-4 clearlist">
+                <c:forEach items="${userRequest}" var="item">
+                <li class="d-flex justify-content-between align-items-center">
+                    <a href="projectDetail.do?no=${item.projectNo}" class="d-flex align-items-center" style="text-decoration-line : none;">
+                        <c:choose>
+                            <c:when test="${item.state eq '1'}"><span class="badge bg-info text-dark">검토중</span></c:when>
+                            <c:when test="${item.state eq '2'}"><span class="badge bg-success">승인</span></c:when>
+                            <c:when test="${item.state eq '3'}"><span class="badge bg-danger">거절</span></c:when>
+                            <c:when test="${item.state eq '9'}"><span class="badge bg-warning text-dark">취소</span></c:when>
+                        </c:choose>
+                        &nbsp;&nbsp;
+                        <span class="badge bg-dark">
+                           ${item.position eq 'FE' ? '프론트엔드 개발자' : null}
+                            ${item.position eq 'BE' ? '백엔드 개발자' : null}
+                            ${item.position eq 'FS' ? '풀스택 개발자' : null}
+                            ${item.position eq 'DE' ? '디자이너' : null}
+                            ${item.position eq 'PL' ? '기획자' : null}
+                        </span>
+                        &nbsp;&nbsp;
+                        ${item.subject }
+                        <span>- ${item.requestDt}</span>
+                    </a>
                     <button type="button" class="btn btn-mod btn-w btn-medium btn-round" onclick="deleteRequest('${item.memberId }', '${item.projectNo }')">지원 삭제</button>
-                </p>
-            </c:forEach>
+                </li>
+                </c:forEach>
+            </ul>
         </c:if>
     </div>
 </section>
@@ -105,17 +121,7 @@
 <!-- Divider -->
 <hr class="mt-0 mb-0 white" />
 <!-- End Divider -->
-<style>
-    .project-list a {
-        text-decoration: none;
-        color: white;
-        border-color: #5e5e5e;
-        background-color: #2c2c2c;;
-    }
-    .project-list a:hover {
-        background-color: #3d3d3d;;
-    }
-</style>
+
 <!-- Call Action Section -->
 <section class="small-section bg-dark light-content">
     <div class="container relative">

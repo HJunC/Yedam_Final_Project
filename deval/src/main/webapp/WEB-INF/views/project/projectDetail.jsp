@@ -49,13 +49,14 @@
 
             </div>
         </div>
+
         <!-- Bar Item -->
         <div class="progress tpl-progress" style="background-color: #ebebeb; position: relative;">
             <div id="progressBar"
                  class="progress-bar"
                  role="progressbar"
                  aria-valuemin="0"
-                 aria-valuemax="${project.projectTerm}"
+                 aria-valuemax="100"
                  style="background-color: #6ead5a">
                 <div>
                     <fmt:formatDate value="${project.projectSdt}" type="both" pattern="yyyy-MM-dd"/>
@@ -66,6 +67,18 @@
             </div>
         </div>
         <!-- End Bar Item -->
+        <script>
+          /**
+           * progressBar
+           */
+          var today = new Date();
+          const start_date = new Date('<fmt:formatDate value="${project.projectSdt}" type="both" pattern="yyyy-MM-dd"/>');
+          const end_date = new Date('<fmt:formatDate value="${project.projectEdt}" type="both" pattern="yyyy-MM-dd"/>');
+          const total = end_date - start_date;
+          const perc = today - start_date;
+          const progressValue = Math.round(perc / total * 100 );
+          document.getElementById("progressBar").setAttribute("aria-valuenow", progressValue);
+        </script>
 
         <c:if test="${project.state eq '2' and project.leaderId eq member.name}">
 
@@ -85,6 +98,26 @@
                     </div>
                 </div>
                 <button type="button" onclick="startProject()" class="btn btn-mod btn-round btn-large">시작</button>
+            </div>
+            <!-- End Lightbox Modal -->
+
+        </c:if>
+
+        <jsp:useBean id="now" class="java.util.Date" />
+        <fmt:formatDate value="${now}" pattern="yyyyMMdd" var="nowDate" />
+        <fmt:formatDate value="${project.projectEdt}" pattern="yyyyMMdd" var="projectEdt"/>
+        <c:if test="${nowDate >= projectEdt && project.leaderId eq member.name && project.state eq '3'}">
+
+            <!-- Lightbox Modal -->
+            <a href="#test-modal" class="btn btn-mod btn-w btn-medium round mt-10 lightbox-gallery-5 mfp-inline">프로젝트 완료하기 🎉</a>
+
+            <div id="test-modal" class="mfp-hide">
+                <h3>프로젝트를 무사히 완주 🏆 <i class="fa fa-share-square"></i></h3>
+                <div class="d-flex justify-content-between mb-40">
+                    <label>프로젝트 주소</label>
+                    <input type="text" class="form-control">
+                </div>
+                <button type="button" onclick="completeProject()" class="btn btn-mod btn-round btn-large">완료 (exp + 300)</button>
             </div>
             <!-- End Lightbox Modal -->
 
@@ -155,16 +188,22 @@
                 <!-- End Comments -->
 
                 <%--프로젝트 모집중인 팀장만 볼수있는 화면--%>
-                <c:if test="${not empty project.requestList
-                            and project.leaderId eq member.name}">
+                <c:if test="${project.leaderId eq member.name
+                              and project.state eq '1' or project.state eq '2'}">
                 <div class="mb-80 mb-xs-40">
 
                     <h4 class="blog-page-title">신청현황</h4>
 
-                    <c:forEach items="${project.requestList}" var="item">
-                        ${item.memberId} / ${item.position}
-                    </c:forEach>
-
+                    <c:choose>
+                        <c:when test="${not empty project.requestList}">
+                            <c:forEach items="${project.requestList}" var="item">
+                                ${item.memberId} / ${item.position}
+                            </c:forEach>
+                        </c:when>
+                        <c:otherwise>
+                            <h3 class="call-action-1-heading" style="font-size: 30px; color: rgba(255, 255, 255, 0.3);">지원자가 없습니다.</h3>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
                 </c:if>
 
@@ -337,22 +376,25 @@
                     </div>
                     <!-- End Widget -->
 
-                    <!-- 설정 -->
-                    <div class="widget">
+                    <c:if test="${project.leaderId eq member.name
+                                  and project.state ne '4'}">
+                        <!-- 설정 -->
+                        <div class="widget">
 
-                        <h3 class="widget-title">설정</h3>
+                            <h3 class="widget-title">설정</h3>
 
-                        <div class="widget-body">
-                            <button type="button" onclick="" class="btn btn-mod btn-w btn-round btn-small">
-                                수정하기
-                            </button>
-                            <button type="button" onclick="deleteProject()" class="btn btn-mod btn-w btn-round btn-small" style="background: rgb(251 71 71 / 90%);">
-                                프로젝트 삭제
-                            </button>
+                            <div class="widget-body">
+                                <button type="button" onclick="" class="btn btn-mod btn-w btn-round btn-small">
+                                    수정하기
+                                </button>
+                                <button type="button" onclick="deleteProject()" class="btn btn-mod btn-w btn-round btn-small" style="background: rgb(251 71 71 / 90%);">
+                                    프로젝트 삭제
+                                </button>
+                            </div>
+
                         </div>
-
-                    </div>
-                    <!-- End Widget -->
+                        <!-- End Widget -->
+                    </c:if>
 
                 </div>
 
@@ -367,6 +409,11 @@
 <script src="${resources}/js/moment.min.js"></script>
 <script src="${resources}/js/moment-with-locales.min.js"></script>
 <script>
+  /**
+   * 작성시간 표시
+   */
+  moment.locale('ko');
+  $("#createAt").append(moment("<fmt:formatDate value="${project.recruitSdt}" type="both" pattern="yyyy-MM-dd HH:mm:ss"/>").fromNow());
 
   const viewer = new toastui.Editor.factory({
     el: document.querySelector("#viewer"),
@@ -376,30 +423,36 @@
   });
 
   /**
-   * 작성시간 표시
-   */
-  moment.locale('ko');
-  var createAt = document.getElementById("createAt");
-  createAt.append(moment("<fmt:formatDate value="${project.recruitSdt}" type="both" pattern="yyyy-MM-dd HH:mm:ss"/>").fromNow());
-
-  /**
    * 프로젝트 시작 시간 설정
    */
-  var today = new Date();
+  today = new Date();
   var projectSdtInput = document.getElementById("projectSdt");
   projectSdtInput.setAttribute("value", moment(today).format("YYYY-MM-DD"));
   var projectEdtInput = document.getElementById("projectEdt");
   projectEdtInput.setAttribute("value", moment(today.setDate(today.getDate() + ${project.projectTerm})).format("YYYY-MM-DD"));
-  $("#projectSdt").on("change", (e) => {
+  /*$("#projectSdt").on("change", (e) => {
     const sdtDate = new Date(projectSdtInput.value);
     projectEdtInput.setAttribute("value", moment(sdtDate.setDate(sdtDate.getDate() + ${project.projectTerm})).format("YYYY-MM-DD"));
-  })
+  })*/
 
-  /**
-   * progressBar
-   */
-  var progressBar = document.getElementById("progressBar");
-  progressBar.setAttribute("aria-valuenow", "5");
+
+  var feCount = 0;
+  var beCount = 0;
+  var fsCount = 0;
+  var deCount = 0;
+  var plCount = 0;
+  <c:forEach items="${team }" var="item">
+  <c:if test="${item.position eq 'FE'}">feCount++</c:if>
+  <c:if test="${item.position eq 'BE'}">beCount++</c:if>
+  <c:if test="${item.position eq 'FS'}">fsCount++</c:if>
+  <c:if test="${item.position eq 'DE'}">deCount++</c:if>
+  <c:if test="${item.position eq 'PL'}">plCount++</c:if>
+  </c:forEach>
+  $("#feCount").html(feCount);
+  $("#beCount").html(beCount);
+  $("#fsCount").html(fsCount);
+  $("#deCount").html(deCount);
+  $("#plCount").html(plCount);
 
   /**
    * 프로젝트 합류 요청 ajax
@@ -492,21 +545,24 @@
     })
   }
 
-  var feCount = 0;
-  var beCount = 0;
-  var fsCount = 0;
-  var deCount = 0;
-  var plCount = 0;
-  <c:forEach items="${team }" var="item">
-  <c:if test="${item.position eq 'FE'}">feCount++</c:if>
-  <c:if test="${item.position eq 'BE'}">beCount++</c:if>
-  <c:if test="${item.position eq 'FS'}">fsCount++</c:if>
-  <c:if test="${item.position eq 'DE'}">deCount++</c:if>
-  <c:if test="${item.position eq 'PL'}">plCount++</c:if>
-  </c:forEach>
-  $("#feCount").html(feCount);
-  $("#beCount").html(beCount);
-  $("#fsCount").html(fsCount);
-  $("#deCount").html(deCount);
-  $("#plCount").html(plCount);
+  function completeProject() {
+    $.ajax({
+      url: "../api/project/complete",
+      type: "POST",
+      data: {
+        "projectNo": ${project.projectNo},
+        "leaderId": '${project.leaderId}'
+      },
+      dataType: "json",
+      success: function(res) {
+        console.log(res);
+        alert("프로젝트가 완료되었습니다.");
+        location.reload();
+      },
+      error: function (error) {
+        alert("에러입니다.");
+        console.log(error);
+      }
+    })
+  }
 </script>

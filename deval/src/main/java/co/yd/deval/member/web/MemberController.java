@@ -83,16 +83,5 @@ public class MemberController {
 		map.put("cashPt", cashPt);
 		memberDao.memberCashUpdate(map);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

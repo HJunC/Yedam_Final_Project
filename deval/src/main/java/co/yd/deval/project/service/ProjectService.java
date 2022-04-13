@@ -63,6 +63,12 @@ public interface ProjectService {
      */
     int startProject(ProjectVO vo);
 
+    /***
+     * 프로젝트 완료
+     * @return
+     */
+    int completeProject(ProjectVO vo);
+
     void updateHit(int projectNo);
     void updateApplyCount(int projectNo);
 
