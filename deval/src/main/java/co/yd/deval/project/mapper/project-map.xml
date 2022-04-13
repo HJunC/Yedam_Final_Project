@@ -145,6 +145,9 @@
                     AND LANG LIKE '%'||#{item}||'%'
                 </foreach>
             </if>
+            <if test="termStart != 0 and termEnd != 0">
+                AND PROJECT_TERM BETWEEN #{termStart} AND #{termEnd}
+            </if>
             <if test="frontRcnt == 1">AND FRONT_RCNT > 0</if>
             <if test="backRcnt == 1">AND BACK_RCNT > 0</if>
             <if test="designRcnt == 1">AND DESIGN_RCNT > 0</if>

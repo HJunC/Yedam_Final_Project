@@ -115,7 +115,6 @@
                           }
 
                           timeArray.forEach(value => {
-                            console.log(value)
                             countDate(value.id, value.endDate);
                           });
                         </script>
@@ -204,9 +203,21 @@
                         <h3 class="widget-title">프로젝트 기간</h3>
 
                         <div class="widget-body">
-                            <input type="number" name="termStart" class="input-lg round form-control bg-dark-input" min="3" max="365" value="3">
-                            ~
-                            <input type="number" name="termEnd" class="input-lg round form-control bg-dark-input" min="3" max="365" value="15">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="input-group">
+                                        <input type="number" name="termStart" class="input-sm round form-control bg-dark-input" min="3" max="365" value="${search.termStart == null or search.termStart eq '' ? 3 : search.termStart}">
+                                        <div class="input-group-text bg-dark" style="border-color: #5e646a;">일</div>
+                                    </div>
+                                </div>
+                                ~
+                                <div class="col">
+                                    <div class="input-group">
+                                        <input type="number" name="termEnd" class="input-sm round form-control bg-dark-input" min="3" max="365" value="${search.termEnd == null or search.termEnd eq ''  ? 365 : search.termEnd}">
+                                        <div class="input-group-text bg-dark" style="border-color: #5e646a;">일</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                     </div>
