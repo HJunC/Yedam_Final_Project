@@ -39,9 +39,23 @@
 
 			<!-- 지역선택 -->
 			<select class="input-md round form-control" id="location" name="location">
-				<option>One</option>
-				<option>Two</option>
-				<option>Three</option>
+				<option>서울특별시 </option>
+				<option>인천광역시</option>
+				<option>경기도</option>
+				<option>강원도</option>
+				<option>충청북도</option>
+				<option>충청남도</option>
+				<option>세종특별자치시</option>
+				<option>대전광역시</option>
+				<option>대구광역시</option>
+				<option>경상북도</option>
+				<option>경상남도</option>
+				<option>부산광역시</option>
+				<option>울산광역시</option>
+				<option>전라북도</option>
+				<option>광주광역시</option>
+				<option>전라남도</option>
+				<option>제주특별자치도</option>
 			</select><br><br>
 
 			<!-- 인원 설정 -->
@@ -55,26 +69,6 @@
 
 			<!-- 언어선택 -->
 			<div id="langSelect"></div>
-			<!-- <label class="checkbox-inline">
-				<input type="checkbox" name="ck_lang" onclick="count_ck(this);" id="lang1" value="C">
-				<span class="small">C</span>
-			</label>
-			<label class="checkbox-inline">
-				<input type="checkbox" name="ck_lang" onclick="count_ck(this);" id="lang2" value="C++">
-				<span class="small">C++</span>
-			</label>
-			<label class="checkbox-inline">
-				<input type="checkbox" name="ck_lang" onclick="count_ck(this);" id="lang3" value="Java">
-				<span class="small">Java</span>
-			</label>
-			<label class="checkbox-inline">
-				<input type="checkbox" name="ck_lang" onclick="count_ck(this);" id="lang4" value="JavaScript">
-				<span class="small">JavaScript</span>
-			</label>
-			<label class="checkbox-inline">
-				<input type="checkbox" name="ck_lang" onclick="count_ck(this);" id="lang4" value="Python">
-				<span class="small">Python</span>
-			</label><br> -->
 
 			<!-- 난이도선택 -->
 			<label class="radio-inline">
@@ -103,7 +97,6 @@
 			
 			<!-- 버튼 -->
 			<input type="button" id="btnStdAdd" name="btnStdAdd" value="등록" onclick="StdAdd()">
-			<!-- <input type="button" id="btnStdEdit" name="btnStdEdit" value="변경" onclick="StdEdit()"> -->
 			<input type="reset" value="취소">
 		</form>
 
@@ -167,7 +160,7 @@
 				},
 				error : function(err) {
 					console.log("err", err);
-					//location.href="studyMain.do";
+					alert('모든 정보를 입력해주세요');
 				}
 			});
 		}

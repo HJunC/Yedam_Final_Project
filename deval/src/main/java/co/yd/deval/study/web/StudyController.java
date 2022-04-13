@@ -1,12 +1,13 @@
 package co.yd.deval.study.web;
 
 import java.security.Principal;
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import co.yd.deval.common.Criteria;
+import co.yd.deval.common.PageDTO;
 import co.yd.deval.member.service.MemberService;
 import co.yd.deval.member.service.MemberVO;
 import co.yd.deval.study.service.StudyInfoVO;
@@ -32,10 +35,19 @@ public class StudyController {
 	@Autowired
 	private MemberService memberDao;
 	
-	/* STUDY */
+	@Autowired
+	private StudyMailSender mail;
+	
+	
+	/* STUDY MAIN */
 	// 스터디 메인
     @GetMapping("/studyMain.do")
-    public String main() {
+    public String main(StudyVO vo, StudyReqVO rvo, Model model, Principal User) {
+    	if(User != null) {
+	    	model.addAttribute("study", studyDao.studyLeaderBtn(User.getName()));
+	    	model.addAttribute("member", User);
+	    	model.addAttribute("list", studyDao.studyUnfinedTeamBtn(User.getName()));
+    	}
         return "study/studyMain";
     }
     
@@ -48,7 +60,11 @@ public class StudyController {
     // 스터디 등록 기능
     @RequestMapping("/insertStudy.do")
     @ResponseBody
-    public String insertStudy(StudyVO vo, Principal user) {
+    public String insertStudy(StudyVO vo, StudyReqVO reqvo, StudyInfoVO invo, Principal user, HttpSession session) {
+    	
+    	int n = 0;
+    	invo.setMemberId(user.getName());
+    	invo = studyDao.studySelectUser(invo);
     	// 언어 2개 체크
     	if(vo.getCk_lang()!=null) {
     		if(vo.getCk_lang().length>0) {
@@ -58,9 +74,19 @@ public class StudyController {
     			vo.setLang2(vo.getCk_lang()[1]);
     		}
     	}
-
+    	
     	vo.setLeaderId(user.getName());
-    	int n = studyDao.studyInsert(vo);
+    	n = studyDao.studyInsert(vo);
+    	
+    	if(n != 0) {
+    		reqvo.setMemberId(user.getName());
+    		reqvo.setStudyNo(studyDao.findMaxStudyNo());
+    		reqvo.setCareer(invo.getCareer());
+    		reqvo.setCollege(invo.getCollege());
+    		reqvo.setLicense(invo.getLicense());
+    		reqvo.setPresent(invo.getPresent());
+    		n = studyDao.studyTeamLeaderInsert(reqvo);
+    	}
     	return Integer.toString(n);
     }
     
@@ -76,25 +102,44 @@ public class StudyController {
     public String editStudy(StudyVO vo) {
     	int n = studyDao.studyUpdate(vo);
     	if (n != 0) {
-			/* return "redirect:studySelect.do?studyNo="+vo.getStudyNo(); -> get방식 */ 
-    		return "redirect:studyList.do";
+			return "redirect:studyList.do";
     	}
 		return "study/studyError";
     }
     
     // 스터디 검색 찾기 -> 전체목록
-    @RequestMapping("/studyList.do")
-    public String studyList(Model model) {
-    	model.addAttribute("study", studyDao.studySelectAll());
+    @GetMapping("/studyList.do")
+    public String studyList(StudyVO vo, Model model, Principal User, Criteria cri) {
+    	// 페이지 처리
+    	if (cri.getPageNum() == 0) cri.setPageNum(1);
+        if (cri.getAmount() == 0) cri.setAmount(10);
+    	vo.setCriteria(cri);
+    	if (vo.getStudyNm() != null) {
+    		vo.setStudyNm(vo.getStudyNm().trim());
+    	}
+    	model.addAttribute("study", studyDao.getListWithPaging(vo));
+    	model.addAttribute("pageMaker", new PageDTO(cri, studyDao.getTotalCount(vo)));
+    	model.addAttribute("list", studyDao.studyMemberFind(User.getName()));
+    	model.addAttribute("studyfind", vo);
+    	model.addAttribute("member", User);
     	return "study/studyList";
+    }
+    
+    // 스터디 지역 찾기 (지도사용)
+    @GetMapping("/locationList.do")
+    @ResponseBody
+    public List<StudyVO> locationList(StudyVO vo) {
+    	return studyDao.studyLocSearch(vo.getLocation());
     }
     
     // 스터디 상세글
     @PostMapping("/studySelect.do")
-    public String studySelect(StudyVO vo, Model model) {
+    public String studySelect(StudyVO vo, Model model, Principal User) {
 		vo = studyDao.studySelectNo(vo);
     	if(vo != null) {
     		model.addAttribute("study", vo);
+    		model.addAttribute("member", User);
+    		model.addAttribute("list", studyDao.studyMemberFind(User.getName()));
     		return "study/studySelect";
     	} else {
     		model.addAttribute("message", "게시글존재x");
@@ -132,7 +177,6 @@ public class StudyController {
     
     
     /* Study Request */
-    
     @PostMapping("/studyReqInsert.do")
     @ResponseBody
     public ResponseEntity<StudyReqVO> studyReqInsert(int sno, StudyReqVO rvo, Principal principal) {
@@ -156,21 +200,74 @@ public class StudyController {
     @RequestMapping("/studyReqDel.do")
     @ResponseBody
     public ResponseEntity<Integer> studyReqDel(StudyReqVO vo) {
-    	
     	int n = studyDao.studyTeamMemberDelete(vo);
     	
     	return ResponseEntity.ok().body(n);
     }
     
+	 @RequestMapping("/studyReqRefuse.do")
+	 @ResponseBody
+	 public ResponseEntity<Integer> studyReqRefuse(StudyReqVO vo) throws Exception {
+		 int n = studyDao.studyTeamMemberUpdateRefuse(vo);
+		 
+		 if (n != 0) {
+			 mail.sendMailTest(memberDao.memberMailGet(vo.getMemberId()));
+		 }
+		 
+		 return ResponseEntity.ok().body(n);
+	 }
+	 
+	 @RequestMapping("/studyReqAccept.do")
+	 @ResponseBody
+	 public ResponseEntity<Integer> studyReqAccept(StudyReqVO rvo, StudyVO vo) throws Exception {
+		 		 
+		 vo.setStudyNo(rvo.getStudyNo());
+		 vo = studyDao.studySelectNo(vo);
+		 
+		 if(vo.getRcnt() == vo.getMaxRcnt()) {
+			 int r = studyDao.studyEnd(vo);
+			 
+			 if(r != 0) {
+				 studyDao.studyTeamMemberDelete(rvo);
+			 }
+			 return ResponseEntity.ok().body(0);
+			 
+		 } else {
+			 studyDao.rcntMember(vo);
+			 int n= studyDao.studyTeamMemberUpdateAccept(rvo);
+			  if(vo.getRcnt()+1 == vo.getMaxRcnt()) {
+				  
+				  int r = studyDao.studyEnd(vo);
+				  
+				  if(r != 0) {
+						 studyDao.studyTeamMemberDelete(rvo);
+					 }
+			  }
+			 
+			 // 메일발송 시간 지연으로 인해 디자인 로딩창 넣기
+			 if (n != 0) {
+				 mail.sendMailTest(memberDao.memberMailGet(rvo.getMemberId()));
+			 }
+			 return ResponseEntity.ok().body(n);
+		 }
+	 }
+    
     @RequestMapping("/studyReq.do")
-    public String studyReq(Model model) {
-    	model.addAttribute("study", studyDao.studyReqSelectAll());
+    public String studyReq(StudyVO vo, StudyReqVO rvo, Model model, Principal User) {
+    	model.addAttribute("study", studyDao.studyLeaderReqPage(User.getName()));
+    	
     	return "study/studyReq";
     }
     
     @RequestMapping("/studyMember.do")
-    public String studyMember(Model model) {
-    	//model.addAttribute("", );
+    public String studyMember(StudyVO vo, StudyReqVO rvo, Model model, Principal User) {
+    	model.addAttribute("study", studyDao.studyTeamMember(User.getName()));
     	return "study/studyMember";
-    } 
+    }
+    
+    @RequestMapping("/designList.do")
+    public String designList(Model model) {
+    	
+    	return "study/designList";
+    }
 }

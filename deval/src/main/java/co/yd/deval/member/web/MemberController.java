@@ -1,12 +1,12 @@
 package co.yd.deval.member.web;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
-import java.security.Principal;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import co.yd.deval.member.service.MemberService;
 import co.yd.deval.member.service.MemberVO;
 import co.yd.deval.project.service.ProjectService;
+import co.yd.deval.setleLog.service.SetleLogService;
+import co.yd.deval.setleLog.service.SetleLogVO;
 import co.yd.deval.study.service.StudyService;
-
-import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class MemberController {
@@ -31,7 +31,8 @@ public class MemberController {
 	private ProjectService projectDao;
 	@Autowired
 	private StudyService studyDao;
-	
+	@Autowired
+	private SetleLogService setleDAO;
 	
 	@RequestMapping("/loginForm.do")
 	public String loginForm(HttpServletRequest request) {
@@ -75,13 +76,20 @@ public class MemberController {
 		return "member/coPage";
 	}
 	
+	//포인트 등록
 	@PostMapping("/updatePoint.do")
 	@ResponseBody
-	public void updatePoint(@RequestParam("cashPt") int cashPt, @RequestParam("memberId") String memberId) {
+	public void updatePoint(@RequestParam("cashPt") int cashPt, @RequestParam("memberId") String memberId, SetleLogVO svo) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("id", memberId);
 		map.put("cashPt", cashPt);
-		memberDao.memberCashUpdate(map);
+		int r = memberDao.memberCashUpdate(map);
+		if(r != 0) {
+			svo.setMemberId(memberId);
+			svo.setSetleAmount(cashPt);
+			setleDAO.setelLogInsert(svo);
+			
+		}
 	}
 
 }
