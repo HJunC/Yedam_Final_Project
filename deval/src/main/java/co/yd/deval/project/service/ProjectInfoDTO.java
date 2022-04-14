@@ -52,6 +52,7 @@ public class ProjectInfoDTO {
     private int applyRcnt;
     private String leaderId;
     private int crntRcnt;
+    private String gitUri;
 
     private List<ProjectTeamVO> projectTeam;
     private List<ProjectRequestVO> requestList;

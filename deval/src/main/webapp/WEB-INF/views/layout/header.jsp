@@ -88,13 +88,12 @@ webSocket.onopen = function(e) {
 								<li><a href="${root}/board/free.do">자유게시판</a></li>
 								<li><a href="${root}/board/notice.do">공지사항</a></li>
 								<li><a href="${root}/board/technical.do">최신기술</a></li>
-								<li><a href="${root}/trade/tradeList.do">중고거래</a></li>
 							</ul>
 						</li>
 						<li class="mn-sub-multi">
 							<a class="mn-group-title">Code</a>
 							<ul>
-								<li><a href="${root}/code/codeList.do">소스코드</a></li>
+								<li><a href="${root}/code/codeList.do">코드공유</a></li>
 								<%-- <li><a href="${root}/code/review.do">코드리뷰</a></li> --%>
 								<%-- <li><a href="${root}/code/question.do">질문</a></li> --%>
 								<%-- <li><a href="${root}/code/answer.do">답변</a></li> --%>
@@ -104,12 +103,11 @@ webSocket.onopen = function(e) {
 				</li>
 
 				<li>
-					<a href="#" class="mn-has-sub">구인/구직 <i class="mn-has-sub-icon"></i></a>
+					<a href="#" class="mn-has-sub">채용 <i class="mn-has-sub-icon"></i></a>
 					<ul class="mn-sub mn-has-multi">
 						<li class="mn-sub-multi">
 							<ul>
-								<li><a href="${root}/job/offer.do">구인</a></li>
-								<li><a href="${root}/job/seeking.do">구직</a></li>
+								<li><a href="${root}/job/seeking.do">채용정보</a></li>
 							</ul>
 						</li>
 					</ul>

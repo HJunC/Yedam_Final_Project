@@ -84,12 +84,13 @@
     <update id="updatePositionCount">
         UPDATE PROJECT
         <set>
+            CRNT_RCNT = CRNT_RCNT + 1,
             <if test="frontRcnt == 1">FRONT_RCNT = FRONT_RCNT - 1,</if>
             <if test="backRcnt == 1">BACK_RCNT = BACK_RCNT - 1,</if>
             <if test="designRcnt == 1">DESIGN_RCNT = DESIGN_RCNT - 1,</if>
             <if test="fullRcnt == 1">FULL_RCNT = FULL_RCNT - 1,</if>
             <if test="plannerRcnt == 1">PLANNER_RCNT = PLANNER_RCNT - 1,</if>
-            CRNT_RCNT = CRNT_RCNT + 1
+            <if test="updateState != null">STATE = #{updateState},</if>
         </set>
         WHERE PROJECT_NO = #{projectNo}
     </update>

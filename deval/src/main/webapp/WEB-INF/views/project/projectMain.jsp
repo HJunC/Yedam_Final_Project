@@ -80,21 +80,24 @@
             <c:choose>
                 <c:when test="${not empty requestList}">
                     <c:forEach items="${requestList}" var="item">
-                        <div class="table-responsive">
-                            <table class="table shopping-cart-table">
-                                <tbody>
-                                    <tr class="active">
-                                        <td>${item.projectNo }</td>
-                                        <td>${item.memberId }</td>
-                                        <td>${item.state }</td>
-                                        <td>${item.subject }</td>
-                                        <td>${item.position }</td>
-                                        <td>${item.requestDt }</td>
-                                        <td><button type="button" class="btn btn-mod btn-w btn-medium btn-round" onclick="approveRequest('${item.memberId }', '${item.projectNo }', '${item.position }')">수락</button></td>
-                                        <td><button type="button" class="btn btn-mod btn-w btn-medium btn-round" onclick="refuseRequest('${item.memberId }', '${item.projectNo }')">거절</button></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <div style="color: #999999;">
+                                    <i class="fa fa-user"></i> ${item.memberId }
+                                    | 포지션 :
+                                    ${item.position eq 'FE' ? '프론트엔드 개발자' : null}
+                                    ${item.position eq 'BE' ? '백엔드 개발자' : null}
+                                    ${item.position eq 'FS' ? '풀스택 개발자' : null}
+                                    ${item.position eq 'DE' ? '디자이너' : null}
+                                    ${item.position eq 'PL' ? '기획자' : null}
+                                    | 지원 일자 : ${item.requestDt }
+                                </div>
+                                <p>${item.subject }</p>
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-mod btn-w btn-medium btn-round" onclick="approveRequest('${item.memberId }', '${item.projectNo }', '${item.position }')">수락</button>
+                                <button type="button" class="btn btn-mod btn-w btn-medium btn-round" onclick="refuseRequest('${item.memberId }', '${item.projectNo }')">거절</button>
+                            </div>
                         </div>
                     </c:forEach>
                 </c:when>
@@ -216,7 +219,6 @@
               }
 
               timeArray.forEach(value => {
-                console.log(value)
                 countDate(value.id, value.endDate);
               });
             </script>

@@ -197,13 +197,34 @@
                     <c:choose>
                         <c:when test="${not empty project.requestList}">
                             <c:forEach items="${project.requestList}" var="item">
-                                ${item.memberId} / ${item.position}
+                                <c:if test="${item.state eq '1'}">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <div style="color: #999999;">
+                                                <i class="fa fa-user"></i> ${item.memberId }
+                                                | 포지션 :
+                                                    ${item.position eq 'FE' ? '프론트엔드 개발자' : null}
+                                                    ${item.position eq 'BE' ? '백엔드 개발자' : null}
+                                                    ${item.position eq 'FS' ? '풀스택 개발자' : null}
+                                                    ${item.position eq 'DE' ? '디자이너' : null}
+                                                    ${item.position eq 'PL' ? '기획자' : null}
+                                                | 지원 일자 : ${item.requestDt }
+                                            </div>
+                                            <p>${item.subject }</p>
+                                        </div>
+                                        <div>
+                                            <button type="button" class="btn btn-mod btn-w btn-medium btn-round" onclick="approveRequest('${item.memberId }', '${item.projectNo }', '${item.position }')">수락</button>
+                                            <button type="button" class="btn btn-mod btn-w btn-medium btn-round" onclick="refuseRequest('${item.memberId }', '${item.projectNo }')">거절</button>
+                                        </div>
+                                    </div>
+                                </c:if>
                             </c:forEach>
                         </c:when>
                         <c:otherwise>
                             <h3 class="call-action-1-heading" style="font-size: 30px; color: rgba(255, 255, 255, 0.3);">지원자가 없습니다.</h3>
                         </c:otherwise>
                     </c:choose>
+
                 </div>
                 </c:if>
 
@@ -562,6 +583,57 @@
       error: function (error) {
         alert("에러입니다.");
         console.log(error);
+      }
+    })
+  }
+
+  /**
+   * 요청 승인
+   * @param memberId
+   * @param projectNo
+   */
+  function approveRequest(memberId, projectNo, position) {
+    $.ajax({
+      url: "../api/project/approveRequest",
+      type: "POST",
+      data: {
+        memberId,
+        projectNo,
+        position
+      },
+      success: function (res) {
+        console.log(res);
+        alert("팀에 합류하였습니다 !");
+        location.reload();
+      },
+      error: function (res) {
+        console.log(res);
+        alert("에러");
+      }
+    })
+  }
+
+  /**
+   * 요청 거절
+   * @param memberId
+   * @param projectNo
+   */
+  function refuseRequest(memberId, projectNo) {
+    $.ajax({
+      url: "../api/project/refuseRequest",
+      type: "POST",
+      data: {
+        memberId,
+        projectNo
+      },
+      success: function (res) {
+        console.log(res);
+        alert("요청이 거절되었습니다.");
+        location.reload();
+      },
+      error: function (res) {
+        console.log(res);
+        alert("에러");
       }
     })
   }

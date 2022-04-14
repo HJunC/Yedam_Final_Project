@@ -73,6 +73,12 @@ public class ProjectRequestServiceImpl implements ProjectRequestService {
                 projectVO.setPlannerRcnt(1);
                 break;
         }
+
+        // 모집완료 시 상태변경
+        ProjectVO currVo = projectMapper.selectProject(vo.getProjectNo());
+        if (currVo.getTotalRcnt() == currVo.getCrntRcnt() - 1) {
+            projectVO.setUpdateState("2");
+        }
         projectMapper.updatePositionCount(projectVO);
 
         // 프로젝트 팀에 추가
