@@ -43,7 +43,7 @@ public class BoardController {
 			cri.setPageNum(1);
 		if (cri.getAmount() == 0)
 			cri.setAmount(10);
-		vo.setBoardTypeNo(1);
+		vo.setBoardTypeNo(2);
 		vo.setCriteria(cri);
 		List<BoardVO> boardList = boardDao.getListWithPaging(vo);
 		model.addAttribute("boardList", boardList);
@@ -114,8 +114,17 @@ public class BoardController {
 	 * @param model
 	 */
 	@GetMapping("/notice.do")
-	public String notice(Model model) {
-		model.addAttribute("noticeList", boardDao.boardSelectList(2));
+	public String notice(Model model, BoardVO vo, Criteria cri) {
+		if (cri.getPageNum() == 0)
+			cri.setPageNum(1);
+		if (cri.getAmount() == 0)
+			cri.setAmount(10);
+		vo.setBoardTypeNo(1);
+		vo.setCriteria(cri);
+		List<BoardVO> boardList = boardDao.getListWithPaging(vo);
+		model.addAttribute("noticeList", boardList);
+		model.addAttribute("board", vo);
+		model.addAttribute("pageMaker", new PageDTO(cri, boardDao.getTotalCount(vo)));
 		return "board/notice";
 	}
 
@@ -124,8 +133,8 @@ public class BoardController {
 	 * 
 	 * @param model
 	 */
-	@GetMapping("/technical.do")
-	public String technical(Model model) {
+	@GetMapping("/technical.do" )
+	public String technical(Model model,  BoardVO vo, Criteria cri) {
 		model.addAttribute("technicList", boardDao.boardSelectList(3));
 		return "board/technical";
 	}

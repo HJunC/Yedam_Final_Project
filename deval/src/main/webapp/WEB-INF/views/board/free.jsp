@@ -3,27 +3,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <c:set var="resources" value="${pageContext.request.contextPath}/resources"/>
-<head>
-<style>
-    .project-list a {
-        text-decoration: none;
-        color: white;
-        border-color: #5e5e5e;
-        background-color: #2c2c2c;;
-    }
-    .project-list a:hover {
-        background-color: #3d3d3d;;
-    }
-    
-  </style>
-  </head>  
+ 
 <section class="page-section bg-dark-alfa-50 bg-scroll" data-background="${resources}/images/intro/20.jpg" id="home">
     <div class="container relative">
            
                 <div class="wow fadeInUpShort" data-wow-delay=".1s">
                    <h1 class="hs-line-7 mb-20 mb-xs-10">자유게시판</h1>
-	
-			<form id="searchForm" class="row">
+	<form id="searchForm" class="row">
                <div class="col-lg-10 offset-lg-1">
                     <input type="text" name="title"
                      id="codeSearch" class="input-sm round" placeholder="검색"

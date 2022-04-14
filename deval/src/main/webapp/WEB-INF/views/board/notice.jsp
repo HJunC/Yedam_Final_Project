@@ -111,8 +111,40 @@ td {
 		</section>
 	</div>
 
+	<script src="${resources}/js/common/jQueryPage.js"></script>
 
 	<script>
+   var endPage = ${pageMaker.endPage}
+   var current = ${pageMaker.cri.pageNum}
+
+   window.pagObj = $('#pagination').twbsPagination({
+     totalPages: endPage,
+     startPage: current,
+     visiblePages:10, // 최대로 보여줄 페이지
+     prev: "<i class='fa fa-chevron-left'></i>", // Previous Button Label
+     next: "<i class='fa fa-chevron-right'></i>", // Next Button Label
+     first: '«', // First Button Label
+     last: '»', // Last Button Label
+     onPageClick: function (event, page) { // Page Click event
+       console.info("current page : " + page);
+     } }).on('page', function (event, page) {
+     searchPage(page);
+   });
+
+ // 검색하는 함수
+ function searchPage(page) {
+   var searchForm = $("#searchForm");
+   console.log(page);
+   searchForm.find("input[name='pageNum']").val(page);
+   searchForm.submit();
+ }
+ 
+ function search() {
+	   var searchForm = $("#searchForm"); 
+	   searchForm.find("input[name='pageNum']").val("1");
+	   searchForm.submit();
+	 }
+
 
 
 function noticeSelect(n){
