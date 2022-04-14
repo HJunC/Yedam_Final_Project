@@ -116,24 +116,24 @@ webSocket.onopen = function(e) {
 				</li>
 
 				<li>
-					<a href="${root}/project/main.do" class="mn-has-sub">팀 프로젝트</a>
+					<a href="${root}/project/main.do">팀 프로젝트</a>
 				</li>
 				
 				<li>
-					<a href="${root}/study/studyMain.do" class="mn-has-sub">스터디</a>
+					<a href="${root}/study/studyMain.do">스터디</a>
 				</li>
 
 				<li>
-					<a href="${root}/mento/main.do" class="mn-has-sub">멘토&멘티</a>
+					<a href="${root}/mento/main.do">멘토&멘티</a>
 				</li>
 
 				<!-- Divider -->
-				<li><a>&nbsp;</a></li>
+				<li>&nbsp;</li>
 				<!-- End Divider -->
 				
 				<sec:authorize access="isAnonymous()">
-					<li><a href="${root}/loginForm.do" class="mn-has-sub">로그인</a></li>
-					<li><a href="${root}/signUpForm.do" class="mn-has-sub">회원가입</a></li>
+					<li><a href="${root}/loginForm.do">로그인</a></li>
+					<li><a href="${root}/signUpForm.do">회원가입</a></li>
 				</sec:authorize>
 
 				<sec:authorize access="isAuthenticated()">
