@@ -2,6 +2,7 @@ package co.yd.deval.board.web;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +50,8 @@ public class BoardController {
 	}
 
 	@GetMapping("/write.do")
-	public String write() {
+	public String write(Model model, Principal user) {
+		model.addAttribute("member", user);
 		return "board/write";
 	}
 
@@ -65,7 +67,7 @@ public class BoardController {
 		String fileName = UUID.randomUUID().toString() + "." + fileType;
 		String pathName = uploadPath + fileName;
 		File dest = new File(pathName);
-
+		System.out.println(vo);
 		try {
 			FileCopyUtils.copy(file.getBytes(), dest);
 		} catch (IllegalStateException e) {
@@ -103,8 +105,18 @@ public class BoardController {
 
 	@GetMapping("/technical.do" )
 	public String technical(Model model,  BoardVO vo, Criteria cri) {
-		model.addAttribute("technicList", boardDao.boardSelectList(3));
+		if (cri.getPageNum() == 0)
+			cri.setPageNum(1);
+		if (cri.getAmount() == 0)
+			cri.setAmount(10);
+		vo.setBoardTypeNo(3);
+		vo.setCriteria(cri);
+		List<BoardVO> boardList = boardDao.getListWithPaging(vo);
+		model.addAttribute("technicList", boardList);
+		model.addAttribute("board", vo);
+		model.addAttribute("pageMaker", new PageDTO(cri, boardDao.getTotalCount(vo)));
 		return "board/technical";
+	
 	}
 
 	@GetMapping("/boardDelete.do")

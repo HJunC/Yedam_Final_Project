@@ -41,17 +41,17 @@ td {
 </style>
 </head>
 <body>
-	<div align="center">
+ 	<div align="center">
 		<section class="page-section bg-dark light-content" id="home">
 			<div class="container relative text-center">
 				<div class="row">
 					<div class="col-lg-10 offset-lg-1"></div>
+				<h1 class="hs-line-7 mb-10 wow fadeInUpShort" data-wow-delay=".2s">공지</h1>
 				</div>
 			</div>
 		</section>
 		<section class="page-section bg-dark light-content pt-0">
 			<div class="container relative">
-				<h1 class="hs-line-7 mb-0 wow fadeInUpShort" data-wow-delay=".2s">공지사항</h1>
 				<div class="row">
 					<div>
 						<form id="searchForm" class="row">
@@ -74,7 +74,6 @@ td {
 					<table class="table shopping-cart-table">
 						<tr align="center">
 							<th width="50">No</th>
-							<th width="100">작성자</th>
 							<th width="300">제목</th>
 							<th width="100">작성일자</th>
 							<th width="50">조회수</th>
@@ -84,8 +83,7 @@ td {
 						<c:forEach items="${noticeList}" var="list2">
 							<tr class="active" onclick="noticeSelect(${list2.boardNo})">
 								<td>${list2.boardNo}</td>
-								<td>${list2.writer}</td>
-								<td>${list2.title}</td>
+								<th align="left">${list2.title}</th>
 								<td><fmt:formatDate pattern="yyyy-MM-dd"
 										value="${list2.boardDate}" /></td>
 								<td>${list2.hit}</td>

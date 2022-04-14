@@ -39,6 +39,7 @@ td {
 	float: right;
 }
 </style>
+
 </head>
 <body>
 	<div align="center">
@@ -46,12 +47,12 @@ td {
 			<div class="container relative text-center">
 				<div class="row">
 					<div class="col-lg-10 offset-lg-1"></div>
+					<h1 class="hs-line-7 mb-10 wow fadeInUpShort" data-wow-delay=".2s">최신기술</h1>
 				</div>
 			</div>
 		</section>
-<section class="page-section bg-dark light-content pt-0">
+		<section class="page-section bg-dark light-content pt-0">
 			<div class="container relative">
-				<h1 class="hs-line-7 mb-0 wow fadeInUpShort" data-wow-delay=".2s">공지사항</h1>
 				<div class="row">
 					<div>
 						<form id="searchForm" class="row">
@@ -69,12 +70,10 @@ td {
 					</div>
 				</div>
 				<br>
-				
 				<div class="table-responsive">
 					<table class="table shopping-cart-table">
 						<tr align="center">
 							<th width="50">No</th>
-							<th width="100">작성자</th>
 							<th width="300">제목</th>
 							<th width="100">작성일자</th>
 							<th width="50">조회수</th>
@@ -85,9 +84,8 @@ td {
 						<c:forEach items="${technicList}" var="list3">
 							<tr class="active" onclick="technicSelect(${list3.boardNo})">
 								<td>${list3.boardNo}</td>
-								<td>${list3.writer}</td>
-								<td>${list3.title}</td>
-							<td><fmt:formatDate pattern="yyyy-MM-dd"
+								<th align="left">${list3.title}</th>
+								<td><fmt:formatDate pattern="yyyy-MM-dd"
 										value="${list3.boardDate}" /></td>
 								<td>${list3.hit}</td>
 								<td>${list3.recommend}</td>
@@ -95,14 +93,14 @@ td {
 						</c:forEach>
 					</table>
 
-			<div align="right">
+					<div align="right">
 						<input class="btn btn-mod btn-round btn-border-w btn-small"
 							type="button" value="글쓰기" onclick="location.href='write.do'">
 					</div>
 				</div>
 			</div>
 			<br>
-<form action="technicSelect.do" method="post" id="boardSS3">
+			<form action="technicSelect.do" method="post" id="boardSS3">
 				<input type="hidden" name="boardNo" id="boardSe3" />
 			</form>
 
@@ -111,11 +109,10 @@ td {
 			</div>
 		</section>
 	</div>
-	
-	
-	
-	
-	<script>
+
+
+
+
 	<script src="${resources}/js/common/jQueryPage.js"></script>
 
 	<script>
