@@ -51,7 +51,6 @@ public class ProjectMapperTest {
         System.out.println(new PageDTO(cri, mapper.getTotalCount(vo)));
 
         list.forEach(item -> System.out.println("=========================================" + item));
-
     }
 
     @Test

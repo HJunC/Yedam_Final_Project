@@ -21,7 +21,7 @@ public class IdCheckTest {
 	
 	@Test
 	public void idCheck() {
-		System.out.println(map.idCheck("view"));
+		/*System.out.println(map.idCheck("view"));*/
 	}
 
 }

@@ -27,7 +27,7 @@ public class StudyMailTest {
 				아이디 : DevalKims@gmail.com
 				비번 : dPekachlwhd!@
 	         * */
-	        String subject = "스터디 메일 전송 테스트";
+	        /*String subject = "스터디 메일 전송 테스트";
 	        String content = "<div align='center' style='border:1px solid black; font-family:verdana'>";
 	        content += "<h3 style='color: blue;'>";
 	        content += "님의 임시 비밀번호 입니다. 비밀번호를 변경하여 사용하세요.</h3>";
@@ -50,7 +50,7 @@ public class StudyMailTest {
 	            
 	        } catch(Exception e) {
 	            e.printStackTrace();
-	        }
+	        }*/
 	        
 	    }
 
