@@ -76,7 +76,7 @@ public class StudyMailSender {
         			+ "          <table role=\"presentation\" style=\"width:94%;max-width:600px;border:none;border-spacing:0;text-align:left;font-family:Arial,sans-serif;font-size:16px;line-height:22px;color:#363636;\">\r\n"
         			+ "            <tr>\r\n"
         			+ "              <td style=\"padding:40px 30px 30px 30px;text-align:center;font-size:24px;font-weight:bold;\">\r\n"
-        			+ "                <a href=\"#\" style=\"text-decoration:none;\"><img src=\"./img/devallogo.png\" width=\"165\" alt=\"Logo\" style=\"width:165px;max-width:80%;height:auto;border:none;text-decoration:none;color:#ffffff;\"></a>\r\n"
+        			+ "                <a href=\"#\" style=\"text-decoration:none;\"><img src=\"${resources}/images/studyimg/devallogo.png\" width=\"165\" alt=\"Logo\" style=\"width:165px;max-width:80%;height:auto;border:none;text-decoration:none;color:#ffffff;\"></a>\r\n"
         			+ "              </td>\r\n"
         			+ "            </tr>\r\n"
         			+ "            <tr>\r\n"
@@ -92,7 +92,7 @@ public class StudyMailSender {
         			+ "            </tr>\r\n"
         			+ "            <tr>\r\n"
         			+ "              <td style=\"padding:0;font-size:24px;line-height:28px;font-weight:bold;\">\r\n"
-        			+ "                <a href=\"http://www.example.com/\" style=\"text-decoration:none;\"><img src=\"./img/prg (1).jpg\" width=\"600\" alt=\"\" style=\"width:100%;height:auto;display:block;border:none;text-decoration:none;color:#363636;\"></a>\r\n"
+        			+ "                <a href=\"http://www.example.com/\" style=\"text-decoration:none;\"><img src=\"resources/images/studyimg/prg (1).jpg\" width=\"600\" alt=\"\" style=\"width:100%;height:auto;display:block;border:none;text-decoration:none;color:#363636;\"></a>\r\n"
         			+ "              </td>\r\n"
         			+ "            </tr>\r\n"
         			+ "            <tr>\r\n"
@@ -209,7 +209,8 @@ public class StudyMailSender {
         
         try {
             MimeMessage mail = mailSender.createMimeMessage();
-            MimeMessageHelper mailHelper = new MimeMessageHelper(mail,"UTF-8"); //단순히 텍스트만
+            MimeMessageHelper mailHelper = new MimeMessageHelper(mail,true,"UTF-8");
+            //MimeMessageHelper mailHelper = new MimeMessageHelper(mail,"UTF-8"); //단순히 텍스트만
            
            
             

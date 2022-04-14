@@ -57,4 +57,3 @@ public interface StudyMapper {
 	    int rcntLeader(StudyVO vo);
 	    int rcntMember(StudyVO vo);
 	}
-
