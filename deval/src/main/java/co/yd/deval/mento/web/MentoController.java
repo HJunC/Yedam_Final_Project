@@ -1,6 +1,7 @@
 package co.yd.deval.mento.web;
 
 import java.io.File;
+
 import java.io.IOException;
 import java.security.Principal;
 import java.util.UUID;
@@ -87,7 +88,7 @@ public class MentoController {
     @GetMapping("/mentoSelect.do")
     public String mentoSelect(Model model, MentoVO vo, Principal principal) {
     	
-    	  //추가
+    	  //異붽�
 		  MemberVO user = new MemberVO();
 		  if(principal != null) {
 			  user.setMemberId(principal.getName());
