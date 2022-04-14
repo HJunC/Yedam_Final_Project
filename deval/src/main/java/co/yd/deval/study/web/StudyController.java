@@ -207,11 +207,12 @@ public class StudyController {
     
 	 @RequestMapping("/studyReqRefuse.do")
 	 @ResponseBody
-	 public ResponseEntity<Integer> studyReqRefuse(StudyReqVO vo) throws Exception {
+	 public ResponseEntity<Integer> studyReqRefuse(StudyReqVO vo, StudyVO svo) throws Exception {
 		 int n = studyDao.studyTeamMemberUpdateRefuse(vo);
-		 
+		 svo.setStudyNo(vo.getStudyNo());
+		 svo = studyDao.studySelectNo(svo);
 		 if (n != 0) {
-			 mail.sendMailTest(memberDao.memberMailGet(vo.getMemberId()));
+			 mail.sendMailTest(memberDao.memberMailGet(vo.getMemberId()),0,vo.getMemberId(),vo.getStudyNo(), svo.getStudySdt(), svo.getStudyEdt());
 		 }
 		 
 		 return ResponseEntity.ok().body(n);
@@ -246,7 +247,7 @@ public class StudyController {
 			 
 			 // 메일발송 시간 지연으로 인해 디자인 로딩창 넣기
 			 if (n != 0) {
-				 mail.sendMailTest(memberDao.memberMailGet(rvo.getMemberId()));
+				 mail.sendMailTest(memberDao.memberMailGet(rvo.getMemberId()),1,rvo.getMemberId(),vo.getStudyNo(), vo.getStudySdt(), vo.getStudyEdt());
 			 }
 			 return ResponseEntity.ok().body(n);
 		 }

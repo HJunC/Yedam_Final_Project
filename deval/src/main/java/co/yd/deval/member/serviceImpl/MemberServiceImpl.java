@@ -49,13 +49,15 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int memberCashUpdate(Map<String, Object> cash) {
+	public int memberCashUpdate(HashMap<String, Object> cash) {
 		return map.memberCashUpdate(cash);
 	}
+
 
 	@Override
 	public String memberMailGet(String id) {
 		return map.memberMailGet(id);
 	}
+
 
 }

@@ -1,12 +1,12 @@
 package co.yd.deval.member.web;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
-import java.security.Principal;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,11 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import co.yd.deval.member.service.MemberService;
 import co.yd.deval.member.service.MemberVO;
 import co.yd.deval.project.service.ProjectService;
-import co.yd.deval.study.service.StudyReqVO;
 import co.yd.deval.study.service.StudyService;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 @Controller
 public class MemberController {
@@ -83,7 +79,7 @@ public class MemberController {
 		Map<String, Object> map = new HashMap<>();
 		map.put("id", memberId);
 		map.put("cashPt", cashPt);
-		memberDao.memberCashUpdate(map);
+		memberDao.memberCashUpdate((HashMap<String, Object>) map);
 	}
 	
 	
