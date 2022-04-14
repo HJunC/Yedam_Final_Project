@@ -42,16 +42,15 @@
                         
                             <div class="col-sm-4 bg-c-lite-green user-profile">
                                 <div class="card-block text-center text-white">
-                                    <div class="m-b-25"> <img src="https://img.icons8.com/bubbles/100/000000/user.png" class="img-radius" alt="User-Profile-Image"> </div>
+                                    <div class="m-b-25"> <img src="${resources}/images/studyimg/probg.png" class="img-radius" alt="User-Profile-Image"> </div>
                                     <h6 class="f-w-600">${std.memberId }</h6>
-                                    <p>${std.present }</p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
+                                    <p>${std.present }</p> 
                                 </div>
                             </div>
                             <div class="col-sm-8">
                                 <div class="card-block">
-                                    <h6 class="m-b-20 p-b-5 b-b-default f-w-600">스터디번호: ${std.studyNo }</h6>
+                                    <h6 class="m-b-20 p-b-5 b-b-default f-w-600">팀번호: ${std.studyNo }</h6>
                                     <div class="row">
-                                       
                                         <div class="col-sm-6">
                                             <p class="m-b-10 f-w-600">자격증</p>
                                             <h6 class="text-muted f-w-400">${std.license }</h6>
@@ -69,10 +68,10 @@
                                         </div>
                                     </div>
                                     <div class="social-link list-unstyled m-t-40 m-b-10">
-                                    	<button onclick="teamGo('${std.memberId }', '${std.studyNo }')">승인</button>
-                                    	<button onclick="teamBye('${std.memberId }', '${std.studyNo }')">거절</button>
+                                    	<button class="btn btn-mod btn-glass btn-round" style="background-color: black; color: white;" onclick="teamGo('${std.memberId }', '${std.studyNo }')">승인</button>
+                                    	<button class="btn btn-mod btn-glass btn-round" style="background-color: black; color: white;" onclick="teamBye('${std.memberId }', '${std.studyNo }')">거절</button>
                                     	<!-- 채팅 기능은 Form 이 좋을지, 버튼이 좋을지.. -->
-                                    	<input type="button" id="reqChat" name="reqChat" value="Message">
+                                    	<input class="btn btn-mod btn-glass btn-round" style="background-color: black; color: white;" type="button" id="reqChat" name="reqChat" value="Message">
                                     </div>
                                 </div>
                             </div>
