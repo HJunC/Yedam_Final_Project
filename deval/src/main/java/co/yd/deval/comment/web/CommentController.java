@@ -22,9 +22,7 @@ public class CommentController {
 	private CommentService commentDAO;
 
 	@GetMapping("/commentList.do")
-//	@ResponseBody
 	public String commentList(Model model, CommentVO vo) {
-//		model.addAttribute("no", no);
 		model.addAttribute("comments", commentDAO.commentSelectList(vo));
 		return "comment/comment";
 	}
@@ -60,14 +58,13 @@ public class CommentController {
 		return "1";
 	}
 	
-	// ¿Ã¿∫øÏ
+
 //  @GetMapping("/boardDetail.do")
 //	public String  boardDetail(Model model) {
 //		model.addAttribute("commentList");
 //		System.out.println(model);
 //		return "board/boardDetail";
 //	}
-
 	@PostMapping("/commentPost.do")
 	@ResponseBody
 	public List<CommentVO> boardDetail(CommentVO vo, Model model) {
