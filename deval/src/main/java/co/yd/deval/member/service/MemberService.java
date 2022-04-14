@@ -11,7 +11,10 @@ public interface MemberService {
 	
 	MemberVO memberLogin(String id);	
 	int memberExpUp(HashMap<String, Object> exp);
-	int memberCashUpdate(HashMap<String, Object> cash);
+	int memberCashUpdate(Map<String, Object> cash);
 	
-	String memberMailGet(String id);
+	//환불처리
+	int refund(Map<String, Object> cash);
+
+  String memberMailGet(String id);
 }

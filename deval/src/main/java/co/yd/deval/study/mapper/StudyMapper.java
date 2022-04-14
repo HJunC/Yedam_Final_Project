@@ -1,15 +1,11 @@
 package co.yd.deval.study.mapper;
 
-import java.util.List;
-
-
-import org.apache.ibatis.annotations.Param;
-
-import co.yd.deval.project.service.ProjectVO;
 import co.yd.deval.study.service.StudyInfoVO;
 import co.yd.deval.study.service.StudyReqVO;
 import co.yd.deval.study.service.StudyTeamVO;
 import co.yd.deval.study.service.StudyVO;
+
+import java.util.List;
 
 public interface StudyMapper {
 	// 스터디 모집
@@ -22,7 +18,6 @@ public interface StudyMapper {
 		int findMaxStudyNo();
 		int studyInsert(StudyVO vo);
 		int studyUpdate(StudyVO vo);
-		List<StudyVO> findStudyImLeader(String id);
 		List<StudyVO> findStudyByNo(String id);
 		List<StudyVO> findWaitingStudy(String id);
 		

@@ -1,7 +1,6 @@
 package co.yd.deval.project.service;
 
 import java.util.List;
-import java.util.Map;
 
 public interface ProjectService {
     /***
@@ -20,7 +19,7 @@ public interface ProjectService {
 
     int updateProject(ProjectVO vo);
 
-    /***
+  /***
      * 유저의 대기,진행 중인 프로젝트 여부 (프로젝트 정보가 반환되지 않음)
      * @param memberId
      * @return 프로젝트 역할정보 반환
@@ -61,7 +60,6 @@ public interface ProjectService {
     void updateHit(int projectNo);
     void updateApplyCount(int projectNo);
 
-    List<ProjectVO> findProjectImLeader(String id);
     List<ProjectVO> findProjectByNo(String id);
     List<ProjectVO> findWaitingProject(String id);
 }

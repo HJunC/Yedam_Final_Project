@@ -6,4 +6,12 @@
 		select type,id,'{noop}'||password,
 	</select>
 	
+	<select id="idCheck" resultType="boolean">
+		select case count(*)
+        when 1 then 0
+        else  1 end
+		from user_view
+		where id = #{id}
+	</select>
+	
 </mapper>

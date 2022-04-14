@@ -31,16 +31,18 @@ import java.util.List;
 @PropertySource("classpath:/config/db.properties")
 public class ProjectMapperTest {
 
+/*
     @Autowired
     ProjectMapper mapper;
     @Autowired
     ProjectTeamMapper teamMapper;
     @Autowired
     ProjectRequestMapper requestMapper;
+*/
 
     @Test
     public void getListWithPaging() {
-        Criteria cri = new Criteria();
+       /* Criteria cri = new Criteria();
         cri.setPageNum(1);
         cri.setAmount(10);
 
@@ -50,8 +52,7 @@ public class ProjectMapperTest {
         List<ProjectVO> list = mapper.getListWithPaging(vo);
         System.out.println(new PageDTO(cri, mapper.getTotalCount(vo)));
 
-        list.forEach(item -> System.out.println("=========================================" + item));
-
+        list.forEach(item -> System.out.println("=========================================" + item));*/
     }
 
     @Test

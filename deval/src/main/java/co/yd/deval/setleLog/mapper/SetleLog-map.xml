@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.yd.deval.setleLog.mapper.SetleLogMapper">
+	<insert id="setelLogInsert" parameterType="co.yd.deval.setleLog.service.SetleLogVO">
+		<selectKey keyProperty="setleNo" resultType="Int" order="BEFORE">
+			SELECT NVL(MAX(SETLE_NO), 0) + 1 FROM SETLE_LOG
+		</selectKey>
+		INSERT INTO SETLE_LOG(			SETLE_NO, 
+										SETLE_AMOUNT, 
+										MEMBER_ID)
+		VALUES(							#{setleNo},
+										#{setleAmount},
+										#{memberId})										
+	</insert>
+</mapper>

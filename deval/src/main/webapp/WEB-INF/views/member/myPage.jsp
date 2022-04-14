@@ -46,11 +46,11 @@
         <div class="row">
         	<div id="info_box" class="col-md-8 offset-lg-1 mb-sm-80 order-first order-md-last">
 				<!-- 나의 정보가 보이는 div -->
-				<div id="my_info_box" class="border border-white" style="height:1000px;display:none">
+				<div id="my_info_box" class="border border-white" style="height:1000px;">
 					<h2>나의 정보</h2>
 					<hr>
 					<div>
-						<img src="${member.profileImg}" alt="..">
+						<img src="upload/profile/${member.profileImg}" alt="..">
 						<table class="table">
 							<tr>
 								<th>아이디</th>
@@ -72,17 +72,6 @@
 								<th>포인트</th>
 								<td>${member.cashPt}</td>
 							</tr>
-							<tr>
-								<th>이력서</th>
-								<td colspan="5">
-									<c:if test="${empty member.resume}">
-									등록된 이력서가 없습니다.
-									</c:if>
-									<c:if test="${not empty member.resume}">
-									${member.resume}
-									</c:if>
-								</td>
-							</tr>
 						</table>
 					</div>
 				</div>
@@ -92,7 +81,7 @@
 					<h2>정보 수정</h2>
 					<hr>
 					<div>
-						<form id="infoUpdFrm" action="" method="post">
+						<form id="infoUpdFrm" action="myInfoUpdate.do" method="post" enctype="multipart/form-data" onsubmit="return infoInputCheck()">
 							<table class="table">
 								<tr>
 									<th>아이디</th>
@@ -103,11 +92,11 @@
 								<tr>
 									<th>이메일</th>
 									<td colspan="3">
-										<input class="form-control" type="email" id="mail" name="mail" value="${member.mail}">
+										<input class="form-control" type="email" id="mail" name="mail">
 									</td>
 									<th>이름</th>
 									<td>
-										<input class="form-control" type="text" id="name" name="name" value="${member.name}">
+										<input class="form-control" type="text" id="name" name="name">
 									</td>
 								</tr>
 								<tr>
@@ -128,17 +117,6 @@
 									<th id="pwdChk" colspan="6"></th>
 								</tr>
 								<tr>
-									<th>이력서</th>
-									<td colspan="5">
-										<c:if test="${empty member.resume}">
-											<input type="file" name="file" id="resumeFile">
-										</c:if>
-										<c:if test="${not empty member.resume}">
-											<input type="file" name="file" id="resumeFile">
-										</c:if>
-									</td>
-								</tr>
-								<tr>
 									<th>프로필 사진 변경</th>
 									<td colspan="5">
 										<input type="file" name="imgFile" id="profileImg">
@@ -150,155 +128,34 @@
 						</form>
 					</div>
 				</div>
-			
-				<!-- 내가 만든 스터디,프로젝트 중 완료된 것들의 목록을 보여주는 div -->
-				<div id="career_box" class="border border-white" style="height:1000px;display:none">
-					<h2>나의 이력</h2>
+				
+				<!-- 모집,신청,진행,완료된 프로젝트의 목록을 보여주는 div -->
+				<div id="project_box" class="border border-white" style="height:1000px;display:none">
+					<h2>프로젝트 목록</h2>
 					<hr class="border border-white">
-					<div>
-						<div>
-						<h3>나의 프로젝트 이력</h3>
-						<hr class="border border-white">
-						<c:if test="${empty myProjects}">
-							모집 생성 후 완료한 프로젝트 이력이 없습니다.
-						</c:if>
-						<table class="table">
+					<h3>대기중인 프로젝트</h3>
+					<table id="waitProject" class="table">
+						<thead>
 							<tr>
 								<th>프로젝트 이름</th>
 								<th>프로젝트 기간</th>
 								<th>프로젝트 시작일</th>
 								<th>프로젝트 종료일</th>
 							</tr>
-							<c:if test="${not empty myProjects}">
-								<c:forEach items="${myProjects}" var="project">
-									<c:if test="${project.state == 4}">
-									<td>${project.projectName}</td>
-									<td>${project.projectTerm}</td>
-									<td><fmt:formatDate value="${project.projectSdt}"/></td>
-									<td><fmt:formatDate value="${project.projectEdt}"/></td>
-								</c:if>
-								</c:forEach>
-							</c:if>
-						</table>
-						</div>
-						
-						<div>
-						<h3>나의 스터디 이력</h3>
-						<hr class="border border-white">
-						<c:if test="${empty myStudies}">
-							모집 생성 후 완료한 스터디 이력이 없습니다.
-						</c:if>
-						<c:if test="${not empty mystudies}">
-							<c:forEach items="${myStudies}" var="study">
-							
-							</c:forEach>
-						</c:if>
-						</div>						
-					</div>
-				</div>
-				
-				<!-- 구인 신청 이력을 보여주는 div -->
-				<div id="offer_rec" class="border border-white" style="height:1000px;display:none">
-					<h2>구인 신청 이력</h2>
-					<hr>
-					<div>
-						<div>
-						<c:if test="${empty offers}">
-							구인 신청 이력이 없습니다.
-						</c:if>
-						<c:if test="${not empty offers}">
-							<c:forEach items="${offers}" var="offer">
-							
-							</c:forEach>
-						</c:if>
-						</div>					
-					</div>
-				</div>
-				
-				<!-- 모집,신청,진행,완료된 프로젝트의 목록을 보여주는 div -->
-				<div id="project_box" class="border border-white" style="height:1000px">
-					<h2>프로젝트 목록</h2>
-					<hr class="border border-white">
-					<h3>대기중인 프로젝트</h3>
-					<table class="table">
-						<tr>
-							<th>프로젝트 이름</th>
-							<th>프로젝트 기간</th>
-							<th>프로젝트 시작일</th>
-							<th>프로젝트 종료일</th>
-							<th>상태</th>
-						</tr>
-						<tr>
-							<c:forEach items="${waitProjects}" var="project">
-									<td>${project.projectName}</td>
-									<td>${project.projectTerm}</td>
-									<td><fmt:formatDate value="${project.projectSdt}"/></td>
-									<td><fmt:formatDate value="${project.projectEdt}"/></td>
-									<td>수락 대기중</td>
-							</c:forEach>
-						</tr>
-						<tr>
-							<c:forEach items="${myProjects}" var="project">
-									<c:if test="${project.state == 1}">
-									<td>${project.projectName}</td>
-									<td>${project.projectTerm}</td>
-									<td><fmt:formatDate value="${project.projectSdt}"/></td>
-									<td><fmt:formatDate value="${project.projectEdt}"/></td>
-									<td>모집중</td>
-								</c:if>
-							</c:forEach>
-						</tr>
-						<tr>
-							<c:forEach items="${myProjects}" var="project">
-									<c:if test="${project.state == 2}">
-									<td>${project.projectName}</td>
-									<td>${project.projectTerm}</td>
-									<td><fmt:formatDate value="${project.projectSdt}"/></td>
-									<td><fmt:formatDate value="${project.projectEdt}"/></td>
-									<td>시작대기중</td>
-								</c:if>
-							</c:forEach>
-						</tr>
+						</thead>
 					</table>
 					<hr class="border border-white">
-					<h3>진행중인 프로젝트</h3>
-					<table class="table">
-						<tr>
-							<th>프로젝트 이름</th>
-							<th>프로젝트 기간</th>
-							<th>프로젝트 시작일</th>
-							<th>프로젝트 종료일</th>
-						</tr>
-						<tr>
-							<c:forEach items="${projects}" var="project">
-								<c:if test="${project.state == 3}">
-									<td>${project.projectName}</td>
-									<td>${project.projectTerm}</td>
-									<td><fmt:formatDate value="${project.projectSdt}"/></td>
-									<td><fmt:formatDate value="${project.projectEdt}"/></td>
-								</c:if>
-							</c:forEach>
-						</tr>
-					</table>
-					<hr class="border border-white">
-					<h3>종료된 프로젝트</h3>
-					<table class="table">
-						<tr>
-							<th>프로젝트 이름</th>
-							<th>프로젝트 기간</th>
-							<th>프로젝트 시작일</th>
-							<th>프로젝트 종료일</th>
-						</tr>
-						<tr>
-							<c:forEach items="${projects}" var="project">
-								<c:if test="${project.state == 4}">
-									<td>${project.projectName}</td>
-									<td>${project.projectTerm}</td>
-									<td><fmt:formatDate value="${project.projectSdt}"/></td>
-									<td><fmt:formatDate value="${project.projectEdt}"/></td>
-								</c:if>
-							</c:forEach>
-						</tr>
+					<h3>참여한 프로젝트</h3>
+					<table id="joinProject" class="table">
+						<thead>
+							<tr>
+								<th>프로젝트 이름</th>
+								<th>프로젝트 기간</th>
+								<th>프로젝트 시작일</th>
+								<th>프로젝트 종료일</th>
+								<th>상태</th>
+							</tr>
+						</thead>	
 					</table>				
 				</div>
 				
@@ -307,86 +164,29 @@
 					<h2>스터디 목록</h2>
 					<hr class="border border-white">
 					<h3>대기중인 스터디</h3>
-					<table class="table">
-						<tr>
-							<th>스터디 이름</th>
-							<th>스터디 장소</th>
-							<th>스터디 시작일</th>
-							<th>스터디 종료일</th>
-							<th>상태</th>
-						</tr>
-						<tr>
-							<c:forEach items="${waitStudies}" var="study">
-									<td>${study.studyNm}</td>
-									<td>${study.location}</td>
-									<td><fmt:formatDate value="${study.studySdt}"/></td>
-									<td><fmt:formatDate value="${study.studyEdt}"/></td>
-									<td>수락 대기중</td>
-							</c:forEach>
-						</tr>
-						<tr>
-							<c:forEach items="${myStudies}" var="study">
-									<c:if test="${study.state == 1}">
-									<td>${study.studyNm}</td>
-									<td>${study.location}</td>
-									<td><fmt:formatDate value="${study.studySdt}"/></td>
-									<td><fmt:formatDate value="${study.studyEdt}"/></td>
-									<td>모집중</td>
-								</c:if>
-							</c:forEach>
-						</tr>
-						<tr>
-							<c:forEach items="${myProjects}" var="project">
-									<c:if test="${project.state == 2}">
-									<td>${study.studyNm}</td>
-									<td>${study.location}</td>
-									<td><fmt:formatDate value="${study.studySdt}"/></td>
-									<td><fmt:formatDate value="${study.studyEdt}"/></td>
-									<td>시작대기중</td>
-								</c:if>
-							</c:forEach>
-						</tr>
+					<table id="waitStudy" class="table">
+						<thead>
+							<tr>
+								<th>스터디 이름</th>
+								<th>스터디 장소</th>
+								<th>스터디 시작일</th>
+								<th>스터디 종료일</th>
+							</tr>
+						</thead>
 					</table>
 					<hr class="border border-white">
 					<h3>진행중인 스터디</h3>
-					<table class="table">
-						<tr>
-							<th>스터디 이름</th>
-							<th>스터디 장소</th>
-							<th>스터디 시작일</th>
-							<th>스터디 종료일</th>
-						</tr>
-						<tr>
-							<c:forEach items="${studies}" var="study">
-								<c:if test="${studies.state == 3}">
-									<td>${study.studyNm}</td>
-									<td>${study.location}</td>
-									<td><fmt:formatDate value="${study.studySdt}"/></td>
-									<td><fmt:formatDate value="${study.studyEdt}"/></td>
-								</c:if>
-							</c:forEach>
-						</tr>
+					<table id="joinStudy" class="table">
+						<thead>
+							<tr>
+								<th>스터디 이름</th>
+								<th>스터디 장소</th>
+								<th>스터디 시작일</th>
+								<th>스터디 종료일</th>
+								<th>상태</th>
+							</tr>
+						</thead>
 					</table>
-					<hr class="border border-white">
-					<h3>종료된 스터디</h3>
-					<table class="table">
-						<tr>
-							<th>스터디 이름</th>
-							<th>스터디 장소</th>
-							<th>스터디 시작일</th>
-							<th>스터디 종료일</th>
-						</tr>
-						<tr>
-							<c:forEach items="${studies}" var="study">
-								<c:if test="${study.state == 4}">
-									<td>${study.studyNm}</td>
-									<td>${study.location}</td>
-									<td><fmt:formatDate value="${study.studySdt}"/></td>
-									<td><fmt:formatDate value="${study.studyEdt}"/></td>
-								</c:if>
-							</c:forEach>
-						</tr>
-					</table>	
 				</div>
 				
 								
@@ -400,13 +200,11 @@
                     
                     <div id="tabs" class="widget-body">
                         <ul class="clearlist widget-menu">
-                            <li id="myInfo">
+                            <li id="myInfo" class="bg-light">
                                 나의 정보
                             </li>
                                	<ul id="tag">
                                		<li id="info_update">정보수정</li>
-                               		<li id="my_career">나의 이력</li>
-                               		<li id="offer_record">구인 신청 이력</li>
                                	</ul>
                             <li id="myProject">
                                 마이 프로젝트
@@ -427,6 +225,18 @@
 </section>
 <!-- End Section -->                
 <script>
+	// category background 컬러 구분
+	$('#tabs>ul>li').on('click',function(){
+						$('#tabs>ul>ul>li').removeClass('bg-info');
+						$('#tabs>ul>li').removeClass('bg-light');
+						$(event.target).attr('class','bg-light');
+				    })
+				    
+	$('#tabs>ul>ul>li').on('click',function(){
+							$('#tabs>ul>ul>li').removeClass('bg-info');
+							$(event.target).attr('class','bg-info');
+					  })
+	
 	
 	// div들 display에 관한 기능들
 	$('#myInfo').on('click',function(){
@@ -434,31 +244,88 @@
 						$('#info_box').children().css('display','none');
 						$('#my_info_box').css('display','block');
 					});
+	
+	// 마이프로젝트를 누를 시 ajax를 통해 나의 프로젝트 현황을 보여줌
 	$('#myProject').on('click',function(){
 						$('#tag').children().css('display','none');
 						$('#info_box').children().css('display','none');
 						$('#project_box').css('display','block');
+						$.ajax({
+							url:"myProjects.do",
+							success : function(data){
+								if(data === ''){
+									$('#joinProject>tbody').empty();
+									$('#waitProject>tbody').empty();
+									$('#joinProject').append(makeNotTr(2));
+									$('#waitProject').append(makeNotTr(1));
+								} else {
+									if(data.project.length == 0){
+										$('#joinProject>tbody').empty();
+										$('#joinProject').append(makeNotTr(2));	
+									} else {
+										$('#joinProject>tbody').empty();
+										$.each(data.study,function(item,idx){
+											$('#joinProject>tbody').append(makeTr(idx,4));
+										})
+									}
+									
+									if(data.wait.length == 0){
+										$('#waitProject>tbody').empty();
+										$('#waitProject').append(makeNotTr(1))	
+									} else {
+										$('#waitProject>tbody').empty();
+										$.each(data.wait,function(item,idx){
+											$('#waitProject').append(makeTr(idx,2))	
+										})
+									}
+								}
+							}
+						});
 					   });
+	
+	// 마이스터디를 누를 시 ajax를 통해 나의 스터디 현황을 보여줌
 	$('#myStudy').on('click',function(){
 						$('#tag').children().css('display','none');
 						$('#info_box').children().css('display','none');
 						$('#study_box').css('display','block');
+						$.ajax({
+							url:"myStudies.do",
+							success : function(data){
+								if(data == ''){
+									$('#joinStudy>tbody').empty();
+									$('#waitStudy>tbody').empty();
+									$('#joinStudy').append(makeNotTr(2));
+									$('#waitStudy').append(makeNotTr(1))
+								} else {
+									if(data.study.length == 0){
+										$('#joinStudy>tbody').empty();
+										$('#joinStudy').append(makeNotTr(2));	
+									} else {
+										$('#joinStudy>tbody').empty();
+										$.each(data.study,function(item,idx){
+											$('#joinStudy').append(makeTr(idx,3));
+										})
+									}
+									
+								 	if(data.wait.length == 0){
+										$('#waitStudy>tbody').empty();
+										$('#waitStudy').append(makeNotTr(1))	
+									} else { 
+										$('#waitStudy>tbody').empty();
+										$.each(data.wait,function(item,idx){
+											$('#waitStudy').append(makeTr(idx,1))	
+										})
+									}
+								}
+							}
+						})
 					});
+	
 	// myInfo 하위의 메뉴들이 보여줄 div들의 display에 관한 기능들
 	$('#info_update').on('click',function(){
 							$('#info_box').children().css('display','none');
 							$('#info_update_box').css('display','block');
 						})
-	$('#my_career').on('click',function(){
-		                  $('#info_box').children().css('display','none');
-		                  $('#career_box').css('display','block');
-					   });
-	
-	$('#offer_record').on('click',function(){
-							$('#info_box').children().css('display','none');
-							$('#offer_rec').css('display','block');
-						  })
-	
 	
 	// 비밀번호 변경시 입력한 비밀번호가 비밀번호 확인에 입력한 비밀번호와 일치하는지 확인하는 function					
 	$('#pwdCheck').on('change',function(){
@@ -469,6 +336,79 @@
 			$('#pwdChk').text('');
 			$('#pwdChk').text('비밀번호가 일치하지 않습니다.').css('color','red');
 		}
+	});
+	
+	// 정보 변경시 미입력한 값이 존재하는지 확인
+	function infoInputCheck(){
+		if($('#mail').val() == "" && $('#name').val() == "" && $('#profileImg').val() == "" && $('#pwdChk').css('color') == 'rgb(255, 255, 255)'){
+			alert('변경하는 값이 존재하지 않습니다.')
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
+	function makeNotTr(n){
+		var tr = $('<tr>');
+		var td;
+		if(n == 1){
+			td = $('<td colspan="4">').text('신청 이력이 없습니다.')			
+		} else {
+			td = $('<td colspan="5">').text('참여 이력이 없습니다.')
+		}
+		tr.append(td);
+		return $('<tbody>').append(tr);
+	}
+	
+	function makeTr(item,n){
+		var tr = $('<tr>')
+		var td1 = $('<td>')
+		var td2 = $('<td>')
+		var td3 = $('<td>')
+		var td4 = $('<td>')
+		var td5 = $('<td>')
+		if(n == 1 || n == 3){
+			td1.text(item.studyNm);
+			td2.text(item.location);
+			td3.text(item.studySdt);
+			td4.text(item.studyEdt);
+		} else {
+			td1.text(item.projectName);
+			td2.text(item.projectTerm);
+			td3.text(item.projectSdt);
+			td4.text(item.projectEdt);
+		}
+		if(item.leaderId == '${member.memberId}'){
+			tr.css('color','green');
+		}
+		tr.append(td1,td2,td3,td4);
+		if (n==3) {
+			if(item.state == 0){
+				td5.text('모집중')
+			} else if(item.state == 1){
+				td5.text('마감')
+			} else if(item.state == 2){
+				td5.text('진행중').css('color','blue')
+			} else {
+				td5.text('종료').css('color','green')
+			}
+			tr.append(td5)
+		} else if(n == 4){
+			if(item.state == 1){
+				td5.text('모집중')
+			} else if(item.state == 2){
+				td5.text('마감')
+			} else if(item.state == 3){
+				td5.text('진행중').css('color','blue')
+			} else if(item.state == 4){
+				td5.text('종료').css('color','green')
+			} else {
+				td5.text('취소').css('color','red')
+			}
+			tr.append(td5)
+		}
+		return $('<tbody>').append(tr);
+	}
 	});
 </script>
 

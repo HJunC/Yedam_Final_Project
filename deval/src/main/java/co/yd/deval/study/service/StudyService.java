@@ -13,8 +13,8 @@ public interface StudyService {
 	int findMaxStudyNo();
 	int studyInsert(StudyVO vo);
 	int studyUpdate(StudyVO vo);
-	List<StudyVO> findStudyImLeader(String id);
-	List<StudyVO> findStudyByNo(String id);
+
+  List<StudyVO> findStudyByNo(String id);
 	List<StudyVO> findWaitingStudy(String id);
 	
 	// 모달창 회원정보
