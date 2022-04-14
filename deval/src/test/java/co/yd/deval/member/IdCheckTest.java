@@ -15,9 +15,9 @@ import co.yd.deval.member.mapper.LoginMapper;
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/*-context.xml")
 @PropertySource("classpath:/config/db.properties")
 public class IdCheckTest {
-	
+/*
 	@Autowired
-	LoginMapper map;
+	LoginMapper map;*/
 	
 	@Test
 	public void idCheck() {

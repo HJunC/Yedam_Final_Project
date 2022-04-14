@@ -14,9 +14,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 public class StudyMailTest {
 	
-	 @Autowired
+/*	 @Autowired
 	    JavaMailSenderImpl mailSender;
-	    
+	    */
 	    // MimeMessage 객체를 직접 생성하여 메일을 발송하는 방법
 	    @Test
 	    public void mailSendTest() throws Exception{
