@@ -14,4 +14,5 @@ public interface ProjectTeamMapper {
     int deleteProjectTeam(ProjectTeamVO vo);
 
     ProjectTeamVO getOngoingProject(String memberId);
+    int completeProject(@Param("projectNo") int projectNo, @Param("exp") int exp);
 }

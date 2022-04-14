@@ -1,14 +1,16 @@
 package co.yd.deval.project.serviceImpl;
 
+import co.yd.deval.member.service.MemberService;
 import co.yd.deval.project.mapper.ProjectMapper;
 import co.yd.deval.project.mapper.ProjectRequestMapper;
 import co.yd.deval.project.mapper.ProjectTeamMapper;
 import co.yd.deval.project.service.*;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
 * @package : co.yd.deval.project.serviceImpl
@@ -33,6 +35,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    @Transactional
     public int create(ProjectVO vo) {
         switch (vo.getLeaderPosition()) {
             case "FE":
@@ -72,6 +75,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    @Transactional
     public int remove(ProjectVO vo) {
         ProjectTeamVO teamVO = ProjectTeamVO.builder()
                                 .projectNo(vo.getProjectNo())
@@ -143,6 +147,16 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    @Transactional
+    public int completeProject(ProjectVO vo) {
+        // 팀원들 상태 변경, 경험치
+        teamMapper.completeProject(vo.getProjectNo(), 300);
+        // 프로젝트 상태 변경
+        vo.setUpdateState("4");
+        return mapper.updateProject(vo);
+    }
+
+    @Override
     public void updateHit(int projectNo) {
         mapper.updateHit(projectNo);
     }
@@ -152,10 +166,6 @@ public class ProjectServiceImpl implements ProjectService {
         mapper.updateApplyCount(projectNo);
     }
 
-    @Override
-	public List<ProjectVO> findProjectImLeader(String id) {
-		return mapper.findProjectImLeader(id);
-	}
 
 	@Override
 	public List<ProjectVO> findProjectByNo(String id) {

@@ -20,8 +20,10 @@ import static org.junit.Assert.*;
 @PropertySource("classpath:/config/db.properties")
 public class ProjectServiceImplTest {
 
+/*
     @Autowired
     private ProjectService projectService;
+*/
 
     @Test
     public void insertProject() {

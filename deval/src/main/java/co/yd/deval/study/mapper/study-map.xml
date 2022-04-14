@@ -7,7 +7,21 @@
 		resultType="co.yd.deval.study.service.StudyVO">
 		SELECT *
 		FROM STUDY
-		WHERE STATE = '0'
+		WHERE STATE = 0
+		ORDER BY STUDY_NO DESC
+	</select>
+	
+<!-- 	<select id="studyEndStateHide" resultType="co.yd.deval.study.service.StudyVO">
+		SELECT COUNT(*)
+		FROM STUDY
+		WHERE LEADER_ID = #{leaderId}
+		AND STATE != 2
+	</select> -->
+	
+	<select id="studyLocSearch" resultType="co.yd.deval.study.service.StudyVO">
+		SELECT *
+		FROM STUDY
+		WHERE LOCATION = #{loc}
 		ORDER BY STUDY_NO DESC
 	</select>
 	
@@ -37,7 +51,9 @@
 						, STUDY_EDT
 						, STATE
 						, STUDY_NM
-						, LANG2)
+						, LANG2
+						, RCNT
+						)
 						
 		VALUES (		#{studyNo} 
 						, #{lang1}
@@ -51,9 +67,40 @@
 						, #{studyEdt}
 						, '0'
 						, #{studyNm}
-						, #{lang2})
+						, #{lang2}
+						, 0
+						)
 	</insert>
-
+	
+	<select id="studyRcntSelect" resultType="int">
+		SELECT COUNT(*)
+		FROM STUDY_REQUEST
+		WHERE STUDY_NO IN (	SELECT STUDY_NO
+		                    FROM STUDY
+		                    WHERE STUDY_NO = #{studyNo})
+		AND STATE = 1;
+	</select>
+	
+	<update id="rcntLeader" parameterType="co.yd.deval.study.service.StudyVO">
+		UPDATE STUDY
+		SET RCNT + 1
+		LEADER_ID = #{leaderId}
+		AND
+		STUDY_NO = #{studyNo}
+	</update>
+	
+	<update id="rcntMember" parameterType="co.yd.deval.study.service.StudyVO">
+		UPDATE STUDY
+		SET RCNT = RCNT + 1
+		WHERE STUDY_NO = #{studyNo}
+	</update>
+	
+	<update id="studyEnd" parameterType="co.yd.deval.study.service.StudyVO">
+		UPDATE STUDY
+		SET STATE = 2
+		WHERE STUDY_NO = #{studyNo}
+	</update>
+	
 	<update id="studyUpdate"
 		parameterType="co.yd.deval.study.service.StudyVO">
 		UPDATE STUDY
@@ -64,8 +111,8 @@
 			<if test="maxRcnt 	 != null and maxRcnt  	!= ''"> MAX_RCNT   = #{maxRcnt},</if>
 			<if test="defficulty != null and defficulty != ''"> DEFFICULTY = #{defficulty},</if>
 			<if test="leaderId 	 != null and leaderId 	!= ''"> LEADER_ID  = #{leaderId},</if>
-			<if test="studySdt   != null and studySdt 	!= ''"> STUDY_SDT  = #{studySdt},</if>
-			<if test="studyEdt   != null and studyEdt 	!= ''"> STUDY_EDT  = #{studyEdt},</if>
+			<if test="studySdt   != null"> STUDY_SDT  = #{studySdt},</if>
+			<if test="studyEdt   != null"> STUDY_EDT  = #{studyEdt},</if>
 			<if test="studyNm    != null and studyNm 	!= ''"> STUDY_NM   = #{studyNm},</if>
 			<if test="lang2   	 != null and lang2 		!= ''"> LANG2      = #{lang2},</if>
 		</set>
@@ -75,33 +122,26 @@
 	<!-- Study User Info (Modal)-->
 	<select id="studySelectUser"
 		resultType="co.yd.deval.study.service.StudyInfoVO">
-		SELECT *
-		FROM STUDY_INFO
-		WHERE MEMBER_ID = #{memberId}
+		SELECT	*
+		FROM	STUDY_INFO
+		WHERE	MEMBER_ID = #{memberId}
 	</select>
 
-
-	<select id="findStudyImLeader" resultType="co.yd.deval.study.service.StudyVO">
-		select  *
-		from    study
-		where   leader_id = #{id}
-	</select>
-	
 	<select id="findStudyByNo" resultType="co.yd.deval.study.service.StudyVO">
-		select  *
-		from    study
-		where   study_no in (select  study_no
-						     from    study_team
-						     where   member_id = #{id})
+		SELECT  *
+		FROM    STUDY
+		WHERE   STUDY_NO IN (sELECT  STUDY_NO
+						     FROM    STUDY_TEAM
+						     WHERE   MEMBER_ID = #{id})
 	</select>
 	
 	<select id="findWaitingStudy" resultType="co.yd.deval.study.service.StudyVO">
-		select  *
-		from    study
-		where   study_no in (select  study_no
-						     from    study_request
-						     where   member_id     = #{id}
-						     and     state         = 0)
+		SELECT  *
+		FROM    STUDY
+		WHERE   STUDY_NO IN (SELECT  STUDY_NO
+						     FROM    STUDY_REQUEST
+						     WHERE   MEMBER_ID     = #{id}
+						     AND     STATE         = 0)
 	</select>
 
 	<insert id="studyUserInsert"
@@ -133,11 +173,13 @@
 		WHERE MEMBER_ID = #{memberId}
 	</update>
 	
-	<!-- Study Req & Team -->
 	
+	<!-- Study Request -->
 	<select id="studyReqSelectAll" resultType="co.yd.deval.study.service.StudyReqVO" parameterType="co.yd.deval.study.service.StudyReqVO">
 		SELECT *
 		FROM STUDY_REQUEST
+		WHERE STATE = 0
+		ORDER BY MEMBER_ID ASC
 	</select>
 	
 	<insert id="studyTeamMemberInsert" parameterType="co.yd.deval.study.service.StudyReqVO">
@@ -157,17 +199,138 @@
 						   		   , #{license}
 						   		   , #{present}
 						   		   , #{profileImg}
-						   		   )								   
-		
+						   		   )
 	</insert>
+	
+	<insert id="studyTeamLeaderInsert" parameterType="co.yd.deval.study.service.StudyReqVO">
+		INSERT INTO STUDY_REQUEST (   STUDY_NO
+									, STATE
+									, MEMBER_ID
+									, ISLEADER
+								   )
+								   
+						   VALUES (  #{studyNo}
+						   		   , 1
+						   		   , #{memberId}
+						   		   , 1
+						   		   )					
+	</insert>
+	
+	<update id="studyTeamMemberUpdateAccept" parameterType="co.yd.deval.study.service.StudyReqVO">
+		UPDATE STUDY_REQUEST
+		SET STATE = 1
+		WHERE MEMBER_ID = #{memberId}
+		AND
+		STUDY_NO = #{studyNo}
+	</update>
+	
+	<update id="studyTeamMemberUpdateRefuse" parameterType="co.yd.deval.study.service.StudyReqVO">
+		UPDATE STUDY_REQUEST
+		SET STATE = 3
+		WHERE MEMBER_ID = #{memberId}
+		AND
+		STUDY_NO = #{studyNo}
+	</update>
+	
+	<select id="studyMemberFind" resultType="co.yd.deval.study.service.StudyReqVO">
+		SELECT *
+		FROM STUDY_REQUEST
+		WHERE STATE <![CDATA[<]]> 2
+		AND MEMBER_ID = #{id}
+	</select>
+	
+	<select id="studyUnfinedTeamBtn" resultType="co.yd.deval.study.service.StudyReqVO">
+		SELECT *
+		FROM STUDY_REQUEST
+		WHERE STATE = 1
+		AND MEMBER_ID = #{id}
+	</select>
+	
+	<select id="studyLeaderBtn" resultType="co.yd.deval.study.service.StudyReqVO">
+		SELECT *
+		FROM STUDY_REQUEST
+		WHERE ISLEADER = 1
+		AND MEMBER_ID = #{id}
+	</select>
+	
+	<select id="studyLeaderReqPage" resultType="co.yd.deval.study.service.StudyReqVO">
+		SELECT *
+		FROM STUDY_REQUEST
+		WHERE STUDY_NO = (	SELECT STUDY_NO
+		                  	FROM STUDY
+		                  	WHERE LEADER_ID = #{leaderId}
+		                  	AND STATE = 0
+		                  	)
+		AND STATE = 0
+	</select>
 	
 	<delete id="studyTeamMemberDelete" parameterType="co.yd.deval.study.service.StudyReqVO">
 		DELETE
 		FROM STUDY_REQUEST
-		WHERE MEMBER_ID = #{memberId}
-		AND
-		STUDY_NO = #{studyNo}
+		WHERE STUDY_NO = #{studyNo}
+		AND STATE = 0
 	</delete>
 	
+	<!-- Study Team VIEW -->
+	<select id="findMaxStudyNo" resultType="int">
+		SELECT MAX(STUDY_NO)
+		FROM STUDY
+	</select>
+	
+	<select id="studyTeamMember" resultType="co.yd.deval.study.service.StudyTeamVO">
+		SELECT *
+		FROM STUDY_TEAM
+		WHERE STUDY_NO = (	SELECT STUDY_NO
+                            FROM STUDY_REQUEST
+                            WHERE MEMBER_ID = #{memberId}
+                            )
+		AND STATE = 1
+	</select>
+	
+	<!-- Paging -->
+	<sql id="option">
+	
+		<if test="defficulty != null and !defficulty.equals('')">
+			AND DEFFICULTY = #{defficulty}
+		</if>
+		<if test="location != null and !location.equals('')">
+			AND LOCATION = #{location}
+		</if>
+		<if test="lang1 != null and !lang1.equals('')">
+			AND (lang1 = #{lang1}
+			OR lang2 = #{lang1})
+		</if>
+		<if test="state != null and !state.equals('')">
+			AND STATE = #{state}
+		</if>
+		<if test="studyNm != null and !studyNm.equals('')">
+			AND STUDY_NM LIKE '%'||#{studyNm}||'%'
+		</if>
+	
+    </sql>
+    
+    <select id="getListWithPaging" resultType="co.yd.deval.study.service.StudyVO">
+        <![CDATA[
+        SELECT * FROM (
+              SELECT ROWNUM rn, t.*
+              FROM STUDY t
+        ]]>
+        <where>
+            <include refid="option"></include>
+            AND rownum <![CDATA[<=]]> #{criteria.pageNum} * #{criteria.amount}
+        </where>
+        )
+        <![CDATA[
+        WHERE rn > (#{criteria.pageNum} - 1) * #{criteria.amount}
+        ]]>
+    </select>
+
+    <select id="getTotalCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM STUDY
+        <where>
+	        <include refid="option"></include>
+	        AND study_no > 0
+        </where>
+    </select>
 
 </mapper>

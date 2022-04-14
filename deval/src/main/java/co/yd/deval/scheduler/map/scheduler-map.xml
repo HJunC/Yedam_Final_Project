@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.yd.deval.scheduler.map.SchedulerMapper">
+
+	<update id="updateProjectState">
+		{
+            CALL UPDATE_PROJECT_STATE
+        }
+	</update>
+	
+	<update id="updateStudyState">
+		{
+            CALL UPDATE_STUDY_STATE
+        }
+	</update>
+	
+	<update id="updateTradeState">
+		{
+            CALL UPDATE_TRADE_STATE
+        }
+	</update>
+</mapper>

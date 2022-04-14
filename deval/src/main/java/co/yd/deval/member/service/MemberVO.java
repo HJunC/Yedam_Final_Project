@@ -22,6 +22,8 @@ public class MemberVO implements UserDetails {
 	private String role;       //유저의 권한
 	private String tier;
 	
+	//Study Leader 유무
+	private String isLeader;
 	
 	public String tierUp(int exp){
 		String tier;
@@ -97,7 +99,11 @@ public class MemberVO implements UserDetails {
 	public void setTier(String tier) {
 		this.tier = tier;
 	}
-
+	
+	public void setIsLeader(String isLeader) {
+		this.isLeader = isLeader;
+	}
+	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<GrantedAuthority> auth = new ArrayList<>();

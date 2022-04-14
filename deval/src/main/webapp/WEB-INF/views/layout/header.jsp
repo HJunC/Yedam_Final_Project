@@ -4,7 +4,30 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <c:set var="resources" value="${pageContext.request.contextPath}/resources"/>
 <c:set var="root" value="${pageContext.request.contextPath}"/>
-
+<script>
+var socket = null;
+var room = '${roomId}';
+console.log(room)
+if (room == '') {
+	var webSocket = new WebSocket('ws://localhost/deval/socket');
+} else {
+	var webSocket = new WebSocket('ws://localhost/deval/socket?roomId=${roomId}');
+}
+console.log(webSocket)
+socket = webSocket;
+webSocket.onopen = function(e) {
+	console.log(e);
+	console.log("웹소켓이 연결되었습니다.");
+	webSocket.onmessage = function(e) {
+		console.log(e)
+			$('#alarm').text(e.data);
+			$('#alarm').css("display","block");
+			setTimeout(function() {
+				$('#alarm').css("display","none");
+			},5000);
+		}
+	};
+</script>
 <!-- Navigation panel -->
 <style>
 .inner-nav ul li .mn-sub li form button{
@@ -35,6 +58,7 @@
 </style>
 <nav class="main-nav dark transparent stick-fixed wow-menubar">
 	<div class="full-wrapper relative clearfix">
+	<div class="alert alert-primary" role="alert" id="alarm" style="display: none;"></div>
 		<!-- Logo ( * your text or image into link tag *) -->
 		<div class="nav-logo-wrap local-scroll">
 			<a href="${root}/home.do" class="logo">
@@ -94,19 +118,9 @@
 				<li>
 					<a href="${root}/project/main.do" class="mn-has-sub">팀 프로젝트</a>
 				</li>
-
+				
 				<li>
-					<a href="${root}/study/studyMain.do" class="mn-has-sub">스터디 <i class="mn-has-sub-icon"></i></a>
-               	<ul class="mn-sub mn-has-multi">
-                  	<li class="mn-sub-multi">
-                  	<ul>
-                     <li><a href="${root}/study/studyList.do">스터디 검색</a></li>
-                     <li><a href="${root}/study/addStudy.do">스터디 등록</a></li>
-                     <li><a href="${root}/study/studyReq.do">신청자 정보</a></li>
-                     <li><a href="${root}/study/studyMember.do">그룹원 정보</a></li>
-                  </ul>
-                  </li>   
-               </ul>
+					<a href="${root}/study/studyMain.do" class="mn-has-sub">스터디</a>
 				</li>
 
 				<li>
@@ -144,7 +158,6 @@
 			</ul>
 		</div>
 		<!-- End Main Menu -->
-
 	</div>
 </nav>
 <!-- End Navigation panel -->

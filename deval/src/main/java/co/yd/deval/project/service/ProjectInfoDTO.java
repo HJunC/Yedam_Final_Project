@@ -51,6 +51,7 @@ public class ProjectInfoDTO {
     private int hit;
     private int applyRcnt;
     private String leaderId;
+    private int crntRcnt;
 
     private List<ProjectTeamVO> projectTeam;
     private List<ProjectRequestVO> requestList;

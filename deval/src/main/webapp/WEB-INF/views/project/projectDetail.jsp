@@ -38,7 +38,7 @@
                                 <fmt:formatDate value="${project.recruitEdt}" type="both" pattern="yyyy-MM-dd"/>
                             </span>
                             <span class="separator">&nbsp;</span>
-                            <span><i class="fa fa-comments"></i> ${project.applyRcnt} 신청자 수</span>
+                            <span><i class="fa fa-user-clock"></i> ${project.applyRcnt} 신청자 수</span>
                             <span class="separator">&nbsp;</span>
                             <span><i class="fa fa-eye"></i> ${project.hit} 조회수</span>
                             <span class="separator">&nbsp;</span>
@@ -49,13 +49,14 @@
 
             </div>
         </div>
+
         <!-- Bar Item -->
         <div class="progress tpl-progress" style="background-color: #ebebeb; position: relative;">
             <div id="progressBar"
                  class="progress-bar"
                  role="progressbar"
                  aria-valuemin="0"
-                 aria-valuemax="${project.projectTerm}"
+                 aria-valuemax="100"
                  style="background-color: #6ead5a">
                 <div>
                     <fmt:formatDate value="${project.projectSdt}" type="both" pattern="yyyy-MM-dd"/>
@@ -66,6 +67,62 @@
             </div>
         </div>
         <!-- End Bar Item -->
+        <script>
+          /**
+           * progressBar
+           */
+          var today = new Date();
+          const start_date = new Date('<fmt:formatDate value="${project.projectSdt}" type="both" pattern="yyyy-MM-dd"/>');
+          const end_date = new Date('<fmt:formatDate value="${project.projectEdt}" type="both" pattern="yyyy-MM-dd"/>');
+          const total = end_date - start_date;
+          const perc = today - start_date;
+          const progressValue = Math.round(perc / total * 100 );
+          document.getElementById("progressBar").setAttribute("aria-valuenow", progressValue);
+        </script>
+
+        <c:if test="${project.state eq '2' and project.leaderId eq member.name}">
+
+            <!-- Lightbox Modal -->
+            <a href="#test-modal" class="btn btn-mod btn-w btn-medium round mt-10 lightbox-gallery-5 mfp-inline">프로젝트 시작하기</a>
+
+            <div id="test-modal" class="mfp-hide">
+                <h3>프로젝트를 시작할까요? 🎪</h3>
+                <h5>총 프로젝트 기간 ${project.projectTerm}일</h5>
+                <div class="d-flex justify-content-between mb-40">
+
+                    <div class="form-group">
+                        시작일<input type="date" class="input-lg round form-control" name="projectSdt" id="projectSdt" readonly>
+                    </div>
+                    <div class="form-group">
+                        종료일<input type="date" class="input-lg round form-control" name="projectEdt" id="projectEdt" readonly>
+                    </div>
+                </div>
+                <button type="button" onclick="startProject()" class="btn btn-mod btn-round btn-large">시작</button>
+            </div>
+            <!-- End Lightbox Modal -->
+
+        </c:if>
+
+        <jsp:useBean id="now" class="java.util.Date" />
+        <fmt:formatDate value="${now}" pattern="yyyyMMdd" var="nowDate" />
+        <fmt:formatDate value="${project.projectEdt}" pattern="yyyyMMdd" var="projectEdt"/>
+        <c:if test="${nowDate >= projectEdt && project.leaderId eq member.name && project.state eq '3'}">
+
+            <!-- Lightbox Modal -->
+            <a href="#test-modal" class="btn btn-mod btn-w btn-medium round mt-10 lightbox-gallery-5 mfp-inline">프로젝트 완료하기 🎉</a>
+
+            <div id="test-modal" class="mfp-hide">
+                <h3>프로젝트를 무사히 완주 🏆 <i class="fa fa-share-square"></i></h3>
+                <div class="d-flex justify-content-between mb-40">
+                    <label>프로젝트 주소</label>
+                    <input type="text" class="form-control">
+                </div>
+                <button type="button" onclick="completeProject()" class="btn btn-mod btn-round btn-large">완료 (exp + 300)</button>
+            </div>
+            <!-- End Lightbox Modal -->
+
+        </c:if>
+
     </div>
 </section>
 <!-- End Home Section -->
@@ -113,7 +170,12 @@
                                 </a>
                                 <div class="media-body">
                                     <div class="comment-item-data">
-                                        <div class="comment-author">${item.memberId}</div>${item.position}
+                                        <div class="comment-author">${item.memberId}</div>
+                                        ${item.position eq 'FE' ? '프론트엔드 개발자' : null}
+                                        ${item.position eq 'BE' ? '백엔드 개발자' : null}
+                                        ${item.position eq 'FS' ? '풀스택 개발자' : null}
+                                        ${item.position eq 'DE' ? '디자이너' : null}
+                                        ${item.position eq 'PL' ? '기획자' : null}
                                     </div>
                                 </div>
                             </li>
@@ -126,16 +188,22 @@
                 <!-- End Comments -->
 
                 <%--프로젝트 모집중인 팀장만 볼수있는 화면--%>
-                <c:if test="${not empty project.requestList
-                            and project.leaderId eq member.name}">
+                <c:if test="${project.leaderId eq member.name
+                              and project.state eq '1' or project.state eq '2'}">
                 <div class="mb-80 mb-xs-40">
 
                     <h4 class="blog-page-title">신청현황</h4>
 
-                    <c:forEach items="${project.requestList}" var="item">
-                        ${item.memberId} / ${item.position}
-                    </c:forEach>
-
+                    <c:choose>
+                        <c:when test="${not empty project.requestList}">
+                            <c:forEach items="${project.requestList}" var="item">
+                                ${item.memberId} / ${item.position}
+                            </c:forEach>
+                        </c:when>
+                        <c:otherwise>
+                            <h3 class="call-action-1-heading" style="font-size: 30px; color: rgba(255, 255, 255, 0.3);">지원자가 없습니다.</h3>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
                 </c:if>
 
@@ -157,9 +225,9 @@
                                 <div class="mb-30 mb-md-20">
                                     <!-- Website -->
                                     <h6>지원 포지션</h6>
-                                    <div class="d-flex justify-content-between">
+                                    <div class="d-flex justify-content-start">
                                         <c:if test="${project.frontRcnt > 0}">
-                                            <div class="col input-group justify-content-center">
+                                            <div class="col input-group">
                                                 <span class="input-group-text bg-dark" style="border-color: #5e646a;">프론트엔드</span>
                                                 <div class="input-group-text bg-dark" style="border-color: #5e646a;">
                                                     <input class="form-check-input mt-0" type="radio" value="FE" name="position" required>
@@ -167,7 +235,7 @@
                                             </div>
                                         </c:if>
                                         <c:if test="${project.backRcnt > 0}">
-                                            <div class="col input-group justify-content-center">
+                                            <div class="col input-group">
                                                 <span class="input-group-text bg-dark" style="border-color: #5e646a;">백엔드</span>
                                                 <div class="input-group-text bg-dark" style="border-color: #5e646a;">
                                                     <input class="form-check-input mt-0" type="radio" value="BE" name="position" required>
@@ -175,7 +243,7 @@
                                             </div>
                                         </c:if>
                                         <c:if test="${project.fullRcnt > 0}">
-                                            <div class="col input-group justify-content-center">
+                                            <div class="col input-group">
                                                 <span class="input-group-text bg-dark" style="border-color: #5e646a;">풀스택</span>
                                                 <div class="input-group-text bg-dark" style="border-color: #5e646a;">
                                                     <input class="form-check-input mt-0" type="radio" value="FS" name="position" required>
@@ -183,7 +251,7 @@
                                             </div>
                                         </c:if>
                                         <c:if test="${project.designRcnt > 0}">
-                                            <div class="col input-group justify-content-center">
+                                            <div class="col input-group">
                                                 <span class="input-group-text bg-dark" style="border-color: #5e646a;">디자인</span>
                                                 <div class="input-group-text bg-dark" style="border-color: #5e646a;">
                                                     <input class="form-check-input mt-0" type="radio" value="DE" name="position" required>
@@ -191,7 +259,7 @@
                                             </div>
                                         </c:if>
                                         <c:if test="${project.plannerRcnt > 0}">
-                                            <div class="col input-group justify-content-center">
+                                            <div class="col input-group">
                                                 <span class="input-group-text bg-dark" style="border-color: #5e646a;">기획</span>
                                                 <div class="input-group-text bg-dark" style="border-color: #5e646a;">
                                                     <input class="form-check-input mt-0" type="radio" value="PL" name="position" required>
@@ -262,16 +330,11 @@
                             <div class="widget">
                                 <h3 class="widget-title">포지션 정보</h3>
                                 <div class="widget-body">
-                                    <p class="mb-1">프론트엔드 개발자</p>
-                                    <p class="badge bg-secondary">코장</p>
-                                    <p class="mb-1">백엔드 개발자</p>
-                                    <p class="badge bg-secondary">브랜든</p>
-                                    <p class="mb-1">풀스택 개발자</p>
-                                    <p class="badge bg-secondary">코딩이뭐야</p>
-                                    <p class="mb-1">디자이너</p>
-                                    <p class="badge bg-secondary">한글</p>
-                                    <p class="mb-1">기획자</p>
-                                    <p class="badge bg-secondary">한국어</p>
+                                    <p class="mb-1">프론트엔드 개발자 <span class="badge bg-info" id="feCount"></span></p>
+                                    <p class="mb-1">백엔드 개발자  <span class="badge bg-info" id="beCount"></span></p>
+                                    <p class="mb-1">풀스택 개발자  <span class="badge bg-info" id="fsCount"></span></p>
+                                    <p class="mb-1">디자이너  <span class="badge bg-info" id="deCount"></span></p>
+                                    <p class="mb-1">기획자  <span class="badge bg-info" id="plCount"></span></p>
                                 </div>
                             </div>
                         </c:otherwise>
@@ -285,18 +348,9 @@
                         <h3 class="widget-title">진행 기간 (${project.projectTerm}일)</h3>
 
                         <div class="widget-body">
-                            <ul class="clearlist widget-menu">
-                                <li>
-                                    <div class="form-group">
-                                        시작일<input type="date" class="input-lg round form-control bg-dark-input" value="${project.projectSdt}">
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="form-group">
-                                        종료일<input type="date" class="input-lg round form-control bg-dark-input" value="${project.projectEdt}">
-                                    </div>
-                                </li>
-                            </ul>
+                            <fmt:formatDate value="${project.projectSdt}" type="both" pattern="yyyy-MM-dd"/>
+                            ~
+                            <fmt:formatDate value="${project.projectEdt}" type="both" pattern="yyyy-MM-dd"/>
                         </div>
 
                     </div>
@@ -322,22 +376,25 @@
                     </div>
                     <!-- End Widget -->
 
-                    <!-- 설정 -->
-                    <div class="widget">
+                    <c:if test="${project.leaderId eq member.name
+                                  and project.state ne '4'}">
+                        <!-- 설정 -->
+                        <div class="widget">
 
-                        <h3 class="widget-title">설정</h3>
+                            <h3 class="widget-title">설정</h3>
 
-                        <div class="widget-body">
-                            <button type="button" onclick="" class="btn btn-mod btn-w btn-round btn-small">
-                                수정하기
-                            </button>
-                            <button type="button" onclick="deleteProject()" class="btn btn-mod btn-w btn-round btn-small" style="background: rgb(251 71 71 / 90%);">
-                                프로젝트 삭제
-                            </button>
+                            <div class="widget-body">
+                                <button type="button" onclick="" class="btn btn-mod btn-w btn-round btn-small">
+                                    수정하기
+                                </button>
+                                <button type="button" onclick="deleteProject()" class="btn btn-mod btn-w btn-round btn-small" style="background: rgb(251 71 71 / 90%);">
+                                    프로젝트 삭제
+                                </button>
+                            </div>
+
                         </div>
-
-                    </div>
-                    <!-- End Widget -->
+                        <!-- End Widget -->
+                    </c:if>
 
                 </div>
 
@@ -352,6 +409,11 @@
 <script src="${resources}/js/moment.min.js"></script>
 <script src="${resources}/js/moment-with-locales.min.js"></script>
 <script>
+  /**
+   * 작성시간 표시
+   */
+  moment.locale('ko');
+  $("#createAt").append(moment("<fmt:formatDate value="${project.recruitSdt}" type="both" pattern="yyyy-MM-dd HH:mm:ss"/>").fromNow());
 
   const viewer = new toastui.Editor.factory({
     el: document.querySelector("#viewer"),
@@ -361,18 +423,36 @@
   });
 
   /**
-   * 작성시간 설정
+   * 프로젝트 시작 시간 설정
    */
-  moment.locale('ko');
-  var createAt = document.getElementById("createAt");
-  createAt.append(moment("<fmt:formatDate value="${project.recruitSdt}" type="both" pattern="yyyy-MM-dd hh:mm:ss"/>").fromNow());
+  today = new Date();
+  var projectSdtInput = document.getElementById("projectSdt");
+  projectSdtInput.setAttribute("value", moment(today).format("YYYY-MM-DD"));
+  var projectEdtInput = document.getElementById("projectEdt");
+  projectEdtInput.setAttribute("value", moment(today.setDate(today.getDate() + ${project.projectTerm})).format("YYYY-MM-DD"));
+  /*$("#projectSdt").on("change", (e) => {
+    const sdtDate = new Date(projectSdtInput.value);
+    projectEdtInput.setAttribute("value", moment(sdtDate.setDate(sdtDate.getDate() + ${project.projectTerm})).format("YYYY-MM-DD"));
+  })*/
 
-  // progressBar
-  var progressBar = document.getElementById("progressBar");
-  progressBar.setAttribute("aria-valuenow", "5");
 
-  var today = new Date();
-  today = moment(today).format("YYYY-MM-DD");
+  var feCount = 0;
+  var beCount = 0;
+  var fsCount = 0;
+  var deCount = 0;
+  var plCount = 0;
+  <c:forEach items="${team }" var="item">
+  <c:if test="${item.position eq 'FE'}">feCount++</c:if>
+  <c:if test="${item.position eq 'BE'}">beCount++</c:if>
+  <c:if test="${item.position eq 'FS'}">fsCount++</c:if>
+  <c:if test="${item.position eq 'DE'}">deCount++</c:if>
+  <c:if test="${item.position eq 'PL'}">plCount++</c:if>
+  </c:forEach>
+  $("#feCount").html(feCount);
+  $("#beCount").html(beCount);
+  $("#fsCount").html(fsCount);
+  $("#deCount").html(deCount);
+  $("#plCount").html(plCount);
 
   /**
    * 프로젝트 합류 요청 ajax
@@ -425,7 +505,7 @@
       type: "POST",
       data: {
         "projectNo": ${project.projectNo},
-        "leaderId": ""
+        "leaderId": '${project.leaderId}'
       },
       dataType: "json",
       success: function(res) {
@@ -439,4 +519,50 @@
     })
   }
 
+  /**
+   * 프로젝트 시작
+   */
+  function startProject() {
+    $.ajax({
+      url: "../api/project/start",
+      type: "POST",
+      data: {
+        "projectNo": ${project.projectNo},
+        "leaderId": '${member.name}',
+        "projectSdt": $("input[name=projectSdt]").val(),
+        "projectEdt": $("input[name=projectEdt]").val(),
+      },
+      dataType: "json",
+      success: function(res) {
+        console.log(res);
+        alert("프로젝트가 시작되었습니다.");
+        location.reload();
+      },
+      error: function (error) {
+        alert("에러입니다.")
+        console.log(error);
+      }
+    })
+  }
+
+  function completeProject() {
+    $.ajax({
+      url: "../api/project/complete",
+      type: "POST",
+      data: {
+        "projectNo": ${project.projectNo},
+        "leaderId": '${project.leaderId}'
+      },
+      dataType: "json",
+      success: function(res) {
+        console.log(res);
+        alert("프로젝트가 완료되었습니다.");
+        location.reload();
+      },
+      error: function (error) {
+        alert("에러입니다.");
+        console.log(error);
+      }
+    })
+  }
 </script>
