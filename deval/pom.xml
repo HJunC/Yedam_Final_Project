@@ -279,7 +279,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		 <resources>
+		 <!--<resources>
 			<resource>
 				<directory>src/main/java</directory>
 				<includes>
@@ -292,6 +292,6 @@
 					<include>**/*.properties</include>
 				</includes>
 			</resource>
-		</resources>
+		</resources>-->
 	</build>
 </project>
