@@ -408,7 +408,6 @@
 			tr.append(td5)
 		}
 		return $('<tbody>').append(tr);
-	}
-	});
+	};
 </script>
 

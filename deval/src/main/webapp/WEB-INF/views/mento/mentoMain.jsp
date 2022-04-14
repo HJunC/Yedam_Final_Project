@@ -10,8 +10,8 @@
 <main id="main">    
             
                 <!-- Home Section -->
-                <section class="home-section bg-dark-alfa-90 parallax-5" data-background="images/full-width-images/section-bg-22.jpg" id="home">
-                    <div class="container min-height-100vh d-flex align-items-center pt-100 pb-100">
+                <section class="home-section bg-dark-alfa-90 parallax-5" data-background="" id="home">
+                    <div class="container min-height-100vh d-flex align-items-center pt-100 pb-100" style="background-image: url('${resources}/images/mento/mentoMain2.PNG')">
                         
                         <!-- Hero Content -->
                         <div class="home-content text-start">
@@ -25,7 +25,9 @@
                                         <span class="sr-only"></span>
                                         <span data-period="2800" data-type='[ " 1대1 멘토링!", "입맛대로 골라먹는 언어", "다양한경험의 멘토들"]' class="typewrite" aria-hidden="true"><span class="wrap"></span></span>
                                     </h2>
-                                   
+                                   	<div>
+                                   		<img alt="" src="${resources}/images/mento/mentoMain2.PNG">
+                                   	</div>
                                     </div>
                                 </div>
                             </div>
@@ -139,7 +141,7 @@
                 <!-- End About Section -->
                 
                 <!-- Language Section -->
-                <div>
+                <div style="width:700px; margin:auto;">
                 <div>
                 	<h3 class="mb-30">배우고 싶은 프로그래밍 언어가 있으신가요?</h3>
                 </div>
@@ -154,7 +156,14 @@
                                     </div>
                        <button type="submit" class="btn btn-mod btn-w btn-medium btn-round me-md-1" style="background-color:#00D8FF">언어 선택</button>
                       </form>
+                      <c:if test="${member.exp >= 1000 }">
+                      <form action="mentoInsertForm.do" id="frm2" method="get">
+                      		<button type="submit" class="btn btn-mod btn-w btn-circle"> <i class="fa fa-chalkboard-teacher"></i>멘토등록</button>
+                 		</form>
+                 		</c:if>
                  </div>
                 
                 
             </main>
+            
+            

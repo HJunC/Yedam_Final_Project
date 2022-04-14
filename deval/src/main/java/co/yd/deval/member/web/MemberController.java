@@ -151,7 +151,6 @@ public class MemberController {
 		Map<String, Object> map = new HashMap<>();
 		map.put("id", memberId);
 		map.put("cashPt", cashPt);
-		memberDao.memberCashUpdate((HashMap<String, Object>) map);
 		int r = memberDao.memberCashUpdate(map);
 		if(r != 0) {
 			svo.setMemberId(memberId);

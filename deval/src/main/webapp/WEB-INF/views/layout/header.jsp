@@ -9,7 +9,7 @@ var socket = null;
 var room = '${roomId}';
 console.log(room)
 if (room == '') {
-	var webSocket = new WebSocket('ws://localhost/deval/socket');
+	var webSocket = new WebSocket('ws://localhost:83/deval/socket');
 } else {
 	var webSocket = new WebSocket('ws://localhost/deval/socket?roomId=${roomId}');
 }
