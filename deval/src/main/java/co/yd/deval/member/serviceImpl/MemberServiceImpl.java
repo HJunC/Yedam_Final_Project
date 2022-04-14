@@ -48,11 +48,6 @@ public class MemberServiceImpl implements MemberService {
 		return 0;
 	}
 
-	@Override
-	public int memberCashUpdate(HashMap<String, Object> cash) {
-		return map.memberCashUpdate(cash);
-	}
-
 
 	@Override
 	public int refund(Map<String, Object> cash) {
@@ -63,6 +58,12 @@ public class MemberServiceImpl implements MemberService {
 	public String memberMailGet(String id) {
 		return map.memberMailGet(id);
 	}
+
+@Override
+public int memberCashUpdate(Map<String, Object> cash) {
+	// TODO Auto-generated method stub
+	return map.memberCashUpdate(cash);
+}
 
 
 }
