@@ -26,16 +26,40 @@
     </div>
 </section>
 <!-- End Home Section -->
-
+<style>
+    .my-project {
+        background-color: #1b1b1b;
+        padding: 0;
+        color: white !important;
+    }
+    .my-project:hover {
+        text-decoration : none;
+        background-color: #0e0e0e;;
+    }
+</style>
 <!-- Call Action Section -->
 <section class="small-section bg-dark light-content">
     <div class="container relative">
         <c:choose>
             <c:when test="${not empty userProject}">
-            <h3>내 프로젝트 ${sessionScope.userProjectState }</h3>
-            <a href="projectDetail.do?no=${userProject.projectNo}">
-                ${userProject.projectNo} / ${userProject.projectName} / 리더 아이디 : ${userProject.leaderId}
-            </a>
+            <h3>내 프로젝트 (${sessionScope.userProjectState })</h3>
+                <a href="projectDetail.do?no=${userProject.projectNo}" class="list-group-item d-flex justify-content-between align-items-start pt-2 pb-2 my-project" aria-current="true">
+                    <div class="ms-2 me-auto">
+                        <div class="countdown-search-list mb-1">
+                            <i class="fa fa-users"></i> (${userProject.crntRcnt}/${userProject.totalRcnt})
+                        </div>
+                        <div>
+                            <h5 class="mb-2">${userProject.projectName} <span class="fs-6" style="color: #727272">(${userProject.projectTerm}일)</span></h5>
+                            <div class="lang-search-list">${userProject.lang}</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="info-search-list mt-40">
+                            <i class="fa fa-eye"></i> ${userProject.hit}&nbsp;&nbsp;&nbsp;
+                            <i class="fa fa-user-clock"></i> ${userProject.applyRcnt} 지원</span>
+                        </div>
+                    </div>
+                </a>
             </c:when>
 
             <c:otherwise>
@@ -51,12 +75,8 @@
             </c:otherwise>
         </c:choose>
 
-        <c:if test="${sessionScope.userProjectState eq '팀장'}">
-            나는 리더
-        </c:if>
-
         <c:if test="${sessionScope.isWait == true}">
-            <h4>지원자</h4>
+            <h4 class="mt-5">지원자</h4>
             <c:choose>
                 <c:when test="${not empty requestList}">
                     <c:forEach items="${requestList}" var="item">

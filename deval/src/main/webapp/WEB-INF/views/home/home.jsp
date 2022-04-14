@@ -91,14 +91,12 @@
         <div class="notice-box d-flex">
             <i class="fa fa-bullhorn d-flex justify-content-center align-items-center" style="width: 52px; height: 52px;"></i>
             <ul class="clearlist">
-                <li class="d-flex justify-content-between align-items-center">
-                    <a href="#">[업데이트] 프로젝트 검색 기능으로, 원하는 조건의 프로젝트만 편리하게 찾아보세요!</a>
-                    <span style="color: #919191">2022-03-20</span>
-                </li>
-                <li class="d-flex justify-content-between align-items-center">
-                    <a href="#">[업데이트] 프로젝트 검색 기능으로, 원하는 조건의 프로젝트만 편리하게 찾아보세요!</a>
-                    <span style="color: #919191">2022-03-20</span>
-                </li>
+                <c:forEach items="${noticeList}" var="item">
+                    <li class="d-flex justify-content-between align-items-center">
+                        <a href="${item.boardNo}">${item.title}</a>
+                        <span style="color: #919191">2022-03-20</span>
+                    </li>
+                </c:forEach>
             </ul>
         </div>
 
@@ -113,26 +111,12 @@
                         <a href="${pageContext.request.contextPath}/board/free.do" class="mb-1">더보기 <i class="fa fa-angle-right"></i></a>
                     </div>
                     <ul class="clearlist">
-                        <li class="d-flex justify-content-between">
-                            <a href="#">어서오세여</a>
-                            <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;0</span>
-                        </li>
-                        <li class="d-flex justify-content-between">
-                            <a href="#">어서오세여</a>
-                            <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;0</span>
-                        </li>
-                        <li class="d-flex justify-content-between">
-                            <a href="#">어서오세여</a>
-                            <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;0</span>
-                        </li>
-                        <li class="d-flex justify-content-between">
-                            <a href="#">어서오세여</a>
-                            <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;0</span>
-                        </li>
-                        <li class="d-flex justify-content-between">
-                            <a href="#">어서오세여</a>
-                            <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;0</span>
-                        </li>
+                        <c:forEach items="${codeList}" var="item">
+                            <li class="d-flex justify-content-between">
+                                <a href="code/codeSelectOne.do?no=${item.boardNo}">${item.title}</a>
+                                <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;${item.hit}</span>
+                            </li>
+                        </c:forEach>
                     </ul>
                 </div>
 
@@ -148,26 +132,12 @@
                         <a href="${pageContext.request.contextPath}/board/technical.do" class="mb-1">더보기 <i class="fa fa-angle-right"></i></a>
                     </div>
                     <ul class="clearlist">
-                        <li class="d-flex justify-content-between">
-                            <a href="#">어서오세여</a>
-                            <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;0</span>
-                        </li>
-                        <li class="d-flex justify-content-between">
-                            <a href="#">어서오세여</a>
-                            <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;0</span>
-                        </li>
-                        <li class="d-flex justify-content-between">
-                            <a href="#">어서오세여</a>
-                            <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;0</span>
-                        </li>
-                        <li class="d-flex justify-content-between">
-                            <a href="#">어서오세여</a>
-                            <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;0</span>
-                        </li>
-                        <li class="d-flex justify-content-between">
-                            <a href="#">어서오세여</a>
-                            <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;0</span>
-                        </li>
+                        <c:forEach items="${techList}" var="item">
+                            <li class="d-flex justify-content-between">
+                                <a href="board/technicSelect.do?no=${item.boardNo}">${item.title}</a>
+                                <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;${item.hit}</span>
+                            </li>
+                        </c:forEach>
                     </ul>
                 </div>
 

@@ -33,6 +33,14 @@
         font-size: 14px;
         color: #c0c0c0;
     }
+    .toggle {
+        border-color: #3d3d3d !important;
+    }
+    .toggle > dt > a {
+        font-size: 15px;
+        border-color: #3d3d3d !important;
+        padding: 8px 30px 8px 0;
+    }
 </style>
 <!-- Section -->
 <section class="page-section bg-dark light-content">
@@ -107,10 +115,36 @@
                             <script src="${resources}/js/common/Languages.js"></script>
 
                             <div>
-                                <div class="tags" id="languagesBox"><p class="input-info mb-1">언어</p></div>
-                                <div class="tags" id="fplBox"><p class="input-info mb-1">프레임워크</p></div>
-                                <div class="tags" id="versionControlBox"><p class="input-info mb-1">버전관리</p></div>
-                                <div class="tags" id="databaseBox"><p class="input-info mb-1">DB</p></div>
+                                <dl class="toggle">
+
+                                    <dt>
+                                        <a href="" role="button" aria-expanded="false">언어</a>
+                                    </dt>
+                                    <dd style="display: none;">
+                                        <div class="tags" id="languagesBox"></div>
+                                    </dd>
+
+                                    <dt>
+                                        <a href="" role="button" aria-expanded="false">프레임워크</a>
+                                    </dt>
+                                    <dd style="display: none;">
+                                        <div class="tags" id="fplBox"></div>
+                                    </dd>
+
+                                    <dt>
+                                        <a href="" role="button" aria-expanded="false">버전관리</a>
+                                    </dt>
+                                    <dd style="display: none;">
+                                        <div class="tags" id="versionControlBox"></div>
+                                    </dd>
+
+                                    <dt>
+                                        <a href="" role="button" aria-expanded="false">DB</a>
+                                    </dt>
+                                    <dd style="display: none;">
+                                        <div class="tags" id="databaseBox"></div>
+                                    </dd>
+                                </dl>
                             </div>
                             <input type="hidden" name="lang" value="">
 
@@ -165,9 +199,11 @@
                         </div>
                         <div class="form-group">
                             <label for="recruitEdt">프로젝트 모집 마감일</label>
-                            <p class="input-info">1일 ~ 15일</p>
-                            <input type="date" name="recruitEdt" id="recruitEdt" class="input-lg round form-control bg-dark-input" required aria-required="true">
-                            <input type="time" id="recruitEdtTime" class="input-lg round form-control bg-dark-input" value="00:00" required aria-required="true">
+                            <p class="input-info">최소 1일, 최대 15일</p>
+                            <div class="form-group">
+                                <input type="date" name="recruitEdt" id="recruitEdt" class="input-lg round form-control bg-dark-input" required aria-required="true">
+                                <input type="time" id="recruitEdtTime" class="input-lg round form-control bg-dark-input" value="00:00" required aria-required="true">
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="subject">프로젝트 설명</label>

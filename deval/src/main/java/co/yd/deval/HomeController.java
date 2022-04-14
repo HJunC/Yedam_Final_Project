@@ -1,9 +1,15 @@
 package co.yd.deval;
 
 
+import co.yd.deval.board.service.BoardService;
+import co.yd.deval.board.service.BoardVO;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
 * @package : co.yd.deval
@@ -16,19 +22,44 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class HomeController {
 	
-	
-	public String mainPage() {
+	private final BoardService boardDao;
+
+	public HomeController(BoardService boardDao) {
+		this.boardDao = boardDao;
+	}
+
+	public String mainPage(Model model) {
+		List<BoardVO> boardVOList =  boardDao.getMainPageList();
+		List<BoardVO> noticeList = new ArrayList<>();
+		List<BoardVO> techList = new ArrayList<>();
+		List<BoardVO> codeList = new ArrayList<>();
+		for (BoardVO vo : boardVOList) {
+			switch (vo.getBoardTypeNo()) {
+				case 1:
+					noticeList.add(vo);
+					break;
+				case 3:
+					techList.add(vo);
+					break;
+				case 4:
+					codeList.add(vo);
+					break;
+			}
+		}
+		model.addAttribute("noticeList", noticeList);
+		model.addAttribute("techList", techList);
+		model.addAttribute("codeList", codeList);
 		return "home/home";
 	}
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home() {
-		return mainPage();
+	public String home(Model model) {
+		return mainPage(model);
 	}
 	
 	@RequestMapping("/home.do")
-	public String main() {
-		return mainPage();
+	public String main(Model model) {
+		return mainPage(model);
 	}
 	
 	
