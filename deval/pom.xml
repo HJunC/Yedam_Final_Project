@@ -9,7 +9,6 @@
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java-version>11</java-version>
 		<org.springframework-version>5.2.8.RELEASE</org.springframework-version>
 		<org.springframework.security-version>5.2.6.RELEASE</org.springframework.security-version>
@@ -265,6 +264,7 @@
 				<configuration>
 					<source>${java-version}</source>
 					<target>${java-version}</target>
+					<encoding>UTF-8</encoding>
 					<compilerArgument>-Xlint:all</compilerArgument>
 					<showWarnings>true</showWarnings>
 					<showDeprecation>true</showDeprecation>
