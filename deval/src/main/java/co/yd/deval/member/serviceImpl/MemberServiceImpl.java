@@ -49,9 +49,10 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int memberCashUpdate(Map<String, Object> cash) {
+	public int memberCashUpdate(HashMap<String, Object> cash) {
 		return map.memberCashUpdate(cash);
 	}
+
 
 	@Override
 	public int refund(Map<String, Object> cash) {
@@ -62,5 +63,6 @@ public class MemberServiceImpl implements MemberService {
 	public String memberMailGet(String id) {
 		return map.memberMailGet(id);
 	}
+
 
 }

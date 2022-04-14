@@ -1,11 +1,16 @@
 package co.yd.deval.member.web;
 
+
 import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 
@@ -49,7 +54,7 @@ public class MemberController {
   @Autowired
 	private SetleLogService setleDAO;
 	
-  	//로그인 화면으로 이동
+  //로그인 화면으로 이동
 	@RequestMapping("/loginForm.do")
 	public String loginForm(HttpServletRequest request) {
 		String referer = (String) request.getHeader("REFERER");
@@ -146,6 +151,7 @@ public class MemberController {
 		Map<String, Object> map = new HashMap<>();
 		map.put("id", memberId);
 		map.put("cashPt", cashPt);
+		memberDao.memberCashUpdate((HashMap<String, Object>) map);
 		int r = memberDao.memberCashUpdate(map);
 		if(r != 0) {
 			svo.setMemberId(memberId);
