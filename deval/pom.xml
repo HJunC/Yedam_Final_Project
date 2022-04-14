@@ -115,21 +115,21 @@
 			</exclusions>
 			<scope>runtime</scope>
 		</dependency>
-		
+
 		<!-- Chat -->
 		<!-- spring-websocket는 이미 존재 -->
 		<dependency>
 			<groupId>javax.websocket</groupId>
 			<artifactId>javax.websocket-api</artifactId>
-		    <version>1.1</version>
+			<version>1.1</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.googlecode.json-simple</groupId>
-		  	<artifactId>json-simple</artifactId>
-		  	<version>1.1.1</version>
+			<artifactId>json-simple</artifactId>
+			<version>1.1.1</version>
 		</dependency>
-			
+
 		<!-- log4jdbc -->
 		<dependency>
 			<groupId>org.bgee.log4jdbc-log4j2</groupId>
@@ -217,19 +217,19 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>2.13.2</version>
 		</dependency>
-		
+
 		<!-- Stmp 메일 전송 관련 Mail -->
 		<!-- https://mvnrepository.com/artifact/javax.mail/mail -->
 		<dependency>
-		    <groupId>javax.mail</groupId>
-		    <artifactId>mail</artifactId>
-		    <version>1.4.7</version>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.7</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
 		<dependency>
-		    <groupId>org.springframework</groupId>
-		    <artifactId>spring-context-support</artifactId>
-		    <version>${org.springframework-version}</version>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${org.springframework-version}</version>
 		</dependency>
 
 		<!-- Test -->
@@ -239,7 +239,7 @@
 			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 	</dependencies>
 	<build>
 		<plugins>
@@ -279,13 +279,14 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		 <resources>
-		 	<resource>
-		 		<directory>src/main/resources</directory>
-		 		<includes>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
 					<include>**/*.properties</include>
+					<include>**/*.xml</include>
 				</includes>
-		 	</resource>
+			</resource>
 			<resource>
 				<directory>src/main/java</directory>
 				<includes>
