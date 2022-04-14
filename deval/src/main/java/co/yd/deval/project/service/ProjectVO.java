@@ -52,6 +52,7 @@ public class ProjectVO {
     private int hit;
     private int applyRcnt;
     private String leaderId;
+    private int crntRcnt;
 
     // 테이블에 없는 데이터
     private String leaderPosition;
@@ -60,4 +61,7 @@ public class ProjectVO {
 
     private List<String> langArray;
     private String updateState;
+
+    private int termStart;
+    private int termEnd;
 }

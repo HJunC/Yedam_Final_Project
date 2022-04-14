@@ -26,6 +26,12 @@
         <if test="memberId != null">AND MEMBER_ID = #{memberId}</if>
     </update>
 
+    <update id="completeProject">
+        {
+            CALL PROJECT_COMPLETE_EXP(#{projectNo}, #{exp})
+        }
+    </update>
+
     <delete id="deleteProjectTeam">
         DELETE FROM PROJECT_TEAM
          WHERE PROJECT_NO = #{projectNo}

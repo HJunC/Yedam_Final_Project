@@ -2,6 +2,7 @@ package co.yd.deval.chat;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.CloseStatus;
@@ -32,7 +33,7 @@ public class Handler extends TextWebSocketHandler {
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		sessionList.add(session);
-		for(AlarmVO vo : alarmDAO.alarmList(session.getPrincipal().getName())) {
+		for(AlarmVO vo : alarmDAO.alarmList(Objects.requireNonNull(session.getPrincipal()).getName())) {
 			session.sendMessage(new TextMessage(vo.getSubject()));
 		}
 		alarmDAO.updateAlarm(session.getPrincipal().getName());
@@ -41,12 +42,12 @@ public class Handler extends TextWebSocketHandler {
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		System.out.println(message.getPayload());
-		String userId = session.getPrincipal().getName();
+		String userId = Objects.requireNonNull(session.getPrincipal()).getName();
 
-		if (!session.getUri().toString().equals(uri)) {
+		if (!Objects.requireNonNull(session.getUri()).toString().equals(uri)) {
 			ChatLogVO chatvo = objectMapper.readValue(message.getPayload(), ChatLogVO.class);
 			for (WebSocketSession sess : sessionList) {
-				if (sess.getUri().equals(session.getUri()) && !sess.getPrincipal().getName().equals(userId)) {
+				if (sess.getUri().equals(session.getUri()) && !Objects.requireNonNull(sess.getPrincipal()).getName().equals(userId)) {
 					sess.sendMessage(new TextMessage(chatvo.getWriter() + ":" + chatvo.getSubject()));
 				}
 			}
@@ -57,7 +58,7 @@ public class Handler extends TextWebSocketHandler {
 		AlarmVO alarmvo = objectMapper.readValue(msg, AlarmVO.class);
 		alarmDAO.insertAlarm(alarmvo);
 		for (WebSocketSession sess : sessionList) {
-			if (sess.getPrincipal().getName().equals(alarmvo.getMemberId())) {
+			if (Objects.requireNonNull(sess.getPrincipal()).getName().equals(alarmvo.getMemberId())) {
 				sess.sendMessage(new TextMessage(alarmvo.getSubject()));
 				alarmDAO.updateAlarm(alarmvo.getMemberId());
 			}

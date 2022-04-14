@@ -46,31 +46,17 @@ public class ProjectController {
     @GetMapping("/main.do")
     public String projectMain(Model model, Principal principal, HttpSession session) {
         if (principal != null) {
-            String state = (String) session.getAttribute("userProjectState");
-
             int projectNo = 0;
-            if (state == null) {
-                ProjectTeamVO userTeam = projectService.getOngoingProject(principal.getName());
-                // 대기, 진행중인 프로젝트가 있을 때
-                if (userTeam != null) {
-                    if (userTeam.getIsLeader().equals("1")) {
-                        session.setAttribute("userProjectState", "팀장");
-                        session.setAttribute("isWait", !userTeam.getState().equals("2"));
-                    } else {
-                        session.setAttribute("userProjectState", "팀원");
-                    }
-                    projectNo = userTeam.getProjectNo();
+            ProjectTeamVO userTeam = projectService.getOngoingProject(principal.getName());
+            // 대기, 진행중인 프로젝트가 있을 때
+            if (userTeam != null) {
+                if (userTeam.getIsLeader().equals("1")) {
+                    session.setAttribute("userProjectState", "팀장");
+                    session.setAttribute("isWait", !userTeam.getState().equals("2"));
                 } else {
-                    session.setAttribute("userProjectState", "");
+                    session.setAttribute("userProjectState", "팀원");
                 }
-            }
-
-            state = (String) session.getAttribute("userProjectState");
-            if (state.equals("팀장") || state.equals("팀원")) {
-                if (projectNo == 0) {
-                    ProjectTeamVO userTeam = projectService.getOngoingProject(principal.getName());
-                    projectNo = userTeam.getProjectNo();
-                }
+                projectNo = userTeam.getProjectNo();
                 model.addAttribute("userProject", projectService.selectProject(projectNo));
                 if ((boolean) session.getAttribute("isWait")) {
                     // 지원자 리스트
@@ -125,7 +111,6 @@ public class ProjectController {
                 }
             }
         }
-        
         return "project/projectDetail";
     }
 

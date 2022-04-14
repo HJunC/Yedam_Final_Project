@@ -55,7 +55,18 @@ public interface ProjectService {
     List<ProjectVO> getListWithPaging(ProjectVO vo);
     int getTotalCount(ProjectVO vo);
 
+    /***
+     * 프로젝트 시작
+     * @param vo
+     * @return
+     */
     int startProject(ProjectVO vo);
+
+    /***
+     * 프로젝트 완료
+     * @return
+     */
+    int completeProject(ProjectVO vo);
 
     void updateHit(int projectNo);
     void updateApplyCount(int projectNo);

@@ -89,6 +89,7 @@
             <if test="designRcnt == 1">DESIGN_RCNT = DESIGN_RCNT - 1,</if>
             <if test="fullRcnt == 1">FULL_RCNT = FULL_RCNT - 1,</if>
             <if test="plannerRcnt == 1">PLANNER_RCNT = PLANNER_RCNT - 1,</if>
+            CRNT_RCNT = CRNT_RCNT + 1
         </set>
         WHERE PROJECT_NO = #{projectNo}
     </update>
@@ -143,6 +144,9 @@
                 <foreach collection="langArray" item="item" index="index">
                     AND LANG LIKE '%'||#{item}||'%'
                 </foreach>
+            </if>
+            <if test="termStart != 0 and termEnd != 0">
+                AND PROJECT_TERM BETWEEN #{termStart} AND #{termEnd}
             </if>
             <if test="frontRcnt == 1">AND FRONT_RCNT > 0</if>
             <if test="backRcnt == 1">AND BACK_RCNT > 0</if>

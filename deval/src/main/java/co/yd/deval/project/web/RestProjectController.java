@@ -97,10 +97,16 @@ public class RestProjectController {
      * @return
      */
     @PostMapping("/start")
-    public ResponseEntity<ProjectVO> startProject(ProjectVO vo, Principal principal) {
+    public ResponseEntity<ProjectVO> startProject(ProjectVO vo, Principal principal, HttpSession session) {
         if (principal.getName().equals(vo.getLeaderId())) {
-            // todo 프로젝트 시작
-            return ResponseEntity.ok().body(vo);
+            try {
+                int result = projectService.startProject(vo);
+                if (result > 0) session.setAttribute("isWait", false);
+                return ResponseEntity.ok().body(vo);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return ResponseEntity.badRequest().body(vo);
+            }
         } else {
             return ResponseEntity.badRequest().body(vo);
         }
@@ -113,6 +119,32 @@ public class RestProjectController {
     public ResponseEntity<Integer> updateProject(ProjectVO vo) {
         int result = projectService.updateProject(vo);
         return ResponseEntity.ok().body(result);
+    }
+
+    @PostMapping("/complete")
+    public ResponseEntity<Map<String, Object>> completeProject(ProjectVO vo, Principal user, HttpSession session) {
+        Map<String, Object> returnBody = new HashMap<>();
+        if (user.getName().equals(vo.getLeaderId())) {
+           try {
+               int result = projectService.completeProject(vo);
+               if (result > 0) {
+                   session.setAttribute("userProjectState", "");
+                   returnBody.put("result", "success");
+                   return ResponseEntity.ok().body(returnBody);
+               } else {
+                   returnBody.put("result", "fail");
+                   returnBody.put("message", "입력 실패하였습니다.");
+                   return ResponseEntity.badRequest().body(returnBody);
+               }
+           } catch (Exception e) {
+               e.printStackTrace();
+               returnBody.put("message", "양식 에러");
+               return ResponseEntity.badRequest().body(returnBody);
+           }
+        } else {
+            returnBody.put("message", "잘못된 접근입니다.");
+            return ResponseEntity.badRequest().body(returnBody);
+        }
     }
 
     /***
@@ -177,7 +209,6 @@ public class RestProjectController {
     /***
      * 프로젝트 참가 요청 승인 (팀 합류)
      * @param vo
-     * @param principal
      * @return
      */
     @PostMapping("/approveRequest")
@@ -193,8 +224,4 @@ public class RestProjectController {
         return ResponseEntity.ok().body(vo);
     }
 
-    @GetMapping("/test")
-    public ResponseEntity<ProjectVO> test(ProjectVO vo) {
-        return ResponseEntity.ok().body(vo);
-    }
 }
