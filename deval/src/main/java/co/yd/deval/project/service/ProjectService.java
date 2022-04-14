@@ -1,7 +1,6 @@
 package co.yd.deval.project.service;
 
 import java.util.List;
-import java.util.Map;
 
 public interface ProjectService {
     /***
@@ -19,9 +18,6 @@ public interface ProjectService {
     int remove(ProjectVO vo);
 
     int updateProject(ProjectVO vo);
-
-    List<ProjectVO> findProjectByNo(String id);
-    List<ProjectVO> findWaitingProject(String id);
 
   /***
      * 유저의 대기,진행 중인 프로젝트 여부 (프로젝트 정보가 반환되지 않음)

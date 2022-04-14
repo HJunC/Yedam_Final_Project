@@ -52,20 +52,4 @@ public interface StudyMapper {
 	int studyRcntSelect(StudyVO vo);
 	int rcntLeader(StudyVO vo);
 	int rcntMember(StudyVO vo);
-
-	List<StudyVO> findStudyByNo(String id);
-	List<StudyVO> findWaitingStudy(String id);
-
-	//모달창 정보
-	StudyInfoVO studySelectUser(StudyInfoVO vo);
-	int studyUserInsert(StudyInfoVO vo);
-	int studyUserUpdate(StudyInfoVO vo);
-	
-	// 스터디 참가
-	List<StudyReqVO> studyReqSelectAll();
-	//StudyReqVO studyTeam(StudyReqVO vo);
-	int studyTeamMemberInsert(StudyReqVO vo);
-	int studyTeamMemberUpdate(StudyReqVO vo);
-	int studyTeamMemberDelete(StudyReqVO vo);
-
 }
