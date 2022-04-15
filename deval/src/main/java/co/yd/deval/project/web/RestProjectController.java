@@ -175,7 +175,6 @@ public class RestProjectController {
         if (principal != null) {
             int result = projectRequestService.request(vo);
             if (result > 0) {
-                projectService.updateApplyCount(vo.getProjectNo());
                 returnBody.put("result", "success");
                 return ResponseEntity.ok().body(returnBody);
             } else {
@@ -213,9 +212,12 @@ public class RestProjectController {
      */
     @PostMapping("/approveRequest")
     public ResponseEntity<ProjectRequestVO> approveRequest(ProjectRequestVO vo) {
-        System.out.println(vo);
-        projectRequestService.approve(vo);
-        return ResponseEntity.ok().body(vo);
+        int result = projectRequestService.approve(vo);
+        if (result > 0) {
+            return ResponseEntity.ok().body(vo);
+        } else {
+            return ResponseEntity.badRequest().body(vo);
+        }
     }
 
     @PostMapping("/deleteRequest")

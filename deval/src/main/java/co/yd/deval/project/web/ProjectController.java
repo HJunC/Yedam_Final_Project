@@ -107,7 +107,7 @@ public class ProjectController {
             model.addAttribute("member", user);
             for(ProjectRequestVO rvo : dto.getRequestList()) {
                 if (rvo.getMemberId().equals(user.getName())) {
-                    model.addAttribute("isRequest", true);
+                    model.addAttribute("userRequest", rvo);
                 }
             }
         }

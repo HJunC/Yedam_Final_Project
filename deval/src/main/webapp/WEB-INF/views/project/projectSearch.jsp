@@ -136,7 +136,7 @@
             <!-- Sidebar -->
             <div class="col-md-4 col-lg-3 mt-10">
 
-                <form class="form" id="searchForm" action="../project/search.do" style="position: sticky; top: 80px" method="get">
+                <form class="form" id="searchForm" action="../project/search.do" method="get">
 
                     <!-- Search Widget -->
                     <div class="widget">

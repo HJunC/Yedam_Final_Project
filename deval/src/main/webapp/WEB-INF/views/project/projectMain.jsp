@@ -365,6 +365,7 @@
    * 요청 승인
    * @param memberId
    * @param projectNo
+   * @param position
    */
   function approveRequest(memberId, projectNo, position) {
     $.ajax({
@@ -378,6 +379,11 @@
       success: function (res) {
         console.log(res);
         alert("팀에 합류하였습니다 !");
+        var msg = {
+          memberId,
+          subject : projectNo + "번 프로젝트에 " + position + " 포지션으로 합류하였습니다!"
+        }
+        webSocket.send(JSON.stringify(msg));
         location.reload();
       },
       error: function (res) {
@@ -403,6 +409,11 @@
       success: function (res) {
         console.log(res);
         alert("요청이 거절되었습니다.");
+        var msg = {
+          memberId,
+          subject : projectNo + "번 프로젝트 지원요청이 거절되었습니다."
+        }
+        webSocket.send(JSON.stringify(msg));
         location.reload();
       },
       error: function (res) {

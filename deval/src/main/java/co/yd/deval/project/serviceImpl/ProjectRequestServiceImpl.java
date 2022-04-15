@@ -76,7 +76,7 @@ public class ProjectRequestServiceImpl implements ProjectRequestService {
 
         // 모집완료 시 상태변경
         ProjectVO currVo = projectMapper.selectProject(vo.getProjectNo());
-        if (currVo.getTotalRcnt() == currVo.getCrntRcnt() - 1) {
+        if (currVo.getTotalRcnt() == (currVo.getCrntRcnt() + 1)) {
             projectVO.setUpdateState("2");
         }
         projectMapper.updatePositionCount(projectVO);

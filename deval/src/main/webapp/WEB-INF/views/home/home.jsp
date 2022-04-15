@@ -90,10 +90,10 @@
 
         <div class="notice-box d-flex">
             <i class="fa fa-bullhorn d-flex justify-content-center align-items-center" style="width: 52px; height: 52px;"></i>
-            <ul class="clearlist">
+            <ul class="board/boardSelect.do?boardNo=clearlist">
                 <c:forEach items="${noticeList}" var="item">
                     <li class="d-flex justify-content-between align-items-center">
-                        <a href="${item.boardNo}">${item.title}</a>
+                        <a href="boardNo${item.boardNo}">${item.title}</a>
                         <span style="color: #919191">2022-03-20</span>
                     </li>
                 </c:forEach>
@@ -113,7 +113,7 @@
                     <ul class="clearlist">
                         <c:forEach items="${codeList}" var="item">
                             <li class="d-flex justify-content-between">
-                                <a href="code/codeSelectOne.do?no=${item.boardNo}">${item.title}</a>
+                                <a href="code/codeSelectOne.do?boardNo=${item.boardNo}">${item.title}</a>
                                 <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;${item.hit}</span>
                             </li>
                         </c:forEach>
@@ -134,7 +134,7 @@
                     <ul class="clearlist">
                         <c:forEach items="${techList}" var="item">
                             <li class="d-flex justify-content-between">
-                                <a href="board/technicSelect.do?no=${item.boardNo}">${item.title}</a>
+                                <a href="board/technicSelect.do?boardNo=${item.boardNo}">${item.title}</a>
                                 <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;${item.hit}</span>
                             </li>
                         </c:forEach>

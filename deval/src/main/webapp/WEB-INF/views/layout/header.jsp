@@ -5,13 +5,14 @@
 <c:set var="resources" value="${pageContext.request.contextPath}/resources"/>
 <c:set var="root" value="${pageContext.request.contextPath}"/>
 <script>
+var URL_CONFIG = '${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath }';
 var socket = null;
 var room = '${roomId}';
 console.log(room)
 if (room == '') {
-	var webSocket = new WebSocket('ws://localhost/deval/socket');
+	var webSocket = new WebSocket('ws://' + URL_CONFIG + '/socket');
 } else {
-	var webSocket = new WebSocket('ws://localhost/deval/socket?roomId=${roomId}');
+	var webSocket = new WebSocket('ws://' + URL_CONFIG + '/socket?roomId=${roomId}');
 }
 console.log(webSocket)
 socket = webSocket;
@@ -20,7 +21,7 @@ webSocket.onopen = function(e) {
 	console.log("웹소켓이 연결되었습니다.");
 	webSocket.onmessage = function(e) {
 		console.log(e)
-			$('#alarm').text(e.data);
+			$('#alarmText').text(e.data);
 			$('#alarm').css("display","block");
 			setTimeout(function() {
 				$('#alarm').css("display","none");
@@ -55,15 +56,25 @@ webSocket.onopen = function(e) {
     background-color: transparent;
     border: 0;
 }
+.custom-alert {
+	position: fixed;
+	bottom: 0;
+	z-index: 1;
+	right: 0;
+	margin: 16px 40px;
+	box-shadow: 0 4px 12px rgb(71 71 71 / 30%);
+}
 </style>
+<div class="alert alert-primary custom-alert" role="alert" id="alarm" style="display: none;">
+	<span id="alarmText"></span>
+	<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
 <nav class="main-nav dark transparent stick-fixed wow-menubar">
 	<div class="full-wrapper relative clearfix">
-	<div class="alert alert-primary" role="alert" id="alarm" style="display: none;"></div>
 		<!-- Logo ( * your text or image into link tag *) -->
 		<div class="nav-logo-wrap local-scroll">
 			<a href="${root}/home.do" class="logo">
 				Developers Vally
-				<%--<img src="" alt="Company logo" width="188" height="37" />--%>
 			</a>
 		</div>
 

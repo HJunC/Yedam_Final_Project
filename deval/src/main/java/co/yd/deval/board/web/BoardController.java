@@ -53,7 +53,7 @@ public class BoardController {
 		return "board/write";
 	}
 
-	@RequestMapping("/boardDetail.do")
+	@GetMapping("/boardDetail.do")
 	public String boardDetail(Model model, int board_no) {
 		return "board/boardDetail";
 	}
@@ -116,7 +116,7 @@ public class BoardController {
 		return "redirect:free.do";
 	}
 
-	@PostMapping("/boardSelect.do")
+	@GetMapping("/boardSelect.do")
 	public String boardSelect(BoardVO vo, Model model, CommentVO cvo) {
 		boardDao.boardHitUp(vo.getBoardNo());
 		cvo.setBoardNo(vo.getBoardNo());
