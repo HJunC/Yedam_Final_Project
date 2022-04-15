@@ -4,6 +4,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <c:set var="resources"
 	value="${pageContext.request.contextPath }/resources" />
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,73 +43,74 @@ td {
 </style>
 </head>
 <body>
- 	<div align="center">
+	<br>
+	<br>
+	<div align="center">
 		<section class="page-section bg-dark light-content" id="home">
 			<div class="container relative text-center">
 				<div class="row">
 					<div class="col-lg-10 offset-lg-1"></div>
-				<h1 class="hs-line-7 mb-10 wow fadeInUpShort" data-wow-delay=".2s">공지</h1>
+					<h1 class="hs-line-7 mb-10 wow fadeInUpShort" data-wow-delay=".2s">공지사항</h1>
 				</div>
 			</div>
 		</section>
 		<section class="page-section bg-dark light-content pt-0">
 			<div class="container relative">
 				<div class="row">
-					<div>
-						<form id="searchForm" class="row">
-							<div class="col-lg-10 offset-lg-1">
-								<input type="text" name="title" id="codeSearch"
-									class="input-sm round" placeholder="검색"
-									style="width: 300px; height: 48px;" /> &nbsp;
-								<button type="submit"
-									class="btn btn-mod btn-round btn-border-w btn-small">검색</button>
-								<input type="hidden" name="pageNum"
-									value="${pageMaker.cri.pageNum}"> <input type="hidden"
-									name="amount" value="${pageMaker.cri.amount}">
-							</div>
-						</form>
-					</div>
+					<form id="searchForm" class="row">
+						<div align="left">
+							<input type="text" name="title" id="codeSearch"
+								class="input-sm round" placeholder="검색"
+								style="width: 300px; height: 48px;" /> &nbsp;
+							<button type="submit"
+								class="btn btn-mod btn-round btn-border-w btn-small">검색</button>
+							<input type="hidden" name="pageNum"
+								value="${pageMaker.cri.pageNum}"> <input type="hidden"
+								name="amount" value="${pageMaker.cri.amount}">
+						</div>
+					</form>
 				</div>
-				<br>
-
-				<div class="table-responsive">
-					<table class="table shopping-cart-table">
-						<tr align="center">
-							<th width="50">No</th>
-							<th width="300">제목</th>
-							<th width="100">작성일자</th>
-							<th width="50">조회수</th>
-							<th width="50">추천수</th>
-						</tr>
-
-						<c:forEach items="${noticeList}" var="list2">
-							<tr class="active" onclick="noticeSelect(${list2.boardNo})">
-								<td>${list2.boardNo}</td>
-								<th align="left">${list2.title}</th>
-								<td><fmt:formatDate pattern="yyyy-MM-dd"
-										value="${list2.boardDate}" /></td>
-								<td>${list2.hit}</td>
-								<td>${list2.recommend}</td>
-							</tr>
-						</c:forEach>
-					</table>
-					<div align="right">
-						<input class="btn btn-mod btn-round btn-border-w btn-small"
-							type="button" value="글쓰기" onclick="location.href='write.do'">
-					</div>
-				</div>
-			</div>
-			<br>
-
-			<form action="noticeSelect.do" method="post" id="boardSS2">
-				<input type="hidden" name="boardNo" id="boardSe2" />
-			</form>
-
-			<div class="pagination">
-				<ul class="pagination" id="pagination"></ul>
 			</div>
 		</section>
 	</div>
+
+	<div class="table-responsive">
+		<table class="table shopping-cart-table">
+			<tr align="center">
+				<th width="50">No</th>
+				<th width="300">제목</th>
+				<th width="100">작성일자</th>
+				<th width="50">조회수</th>
+ 			</tr>
+
+			<c:forEach items="${noticeList}" var="list2">
+				<tr class="active" onclick="noticeSelect(${list2.boardNo})">
+					<td>${list2.boardNo}</td>
+					<th align="left">${list2.title}</th>
+					<td><fmt:formatDate pattern="yyyy-MM-dd"
+							value="${list2.boardDate}" /></td>
+					<td>${list2.hit}</td>
+ 				</tr>
+			</c:forEach>
+		</table>
+		 
+
+		<form action="noticeSelect.do" method="post" id="boardSS2">
+			<input type="hidden" name="boardNo" id="boardSe2" />
+		</form>
+
+		<div class="pagination">
+			<ul class="pagination" id="pagination"></ul>
+		</div>
+	</div>
+
+<sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+				<div align="right">
+					<input class="btn btn-mod btn-round btn-border-w btn-small"
+						type="button" value="글쓰기" onclick="location.href='write.do?no=1'">
+				</div>
+			</sec:authorize>
+
 
 	<script src="${resources}/js/common/jQueryPage.js"></script>
 

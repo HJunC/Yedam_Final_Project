@@ -27,57 +27,47 @@
 			<div class="row">
 				<div class="col-lg-10 offset-lg-1">
 					<br>
-					<h1>수정페이지 💭 </h1>
-
-					<c:set var="ymd" value="<%=new java.util.Date()%>" />
+					<h1>수정페이지 💭</h1>
 					<h4 class="blog-page-title"></h4>
 					<div align="center">
 						<div class="container relative">
 							<div class="row">
 								<div class="col-md-8">
-
 									<form action="boardUpdate.do" method="post">
-
 										<table>
-										
-											<tr>	
-												<td>글번호 :
-											<input type="hidden" value="${board.boardNo}"
-													name="boardNo" id="boardNo" readonly>${board.boardNo}</td>
+											<tr>
 
-											
+												<td>글번호 : <input type="hidden" value="${board.boardNo}"
+													name="boardNo" id="boardNo">${board.boardNo}</td>
 											</tr>
 											<tr>
-												<td>글유형 : 
-											<input type="hidden" value="${board.boardTypeNo}"
-													name="boardTypeNo" id="boardTypeNo">${board.boardTypeNo}</td>
+												<td>분류 : <input type="hidden"
+													value="${board.boardTypeNo}" name="boardTypeNo"
+													id="boardTypeNo">${boardTypeNo}
+												<c:if test="${board.boardTypeNo == 1}">공지사항</c:if>
+												<c:if test="${board.boardTypeNo == 2}">자유게시판</c:if>
+												<c:if test="${board.boardTypeNo == 3}">최신기술동향</c:if>
+											</td>
 											</tr>
 											<tr>
-											
-											<td align="center"> 제목  <input  value="${board.title}"
+												<td align="center">제목 <input value="${board.title}"
 													name="title" id="title"
 													class="input-md square form-control"></td>
 											</tr>
 											<tr>
-									
-									 	
-												<td id="editor">
-												<input value="${board.subject}"
-													name="subject" id="subject"
-													class="input-md square form-control">${board.title}</td>
+
+												<td id="editor">${board.subject}</td>
 											</tr>
 											<tr>
-											
-											
 										</table>
+
 										<button type="submit"
 											class="submit_btn btn btn-mod btn-w btn-large btn-round">수정</button>
 
 									</form>
 
 									<!-- Send Button -->
-									<div class="container relative">
-
+									<div align="right">
 
 										<c:if test="${board.boardTypeNo == 1}">
 											<a href="free.do"

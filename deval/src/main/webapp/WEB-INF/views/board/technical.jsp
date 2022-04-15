@@ -4,6 +4,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <c:set var="resources"
 	value="${pageContext.request.contextPath }/resources" />
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,6 +44,8 @@ td {
 
 </head>
 <body>
+	<br>
+	<br>
 	<div align="center">
 		<section class="page-section bg-dark light-content" id="home">
 			<div class="container relative text-center">
@@ -51,25 +55,25 @@ td {
 				</div>
 			</div>
 		</section>
-		<section class="page-section bg-dark light-content pt-0">
+			<section class="page-section bg-dark light-content pt-0">
 			<div class="container relative">
 				<div class="row">
-					<div>
-						<form id="searchForm" class="row">
-							<div class="col-lg-10 offset-lg-1">
-								<input type="text" name="title" id="codeSearch"
-									class="input-sm round" placeholder="검색"
-									style="width: 300px; height: 48px;" /> &nbsp;
-								<button type="submit"
-									class="btn btn-mod btn-round btn-border-w btn-small">검색</button>
-								<input type="hidden" name="pageNum"
-									value="${pageMaker.cri.pageNum}"> <input type="hidden"
-									name="amount" value="${pageMaker.cri.amount}">
-							</div>
-						</form>
-					</div>
+					<form id="searchForm" class="row">
+						<div align="left">
+							<input type="text" name="title" id="codeSearch"
+								class="input-sm round" placeholder="검색"
+								style="width: 300px; height: 48px;" /> &nbsp;
+							<button type="submit"
+								class="btn btn-mod btn-round btn-border-w btn-small">검색</button>
+							<input type="hidden" name="pageNum"
+								value="${pageMaker.cri.pageNum}"> <input type="hidden"
+								name="amount" value="${pageMaker.cri.amount}">
+						</div>
+					</form>
+
 				</div>
-				<br>
+			</div>
+		</section>
 				<div class="table-responsive">
 					<table class="table shopping-cart-table">
 						<tr align="center">
@@ -92,23 +96,22 @@ td {
 							</tr>
 						</c:forEach>
 					</table>
-
-					<div align="right">
-						<input class="btn btn-mod btn-round btn-border-w btn-small"
-							type="button" value="글쓰기" onclick="location.href='write.do'">
-					</div>
+	<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
+				<div align="right">
+					<input class="btn btn-mod btn-round btn-border-w btn-small"
+						type="button" value="글쓰기" onclick="location.href='write.do?no=3'">
 				</div>
-			</div>
-			<br>
+			</sec:authorize>
 			<form action="technicSelect.do" method="post" id="boardSS3">
 				<input type="hidden" name="boardNo" id="boardSe3" />
 			</form>
 
-			<div class="pagination">
+		<div class="pagination">
 				<ul class="pagination" id="pagination"></ul>
 			</div>
-		</section>
+		</div>
 	</div>
+
 
 
 
