@@ -28,7 +28,7 @@ public class Handler extends TextWebSocketHandler {
 
 	List<WebSocketSession> sessionList = new ArrayList<>();
 
-	String uri = "ws://localhost/deval/socket";
+	String uri = "ws://localhost:83/deval/socket";
 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {

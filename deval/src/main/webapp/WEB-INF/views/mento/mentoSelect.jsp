@@ -390,7 +390,7 @@
     		                  }
     		              }).done(function (data) {
     		                // 가맹점 서버 결제 API 성공시 로직
-    		                //alert("결제에 성공했습니다");
+    		                alert("결제에 성공했습니다, 다시신청해주세요");
     		                $('#nowCash').load(window.location.href + " #nowCash")
     		                $('.mfp-close').trigger('click');
     		                

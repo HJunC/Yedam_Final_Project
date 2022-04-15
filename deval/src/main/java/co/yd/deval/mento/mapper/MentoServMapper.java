@@ -26,4 +26,8 @@ public interface MentoServMapper {
 		
 		//서비스 수락
 		int mentoServAccept(MentoServVO vo);
+		
+		//my Page
+		MentoServVO findWaitMento(String id);
+		List<MentoServVO> findMentoByNo(String id);
 }

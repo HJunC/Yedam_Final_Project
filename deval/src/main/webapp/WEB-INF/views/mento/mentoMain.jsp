@@ -10,8 +10,8 @@
 <main id="main">    
             
                 <!-- Home Section -->
-                <section class="home-section bg-dark-alfa-90 parallax-5" data-background="" id="home">
-                    <div class="container min-height-100vh d-flex align-items-center pt-100 pb-100" style="background-image: url('${resources}/images/mento/mentoMain2.PNG')">
+                <section class="home-section parallax-5" data-background="" id="home">
+                    <div class="container min-height-100vh d-flex align-items-center pt-100 pb-100" style="background-image: url('${resources}/images/mento/mentoMain2.PNG');background-size : 100%; background-repeat: no-repeat;">
                         
                         <!-- Hero Content -->
                         <div class="home-content text-start">
@@ -25,9 +25,7 @@
                                         <span class="sr-only"></span>
                                         <span data-period="2800" data-type='[ " 1대1 멘토링!", "입맛대로 골라먹는 언어", "다양한경험의 멘토들"]' class="typewrite" aria-hidden="true"><span class="wrap"></span></span>
                                     </h2>
-                                   	<div>
-                                   		<img alt="" src="${resources}/images/mento/mentoMain2.PNG">
-                                   	</div>
+                                   	
                                     </div>
                                 </div>
                             </div>
@@ -160,7 +158,10 @@
                       <form action="mentoInsertForm.do" id="frm2" method="get">
                       		<button type="submit" class="btn btn-mod btn-w btn-circle"> <i class="fa fa-chalkboard-teacher"></i>멘토등록</button>
                  		</form>
-                 		</c:if>
+                 		<form action="mentiCheck.do" id="frm3" method="get">
+                      		<button type="submit" class="btn btn-mod btn-w btn-circle"> <i class="fa fa-chalkboard-teacher"></i>서비스신청현황</button>
+                 		</form>
+                 	</c:if>
                  </div>
                 
                 
