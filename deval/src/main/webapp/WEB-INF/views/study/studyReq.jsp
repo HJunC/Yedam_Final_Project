@@ -15,26 +15,22 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-				<!-- Title -->
-                <section class="small-section bg-dark-alfa-50" data-background="images/full-width-images/section-bg-19.jpg">
-                    <div class="container relative">
+				 <!-- Home Section -->
+                <section class="page-section bg-dark light-content" id="home">
+                    <div class="container relative text-center">
                         <div class="row">
-                            <div class="col-md-8">
-                                <div class="wow fadeInUpShort" data-wow-delay=".1s">
-                                    <h1 class="hs-line-7 mb-20 mb-xs-10">STUDY</h1>
-                                </div>
-                                <div class="wow fadeInUpShort" data-wow-delay=".2s">
-                                    <p class="hs-line-6 opacity-075 mb-20 mb-xs-0">
-                                         스터디 신청자
-                                    </p>
-                                </div>
+                            <div class="col-lg-10 offset-lg-1">
+                                <h1 class="hs-line-4 mb-30 mb-xs-20 wow fadeInUpShort" data-wow-delay=".1s"><span class="d-inline-block bg-gray-dark round px-3 pb-1"><i class="fas fa-code-branch"></i></span></h1>
+                                <h2 class="hs-line-7 mb-0 wow fadeInUpShort" data-wow-delay=".2s">DEVELOPER<br>STUDY APPLICANT</h2>
                             </div>
                         </div>
                     </div>
                 </section>
+            <!-- End Home Section -->
+            
 	 <div class="page-content page-container" id="page-content">
-        <div class="padding">
-            <div class="row container d-flex justify-content-center">
+        <div class="padding" align="center">
+            <div class="row container d-flex justify-content-center" >
                 <div class="col-xl-6 col-md-12">
 	 			  <c:forEach items="${study}" var="std">
                     <div class="card user-card-full">
