@@ -283,8 +283,7 @@
                         <div class="tab-content tpl-minimal-tabs-cont section-text">
 
                             <div class="tab-pane fade show active" id="item-1" role="tabpanel">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque mollis lacus augue, pharetra non congue sit amet, bibendum sit amet enim. a hendrerit leo tristique vitae. Mauris non ipsum molestie, sagittis elit ac, vulputate odio. Fusce quam augue, gravida tincidunt dui nec, tempor iaculis justo.
-                                Aliquam tortor leo, pharetra non congue sit amet, bibendum sit amet enim.
+
                             </div>
 
                             <div class="tab-pane fade" id="item-2" role="tabpanel">
@@ -301,7 +300,31 @@
                         <!-- End Tab panes -->
                     </div>
                     <script>
+                      $.ajax({
+                        url: '${project.gitUri}',
+                        type: "GET",
+                        success: function (res) {
+                          makeGithubLink(res);
+                        },
+                        error: function (res) {
+                          $("#item-1").html("연결에러");
+                        }
+                      })
 
+                      function makeGithubLink(res) {
+                        var str = $(`<div class="card text-white bg-dark mb-3">
+                                      <div class="card-header">프로젝트 명 : <a href="`+res.html_url+`" style="text-decoration: none;">`+res.name+`</a></div>
+                                      <div class="card-body">
+                                        <p class="card-text">
+                                          생성자 :
+                                          <img src="`+res.owner.avatar_url+`" alt="프로필" style="width: 30px; border-radius: 30px;">
+                                          `+res.owner.login+`
+                                        </p>
+                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                      </div>
+                                    </div>`);
+                        $("#item-1").append(str);
+                      }
                     </script>
                 </c:if>
                 <h4 class="blog-page-title">프로젝트 설명</h4>
@@ -388,8 +411,7 @@
                 </c:if>
 
                 <sec:authorize access="isAuthenticated()">
-                    <c:if test="${sessionScope.userProjectState ne '팀장'
-                                and sessionScope.userProjectState ne '팀원'
+                    <c:if test="${!sessionScope.isTeam
                                 and project.state eq '1'
                                 and empty userRequest
                                 and (project.frontRcnt + project.backRcnt + project.fullRcnt + project.designRcnt + project.plannerRcnt) != 0}">
@@ -467,7 +489,7 @@
                         <!-- End Add Comment -->
                     </c:if>
                 </sec:authorize>
-                <c:if test="${not empty userRequest }">
+                <c:if test="${not empty userRequest and userRequest.state eq '1'}">
                     <div class="mb-80 mb-xs-40">
 
                         <h4 class="blog-page-title">검토중인 요청</h4>
@@ -532,13 +554,32 @@
                             <div class="widget">
                                 <h3 class="widget-title">포지션 정보</h3>
                                 <div class="widget-body">
-                                    <p class="mb-1">프론트엔드 개발자 <span class="badge bg-info" id="feCount"></span></p>
-                                    <p class="mb-1">백엔드 개발자  <span class="badge bg-info" id="beCount"></span></p>
-                                    <p class="mb-1">풀스택 개발자  <span class="badge bg-info" id="fsCount"></span></p>
-                                    <p class="mb-1">디자이너  <span class="badge bg-info" id="deCount"></span></p>
-                                    <p class="mb-1">기획자  <span class="badge bg-info" id="plCount"></span></p>
+                                    <p class="mb-1">프론트엔드 개발자 <span class="badge bg-info text-dark" id="feCount"></span></p>
+                                    <p class="mb-1">백엔드 개발자  <span class="badge bg-info text-dark" id="beCount"></span></p>
+                                    <p class="mb-1">풀스택 개발자  <span class="badge bg-info text-dark" id="fsCount"></span></p>
+                                    <p class="mb-1">디자이너  <span class="badge bg-info text-dark" id="deCount"></span></p>
+                                    <p class="mb-1">기획자  <span class="badge bg-info text-dark" id="plCount"></span></p>
                                 </div>
                             </div>
+                            <script>
+                              var feCount = 0;
+                              var beCount = 0;
+                              var fsCount = 0;
+                              var deCount = 0;
+                              var plCount = 0;
+                              <c:forEach items="${team }" var="item">
+                              <c:if test="${item.position eq 'FE'}">feCount++</c:if>
+                              <c:if test="${item.position eq 'BE'}">beCount++</c:if>
+                              <c:if test="${item.position eq 'FS'}">fsCount++</c:if>
+                              <c:if test="${item.position eq 'DE'}">deCount++</c:if>
+                              <c:if test="${item.position eq 'PL'}">plCount++</c:if>
+                              </c:forEach>
+                              $("#feCount").html(feCount);
+                              $("#beCount").html(beCount);
+                              $("#fsCount").html(fsCount);
+                              $("#deCount").html(deCount);
+                              $("#plCount").html(plCount);
+                            </script>
                         </c:otherwise>
                     </c:choose>
 
@@ -586,7 +627,7 @@
                             <h3 class="widget-title">설정</h3>
 
                             <div class="widget-body">
-                                <button type="button" onclick="" class="btn btn-mod btn-w btn-round btn-small">
+                                <button type="button" onclick="pageGoUpdateForm()" class="btn btn-mod btn-w btn-round btn-small">
                                     수정하기
                                 </button>
                                 <button type="button" onclick="deleteProject()" class="btn btn-mod btn-w btn-round btn-small" style="background: rgb(251 71 71 / 90%);">
@@ -634,25 +675,6 @@
     const sdtDate = new Date(projectSdtInput.value);
     projectEdtInput.setAttribute("value", moment(sdtDate.setDate(sdtDate.getDate() + ${project.projectTerm})).format("YYYY-MM-DD"));
   })*/
-
-
-  var feCount = 0;
-  var beCount = 0;
-  var fsCount = 0;
-  var deCount = 0;
-  var plCount = 0;
-  <c:forEach items="${team }" var="item">
-  <c:if test="${item.position eq 'FE'}">feCount++</c:if>
-  <c:if test="${item.position eq 'BE'}">beCount++</c:if>
-  <c:if test="${item.position eq 'FS'}">fsCount++</c:if>
-  <c:if test="${item.position eq 'DE'}">deCount++</c:if>
-  <c:if test="${item.position eq 'PL'}">plCount++</c:if>
-  </c:forEach>
-  $("#feCount").html(feCount);
-  $("#beCount").html(beCount);
-  $("#fsCount").html(fsCount);
-  $("#deCount").html(deCount);
-  $("#plCount").html(plCount);
 
   /**
    * 프로젝트 합류 요청 ajax
@@ -832,4 +854,13 @@
     })
   }
 
+  function pageGoUpdateForm() {
+    var insdoc = "<input type='hidden' name='leaderId' value='test21'>";
+
+    var goform = $("<form>", {
+      method: "post",
+      action: 'projectUpdateForm.do',
+      html: insdoc
+    }).appendTo("body"); goform.submit();
+  }
 </script>

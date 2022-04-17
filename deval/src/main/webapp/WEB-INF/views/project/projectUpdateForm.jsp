@@ -16,7 +16,7 @@
                 <div class="wow fadeInUpShort" data-wow-delay=".1s">
                     <h1 class="hs-line-7 mb-20 mb-xs-10">
                         👀<br>
-                        팀 프로젝트 생성하기
+                        프로젝트 수정
                     </h1>
                 </div>
                 <div class="wow fadeInUpShort" data-wow-delay=".2s"></div>

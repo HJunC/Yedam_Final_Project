@@ -42,7 +42,7 @@
     <div class="container relative">
         <c:choose>
             <c:when test="${not empty userProject}">
-            <h3>내 프로젝트 (${sessionScope.userProjectState })</h3>
+            <h3>내 프로젝트</h3>
                 <a href="projectDetail.do?no=${userProject.projectNo}" class="list-group-item d-flex justify-content-between align-items-start pt-2 pb-2 my-project" aria-current="true">
                     <div class="ms-2 me-auto">
                         <div class="countdown-search-list mb-1">
@@ -60,6 +60,37 @@
                         </div>
                     </div>
                 </a>
+                <c:if test="${userProject.state eq '3'}">
+                    <!-- Bar Item -->
+                    <div class="progress tpl-progress mt-4" style="background-color: #ebebeb; position: relative;">
+                        <div id="progressBar"
+                             class="progress-bar"
+                             role="progressbar"
+                             aria-valuemin="0"
+                             aria-valuemax="100"
+                             style="background-color: #6ead5a">
+                            <div>
+                                <fmt:formatDate value="${userProject.projectSdt}" type="both" pattern="yyyy-MM-dd"/>
+                            </div>
+                        </div>
+                        <div style="position: absolute; top: 8px; right: 0;">
+                            <fmt:formatDate value="${userProject.projectEdt}" type="both" pattern="yyyy-MM-dd"/>
+                        </div>
+                    </div>
+                    <!-- End Bar Item -->
+                    <script>
+                      /**
+                       * progressBar
+                       */
+                      var today = new Date();
+                      const start_date = new Date('<fmt:formatDate value="${userProject.projectSdt}" type="both" pattern="yyyy-MM-dd"/>');
+                      const end_date = new Date('<fmt:formatDate value="${userProject.projectEdt}" type="both" pattern="yyyy-MM-dd"/>');
+                      const total = end_date - start_date;
+                      const perc = today - start_date;
+                      const progressValue = Math.round(perc / total * 100 );
+                      document.getElementById("progressBar").setAttribute("aria-valuenow", progressValue);
+                    </script>
+                </c:if>
             </c:when>
 
             <c:otherwise>

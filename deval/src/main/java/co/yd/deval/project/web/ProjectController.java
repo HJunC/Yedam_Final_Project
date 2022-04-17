@@ -51,10 +51,11 @@ public class ProjectController {
             // 대기, 진행중인 프로젝트가 있을 때
             if (userTeam != null) {
                 if (userTeam.getIsLeader().equals("1")) {
-                    session.setAttribute("userProjectState", "팀장");
+                    session.setAttribute("isTeam", true);
                     session.setAttribute("isWait", !userTeam.getState().equals("2"));
                 } else {
-                    session.setAttribute("userProjectState", "팀원");
+                    session.setAttribute("isTeam", true);
+                    session.setAttribute("isWait", false);
                 }
                 projectNo = userTeam.getProjectNo();
                 model.addAttribute("userProject", projectService.selectProject(projectNo));
@@ -65,14 +66,15 @@ public class ProjectController {
                             .state("1").build();
                     model.addAttribute("requestList", projectRequestService.selectProjectRequest(requestVO));
                 }
+            } else {
+                // 지원한 프로젝트 리스트
+                ProjectRequestVO rvo = ProjectRequestVO.builder()
+                        .memberId(principal.getName())
+                        .state("1")
+                        .build();
+                List<ProjectRequestVO> requestList = projectRequestService.selectProjectRequest(rvo);
+                model.addAttribute("userRequest", requestList);
             }
-            // 지원한 프로젝트 리스트
-            ProjectRequestVO rvo = ProjectRequestVO.builder()
-                    .memberId(principal.getName())
-                    .state("1")
-                    .build();
-            List<ProjectRequestVO> requestList = projectRequestService.selectProjectRequest(rvo);
-            model.addAttribute("userRequest", requestList);
         }
         // 팀 프로젝트 찾기
         ProjectVO searchVO = new ProjectVO();
@@ -132,4 +134,19 @@ public class ProjectController {
         return "project/projectSearch";
     }
 
+    /**
+     * 프로젝트 수정 화면 이동
+     * @return
+     */
+    @PostMapping("/projectUpdateForm.do")
+    public String projectUpdateForm(Model model, Principal user, ProjectVO vo) {
+        if (user != null && vo.getLeaderId().equals(user.getName())) {
+            model.addAttribute("userProject", projectService.selectProject(vo.getProjectNo()));
+            return "project/projectUpdateForm";
+        } else {
+            return "notFoundPage";
+        }
+    }
+
+    
 }

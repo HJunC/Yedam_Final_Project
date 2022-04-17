@@ -157,26 +157,77 @@
                     <!-- 언어 -->
                     <div class="widget">
 
-                        <h3 class="widget-title">언어</h3>
+                        <h3 class="widget-title">기술</h3>
 
                         <script src="${resources}/js/common/Languages.js"></script>
 
-                        <div class="widget-body">
-                            <div class="tags" id="languages"></div>
+                        <div>
+                            <dl class="toggle">
+
+                                <dt>
+                                    <a href="" role="button" aria-expanded="false">언어</a>
+                                </dt>
+                                <dd style="display: none;">
+                                    <div class="tags" id="languagesBox"></div>
+                                </dd>
+
+                                <dt>
+                                    <a href="" role="button" aria-expanded="false">프레임워크</a>
+                                </dt>
+                                <dd style="display: none;">
+                                    <div class="tags" id="fplBox"></div>
+                                </dd>
+
+                                <dt>
+                                    <a href="" role="button" aria-expanded="false">버전관리</a>
+                                </dt>
+                                <dd style="display: none;">
+                                    <div class="tags" id="versionControlBox"></div>
+                                </dd>
+
+                                <dt>
+                                    <a href="" role="button" aria-expanded="false">DB</a>
+                                </dt>
+                                <dd style="display: none;">
+                                    <div class="tags" id="databaseBox"></div>
+                                </dd>
+                            </dl>
                         </div>
 
                         <script>
-                          var languages = $("#languages");
                           var checkBox = "";
-                          mostUsed.forEach((item, index) => {
-                            checkBox += '<input type="checkbox" class="btn-check" id="btncheck'+index+'" name="langArray" value="' + item + '">';
-                            checkBox += '<label class="btn btn-outline-primary" for="btncheck'+index+'">' + item + '</label>';
+                          Language.forEach(item => {
+                            checkBox += '<input type="checkbox" class="btn-check" id="btncheck'+item+'" name="langArray" value="' + item + '">';
+                            checkBox += '<label class="btn btn-outline-primary" for="btncheck'+item+'">' + item + '</label>';
                           })
-                          languages.append(checkBox);
+                          $("#languagesBox").append(checkBox);
+                          checkBox = "";
+                          FPL.forEach(item => {
+                            checkBox += '<input type="checkbox" class="btn-check" id="btncheck'+item+'" name="langArray" value="' + item + '">';
+                            checkBox += '<label class="btn btn-outline-primary" for="btncheck'+item+'">' + item + '</label>';
+                          })
+                          $("#fplBox").append(checkBox);
+                          checkBox = "";
+                          versionControl.forEach(item => {
+                            checkBox += '<input type="checkbox" class="btn-check" id="btncheck'+item+'" name="langArray" value="' + item + '">';
+                            checkBox += '<label class="btn btn-outline-primary" for="btncheck'+item+'">' + item + '</label>';
+                          })
+                          $("#versionControlBox").append(checkBox);
+                          checkBox = "";
+                          Database.forEach(item => {
+                            checkBox += '<input type="checkbox" class="btn-check" id="btncheck'+item+'" name="langArray" value="' + item + '">';
+                            checkBox += '<label class="btn btn-outline-primary" for="btncheck'+item+'">' + item + '</label>';
+                          })
+                          $("#databaseBox").append(checkBox);
+                          checkBox = "";
                         </script>
                     </div>
                     <!-- End Widget -->
-
+                    <script>
+                      <c:forEach items="${search.langArray }" var="lang">
+                        $("#btncheck${lang}").attr("checked", true);
+                      </c:forEach>
+                    </script>
                     <!-- 포지션 -->
                     <div class="widget">
 
@@ -260,7 +311,6 @@
 <!-- End Section -->
 
 <script src="${resources}/js/common/jQueryPage.js"></script>
-
 <script>
     var endPage = ${pageMaker.endPage}
     var current = ${pageMaker.cri.pageNum}
