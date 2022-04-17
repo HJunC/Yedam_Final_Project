@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!-- Home Section -->
-<section class="page-section bg-dark-alfa-50 bg-scroll" data-background="images/full-width-images/section-bg-19.jpg" id="home">
+<section class="page-section bg-dark-alfa-50 bg-scroll" id="home">
 	<div class="container relative">
 
 		<div class="row">
@@ -35,21 +35,33 @@
 					<div class="clearfix">
 						<div class="form-group">
 							<label for="memberId">아이디</label>
-							<input type="text" name="memberId" id="memberId" class="input-lg round form-control" placeholder="Enter id">
-							<button type="button" id="btn" class="btn btn-outline-primary" onclick="idDuplecatedCheck()">중복 확인</button>
+							<div class="input-group">
+								<input type="text" name="memberId" id="memberId" class="input-lg round form-control" placeholder="아이디를 입력해주세요">
+								<button type="button" id="btn" class="btn btn-outline-secondary" onclick="idDuplecatedCheck()">중복 확인</button>
+							</div>
 						</div>
 						<div class="form-group">
 							<label for="memberPassword">비밀번호</label>
-							<input type="password" name="password" id="memberPassword"  class="input-lg round form-control" placeholder="Enter password">
+							<input type="password" name="password" id="memberPassword"  class="input-lg round form-control" placeholder="비밀번호를 입력해주세요">
 						</div>
 						<div class="form-group">
 							<label for="passwordCheck">비밀번호 확인</label>
-							<input type="password" id="passwordCheck" onchange="pwdCheck()" class="input-lg round form-control" placeholder="Confirm password">
+							<input type="password" id="passwordCheck" onchange="pwdCheck()" class="input-lg round form-control" placeholder="비밀번호를 다시 입력해주세요">
 							<div id="checkWord"></div>
 						</div>
 						<div class="form-group">
 							<label for="memberMail">이메일</label>
-							<input type="email" name="mail" id="memberMail" class="input-lg round form-control" placeholder="Enter email" required="required">
+							<div class="input-group">
+								<input type="email" name="mail" id="memberMail" class="input-lg round form-control" placeholder="이메일을 입력해주세요" required="required">
+								<button type="button" id="mailBtn" class="btn btn-outline-secondary" onclick="sendEmail()">인증번호 보내기</button>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="authCheck">이메일 확인</label>
+							<div class="input-group">
+								<input type="text" id="authCheck" class="input-lg round form-control" placeholder="인증번호를 입력해주세요">
+								<button type="button" id="checkBtn" class="btn btn-outline-secondary" value="checkAuth">인증번호 확인</button>
+							</div>
 						</div>
 						<div class="form-group">
 							<label for="memberName">이름</label>
@@ -78,6 +90,7 @@
 <!-- End Divider -->
 
 <script>
+	const auth;
 	function formCheck(){
 		if(checkWord.style.color != green) {
 			if(checkWord.style.color == red){
@@ -130,5 +143,14 @@
 				}
 			})
 		}
+	}
+	
+	function sendMail() {
+		$.ajax({
+			url:"sendAuthMail.do",
+			success:function(data) {
+				
+			}
+		})
 	}
 </script>

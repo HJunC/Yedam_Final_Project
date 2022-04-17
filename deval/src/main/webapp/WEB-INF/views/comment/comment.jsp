@@ -33,38 +33,22 @@
 							<td>
 								<input style="" class="btn btn-mod btn-round btn-border-w btn-small" 
 								size="90" id="commentSub" name="commentSub"> 
-								<input type="hidden" id="boardNo" name="boardNo" value="${bno }">
-								
-								<c:if test="${not empty asdasd }">
-								<input type="hidden" id="boardTypeNo" name="boardTypeNo" value="1">
-								</c:if>
-								<c:if test="${not empty asdsada }">
-								<input type="hidden" id="boardTypeNo" name="boardTypeNo" value="2">
-								</c:if>
-								<c:if test="${not empty asdsadaddd }">
-								<input type="hidden" id="boardTypeNo" name="boardTypeNo" value="3">
-								</c:if>
-								<c:if test="${not empty code.cqNo }">
-								<input type="hidden" id="boardTypeNo" name="boardTypeNo" value="4">
-								</c:if>
-								<c:if test="${not empty review.cqNo }">
-								<input type="hidden" id="boardTypeNo" name="boardTypeNo" value="5">
-								</c:if>
+								<input type="hidden" id="boardNo" name="boardNo" value="${bno}">
 							</td>
 							<td>
 								<input type="hidden" id="writer" name="writer"
-								value="<sec:authentication property="principal.username"/>">
+								value="${user}">
 							</td>
 							<td>
-								<input class="btn btn-mod btn-round btn-border-w btn-small"
+								<input class="btn btn-mod btn-round btn-border-w btn-small" <c:if test="${empty user}">disabled="disabled"</c:if>
 								type="button" value="등록" onclick="commentUpdate('IN')">
 							</td>
 						</tr>
-						<c:forEach items="${comments }" var="comment">
+						<c:forEach items="${comments}" var="comment">
 							<tr>
-								<td>${comment.writer }: ${comment.commentSub }</td>
+								<td>${comment.writer}: ${comment.commentSub}</td>
 								<!-- <td width="300px"></td> -->
-								<c:if test="${comment.writer eq username }">
+								<c:if test="${comment.writer eq user}">
 									<td width="135px" align="right">
 									<input class="btn btn-mod btn-round btn-border-w btn-small" type="button" value="수정"> 
 									<input class="btn btn-mod btn-round btn-border-w btn-small" type="button" onclick="commentDelete(${comment.commentNo })" value="삭제">
