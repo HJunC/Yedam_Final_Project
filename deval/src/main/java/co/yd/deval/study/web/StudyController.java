@@ -271,4 +271,11 @@ public class StudyController {
     	
     	return "study/designList";
     }
+    
+    @RequestMapping("/test.do")
+    public String test(Model model) {
+    	
+    	return "study/test";
+    }
+
 }
