@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import co.yd.deval.chat.service.ChatLogService;
 import co.yd.deval.chat.service.ChatRoomService;
 import co.yd.deval.chat.service.ChatRoomVO;
 import co.yd.deval.common.Criteria;
@@ -31,7 +30,6 @@ import co.yd.deval.study.service.StudyVO;
 @Controller
 @RequestMapping("/study")
 public class StudyController {
-	
 	@Autowired
 	private StudyService studyDao;
 	
@@ -41,10 +39,8 @@ public class StudyController {
 	@Autowired
 	private StudyMailSender mail;
 	
-	/*
-	 * @Autowired private ChatRoomService chatRoomDao;
-	 */
-	
+	@Autowired
+	private ChatRoomService chatRoomService;
 	
 	/* STUDY MAIN */
 	// 스터디 메인
@@ -55,6 +51,7 @@ public class StudyController {
 	    	model.addAttribute("member", User);
 	    	model.addAttribute("list", studyDao.studyUnfinedTeamBtn(User.getName()));
     	}
+
         return "study/studyMain";
     }
     
@@ -288,21 +285,52 @@ public class StudyController {
     	return "study/test";
     }
     
+    @RequestMapping("/chatStudy.do")
+    public String chatStudy() {
+    	
+    	return "chat/chat";
+    }
     
     // 채팅 서비스
 	/*
-	 * @RequestMapping("/studyChat.do") public String studyChat(Model model,
-	 * Principal User, StudyVO vo, StudyReqVO rvo) { ChatRoomVO chatVO = new
-	 * ChatRoomVO(); chatVO = chatRoomDao.selectChatRoom(chatVO.getRoomId());
+	 * @RequestMapping("/studyChat.do")
+	 * public String studyChat(Model model,
+	 * Principal User, StudyVO vo, StudyReqVO rvo){
+	 * ChatRoomVO chatVO = new ChatRoomVO();
 	 * 
-	 * // if 스터디 방 번호가 없을 경우 insert if (chatVO == null) {
-	 * chatVO.setOwnerId(User.getName()); chatVO.setEntryId(rvo.getMemberId());
-	 * chatRoomDao.makeChatRoom(chatVO); } else { // else 스터디 방 번호가 있을 경우 스터디 채팅방을
-	 * 불러온다 chatRoomDao.selectChatRoom(chatVO.getRoomId()); }
+	 * chatVO = chatRoomDao.selectChatRoom(chatVO.getRoomId());
+	 * 
+	 * // if 스터디 방 번호가 없을 경우 insert
+	 * if (chatVO == null) {
+	 * chatVO.setOwnerId(User.getName());
+	 * chatVO.setEntryId(rvo.getMemberId());
+	 * chatRoomDao.makeChatRoom(chatVO);
+	 * } else {
+	 * // else 스터디 방 번호가 있을 경우 스터디 채팅방을 불러온다
+	 * chatRoomDao.selectChatRoom(chatVO.getRoomId()); }
 	 * 
 	 * // studyReq 신청자페이지, studyMember 그룹원페이지, studySelect 상세글 페이지 // 버튼 적용
 	 * 
 	 * return "chat/chat"; }
 	 */
-
+    
+    // 채팅
+    @RequestMapping("/studyChat.do")
+    @ResponseBody
+    public String studyChat(Principal User, ChatRoomVO vo) {
+    	System.out.println("==================================== " + vo.getOwnerId());	// 화면에서 가져오는
+    	System.out.println("==================================== " + User.getName());	// 우리 로그인
+    	vo.setEntryId(User.getName());	// 값 세팅
+    	vo.setRoomId(0);
+    	
+    	// 채팅이 존재하는가 존재하지 않는가
+    	//vo = chatRoomService.selectChat(vo);
+    	
+    	if(vo.getRoomId() == 0){
+    		// 새로운 채팅 만들기
+    		//chatRoomService.makeChatRoom(vo);
+    	}
+    	
+    	return "1";
+    }
 }
