@@ -38,7 +38,9 @@ public class CodeController {
 			CommentVO cmVo = new CommentVO();
 			cmVo.setBoardNo(vo.getCqNo());
 			model.addAttribute("comments", commentDAO.commentSelectList(cmVo));
-			model.addAttribute("username", principal.getName());
+			if (principal != null) {
+				model.addAttribute("username", principal.getName());
+			}
 			model.addAttribute("bno", vo.getCqNo());
 			codeDAO.codeHitUp(vo);
 			return "code/codeSelectOne";

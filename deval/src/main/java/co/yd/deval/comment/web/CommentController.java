@@ -1,7 +1,7 @@
 package co.yd.deval.comment.web;
 
+import java.security.Principal;
 import java.util.List;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,8 +29,9 @@ public class CommentController {
 	}
 
 	@PostMapping("/commentInsert.do")
-	public String commentInsert(CommentVO vo) {
+	public String commentInsert(CommentVO vo,Principal user) {
 		int type = vo.getBoardTypeNo();
+		vo.setWriter(user.getName());
 		int r = commentDAO.commentInsert(vo);
 		if (r != 0) {
 			if (type == 1) {

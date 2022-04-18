@@ -6,8 +6,7 @@
 	select *
 	from board
 	where board_type_no = #{b}
-	ORDER BY
-	BOARD_NO DESC
+	ORDER BY BOARD_NO DESC
 </select>
 
 
@@ -82,11 +81,10 @@
        SELECT * FROM (
            SELECT ROWNUM rn, t.*
              FROM BOARD t
-
        ]]>
 	<include refid="option"></include>
-	AND rownum <![CDATA[<=]]>
-	#{criteria.pageNum} * #{criteria.amount}
+	AND rownum <![CDATA[<=]]> #{criteria.pageNum} * #{criteria.amount}
+	ORDER BY BOARD_NO DESC
 	)
        <![CDATA[
        WHERE rn > (#{criteria.pageNum} - 1) * #{criteria.amount}
@@ -99,7 +97,10 @@
 	AND board_no > 0
 </select>
 
-
+	<select id="getMainPageList" resultType="co.yd.deval.board.service.BoardVO">
+		SELECT BOARD_NO, TITLE, HIT, BOARD_TYPE_NO
+		FROM MAIN_PAGE_BOARD_VIEW
+	</select>
 
 <update id="boardHitUp" parameterType="int">
 	UPDATE BOARD

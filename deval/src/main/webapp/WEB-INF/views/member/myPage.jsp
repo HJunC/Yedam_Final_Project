@@ -556,7 +556,6 @@
 			}
 			tr.append(td5)
 		}
-		console.log(tr)
 		return tr;
 	};
 	
@@ -614,5 +613,7 @@
 		frm.submit();
 	};
 	
+		return $('<tbody>').append(tr);
+	};
 </script>
 

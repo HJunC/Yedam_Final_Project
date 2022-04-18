@@ -54,7 +54,7 @@ public class RestProjectController {
             try {
                 int createPno = projectService.create(vo);
                 if (createPno > 0) {
-                    session.setAttribute("userProjectState", "팀장");
+                    session.setAttribute("isTeam", true);
                     session.setAttribute("isWait", true);
                     res.put("result", "success");
                     res.put("projectNo", createPno);
@@ -82,7 +82,7 @@ public class RestProjectController {
     public ResponseEntity<ProjectVO> deleteProject(ProjectVO vo, Principal principal, HttpSession session) {
         if (principal.getName().equals(vo.getLeaderId())) {
             projectService.remove(vo);
-            session.setAttribute("userProjectState", "");
+            session.setAttribute("isTeam", false);
             session.setAttribute("isWait", false);
             return ResponseEntity.ok().body(vo);
         } else {
@@ -112,13 +112,18 @@ public class RestProjectController {
         }
     }
 
-    /***
+     /**
      * 프로젝트 업데이트
+     * @param vo
+     * @return
      */
     @PostMapping("/update")
     public ResponseEntity<Integer> updateProject(ProjectVO vo) {
         int result = projectService.updateProject(vo);
-        return ResponseEntity.ok().body(result);
+        if (result > 0) {
+            return ResponseEntity.ok().body(result);
+        }
+        return ResponseEntity.badRequest().body(result);
     }
 
     @PostMapping("/complete")
@@ -128,7 +133,6 @@ public class RestProjectController {
            try {
                int result = projectService.completeProject(vo);
                if (result > 0) {
-                   session.setAttribute("userProjectState", "");
                    returnBody.put("result", "success");
                    return ResponseEntity.ok().body(returnBody);
                } else {
@@ -175,7 +179,6 @@ public class RestProjectController {
         if (principal != null) {
             int result = projectRequestService.request(vo);
             if (result > 0) {
-                projectService.updateApplyCount(vo.getProjectNo());
                 returnBody.put("result", "success");
                 return ResponseEntity.ok().body(returnBody);
             } else {
@@ -213,9 +216,12 @@ public class RestProjectController {
      */
     @PostMapping("/approveRequest")
     public ResponseEntity<ProjectRequestVO> approveRequest(ProjectRequestVO vo) {
-        System.out.println(vo);
-        projectRequestService.approve(vo);
-        return ResponseEntity.ok().body(vo);
+        int result = projectRequestService.approve(vo);
+        if (result > 0) {
+            return ResponseEntity.ok().body(vo);
+        } else {
+            return ResponseEntity.badRequest().body(vo);
+        }
     }
 
     @PostMapping("/deleteRequest")
