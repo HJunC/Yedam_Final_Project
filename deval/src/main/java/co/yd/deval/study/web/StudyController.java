@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import co.yd.deval.chat.service.ChatLogService;
+import co.yd.deval.chat.service.ChatRoomService;
+import co.yd.deval.chat.service.ChatRoomVO;
 import co.yd.deval.common.Criteria;
 import co.yd.deval.common.PageDTO;
 import co.yd.deval.member.service.MemberService;
@@ -37,6 +40,10 @@ public class StudyController {
 	
 	@Autowired
 	private StudyMailSender mail;
+	
+	/*
+	 * @Autowired private ChatRoomService chatRoomDao;
+	 */
 	
 	
 	/* STUDY MAIN */
@@ -266,6 +273,9 @@ public class StudyController {
     	return "study/studyMember";
     }
     
+    
+    // 디자인 테스트
+    
     @RequestMapping("/designList.do")
     public String designList(Model model) {
     	
@@ -277,5 +287,22 @@ public class StudyController {
     	
     	return "study/test";
     }
+    
+    
+    // 채팅 서비스
+	/*
+	 * @RequestMapping("/studyChat.do") public String studyChat(Model model,
+	 * Principal User, StudyVO vo, StudyReqVO rvo) { ChatRoomVO chatVO = new
+	 * ChatRoomVO(); chatVO = chatRoomDao.selectChatRoom(chatVO.getRoomId());
+	 * 
+	 * // if 스터디 방 번호가 없을 경우 insert if (chatVO == null) {
+	 * chatVO.setOwnerId(User.getName()); chatVO.setEntryId(rvo.getMemberId());
+	 * chatRoomDao.makeChatRoom(chatVO); } else { // else 스터디 방 번호가 있을 경우 스터디 채팅방을
+	 * 불러온다 chatRoomDao.selectChatRoom(chatVO.getRoomId()); }
+	 * 
+	 * // studyReq 신청자페이지, studyMember 그룹원페이지, studySelect 상세글 페이지 // 버튼 적용
+	 * 
+	 * return "chat/chat"; }
+	 */
 
 }
