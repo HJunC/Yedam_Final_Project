@@ -25,7 +25,7 @@
                         <!-- Product Content -->
                         <div class="row mb-60 mb-xs-30">
                         <c:if test="${!empty member}">
-                            <div><h1>${member.cashPt}</h1></div>
+                            <div id="nowCash" style="display: none">${member.cashPt}</div>
                         </c:if>
                             <!-- Product Images -->
                             <div class="col-md-4 mb-md-30">
@@ -40,7 +40,7 @@
                             <!-- Product Description -->
                             <div class="col-sm-8 col-md-5 mb-xs-40">
                                 
-                                <h1 class="h3 mt-0">${mento.mentoId }</h1>
+                                <h1 class="h3 mt-0">${mento.mentoId}</h1>
                                 
                                 <hr class="mt-0 mb-30 white" />
                                 
@@ -134,14 +134,9 @@
 														<!-- Pricing Features -->
 														<div class="pricing-features">
 															<ul class="sf-list pr-list">
-																<li id="priceTime">시간 : </li>
-																<li id="priceTerm">기간 : </li>
-																<c:if test="${empty member.cashPt}">
-																	<li>포인트가 없습니다 충전해주세요.</li>
-																</c:if>
-																<c:if test="${!empty member.cashPt}">
-																	<li id="nowPoint">현제포인트 : ${member.cashPt}</li>
-																</c:if>
+																<li id="priceTime"></li>
+																<li id="priceTerm"></li>
+																<li id="nowPoint"></li>
 																<li>시간당가격 : ${mento.price}</li>
 															</ul>
 														</div>
@@ -151,7 +146,7 @@
 															<span id="totalPrice"></span>
 														</div>
 														<div class="pr-per">서비스전체가격</div>
-														<div>
+														<div class="refresh">
 														<input type="hidden" id="putPoint">충전금액을 적어주세요</input>
 														</div>
 
@@ -291,6 +286,7 @@
         }
         
         function totalTime() {
+        	
         	// 토탈가격 시간측정
         	var edTime = document.getElementById('serviceEdt').value;
         	var stTime = document.getElementById('serviceStt').value;
@@ -336,6 +332,7 @@
         function checkTime() {
         	var edTime = document.getElementById('serviceEdt').value;
         	var stTime = document.getElementById('serviceStt').value;
+        	$('#nowPoint').html('현재 포인트 : '+$('#nowCash').text())
         	if(edTime == "종료시간" || stTime == '시작시간') {
         		alert('기간 또는 시간을 정해주세요.');
         	}else {
@@ -349,12 +346,14 @@
     	        	$('#totalPrice').empty();
     	        	$('#totalPrice').append(totalPrice);
     	        	// 충전버튼 생성
-    	        	if(totalPrice > ${member.cashPt}) {
+    	        	if(totalPrice > $('#nowCash').text()) {
     	        		putPoint.type = "text";
     	        		var chargeBtn = $('<input type="button" class="btn btn-mod btn-w btn-small round" id="charge" onclick="chargePt()" value="충전하기">');
     	        		$('#btnDiv').empty();
     	        		$('#btnDiv').append(chargeBtn);
-    	        	}else if(totalPrice <= ${member.cashPt}) {
+    	        	}else if(totalPrice <= $('#nowCash').text()) {
+    	        		putPoint.type="hidden";
+    	        		$('.refresh').text('');
     	        		var paymentBtn = $('<input type="button" class="btn btn-mod btn-w btn-small round" id="payment" onclick="payment()" value="결제하기">');
     	        		$('#btnDiv').empty();
     	        		$('#btnDiv').append(paymentBtn);
@@ -391,16 +390,18 @@
     		                  }
     		              }).done(function (data) {
     		                // 가맹점 서버 결제 API 성공시 로직
-    		                alert("결제에 성공했습니다");
-    		                //$('.pricing-wrap').load(window.location.href + " .pricing-wrap")
+    		                alert("결제에 성공했습니다, 다시신청해주세요");
+    		                $('#nowCash').load(window.location.href + " #nowCash")
+    		                $('.mfp-close').trigger('click');
     		                
     		              })
     		          } else {
     		              // 결제 실패 시 로직,
     		        	  alert("결제에 실패하였습니다. 에러 내용: " +  rsp.error_msg);
-    		          } 
+    		          }
+    		          console.log(i);
     		      });
-    	   }
+    	   };
     	   
     	  //결제하기
     	  // 결제되는 포인트 변수선언

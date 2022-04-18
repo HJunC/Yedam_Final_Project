@@ -53,6 +53,7 @@ public class ProjectVO {
     private int applyRcnt;
     private String leaderId;
     private int crntRcnt;
+    private String gitUri;
 
     // 테이블에 없는 데이터
     private String leaderPosition;

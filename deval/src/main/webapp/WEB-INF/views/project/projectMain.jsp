@@ -26,16 +26,71 @@
     </div>
 </section>
 <!-- End Home Section -->
-
+<style>
+    .my-project {
+        background-color: #1b1b1b;
+        padding: 0;
+        color: white !important;
+    }
+    .my-project:hover {
+        text-decoration : none;
+        background-color: #0e0e0e;;
+    }
+</style>
 <!-- Call Action Section -->
 <section class="small-section bg-dark light-content">
     <div class="container relative">
         <c:choose>
             <c:when test="${not empty userProject}">
-            <h3>내 프로젝트 ${sessionScope.userProjectState }</h3>
-            <a href="projectDetail.do?no=${userProject.projectNo}">
-                ${userProject.projectNo} / ${userProject.projectName} / 리더 아이디 : ${userProject.leaderId}
-            </a>
+            <h3>내 프로젝트</h3>
+                <a href="projectDetail.do?no=${userProject.projectNo}" class="list-group-item d-flex justify-content-between align-items-start pt-2 pb-2 my-project" aria-current="true">
+                    <div class="ms-2 me-auto">
+                        <div class="countdown-search-list mb-1">
+                            <i class="fa fa-users"></i> (${userProject.crntRcnt}/${userProject.totalRcnt})
+                        </div>
+                        <div>
+                            <h5 class="mb-2">${userProject.projectName} <span class="fs-6" style="color: #727272">(${userProject.projectTerm}일)</span></h5>
+                            <div class="lang-search-list">${userProject.lang}</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="info-search-list mt-40">
+                            <i class="fa fa-eye"></i> ${userProject.hit}&nbsp;&nbsp;&nbsp;
+                            <i class="fa fa-user-clock"></i> ${userProject.applyRcnt} 지원</span>
+                        </div>
+                    </div>
+                </a>
+                <c:if test="${userProject.state eq '3'}">
+                    <!-- Bar Item -->
+                    <div class="progress tpl-progress mt-4" style="background-color: #ebebeb; position: relative;">
+                        <div id="progressBar"
+                             class="progress-bar"
+                             role="progressbar"
+                             aria-valuemin="0"
+                             aria-valuemax="100"
+                             style="background-color: #6ead5a">
+                            <div>
+                                <fmt:formatDate value="${userProject.projectSdt}" type="both" pattern="yyyy-MM-dd"/>
+                            </div>
+                        </div>
+                        <div style="position: absolute; top: 8px; right: 0;">
+                            <fmt:formatDate value="${userProject.projectEdt}" type="both" pattern="yyyy-MM-dd"/>
+                        </div>
+                    </div>
+                    <!-- End Bar Item -->
+                    <script>
+                      /**
+                       * progressBar
+                       */
+                      var today = new Date();
+                      const start_date = new Date('<fmt:formatDate value="${userProject.projectSdt}" type="both" pattern="yyyy-MM-dd"/>');
+                      const end_date = new Date('<fmt:formatDate value="${userProject.projectEdt}" type="both" pattern="yyyy-MM-dd"/>');
+                      const total = end_date - start_date;
+                      const perc = today - start_date;
+                      const progressValue = Math.round(perc / total * 100 );
+                      document.getElementById("progressBar").setAttribute("aria-valuenow", progressValue);
+                    </script>
+                </c:if>
             </c:when>
 
             <c:otherwise>
@@ -51,30 +106,29 @@
             </c:otherwise>
         </c:choose>
 
-        <c:if test="${sessionScope.userProjectState eq '팀장'}">
-            나는 리더
-        </c:if>
-
         <c:if test="${sessionScope.isWait == true}">
-            <h4>지원자</h4>
+            <h4 class="mt-5">지원자</h4>
             <c:choose>
                 <c:when test="${not empty requestList}">
                     <c:forEach items="${requestList}" var="item">
-                        <div class="table-responsive">
-                            <table class="table shopping-cart-table">
-                                <tbody>
-                                    <tr class="active">
-                                        <td>${item.projectNo }</td>
-                                        <td>${item.memberId }</td>
-                                        <td>${item.state }</td>
-                                        <td>${item.subject }</td>
-                                        <td>${item.position }</td>
-                                        <td>${item.requestDt }</td>
-                                        <td><button type="button" class="btn btn-mod btn-w btn-medium btn-round" onclick="approveRequest('${item.memberId }', '${item.projectNo }', '${item.position }')">수락</button></td>
-                                        <td><button type="button" class="btn btn-mod btn-w btn-medium btn-round" onclick="refuseRequest('${item.memberId }', '${item.projectNo }')">거절</button></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <div style="color: #999999;">
+                                    <i class="fa fa-user"></i> ${item.memberId }
+                                    | 포지션 :
+                                    ${item.position eq 'FE' ? '프론트엔드 개발자' : null}
+                                    ${item.position eq 'BE' ? '백엔드 개발자' : null}
+                                    ${item.position eq 'FS' ? '풀스택 개발자' : null}
+                                    ${item.position eq 'DE' ? '디자이너' : null}
+                                    ${item.position eq 'PL' ? '기획자' : null}
+                                    | 지원 일자 : ${item.requestDt }
+                                </div>
+                                <p>${item.subject }</p>
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-mod btn-w btn-medium btn-round" onclick="approveRequest('${item.memberId }', '${item.projectNo }', '${item.position }')">수락</button>
+                                <button type="button" class="btn btn-mod btn-w btn-medium btn-round" onclick="refuseRequest('${item.memberId }', '${item.projectNo }')">거절</button>
+                            </div>
                         </div>
                     </c:forEach>
                 </c:when>
@@ -196,7 +250,6 @@
               }
 
               timeArray.forEach(value => {
-                console.log(value)
                 countDate(value.id, value.endDate);
               });
             </script>
@@ -343,6 +396,7 @@
    * 요청 승인
    * @param memberId
    * @param projectNo
+   * @param position
    */
   function approveRequest(memberId, projectNo, position) {
     $.ajax({
@@ -356,6 +410,11 @@
       success: function (res) {
         console.log(res);
         alert("팀에 합류하였습니다 !");
+        var msg = {
+          memberId,
+          subject : projectNo + "번 프로젝트에 " + position + " 포지션으로 합류하였습니다!"
+        }
+        webSocket.send(JSON.stringify(msg));
         location.reload();
       },
       error: function (res) {
@@ -381,6 +440,11 @@
       success: function (res) {
         console.log(res);
         alert("요청이 거절되었습니다.");
+        var msg = {
+          memberId,
+          subject : projectNo + "번 프로젝트 지원요청이 거절되었습니다."
+        }
+        webSocket.send(JSON.stringify(msg));
         location.reload();
       },
       error: function (res) {

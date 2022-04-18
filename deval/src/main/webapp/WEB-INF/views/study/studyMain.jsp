@@ -30,7 +30,7 @@
                            <a href="studyMember.do" class="btn btn-mod btn-w btn-small btn-round mx-md-1">Study Team</a>
                          </c:if>
                          <c:if test="${not empty study}">
-                           <a href="studyReq.do" class="btn btn-mod btn-w btn-small btn-round mx-md-1">Team Requestor</a>
+                           <a href="studyReq.do" class="btn btn-mod btn-w btn-small btn-round mx-md-1">Team Applicant </a>
                         </c:if>
                           <!--  <a href="chat.do">채팅</a> -->
                         </div>

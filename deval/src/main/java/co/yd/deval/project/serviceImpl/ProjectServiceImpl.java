@@ -153,6 +153,7 @@ public class ProjectServiceImpl implements ProjectService {
         teamMapper.completeProject(vo.getProjectNo(), 300);
         // 프로젝트 상태 변경
         vo.setUpdateState("4");
+        vo.setGitUri(vo.getGitUri());
         return mapper.updateProject(vo);
     }
 

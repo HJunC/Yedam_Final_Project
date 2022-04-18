@@ -7,6 +7,8 @@
 <link rel="stylesheet" href="${resources}/css/common/toastui-editor.min.css" />
 <link rel="stylesheet" href="${resources}/css/common/toastui-editor-dark.min.css" />
 
+<script src="${resources}/js/moment.min.js"></script>
+<script src="${resources}/js/moment-with-locales.min.js"></script>
 <!-- Home Section -->
 <section class="small-section bg-dark-alfa-50 bg-scroll light-content" data-background="${resources}/images/full-width-images/section-bg-19.jpg" id="home">
     <div class="container relative pt-70">
@@ -32,10 +34,40 @@
                             <span><i class="fa fa-user"></i> ${project.leaderId}</span>
                             <span class="separator">&nbsp;</span>
                             <span><i class="fa fa-clock"></i>
-                                모집일
-                                <fmt:formatDate value="${project.recruitSdt}" type="both" pattern="yyyy-MM-dd"/>
-                                ~
-                                <fmt:formatDate value="${project.recruitEdt}" type="both" pattern="yyyy-MM-dd"/>
+                            <c:choose>
+                                <c:when test="${project.state eq '1' or project.state eq '2'}">
+                                     마감 <span id="timer"></span>
+                                    <script>
+                                    var getCurrentTime = moment();
+                                    var targetTime = moment('<fmt:formatDate value="${project.recruitEdt}" type="both" pattern="yyyy-MM-dd"/>');
+                                    var getCurrentTimeUnix = getCurrentTime.unix();
+                                    var targetTimeUnix = targetTime.unix();
+                                    var leftTime = targetTimeUnix - getCurrentTimeUnix;
+                                    var duration = moment.duration(leftTime, 'seconds');
+                                    var interval = 1000;
+                                    var intv = setInterval(function(){
+                                      if (duration.asSeconds() <= 1 || getCurrentTimeUnix >= targetTimeUnix ) {
+                                        $("#timer").html('-');
+                                        clearInterval(intv);
+                                      }else{
+                                        duration = moment.duration(duration.asSeconds() - 1, 'seconds');
+                                        var timer = {
+                                          hours : (duration.hours() < 10) ? '0' + duration.hours() : duration.hours(),
+                                          minutes : (duration.minutes() < 10) ? '0' + duration.minutes() : duration.minutes(),
+                                          seconds : (duration.seconds() < 10) ? '0' + duration.seconds() : duration.seconds()
+                                        }
+                                        $("#timer").html(
+                                          targetTime.diff(getCurrentTime, 'days') + '일 ' +
+                                          timer.hours + ' : ' + timer.minutes + ' : ' +  timer.seconds
+                                        );
+                                      }
+                                    }, interval);
+                                    </script>
+                                </c:when>
+                                <c:otherwise>
+                                    모집 마감 <fmt:formatDate value="${project.recruitEdt}" type="both" pattern="yyyy-MM-dd"/>
+                                </c:otherwise>
+                            </c:choose>
                             </span>
                             <span class="separator">&nbsp;</span>
                             <span><i class="fa fa-user-clock"></i> ${project.applyRcnt} 신청자 수</span>
@@ -109,18 +141,99 @@
         <c:if test="${nowDate >= projectEdt && project.leaderId eq member.name && project.state eq '3'}">
 
             <!-- Lightbox Modal -->
-            <a href="#test-modal" class="btn btn-mod btn-w btn-medium round mt-10 lightbox-gallery-5 mfp-inline">프로젝트 완료하기 🎉</a>
+            <a href="#test-modal" class="btn btn-mod btn-w btn-medium round mt-10 lightbox-gallery-5 mfp-inline" id="modalTest">프로젝트 완료하기 🎉</a>
 
             <div id="test-modal" class="mfp-hide">
-                <h3>프로젝트를 무사히 완주 🏆 <i class="fa fa-share-square"></i></h3>
-                <div class="d-flex justify-content-between mb-40">
-                    <label>프로젝트 주소</label>
-                    <input type="text" class="form-control">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h3>축하합니다 🏆</h3>
+                    <div class="d-flex">
+                        <input type="text" id="uri" class="form-control">
+                        <button type="button" id="uriClip" class="btn" title="주소 복사하기" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                            <i class="fa fa-share-square"></i>
+                        </button>
+                    </div>
+
+                </div>
+
+                <div class="form-group mb-4">
+                    <label><svg style="width: 18px;" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                        깃허브 Repository 주소 (추가 exp +100)</label>
+                    <input type="text" class="form-control mb-1" id="githubUri">
+                    <div id="uriResult"></div>
                 </div>
                 <button type="button" onclick="completeProject()" class="btn btn-mod btn-round btn-large">완료 (exp + 300)</button>
             </div>
             <!-- End Lightbox Modal -->
+            <script>
+              function uriClip(){
+                document.getElementById("uri").select();
+                document.execCommand("copy");
+                console.log("복사하였습니다!");
+              }
 
+              setTimeout(() => {
+                $(".mfp-inline").magnificPopup({
+                  closeOnBgClick: false
+                });
+              }, 1000);
+
+              $("#uri").val(location.href);
+              $("#uriClip").on("click", function () {
+                uriClip();
+              });
+
+              var insertGithubUri = '';
+              $("#githubUri").on("change", function () {
+                $("#uriResult").html('');
+                var isDone = true;
+                var uriArray = $("#githubUri").val().split("/");
+                console.log(uriArray);
+
+                if (uriArray[0] !== 'https:' || uriArray[3] == null || uriArray[4] == null) {
+                  $("#uriResult").html('<span style="color: red;">올바른 형식이 아닙니다.</span>');
+                  isDone = false;
+                }
+
+                if (uriArray[2] !== 'github.com') {
+                  $("#uriResult").html('<span style="color: red;">깃허브 주소가 아닙니다.</span>');
+                  isDone = false;
+                }
+
+                if (isDone) {
+
+                  $.ajax({
+                    url: 'https://api.github.com/repos/' + uriArray[3] + '/' + uriArray[4],
+                    type: "GET",
+                    success: function (res) {
+                      if (res.message === "Not Found") {
+                        $("#uriResult").html("없는 Repository");
+                      } else {
+                        var str = '<div id="repositoryInfo" class="card mt-2"><div class="card-body">' +
+                          '<div>\n' +
+                          '프로젝트 이름 : ' + res.name +
+                          '</div>\n' +
+                          '<div class="d-flex align-items-center">\n' +
+                          '생성자 : ' +
+                          '<img src="' + res.owner.avatar_url + '" class="me-2" style="width: 30px; border-radius: 30px;">\n' +
+                          res.owner.login +
+                          '</div>\n' +
+                          '<div class="d-flex align-items-center">\n' +
+                          '만들어진 날짜 : ' + res.created_at + ' ' +
+                          '마지막 푸쉬 : ' + res.pushed_at +
+                          '</div>\n' +
+                          '</div></div>';
+                        $("#uriResult").html(str);
+                        insertGithubUri = res.url;
+                      }
+                    },
+                    error: function (res) {
+                      $("#uriResult").html('<span style="color: red;">'+res.message+'</span>');
+                    }
+                  })
+                }
+              })
+
+            </script>
         </c:if>
 
     </div>
@@ -144,8 +257,76 @@
 
             <!-- Content -->
             <div class="col-md-8 mb-sm-80">
+                <c:if test="${project.state eq '4'}">
+                    <!-- Nav Tabs -->
+                    <div class="blog-item mb-80 mb-xs-40">
+                        <div class="align-center mb-40 mb-xxs-30">
+                            <ul class="nav nav-tabs tpl-tabs animate" role="tablist">
 
-                <h4 class="blog-page-title">프로젝트 설명</h4>
+                                <li class="nav-item">
+                                    <a href="#item-1" aria-controls="item-1" class="nav-link active" data-bs-toggle="tab" role="tab" aria-selected="true">First Tab</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="#item-2" aria-controls="item-2" class="nav-link" data-bs-toggle="tab" role="tab" aria-selected="false">Second Tab</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="#item-3" aria-controls="item-3" class="nav-link" data-bs-toggle="tab" role="tab" aria-selected="false">Third Tab</a>
+                                </li>
+
+                            </ul>
+                        </div>
+                        <!-- End Nav Tabs -->
+
+                        <!-- Tab panes -->
+                        <div class="tab-content tpl-minimal-tabs-cont section-text">
+
+                            <div class="tab-pane fade show active" id="item-1" role="tabpanel">
+
+                            </div>
+
+                            <div class="tab-pane fade" id="item-2" role="tabpanel">
+                                Nam porta elementum tortor, eget tempor orci ullamcorper eget. Aliquam fermentum sem non vulputate dapibus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla at porttitor massa.
+                                Aliquam tortor leo, pharetra non congue sit amet pharetra non congue sit amet, bibendum sit amet enim.
+                            </div>
+
+                            <div class="tab-pane fade" id="item-3" role="tabpanel">
+                                Pellentesque sed vehicula velit, vitae vulputate velit. Morbi nec porta augue, et dignissim enim. Vivamusere suscipit, lorem vitae rhoncus pharetra, erat nisl scelerisque magna, ut mollis dui eros eget libero. Vivamus ut ornare tellus.
+                                Aliquam tortor leo, pharetra pharetra non congue sit amet non congue sit amet, bibendum sit amet enim.
+                            </div>
+
+                        </div>
+                        <!-- End Tab panes -->
+                    </div>
+                    <script>
+                      $.ajax({
+                        url: '${project.gitUri}',
+                        type: "GET",
+                        success: function (res) {
+                          makeGithubLink(res);
+                        },
+                        error: function (res) {
+                          $("#item-1").html("연결에러");
+                        }
+                      })
+
+                      function makeGithubLink(res) {
+                        var str = $(`<div class="card text-white bg-dark mb-3">
+                                      <div class="card-header">프로젝트 명 : <a href="`+res.html_url+`" style="text-decoration: none;">`+res.name+`</a></div>
+                                      <div class="card-body">
+                                        <p class="card-text">
+                                          생성자 :
+                                          <img src="`+res.owner.avatar_url+`" alt="프로필" style="width: 30px; border-radius: 30px;">
+                                          `+res.owner.login+`
+                                        </p>
+                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                      </div>
+                                    </div>`);
+                        $("#item-1").append(str);
+                      }
+                    </script>
+                </c:if>
 
                 <!-- Post -->
                 <div class="blog-item mb-80 mb-xs-40">
@@ -189,7 +370,7 @@
 
                 <%--프로젝트 모집중인 팀장만 볼수있는 화면--%>
                 <c:if test="${project.leaderId eq member.name
-                              and project.state eq '1' or project.state eq '2'}">
+                              and (project.state eq '1' or project.state eq '2')}">
                 <div class="mb-80 mb-xs-40">
 
                     <h4 class="blog-page-title">신청현황</h4>
@@ -197,21 +378,41 @@
                     <c:choose>
                         <c:when test="${not empty project.requestList}">
                             <c:forEach items="${project.requestList}" var="item">
-                                ${item.memberId} / ${item.position}
+                                <c:if test="${item.state eq '1'}">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <div style="color: #999999;">
+                                                <i class="fa fa-user"></i> ${item.memberId }
+                                                | 포지션 :
+                                                    ${item.position eq 'FE' ? '프론트엔드 개발자' : null}
+                                                    ${item.position eq 'BE' ? '백엔드 개발자' : null}
+                                                    ${item.position eq 'FS' ? '풀스택 개발자' : null}
+                                                    ${item.position eq 'DE' ? '디자이너' : null}
+                                                    ${item.position eq 'PL' ? '기획자' : null}
+                                                | 지원 일자 : ${item.requestDt }
+                                            </div>
+                                            <p>${item.subject }</p>
+                                        </div>
+                                        <div>
+                                            <button type="button" class="btn btn-mod btn-w btn-medium btn-round" onclick="approveRequest('${item.memberId }', '${item.projectNo }', '${item.position }')">수락</button>
+                                            <button type="button" class="btn btn-mod btn-w btn-medium btn-round" onclick="refuseRequest('${item.memberId }', '${item.projectNo }')">거절</button>
+                                        </div>
+                                    </div>
+                                </c:if>
                             </c:forEach>
                         </c:when>
                         <c:otherwise>
                             <h3 class="call-action-1-heading" style="font-size: 30px; color: rgba(255, 255, 255, 0.3);">지원자가 없습니다.</h3>
                         </c:otherwise>
                     </c:choose>
+
                 </div>
                 </c:if>
 
-                <%--<sec:authorize access="isAuthenticated()">--%>
-                    <c:if test="${sessionScope.userProjectState ne '팀장'
-                                and sessionScope.userProjectState ne '팀원'
+                <sec:authorize access="isAuthenticated()">
+                    <c:if test="${!sessionScope.isTeam
                                 and project.state eq '1'
-                                and !isRequest
+                                and empty userRequest
                                 and (project.frontRcnt + project.backRcnt + project.fullRcnt + project.designRcnt + project.plannerRcnt) != 0}">
                         <!-- Add Comment -->
                         <div class="mb-80 mb-xs-40">
@@ -286,8 +487,30 @@
                         </div>
                         <!-- End Add Comment -->
                     </c:if>
-               <%-- </sec:authorize>--%>
+                </sec:authorize>
+                <c:if test="${not empty userRequest and userRequest.state eq '1'}">
+                    <div class="mb-80 mb-xs-40">
 
+                        <h4 class="blog-page-title">검토중인 요청</h4>
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <div style="color: #999999;">
+                                    <i class="fa fa-user"></i> ${userRequest.memberId }
+                                    | 포지션 :
+                                        ${userRequest.position eq 'FE' ? '프론트엔드 개발자' : null}
+                                        ${userRequest.position eq 'BE' ? '백엔드 개발자' : null}
+                                        ${userRequest.position eq 'FS' ? '풀스택 개발자' : null}
+                                        ${userRequest.position eq 'DE' ? '디자이너' : null}
+                                        ${userRequest.position eq 'PL' ? '기획자' : null}
+                                    | 지원 일자 : ${userRequest.requestDt }
+                                </div>
+                                <p>${userRequest.subject }</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </c:if>
             </div>
             <!-- End Content -->
 
@@ -330,13 +553,32 @@
                             <div class="widget">
                                 <h3 class="widget-title">포지션 정보</h3>
                                 <div class="widget-body">
-                                    <p class="mb-1">프론트엔드 개발자 <span class="badge bg-info" id="feCount"></span></p>
-                                    <p class="mb-1">백엔드 개발자  <span class="badge bg-info" id="beCount"></span></p>
-                                    <p class="mb-1">풀스택 개발자  <span class="badge bg-info" id="fsCount"></span></p>
-                                    <p class="mb-1">디자이너  <span class="badge bg-info" id="deCount"></span></p>
-                                    <p class="mb-1">기획자  <span class="badge bg-info" id="plCount"></span></p>
+                                    <p class="mb-1">프론트엔드 개발자 <span class="badge bg-info text-dark" id="feCount"></span></p>
+                                    <p class="mb-1">백엔드 개발자  <span class="badge bg-info text-dark" id="beCount"></span></p>
+                                    <p class="mb-1">풀스택 개발자  <span class="badge bg-info text-dark" id="fsCount"></span></p>
+                                    <p class="mb-1">디자이너  <span class="badge bg-info text-dark" id="deCount"></span></p>
+                                    <p class="mb-1">기획자  <span class="badge bg-info text-dark" id="plCount"></span></p>
                                 </div>
                             </div>
+                            <script>
+                              var feCount = 0;
+                              var beCount = 0;
+                              var fsCount = 0;
+                              var deCount = 0;
+                              var plCount = 0;
+                              <c:forEach items="${team }" var="item">
+                              <c:if test="${item.position eq 'FE'}">feCount++</c:if>
+                              <c:if test="${item.position eq 'BE'}">beCount++</c:if>
+                              <c:if test="${item.position eq 'FS'}">fsCount++</c:if>
+                              <c:if test="${item.position eq 'DE'}">deCount++</c:if>
+                              <c:if test="${item.position eq 'PL'}">plCount++</c:if>
+                              </c:forEach>
+                              $("#feCount").html(feCount);
+                              $("#beCount").html(beCount);
+                              $("#fsCount").html(fsCount);
+                              $("#deCount").html(deCount);
+                              $("#plCount").html(plCount);
+                            </script>
                         </c:otherwise>
                     </c:choose>
 
@@ -384,7 +626,7 @@
                             <h3 class="widget-title">설정</h3>
 
                             <div class="widget-body">
-                                <button type="button" onclick="" class="btn btn-mod btn-w btn-round btn-small">
+                                <button type="button" onclick="pageGoUpdateForm()" class="btn btn-mod btn-w btn-round btn-small">
                                     수정하기
                                 </button>
                                 <button type="button" onclick="deleteProject()" class="btn btn-mod btn-w btn-round btn-small" style="background: rgb(251 71 71 / 90%);">
@@ -406,8 +648,6 @@
 </section>
 <!-- End Section -->
 
-<script src="${resources}/js/moment.min.js"></script>
-<script src="${resources}/js/moment-with-locales.min.js"></script>
 <script>
   /**
    * 작성시간 표시
@@ -434,25 +674,6 @@
     const sdtDate = new Date(projectSdtInput.value);
     projectEdtInput.setAttribute("value", moment(sdtDate.setDate(sdtDate.getDate() + ${project.projectTerm})).format("YYYY-MM-DD"));
   })*/
-
-
-  var feCount = 0;
-  var beCount = 0;
-  var fsCount = 0;
-  var deCount = 0;
-  var plCount = 0;
-  <c:forEach items="${team }" var="item">
-  <c:if test="${item.position eq 'FE'}">feCount++</c:if>
-  <c:if test="${item.position eq 'BE'}">beCount++</c:if>
-  <c:if test="${item.position eq 'FS'}">fsCount++</c:if>
-  <c:if test="${item.position eq 'DE'}">deCount++</c:if>
-  <c:if test="${item.position eq 'PL'}">plCount++</c:if>
-  </c:forEach>
-  $("#feCount").html(feCount);
-  $("#beCount").html(beCount);
-  $("#fsCount").html(fsCount);
-  $("#deCount").html(deCount);
-  $("#plCount").html(plCount);
 
   /**
    * 프로젝트 합류 요청 ajax
@@ -545,13 +766,17 @@
     })
   }
 
+  /**
+   * 프로젝트 완료
+   */
   function completeProject() {
     $.ajax({
       url: "../api/project/complete",
       type: "POST",
       data: {
         "projectNo": ${project.projectNo},
-        "leaderId": '${project.leaderId}'
+        "leaderId": '${project.leaderId}',
+        "gitUri": insertGithubUri
       },
       dataType: "json",
       success: function(res) {
@@ -564,5 +789,78 @@
         console.log(error);
       }
     })
+  }
+
+  /**
+   * 요청 승인
+   * @param memberId
+   * @param projectNo
+   * @param position
+   */
+  function approveRequest(memberId, projectNo, position) {
+    $.ajax({
+      url: "../api/project/approveRequest",
+      type: "POST",
+      data: {
+        memberId,
+        projectNo,
+        position
+      },
+      success: function (res) {
+        console.log(res);
+        alert("팀에 합류하였습니다 !");
+        var msg = {
+          memberId,
+          subject : projectNo + "번 프로젝트에 " + position + " 포지션으로 합류하였습니다!"
+        }
+        webSocket.send(JSON.stringify(msg));
+        location.reload();
+      },
+      error: function (res) {
+        console.log(res);
+        alert("에러");
+      }
+    })
+  }
+
+  /**
+   * 요청 거절
+   * @param memberId
+   * @param projectNo
+   */
+  function refuseRequest(memberId, projectNo) {
+    $.ajax({
+      url: "../api/project/refuseRequest",
+      type: "POST",
+      data: {
+        memberId,
+        projectNo
+      },
+      success: function (res) {
+        console.log(res);
+        alert("요청이 거절되었습니다.");
+        var msg = {
+          memberId,
+          subject : projectNo + "번 프로젝트 지원요청이 거절되었습니다."
+        }
+        webSocket.send(JSON.stringify(msg));
+        location.reload();
+      },
+      error: function (res) {
+        console.log(res);
+        alert("에러");
+      }
+    })
+  }
+
+  function pageGoUpdateForm() {
+    var insdoc = "<input type='hidden' name='leaderId' value='${member.name}'>";
+    insdoc += "<input type='hidden' name='projectNo' value='${project.projectNo}'>";
+
+    var goform = $("<form>", {
+      method: "post",
+      action: 'projectUpdateForm.do',
+      html: insdoc
+    }).appendTo("body"); goform.submit();
   }
 </script>

@@ -6,7 +6,7 @@
 <script src="${resources}/js/moment.min.js"></script>
 <script src="${resources}/js/moment-with-locales.min.js"></script>
 <!-- Home Section -->
-<section class="small-section bg-dark-alfa-50 bg-scroll light-content" data-background="images/full-width-images/section-bg-19.jpg" id="home">
+<section class="small-section bg-dark-alfa-50 bg-scroll light-content" data-background="${resources}/images/full-width-images/section-bg-19.jpg" id="home">
     <div class="container relative pt-70">
 
         <div class="row">
@@ -136,11 +136,14 @@
             <!-- Sidebar -->
             <div class="col-md-4 col-lg-3 mt-10">
 
-                <form class="form" id="searchForm" action="../project/search.do" style="position: sticky; top: 100px" method="get">
+                <form class="form" id="searchForm" action="../project/search.do" method="get">
 
                     <!-- Search Widget -->
                     <div class="widget">
-                        <h3 class="widget-title">프로젝트 명</h3>
+                        <h3 class="widget-title d-flex justify-content-between">
+                            프로젝트 명
+                            <button type="button" onclick="resetForm()" class="btn btn-dark"><i class="fa fa-sync"></i></button>
+                        </h3>
 
                         <div class="search-wrap">
                             <button class="search-button animate" type="button" title="Start Search" onclick="search()">
@@ -154,26 +157,77 @@
                     <!-- 언어 -->
                     <div class="widget">
 
-                        <h3 class="widget-title">언어</h3>
+                        <h3 class="widget-title">기술</h3>
 
                         <script src="${resources}/js/common/Languages.js"></script>
 
-                        <div class="widget-body">
-                            <div class="tags" id="languages"></div>
+                        <div>
+                            <dl class="toggle">
+
+                                <dt>
+                                    <a href="" role="button" aria-expanded="false">언어</a>
+                                </dt>
+                                <dd style="display: none;">
+                                    <div class="tags" id="languagesBox"></div>
+                                </dd>
+
+                                <dt>
+                                    <a href="" role="button" aria-expanded="false">프레임워크</a>
+                                </dt>
+                                <dd style="display: none;">
+                                    <div class="tags" id="fplBox"></div>
+                                </dd>
+
+                                <dt>
+                                    <a href="" role="button" aria-expanded="false">버전관리</a>
+                                </dt>
+                                <dd style="display: none;">
+                                    <div class="tags" id="versionControlBox"></div>
+                                </dd>
+
+                                <dt>
+                                    <a href="" role="button" aria-expanded="false">DB</a>
+                                </dt>
+                                <dd style="display: none;">
+                                    <div class="tags" id="databaseBox"></div>
+                                </dd>
+                            </dl>
                         </div>
 
                         <script>
-                          var languages = $("#languages");
                           var checkBox = "";
-                          mostUsed.forEach((item, index) => {
-                            checkBox += '<input type="checkbox" class="btn-check" id="btncheck'+index+'" name="langArray" value="' + item + '">';
-                            checkBox += '<label class="btn btn-outline-primary" for="btncheck'+index+'">' + item + '</label>';
+                          Language.forEach(item => {
+                            checkBox += '<input type="checkbox" class="btn-check" id="btncheck'+item+'" name="langArray" value="' + item + '">';
+                            checkBox += '<label class="btn btn-outline-primary" for="btncheck'+item+'">' + item + '</label>';
                           })
-                          languages.append(checkBox);
+                          $("#languagesBox").append(checkBox);
+                          checkBox = "";
+                          FPL.forEach(item => {
+                            checkBox += '<input type="checkbox" class="btn-check" id="btncheck'+item+'" name="langArray" value="' + item + '">';
+                            checkBox += '<label class="btn btn-outline-primary" for="btncheck'+item+'">' + item + '</label>';
+                          })
+                          $("#fplBox").append(checkBox);
+                          checkBox = "";
+                          versionControl.forEach(item => {
+                            checkBox += '<input type="checkbox" class="btn-check" id="btncheck'+item+'" name="langArray" value="' + item + '">';
+                            checkBox += '<label class="btn btn-outline-primary" for="btncheck'+item+'">' + item + '</label>';
+                          })
+                          $("#versionControlBox").append(checkBox);
+                          checkBox = "";
+                          Database.forEach(item => {
+                            checkBox += '<input type="checkbox" class="btn-check" id="btncheck'+item+'" name="langArray" value="' + item + '">';
+                            checkBox += '<label class="btn btn-outline-primary" for="btncheck'+item+'">' + item + '</label>';
+                          })
+                          $("#databaseBox").append(checkBox);
+                          checkBox = "";
                         </script>
                     </div>
                     <!-- End Widget -->
-
+                    <script>
+                      <c:forEach items="${search.langArray }" var="lang">
+                        $("#btncheck${lang}").attr("checked", true);
+                      </c:forEach>
+                    </script>
                     <!-- 포지션 -->
                     <div class="widget">
 
@@ -181,15 +235,15 @@
 
                         <div class="widget-body">
                             <div class="tags">
-                                <input type="checkbox" class="btn-check" id="FE" name="frontRcnt" value="1">
+                                <input type="checkbox" class="btn-check" id="FE" name="frontRcnt" value="1" ${search.frontRcnt != 0 ? 'checked' : null}>
                                 <label class="btn btn-outline-primary" for="FE">프론트엔드</label>
-                                <input type="checkbox" class="btn-check" id="BE" name="backRcnt" value="1">
+                                <input type="checkbox" class="btn-check" id="BE" name="backRcnt" value="1" ${search.backRcnt != 0 ? 'checked' : null}>
                                 <label class="btn btn-outline-primary" for="BE">백엔드</label>
-                                <input type="checkbox" class="btn-check" id="FS" name="fullRcnt" value="1">
+                                <input type="checkbox" class="btn-check" id="FS" name="fullRcnt" value="1" ${search.fullRcnt != 0 ? 'checked' : null}>
                                 <label class="btn btn-outline-primary" for="FS">풀스택</label>
-                                <input type="checkbox" class="btn-check" id="DE" name="designRcnt" value="1">
+                                <input type="checkbox" class="btn-check" id="DE" name="designRcnt" value="1" ${search.designRcnt != 0 ? 'checked' : null}>
                                 <label class="btn btn-outline-primary" for="DE">디자이너</label>
-                                <input type="checkbox" class="btn-check" id="PL" name="plannerRcnt" value="1">
+                                <input type="checkbox" class="btn-check" id="PL" name="plannerRcnt" value="1" ${search.plannerRcnt != 0 ? 'checked' : null}>
                                 <label class="btn btn-outline-primary" for="PL">기획자</label>
                             </div>
                         </div>
@@ -230,9 +284,14 @@
 
                         <div class="widget-body">
                             <div class="tags">
-                                <a href="">온라인</a>
-                                <a href="">오프라인</a>
-                                <a href="">온/오프라인</a>
+                                <div class="tags">
+                                    <input type="radio" class="btn-check" id="ON" name="process" value="ON" ${search.process eq 'ON' ? 'checked' : null}>
+                                    <label class="btn btn-outline-primary" for="ON">온라인</label>
+                                    <input type="radio" class="btn-check" id="OFF" name="process" value="OFF" ${search.process eq 'OFF' ? 'checked' : null}>
+                                    <label class="btn btn-outline-primary" for="OFF">오프라인</label>
+                                    <input type="radio" class="btn-check" id="ONOFF" name="process" value="ONOFF" ${search.process eq 'ONOFF' ? 'checked' : null}>
+                                    <label class="btn btn-outline-primary" for="ONOFF">온/오프라인</label>
+                                </div>
                             </div>
                         </div>
 
@@ -252,7 +311,6 @@
 <!-- End Section -->
 
 <script src="${resources}/js/common/jQueryPage.js"></script>
-
 <script>
     var endPage = ${pageMaker.endPage}
     var current = ${pageMaker.cri.pageNum}
@@ -282,4 +340,13 @@
     searchForm.find("input[name='pageNum']").val("1");
     searchForm.submit();
   }
+
+  function resetForm() {
+    $("input[type=text]").val("");
+    $("input[name=termStart]").val(3);
+    $("input[name=termEnd]").val(365);
+    $("input[type=radio]").prop("checked", false);
+    $("input[type=checkbox]").prop("checked", false);
+  }
+
 </script>

@@ -143,6 +143,8 @@
 								<th>프로젝트 종료일</th>
 							</tr>
 						</thead>
+						<tbody>
+						</tbody>
 					</table>
 					<hr class="border border-white">
 					<h3>참여한 프로젝트</h3>
@@ -156,6 +158,8 @@
 								<th>상태</th>
 							</tr>
 						</thead>	
+						<tbody>
+						</tbody>
 					</table>				
 				</div>
 				
@@ -173,6 +177,8 @@
 								<th>스터디 종료일</th>
 							</tr>
 						</thead>
+						<tbody>
+						</tbody>
 					</table>
 					<hr class="border border-white">
 					<h3>진행중인 스터디</h3>
@@ -186,9 +192,72 @@
 								<th>상태</th>
 							</tr>
 						</thead>
+						<tbody>
+						</tbody>
+						<!-- 	<a href="#test-modal" class="btn btn-mod btn-w btn-medium round mt-10 lightbox-gallery-5 mfp-inline"></a>
+	                                
+	                                <div id="test-modal" class="mfp-hide">
+	                                    <h1>This is lightbox modal window</h1>
+	                                    <p>
+	                                        Lorem ipsum dolor sit amet, adipiscing elit. In maximus ligula semper metus pellentesque mattis. Maecenas volutpat, diam enim.
+	                                    </p>
+	                                </div> -->
 					</table>
 				</div>
 				
+				<!-- 모집,신청,진행,완료된 멘토 보여주는 div -->
+				<div id="mento_box" class="border border-white" style="height:1000px;display:none">
+					<h2>멘토서비스 목록</h2>
+					<hr class="border border-white">
+					<h3>대기중인 멘토서비스</h3>
+					<table id="waitMento" class="table">
+						<thead>
+							<tr>
+								<th>멘토 이름</th>
+								<th>멘티 이름</th>
+								<th>멘토서비스 시작일</th>
+								<th>서비스 기간</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+					<hr class="border border-white">
+					<h3>진행중인 멘토서비스</h3>
+					<table id="joinMento" class="table">
+						<thead>
+							<tr>
+								<th>멘토 이름</th>
+								<th>멘티 이름</th>
+								<th>멘토서비스 시작일</th>
+								<th>서비스 기간</th>
+								<th>상태</th>
+								<th>평점주기</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
+				
+				
+				<!-- chating -->
+				<!-- 모집,신청,진행,완료된 멘토 보여주는 div -->
+				<div id="chatList_box" class="border border-white" style="height:1000px;display:none">
+					<h2>채팅 목록</h2>
+					<hr class="border border-white">
+					<table id="chatList" class="table">
+						<thead>
+							<tr>
+								<th>채팅방 주인</th>
+								<th>채팅방 손님</th>
+								<th>채팅방 타입</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
 								
 			</div>                                    
         
@@ -212,16 +281,25 @@
                             <li id="myStudy">
                                 마이 스터디
                             </li>
-                            
+                             <li id="myMento">
+                            	마이 멘토
+                            </li>
+                            <li id="chatting">
+                            	마이 채팅
+                            </li>
                         </ul>
                     </div>
                     
                 </div>
                 <!-- End Widget -->
                 </div>
+              
          </div>
 
 	</div>
+	<form action="chatSelect.do" method="post" id="frm">
+                	<input type="hidden" name="roomId">
+     </form>
 </section>
 <!-- End Section -->                
 <script>
@@ -264,7 +342,7 @@
 										$('#joinProject').append(makeNotTr(2));	
 									} else {
 										$('#joinProject>tbody').empty();
-										$.each(data.study,function(item,idx){
+										$.each(data.project,function(item,idx){
 											$('#joinProject>tbody').append(makeTr(idx,4));
 										})
 									}
@@ -275,7 +353,7 @@
 									} else {
 										$('#waitProject>tbody').empty();
 										$.each(data.wait,function(item,idx){
-											$('#waitProject').append(makeTr(idx,2))	
+											$('#waitProject>tbody').append(makeTr(idx,2))	
 										})
 									}
 								}
@@ -291,7 +369,7 @@
 						$.ajax({
 							url:"myStudies.do",
 							success : function(data){
-								if(data == ''){
+								if(data === ''){
 									$('#joinStudy>tbody').empty();
 									$('#waitStudy>tbody').empty();
 									$('#joinStudy').append(makeNotTr(2));
@@ -303,7 +381,7 @@
 									} else {
 										$('#joinStudy>tbody').empty();
 										$.each(data.study,function(item,idx){
-											$('#joinStudy').append(makeTr(idx,3));
+											$('#joinStudy>tbody').append(makeTr(idx,3));
 										})
 									}
 									
@@ -313,7 +391,7 @@
 									} else { 
 										$('#waitStudy>tbody').empty();
 										$.each(data.wait,function(item,idx){
-											$('#waitStudy').append(makeTr(idx,1))	
+											$('#waitStudy>tbody').append(makeTr(idx,1))	
 										})
 									}
 								}
@@ -321,6 +399,69 @@
 						})
 					});
 	
+	// 마이멘토를 누를 시 ajax를 통해 나의 멘토 현황을 보여줌
+	$('#myMento').on('click',function(){
+						$('#tag').children().css('display','none');
+						$('#info_box').children().css('display','none');
+						$('#mento_box').css('display','block');
+						$.ajax({
+							url:"myMento.do",
+							success : function(data){
+								if(data === ''){
+									$('#joinMento>tbody').empty();
+									$('#joinMento>tbody').empty();
+									$('#joinMento').append(makeNotTr(2));
+									$('#waitMento').append(makeNotTr(1));
+								} else {
+									console.log(data);
+									 if(data.mento.length == 0){
+										$('#joinMento>tbody').empty();
+										$('#joinMento').append(makeNotTr(2));	
+									} else {
+										$('#joinMento>tbody').empty();
+										$.each(data.mento,function(item,idx){
+											$('#joinMento>tbody').append(mentoTr(idx));
+										})
+									}
+									
+									if(data.wait == null){
+										$('#waitMento>tbody').empty();
+										$('#waitMento').append(makeNotTr(1))	
+									} else {
+										$('#waitMento>tbody').empty();
+										$.each(data.wait,function(item,idx){
+											$('#waitMento>tbody').append(mentoTr(idx))	
+										})
+									}
+								}
+							}
+						});
+					   }); //End Mento
+			// 마이채팅을 누를 시 ajax를 통해 나의 채팅목록을 보여줌
+						$('#chatting').on('click',function(){
+											$('#tag').children().css('display','none');
+											$('#info_box').children().css('display','none');
+											$('#chatList_box').css('display','block');
+											$.ajax({
+												url : "myChat.do",
+												success : function(data) {
+													if(data === '') {
+														$('#chatList>tbody').empty();
+														$('#chatList').append(makeNotTr(0));
+													}else {
+														if(data.chat.length == 0) {
+															$('#chatList>tbody').empty();
+															$('#chatList').append(makeNotTr(0));
+														}else {
+															$('#chatList>tbody').empty();
+															$.each(data.chat,function(item,idx) {
+																$('#chatList>tbody').append(makeChatTr(idx));
+															})
+														}
+													}
+												}
+												});	
+											});
 	// myInfo 하위의 메뉴들이 보여줄 div들의 display에 관한 기능들
 	$('#info_update').on('click',function(){
 							$('#info_box').children().css('display','none');
@@ -353,61 +494,123 @@
 		var td;
 		if(n == 1){
 			td = $('<td colspan="4">').text('신청 이력이 없습니다.')			
+		}else if(n == 0) {
+			td = $('<td colspan="4">').text('채팅방이 존재하지 않습니다 ^오^')	
 		} else {
 			td = $('<td colspan="5">').text('참여 이력이 없습니다.')
 		}
 		tr.append(td);
-		return $('<tbody>').append(tr);
+		return tr;
 	}
 	
-	function makeTr(item,n){
+	function makeTr(idx,n){
 		var tr = $('<tr>')
 		var td1 = $('<td>')
 		var td2 = $('<td>')
 		var td3 = $('<td>')
 		var td4 = $('<td>')
 		var td5 = $('<td>')
+		
 		if(n == 1 || n == 3){
-			td1.text(item.studyNm);
-			td2.text(item.location);
-			td3.text(item.studySdt);
-			td4.text(item.studyEdt);
-		} else {
-			td1.text(item.projectName);
-			td2.text(item.projectTerm);
-			td3.text(item.projectSdt);
-			td4.text(item.projectEdt);
+			td1.text(idx.studyNm);
+			td2.text(idx.location);
+			td3.text(idx.studySdt);
+			td4.text(idx.studyEdt);
+		} else if(n == 2 || n == 4 ){
+			td1.text(idx.projectName);
+			td2.text(idx.projectTerm);
+			td3.text(idx.projectSdt);
+			td4.text(idx.projectEdt);
+		} else if(n == 7 || n == 8) {
+			td1.text(idx.mentoId);
+			td2.text(idx.mentiId);
+			td3.text(idx.startDate);
+			td4.text(idx.serviceTerm);
 		}
-		if(item.leaderId == '${member.memberId}'){
+		if(idx.leaderId == '${member.memberId}'){
 			tr.css('color','green');
 		}
 		tr.append(td1,td2,td3,td4);
 		if (n==3) {
-			if(item.state == 0){
+			if(idx.state == 0){
 				td5.text('모집중')
-			} else if(item.state == 1){
+			} else if(idx.state == 1){
 				td5.text('마감')
-			} else if(item.state == 2){
+			} else if(idx.state == 2){
 				td5.text('진행중').css('color','blue')
 			} else {
 				td5.text('종료').css('color','green')
 			}
 			tr.append(td5)
 		} else if(n == 4){
-			if(item.state == 1){
+			if(idx.state == 1){
 				td5.text('모집중')
-			} else if(item.state == 2){
+			} else if(idx.state == 2){
 				td5.text('마감')
-			} else if(item.state == 3){
+			} else if(idx.state == 3){
 				td5.text('진행중').css('color','blue')
-			} else if(item.state == 4){
+			} else if(idx.state == 4){
 				td5.text('종료').css('color','green')
 			} else {
 				td5.text('취소').css('color','red')
 			}
 			tr.append(td5)
 		}
-		return $('<tbody>').append(tr);
+		return tr;
+	};
+	
+	function mentoTr(idx){
+		var tr = $('<tr>')
+		var td1 = $('<td id="tdId" value="실험성공입니다.">')
+		var td2 = $('<td>')
+		var td3 = $('<td>')
+		var td4 = $('<td>')
+		var td5 = $('<td>')
+		var td6 = $('<td>')
+		var btn = $('<button type="button" onclick="sendRating()" class="btn btn-mod btn-w btn-circle btn-small">평점주기</button>');
+		
+		td1.text(idx.mentoId);
+		td2.text(idx.mentiId);
+		td3.text(idx.startDate);
+		td4.text(idx.serviceTerm);
+		console.log(idx.state);
+		if(idx.state == 4) {
+			td5.text('멘토거절(환불)').css('color', 'red');
+		}else if(idx.state == 3) {
+			td5.text('서비스종료(평점부여가능)').css('color', 'blue');
+			td6.append(btn);
+		}else if(idx.state == 2) {
+			td5.text('서비스종료').css('color', 'green');			
+		}else {
+			td5.text('진행중').css('color', 'yellow');
+		}
+		tr.append(td1, td2, td3, td4, td5, td6);
+		return tr;
+	}
+	
+	function sendRating() {
+		var url = "ratingFrom.do";
+		var option = "top=10, left=10, width=500, height=600";
+		window.open(url,"",option);
+	}
+	
+	//채팅 td만들어주는곳
+	function makeChatTr(item) {
+		var tr = $('<tr onclick="selectChat('+item.roomId+')">')
+		var td1 = $('<td>')
+		var td2 = $('<td>')
+		var td3 = $('<td>')
+		td1.text(item.ownerId);
+		td2.text(item.entryId);
+		tr.append(td1,td2);
+		//tr.addEventListener('click', selectChat(item.roomId));
+		
+		return tr;
+	}
+	//chat 들어가기
+	function selectChat(n) {
+		frm.roomId.value = n;
+		frm.submit();
 	};
 </script>
 

@@ -21,4 +21,10 @@ public interface BoardService {
 	List<BoardVO> getListWithPaging(BoardVO vo);
 
 	int getTotalCount(BoardVO vo);
+
+	/***
+	 * 첫화면에서 보여주기위한 데이터
+	 * @return BoardVO 리스트
+	 */
+	List<BoardVO> getMainPageList();
 }

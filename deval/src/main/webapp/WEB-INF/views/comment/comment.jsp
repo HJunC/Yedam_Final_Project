@@ -6,9 +6,6 @@
 	prefix="sec"%>
 <c:set var="resources"
 	value="${pageContext.request.contextPath}/resources" />
-<%-- <c:set var="userN"
-	value="${username }" /> --%>
-
 <section class="page-section bg-dark light-content pt-0">
 				<div class="container relative">
 					<div class="row">
@@ -24,8 +21,7 @@
 					<tbody id="commentBody">
 					<tr>
 						<td>
-							<input class="form-control" 
-							size="90" id="commentSub" name="commentSub"> 
+							<input class="form-control" size="90" id="commentSub" name="commentSubject"> 
 							<input type="hidden" id="boardNo" name="boardNo" value="${bno}">
 						</td>
 						<td>
@@ -37,18 +33,6 @@
 							type="button" value="등록" onclick="commentUpdate('IN')">
 						</td>
 					</tr>
-					<c:forEach items="${comments}" var="comment">
-						<tr>
-							<td>${comment.writer}: ${comment.commentSubject} / ${comment.commentDate }</td>
-							<!-- <td width="300px"></td> -->
-							<c:if test="${comment.writer eq user}">
-								<td width="135px" align="right">
-								<input class="btn btn-mod btn-round btn-border-w btn-small" type="button" value="수정"> 
-								<input class="btn btn-mod btn-round btn-border-w btn-small" type="button" onclick="commentDelete(${comment.commentNo })" value="삭제">
-								</td>
-							</c:if>
-						</tr>
-					</c:forEach>
 					</tbody>
 					</table>
 				</dd>

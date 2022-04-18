@@ -68,7 +68,7 @@
 						, '0'
 						, #{studyNm}
 						, #{lang2}
-						, 0
+						, 1
 						)
 	</insert>
 	
