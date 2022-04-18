@@ -58,14 +58,8 @@
             <if test="recruitEdt != null">RECRUIT_EDT = #{recruitEdt},</if>
             <if test="subject != null">SUBJECT = #{subject},</if>
             <if test="lang != null">LANG = #{lang},</if>
-            <if test="totalRcnt != 0">TOTAL_RCNT = #{totalRcnt},</if>
             <if test="projectSdt != null">PROJECT_SDT = #{projectSdt},</if>
-            <if test="frontRcnt != 0">FRONT_RCNT = #{frontRcnt},</if>
-            <if test="backRcnt != 0">BACK_RCNT = #{backRcnt},</if>
-            <if test="designRcnt != 0">DESIGN_RCNT = #{designRcnt},</if>
             <if test="projectEdt != null">PROJECT_EDT = #{projectEdt},</if>
-            <if test="fullRcnt != 0">FULL_RCNT = #{fullRcnt},</if>
-            <if test="plannerRcnt != 0">PLANNER_RCNT = #{plannerRcnt},</if>
             <if test="projectTerm != 0">PROJECT_TERM = #{projectTerm},</if>
         </set>
         WHERE PROJECT_NO = #{projectNo}

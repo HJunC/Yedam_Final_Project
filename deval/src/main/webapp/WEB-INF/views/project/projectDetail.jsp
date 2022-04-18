@@ -327,7 +327,6 @@
                       }
                     </script>
                 </c:if>
-                <h4 class="blog-page-title">프로젝트 설명</h4>
 
                 <!-- Post -->
                 <div class="blog-item mb-80 mb-xs-40">

@@ -40,6 +40,7 @@
                     <sec:csrfInput />
                     <input type="hidden" name="leaderId" value="<sec:authentication property="principal.username"/>">
                     <input type="hidden" id="totalRcnt" name="totalRcnt" value="0" min="0" max="15">
+                    <input type="hidden" id="projectNo" name="projectNo" value="${userProject.projectNo}">
                     <div class="clearfix">
 
                         <div class="form-group">
@@ -123,6 +124,8 @@
                               checkBox = "";
                             </script>
                             <script>
+                              $("#viewLang").html('${userProject.lang }');
+                              $("input[name=lang]").val('${userProject.lang }');
                               var langArr = '${userProject.lang }'.split(", ");
                               langArr.forEach(item => {
                                 var checkId = 'btncheck' + (item.indexOf('.') !== -1) ? item.replace('.', '') : item;
@@ -170,7 +173,7 @@
 
                     <!-- Send Button -->
                     <div class="text-center pt-10">
-                        <button type="button" class="submit_btn btn btn-mod btn-w btn-large btn-round" onclick="handleSubmit()">생성하기</button>
+                        <button type="button" class="submit_btn btn btn-mod btn-w btn-large btn-round" onclick="handleSubmit()">수정하기</button>
                     </div>
 
                 </form>
@@ -229,24 +232,6 @@
   document.getElementById("positionCountBox").addEventListener("change", handlePositionCount);
 
   /**
-   * 인원수 체크
-   */
-  function handlePositionCount(e) {
-    var f = parseInt($("#frontRcnt").val());
-    var b = parseInt($("#backRcnt").val());
-    var u = parseInt($("#fullRcnt").val());
-    var d = parseInt($("#designRcnt").val());
-    var p = parseInt($("#plannerRcnt").val());
-    var total = f+b+u+d+p;
-    /*if (total > 15) {
-      alert("최대 인원수는 15명입니다.");
-      return;
-    }*/
-    $("#totalCount").html(total);
-    $("#totalRcnt").val(total);
-  }
-
-  /**
    * 프로젝트 생성 요청
    */
   function handleSubmit() {
@@ -257,7 +242,7 @@
       alert("error");
       isDone = false;
     }
-
+    delete data.langArray;
     data.recruitEdt = data.recruitEdt + " " + $("#recruitEdtTime").val() + ":00";
     data.subject = editorObject.getHTML();
 
@@ -268,14 +253,9 @@
           data: data,
           dataType: "json",
           success: function(res) {
-            if (res.result === "success") {
               console.log(res);
               alert("수정완료되었습니다.");
-              location.href = "projectDetail.do?no=${project.projectNo}";
-            } else {
-              console.log(res);
-              alert(res.message);
-            }
+              location.href = "projectDetail.do?no=${userProject.projectNo}";
           },
           error: function(res) {
             console.log(res);

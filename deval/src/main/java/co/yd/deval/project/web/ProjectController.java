@@ -144,7 +144,7 @@ public class ProjectController {
             model.addAttribute("userProject", projectService.selectProject(vo.getProjectNo()));
             return "project/projectUpdateForm";
         } else {
-            return "notFoundPage";
+            return "redirect:notFoundPage.do";
         }
     }
 

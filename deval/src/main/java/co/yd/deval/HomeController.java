@@ -5,6 +5,7 @@ import co.yd.deval.board.service.BoardService;
 import co.yd.deval.board.service.BoardVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -62,6 +63,9 @@ public class HomeController {
 		return mainPage(model);
 	}
 	
-	
+	@GetMapping("/notFoundPage.do")
+	public String notFoundPage() {
+		return "notFoundPage";
+	}
 	
 }
