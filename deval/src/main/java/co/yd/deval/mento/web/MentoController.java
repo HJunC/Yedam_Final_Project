@@ -74,7 +74,7 @@ public class MentoController {
     	String originalName = file.getOriginalFilename();
     	String fileType = originalName.substring(originalName.lastIndexOf(".") + 1, originalName.length());
     	String fileName = UUID.randomUUID().toString() + "." + fileType;
-    	String pathName = uploadPath + fileName;
+    	String pathName = "/upload/" + fileName;
     	File dest = new File(pathName);
     	try {
     		FileCopyUtils.copy(file.getBytes(), dest);
