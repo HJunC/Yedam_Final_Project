@@ -269,7 +269,7 @@
                                 </li>
 
                                 <li class="nav-item">
-                                    <a href="#item-2" aria-controls="item-2" class="nav-link" data-bs-toggle="tab" role="tab" aria-selected="false">참여자</a>
+                                    <a href="#item-2" aria-controls="item-2" class="nav-link" data-bs-toggle="tab" role="tab" aria-selected="false">사용언어</a>
                                 </li>
 
                                 <li class="nav-item">
@@ -285,7 +285,7 @@
 
                             <div class="tab-pane fade show active" id="item-1" role="tabpanel"></div>
 
-                            <div class="tab-pane fade" id="item-2" role="tabpanel">22</div>
+                            <div class="tab-pane fade" id="item-2" role="tabpanel"></div>
 
                             <div class="tab-pane fade" id="item-3" role="tabpanel">33</div>
 
@@ -300,12 +300,17 @@
                         type: "GET",
                         success: function (res) {
                           makeFirstTab(res);
+                          makeProjectLanguages(res);
                         },
                         error: function (res) {
                           $("#item-1").html("연결에러");
                         }
                       })
 
+                      /**
+                       * 프로젝트 개요 view
+                       * @param res
+                       */
                       function makeFirstTab(res) {
                         var str = $(`<div class="card text-white mb-3" style="background-color: initial; border-color: rgb(255 255 255 / 14%);">
                                       <div class="card-header" style="background-color: rgb(60 55 83);">프로젝트 명 : <a href="`+res.html_url+`" style="text-decoration: none;">`+res.name+`</a></div>
@@ -318,7 +323,7 @@
 
                       /**
                        * 레포지토리 Readme 가지고오는 메소드
-                       * @param url
+                       * @param url 깃헙 api 레포지토리 주소
                        * @returns string
                        */
                       function getReadme(url) {
@@ -328,11 +333,7 @@
                           type: "GET",
                           async: false,
                           success: function (res) {
-                            var text = "";
-                            console.log(res)
-                            text = Base64.decode(res.content);
-                            console.log(text);
-                            result = text;
+                            result = Base64.decode(res.content);
                           },
                           error: function (res) {
                             result = "연결에러";
@@ -343,19 +344,18 @@
                       }
 
                       /**
-                       * 레포지토리 Readme 가지고오는 메소드
-                       * @param url
+                       * 레포지토리 markdown 언어를 html로 변환
+                       * @param text markdown언어
                        * @returns string
                        */
                       function getMarkdown(text) {
-                        const sendData = JSON.stringify({
-                          "text" : text
-                        })
                         let result;
                         $.ajax({
                           url: 'https://api.github.com/markdown',
                           type: "POST",
-                          data: sendData,
+                          data: JSON.stringify({
+                            "text" : text
+                          }),
                           async: false,
                           success: function (res) {
                             result = res;
@@ -366,6 +366,38 @@
                         })
                         return result;
                       }
+
+                      function makeProjectLanguages(res) {
+                        var githubLang = getProjectLanguages(res.url);
+                        var str = ""
+                        for (const [key, value] of Object.entries(githubLang)) {
+                          console.log(key + " / " + value);
+                          str += "<p>"+ key + " / " + value +"</p>"
+                        }
+                        $("#item-2").append(str);
+                      }
+
+                      /**
+                       * 사용언어 불러오는 메소드
+                       * @param url
+                       * @returns {*}
+                       */
+                      function getProjectLanguages(url) {
+                        var result = {};
+                        $.ajax({
+                          url: url+'/languages',
+                          type: "GET",
+                          async: false,
+                          success: function (res) {
+                            result = res;
+                          },
+                          error: function (res) {
+                            result = "연결에러";
+                          }
+                        })
+                        return result;
+                      }
+
 
                     </script>
                 </c:if>
@@ -754,7 +786,7 @@
       dataType: "json",
       success: function(res) {
         alert("프로젝트가 삭제되었습니다.");
-        location.href = "/project/main.do";
+        location.href = "main.do";
       },
       error: function (error) {
         alert("에러입니다.")
