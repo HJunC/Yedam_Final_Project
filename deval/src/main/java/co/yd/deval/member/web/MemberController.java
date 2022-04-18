@@ -6,12 +6,16 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
@@ -27,7 +31,6 @@ import co.yd.deval.member.service.LoginService;
 import co.yd.deval.member.service.MemberService;
 import co.yd.deval.member.service.MemberVO;
 import co.yd.deval.mento.service.MentoServService;
-import co.yd.deval.mento.service.MentoVO;
 import co.yd.deval.project.service.ProjectService;
 import co.yd.deval.setleLog.service.SetleLogService;
 import co.yd.deval.setleLog.service.SetleLogVO;
@@ -46,6 +49,8 @@ public class MemberController {
 	private LoginService loginDAO;
 	@Autowired
 	private String uploadPath;
+	@Autowired
+	private JavaMailSender mailSender;
 	@Autowired
 	private MentoServService mentoServDAO;
 	@Autowired
@@ -69,11 +74,38 @@ public class MemberController {
 	}
 	
 	//아이디 중복체크 기능
-	@GetMapping("idCheck.do")
+	@GetMapping("/idCheck.do")
 	@ResponseBody
 	public ResponseEntity<Boolean> idCheck(String id) {
 		boolean result = loginDAO.idCheck(id);
 		return ResponseEntity.ok().body(result);
+	}
+	
+	//이메일 유효성 확인을 위한 인증번호 발송
+	@GetMapping("/sendAuthMail.do")
+	@ResponseBody
+	public ResponseEntity<String> sendAuthMail(String mail) {
+		Random random = new Random();
+		int key = random.nextInt(888888) + 111111;
+		
+		String setFrom = "devalkims@gmail.com";
+		String toMail = mail;
+		String title = "회원가입 인증 이메일입니다.";
+		String content = "인증번호는 " + key + " 입니다."
+					   + "해당 인증번호를 인증번호 확인란에 입력하여주세요.";
+		try {
+			MimeMessage message = mailSender.createMimeMessage();
+			MimeMessageHelper helper = new MimeMessageHelper(message,true,"utf-8");
+			helper.setFrom(setFrom);
+			helper.setTo(toMail);
+			helper.setSubject(title);
+			helper.setText(content, true);
+			mailSender.send(message);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		String auth = Integer.toString(key);
+		return ResponseEntity.ok().body(auth);
 	}
 	
 	//회원가입 실행
@@ -114,7 +146,7 @@ public class MemberController {
 			}
 			vo.setProfileImg(fileName);
 		}
-		int r = memberDao.memberUpdate(vo);
+		memberDao.memberUpdate(vo);
 		return "redirect:myPage.do";
 	}
 

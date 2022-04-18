@@ -8,7 +8,7 @@
 		<div class="container relative text-center">
 			<div class="row">
 				<div class="col-lg-10 offset-lg-1">
-				<h2 class="hs-line-7 mb-0 wow fadeInUpShort" data-wow-delay=".2s">코드 공유</h2>
+				<h2 class="hs-line-7 mb-0 wow fadeInUpShort" data-wow-delay=".2s">질문 / 답변</h2>
 				</div>
 			</div>
 		</div>
@@ -61,7 +61,7 @@
 					<sec:authorize access="isAuthenticated()">
 						<div align="right">
 							<input class="btn btn-mod btn-round btn-border-w btn-small"
-								type="button" value="글쓰기" onclick="location.href='cqInsertForm.do?type=4'">
+								type="button" value="글쓰기" onclick="location.href='cqInsertForm.do?type=6'">
 						</div>
 					</sec:authorize>
 				</div>

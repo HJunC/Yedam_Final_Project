@@ -16,13 +16,13 @@ public class CodeServiceImpl implements CodeService {
 	private CodeMapper map;
 	
 	@Override
-	public List<CodeVO> codeSelectList() {
-		return map.codeSelectList();
+	public List<CodeVO> cqList(int no) {
+		return map.cqList(no);
 	}
 
 	@Override
-	public CodeVO codeSelectOne(CodeVO vo) {
-		return map.codeSelectOne(vo);
+	public CodeVO cqSelect(CodeVO vo) {
+		return map.cqSelect(vo);
 	}
 
 	@Override
@@ -49,5 +49,6 @@ public class CodeServiceImpl implements CodeService {
 	public void codeRecommendUp(CodeVO vo) {
 		map.codeRecommendUp(vo);
 	}
+
 
 }

@@ -19,4 +19,11 @@
             CALL UPDATE_TRADE_STATE
         }
 	</update>
+	
+	<update id="updateMentoServieState">
+		UPDATE MENTO_SERVICE
+		SET STATE = 2, STSFDG = 5
+		WHERE END_DATE + 3 <![CDATA[<=]]> SYSDATE
+		AND STATE = 3
+	</update>
 </mapper>

@@ -9,19 +9,20 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import co.yd.deval.member.mapper.LoginMapper;
+import co.yd.deval.scheduler.map.SchedulerMapper;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/*-context.xml")
 @PropertySource("classpath:/config/db.properties")
 public class IdCheckTest {
-/*
-	@Autowired
-	LoginMapper map;*/
+
+//	@Autowired
+//	SchedulerMapper map;
 	
 	@Test
 	public void idCheck() {
-		/*System.out.println(map.idCheck("view"));*/
+//		map.updateProjectState();
 	}
 
 }

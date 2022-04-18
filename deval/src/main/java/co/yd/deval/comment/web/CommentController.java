@@ -29,25 +29,13 @@ public class CommentController {
 	}
 
 	@PostMapping("/commentInsert.do")
-	public String commentInsert(CommentVO vo,Principal user) {
-		int type = vo.getBoardTypeNo();
-		vo.setWriter(user.getName());
+	@ResponseBody
+	public int commentInsert(CommentVO vo) {
 		int r = commentDAO.commentInsert(vo);
 		if (r != 0) {
-			if (type == 1) {
-				return "redirect:../";
-			} else if (type == 2) {
-				return "redirect:../";
-			} else if (type == 3) {
-				return "redirect:../";
-			} else if (type == 4) {
-				return "redirect:../code/codeSelectOne.do?cqNo=" + vo.getBoardNo();
-			} else if (type == 5) {
-				return "redirect:../";
-			}
-			return "comment/error";
+			return 1;
 		} else {
-			return "comment/error";
+			return 0;
 		}
 	}
 

@@ -104,10 +104,16 @@ webSocket.onopen = function(e) {
 						<li class="mn-sub-multi">
 							<a class="mn-group-title">Code</a>
 							<ul>
+<<<<<<< HEAD
+								<li><a href="${root}/cq/codeList.do">코드공유</a></li>
+								<li><a href="${root}/cq/reviewList.do">코드리뷰</a></li>
+								<li><a href="${root}/cq/questionList.do">질문</a></li>
+=======
 								<li><a href="${root}/code/codeList.do">코드공유</a></li>
 								<%-- <li><a href="${root}/code/review.do">코드리뷰</a></li> --%>
 								<%-- <li><a href="${root}/code/question.do">질문</a></li> --%>
 								<%-- <li><a href="${root}/code/answer.do">답변</a></li> --%>
+>>>>>>> develop
 							</ul>
 						</li>
 					</ul>
