@@ -146,15 +146,14 @@ td {
  }
  
  function search() {
-	   var searchForm = $("#searchForm"); 
-	   searchForm.find("input[name='pageNum']").val("1");
-	   searchForm.submit();
-	 }
+   var searchForm = $("#searchForm");
+   searchForm.find("input[name='pageNum']").val("1");
+   searchForm.submit();
+ }
  // 상세페이지 가는 함수
- function freeSelect(e){
-	boardSS.boardSe.value= e;
-	boardSS.submit(); 
-	}
+ function freeSelect(no){
+	location.href = "boardSelect.do?boardNo=" + no;
+ }
 </script>
 
 

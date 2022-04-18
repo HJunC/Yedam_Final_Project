@@ -1,9 +1,8 @@
 package co.yd.deval.board.mapper;
 
-import java.util.List;
-
 import co.yd.deval.board.service.BoardVO;
-import co.yd.deval.project.service.ProjectVO;
+
+import java.util.List;
 
 public interface BoardMapper {
 
@@ -24,5 +23,11 @@ public interface BoardMapper {
 	List<BoardVO> getListWithPaging(BoardVO vo);
 
 	int getTotalCount(BoardVO vo);
+
+	/***
+	 * 첫화면에서 보여주기위한 데이터
+	 * @return BoardVO 리스트
+	 */
+	List<BoardVO> getMainPageList();
 
 }

@@ -110,7 +110,9 @@
 			</section>
 		<br>
 	</div>
-	<%@ include file="../comment/comment.jsp" %>
+	<sec:authorize access="isAuthenticated()">
+		<%@ include file="../comment/comment.jsp" %>
+	</sec:authorize>
 </body>
 <script type="text/javascript">
 	function codeUpdate(str) {

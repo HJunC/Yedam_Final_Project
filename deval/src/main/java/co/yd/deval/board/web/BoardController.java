@@ -59,7 +59,7 @@ public class BoardController {
 		return "board/write";
 	}
 
-	@RequestMapping("/boardDetail.do")
+	@GetMapping("/boardDetail.do")
 	public String boardDetail(Model model, int board_no) {
 		return "board/boardDetail";
 	}
