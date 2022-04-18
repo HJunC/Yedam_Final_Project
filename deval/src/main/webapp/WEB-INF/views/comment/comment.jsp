@@ -5,8 +5,6 @@
 	prefix="sec"%>
 <c:set var="resources"
 	value="${pageContext.request.contextPath}/resources" />
-<%-- <c:set var="userN"
-	value="${username }" /> --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,7 +51,7 @@
 							</td>
 							<td>
 								<input type="hidden" id="writer" name="writer"
-								value="<sec:authentication property="principal.username"/>">
+								value="${username}">
 							</td>
 							<td>
 								<input class="btn btn-mod btn-round btn-border-w btn-small"
