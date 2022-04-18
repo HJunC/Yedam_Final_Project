@@ -1,4 +1,4 @@
-package co.yd.deval.board.web;
+package co.yd.deval.board.serviceImpl.web;
 
 import java.io.File;
 import java.io.IOException;

@@ -62,7 +62,7 @@ public class MentoController {
     
     @PostMapping("/mentoInsert.do")
     public String mentoInsert(MentoVO mento, MultipartFile file, Principal principal) {
-		//MemberVO user = (MemberVO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		// MemberVO user = (MemberVO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     	MemberVO user = new MemberVO();
     	if(principal != null) {
     		mento.setMentoId(principal.getName());
@@ -87,8 +87,7 @@ public class MentoController {
     
     @GetMapping("/mentoSelect.do")
     public String mentoSelect(Model model, MentoVO vo, Principal principal) {
-    	
-    	  //異붽�
+
 		  MemberVO user = new MemberVO();
 		  if(principal != null) {
 			  user.setMemberId(principal.getName());

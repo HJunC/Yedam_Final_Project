@@ -269,7 +269,7 @@
                                 </li>
 
                                 <li class="nav-item">
-                                    <a href="#item-2" aria-controls="item-2" class="nav-link" data-bs-toggle="tab" role="tab" aria-selected="false">사용언어</a>
+                                    <a href="#item-2" aria-controls="item-2" class="nav-link" data-bs-toggle="tab" role="tab" aria-selected="false">언어</a>
                                 </li>
 
                                 <li class="nav-item">
@@ -313,7 +313,14 @@
                        */
                       function makeFirstTab(res) {
                         var str = $(`<div class="card text-white mb-3" style="background-color: initial; border-color: rgb(255 255 255 / 14%);">
-                                      <div class="card-header" style="background-color: rgb(60 55 83);">프로젝트 명 : <a href="`+res.html_url+`" style="text-decoration: none;">`+res.name+`</a></div>
+                                      <div class="card-header d-flex justify-content-between" style="background-color: #000">
+                                        <div>프로젝트 명 : <a href="`+res.html_url+`" style="text-decoration: none;">`+res.name+`</a></div>
+                                        <div>
+                                            <div class="align-right"><span class="badge bg-dark">생성: `+moment(res.created_at).format("YYYY-MM-DD HH:mm:ss")+`</span></div>
+                                            <div class="align-right"><span class="badge bg-dark">마지막 업데이트: `+moment(res.updated_at).format("YYYY-MM-DD HH:mm:ss")+`</span></div>
+                                            <div class="align-right"><span class="badge bg-dark">마지막 푸쉬: `+moment(res.pushed_at).format("YYYY-MM-DD HH:mm:ss")+`</span></div>
+                                        </div>
+                                      </div>
                                       <div class="card-body">
                                         <div class="markdown-body" style="background-color: initial;">`+getReadme(res.url)+`</p>
                                       </div>
@@ -372,7 +379,7 @@
                         var str = ""
                         for (const [key, value] of Object.entries(githubLang)) {
                           console.log(key + " / " + value);
-                          str += "<p>"+ key + " / " + value +"</p>"
+                          str += "<p class='badge'>"+ key + " / " + value +"</p>"
                         }
                         $("#item-2").append(str);
                       }
