@@ -5,13 +5,9 @@ import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import java.util.UUID;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +22,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import co.yd.deval.chat.service.ChatRoomService;
 import co.yd.deval.member.service.LoginService;
 import co.yd.deval.member.service.MemberService;
 import co.yd.deval.member.service.MemberVO;
+import co.yd.deval.mento.service.MentoServService;
+import co.yd.deval.mento.service.MentoVO;
 import co.yd.deval.project.service.ProjectService;
-import co.yd.deval.project.service.ProjectVO;
-import co.yd.deval.study.service.StudyService;
-import co.yd.deval.study.service.StudyVO;
 import co.yd.deval.setleLog.service.SetleLogService;
 import co.yd.deval.setleLog.service.SetleLogVO;
 import co.yd.deval.study.service.StudyService;
@@ -50,6 +46,10 @@ public class MemberController {
 	private LoginService loginDAO;
 	@Autowired
 	private String uploadPath;
+	@Autowired
+	private MentoServService mentoServDAO;
+	@Autowired
+	private ChatRoomService chatRoomDAO;
 	
   @Autowired
 	private SetleLogService setleDAO;
@@ -131,12 +131,29 @@ public class MemberController {
 	// 마이페이지에서 내가 참여한 프로젝트 이력을 불러오는 ajax
 	@GetMapping("/myProjects.do")
 	@ResponseBody
-	public ResponseEntity<List<ProjectVO>> myProjects(Principal user) {
+	public ResponseEntity<Map<String, Object>> myProjects(Principal user) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("wait", projectDao.findWaitingProject(user.getName()));
 		map.put("project", projectDao.findProjectByNo(user.getName()));
-		return ResponseEntity.ok().body(null);
+		return ResponseEntity.ok().body(map);
 	}
+	// 마이페이지에서 내가 참여한 멘토서비스 이력들 불러오는 ajax
+	  @GetMapping("/myMento.do")
+	  @ResponseBody 
+	  public ResponseEntity<Map<String, Object>> myMento(Principal principal) {
+		  Map<String, Object> map = new HashMap<String, Object>();
+		  map.put("wait", mentoServDAO.findWaitMento(principal.getName()));
+		  map.put("mento", mentoServDAO.findMentoByNo(principal.getName()));
+		  return ResponseEntity.ok().body(map);
+	  }
+	  //마이페이지에서 내가 가지고 있는 채팅목록 보여주는 ajax
+	  @GetMapping("/myChat.do")
+	  @ResponseBody
+	  public ResponseEntity<Map<String, Object>> myChat(Principal principal) {
+		  Map<String, Object> map = new HashMap<>();
+		  map.put("chat", chatRoomDAO.selectListChat(principal.getName()));
+		  return ResponseEntity.ok().body(map);
+	  }
 	
 	//기업페이지로 이동
 	@GetMapping("/coPage.do")
@@ -151,7 +168,6 @@ public class MemberController {
 		Map<String, Object> map = new HashMap<>();
 		map.put("id", memberId);
 		map.put("cashPt", cashPt);
-		memberDao.memberCashUpdate((HashMap<String, Object>) map);
 		int r = memberDao.memberCashUpdate(map);
 		if(r != 0) {
 			svo.setMemberId(memberId);
@@ -160,5 +176,11 @@ public class MemberController {
 			
 		}
 	}
+	
+	@GetMapping("/ratingFrom.do")
+	public String ratingFrom() {
+		return "mento/rating";
+	}
+	
 
 }
