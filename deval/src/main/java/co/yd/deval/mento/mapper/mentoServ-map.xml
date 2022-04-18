@@ -83,6 +83,8 @@
 		SELECT *
 		FROM MENTO_SERVICE
 		WHERE (MENTI_ID = #{id} OR MENTO_ID = #{id})
-		AND STATE = 1 
+		AND STATE != 0 
+		AND STATE != 4 
 	</select>
+	
 </mapper>

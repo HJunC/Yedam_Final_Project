@@ -194,6 +194,14 @@
 						</thead>
 						<tbody>
 						</tbody>
+						<!-- 	<a href="#test-modal" class="btn btn-mod btn-w btn-medium round mt-10 lightbox-gallery-5 mfp-inline"></a>
+	                                
+	                                <div id="test-modal" class="mfp-hide">
+	                                    <h1>This is lightbox modal window</h1>
+	                                    <p>
+	                                        Lorem ipsum dolor sit amet, adipiscing elit. In maximus ligula semper metus pellentesque mattis. Maecenas volutpat, diam enim.
+	                                    </p>
+	                                </div> -->
 					</table>
 				</div>
 				
@@ -223,6 +231,8 @@
 								<th>멘티 이름</th>
 								<th>멘토서비스 시작일</th>
 								<th>서비스 기간</th>
+								<th>상태</th>
+								<th>평점주기</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -410,7 +420,7 @@
 									} else {
 										$('#joinMento>tbody').empty();
 										$.each(data.mento,function(item,idx){
-											$('#joinMento>tbody').append(makeTr(idx,7));
+											$('#joinMento>tbody').append(mentoTr(idx));
 										})
 									}
 									
@@ -420,8 +430,7 @@
 									} else {
 										$('#waitMento>tbody').empty();
 										$.each(data.wait,function(item,idx){
-											console.log(item,idx);
-											$('#waitMento>tbody').append(makeTr(idx,8))	
+											$('#waitMento>tbody').append(mentoTr(idx))	
 										})
 									}
 								}
@@ -494,7 +503,7 @@
 		return tr;
 	}
 	
-	function makeTr(item,n){
+	function makeTr(idx,n){
 		var tr = $('<tr>')
 		var td1 = $('<td>')
 		var td2 = $('<td>')
@@ -503,44 +512,44 @@
 		var td5 = $('<td>')
 		
 		if(n == 1 || n == 3){
-			td1.text(item.studyNm);
-			td2.text(item.location);
-			td3.text(item.studySdt);
-			td4.text(item.studyEdt);
+			td1.text(idx.studyNm);
+			td2.text(idx.location);
+			td3.text(idx.studySdt);
+			td4.text(idx.studyEdt);
 		} else if(n == 2 || n == 4 ){
-			td1.text(item.projectName);
-			td2.text(item.projectTerm);
-			td3.text(item.projectSdt);
-			td4.text(item.projectEdt);
+			td1.text(idx.projectName);
+			td2.text(idx.projectTerm);
+			td3.text(idx.projectSdt);
+			td4.text(idx.projectEdt);
 		} else if(n == 7 || n == 8) {
-			td1.text(item.mentoId);
-			td2.text(item.mentiId);
-			td3.text(item.startDate);
-			td4.text(item.serviceTerm);
+			td1.text(idx.mentoId);
+			td2.text(idx.mentiId);
+			td3.text(idx.startDate);
+			td4.text(idx.serviceTerm);
 		}
-		if(item.leaderId == '${member.memberId}'){
+		if(idx.leaderId == '${member.memberId}'){
 			tr.css('color','green');
 		}
 		tr.append(td1,td2,td3,td4);
 		if (n==3) {
-			if(item.state == 0){
+			if(idx.state == 0){
 				td5.text('모집중')
-			} else if(item.state == 1){
+			} else if(idx.state == 1){
 				td5.text('마감')
-			} else if(item.state == 2){
+			} else if(idx.state == 2){
 				td5.text('진행중').css('color','blue')
 			} else {
 				td5.text('종료').css('color','green')
 			}
 			tr.append(td5)
 		} else if(n == 4){
-			if(item.state == 1){
+			if(idx.state == 1){
 				td5.text('모집중')
-			} else if(item.state == 2){
+			} else if(idx.state == 2){
 				td5.text('마감')
-			} else if(item.state == 3){
+			} else if(idx.state == 3){
 				td5.text('진행중').css('color','blue')
-			} else if(item.state == 4){
+			} else if(idx.state == 4){
 				td5.text('종료').css('color','green')
 			} else {
 				td5.text('취소').css('color','red')
@@ -550,6 +559,41 @@
 		console.log(tr)
 		return tr;
 	};
+	
+	function mentoTr(idx){
+		var tr = $('<tr>')
+		var td1 = $('<td id="tdId" value="실험성공입니다.">')
+		var td2 = $('<td>')
+		var td3 = $('<td>')
+		var td4 = $('<td>')
+		var td5 = $('<td>')
+		var td6 = $('<td>')
+		var btn = $('<button type="button" onclick="sendRating()" class="btn btn-mod btn-w btn-circle btn-small">평점주기</button>');
+		
+		td1.text(idx.mentoId);
+		td2.text(idx.mentiId);
+		td3.text(idx.startDate);
+		td4.text(idx.serviceTerm);
+		console.log(idx.state);
+		if(idx.state == 4) {
+			td5.text('멘토거절(환불)').css('color', 'red');
+		}else if(idx.state == 3) {
+			td5.text('서비스종료(평점부여가능)').css('color', 'blue');
+			td6.append(btn);
+		}else if(idx.state == 2) {
+			td5.text('서비스종료').css('color', 'green');			
+		}else {
+			td5.text('진행중').css('color', 'yellow');
+		}
+		tr.append(td1, td2, td3, td4, td5, td6);
+		return tr;
+	}
+	
+	function sendRating() {
+		var url = "ratingFrom.do";
+		var option = "top=10, left=10, width=500, height=600";
+		window.open(url,"",option);
+	}
 	
 	//채팅 td만들어주는곳
 	function makeChatTr(item) {

@@ -176,5 +176,11 @@ public class MemberController {
 			
 		}
 	}
+	
+	@GetMapping("/ratingFrom.do")
+	public String ratingFrom() {
+		return "mento/rating";
+	}
+	
 
 }

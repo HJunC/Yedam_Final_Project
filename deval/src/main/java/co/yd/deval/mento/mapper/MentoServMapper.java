@@ -30,4 +30,6 @@ public interface MentoServMapper {
 		//my Page
 		MentoServVO findWaitMento(String id);
 		List<MentoServVO> findMentoByNo(String id);
+		
+		
 }

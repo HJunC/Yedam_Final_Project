@@ -32,4 +32,6 @@ public interface MentoServService {
 	MentoServVO findWaitMento(String id);
 	List<MentoServVO> findMentoByNo(String id);
 	
+	
+	
 }
