@@ -120,7 +120,10 @@ public class RestProjectController {
     @PostMapping("/update")
     public ResponseEntity<Integer> updateProject(ProjectVO vo) {
         int result = projectService.updateProject(vo);
-        return ResponseEntity.ok().body(result);
+        if (result > 0) {
+            return ResponseEntity.ok().body(result);
+        }
+        return ResponseEntity.badRequest().body(result);
     }
 
     @PostMapping("/complete")

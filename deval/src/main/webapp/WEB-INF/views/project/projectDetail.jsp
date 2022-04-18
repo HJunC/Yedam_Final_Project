@@ -855,7 +855,8 @@
   }
 
   function pageGoUpdateForm() {
-    var insdoc = "<input type='hidden' name='leaderId' value='test21'>";
+    var insdoc = "<input type='hidden' name='leaderId' value='${member.name}'>";
+    insdoc += "<input type='hidden' name='projectNo' value='${project.projectNo}'>";
 
     var goform = $("<form>", {
       method: "post",
