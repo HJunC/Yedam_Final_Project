@@ -74,7 +74,7 @@ public class MentoController {
     	String originalName = file.getOriginalFilename();
     	String fileType = originalName.substring(originalName.lastIndexOf(".") + 1, originalName.length());
     	String fileName = UUID.randomUUID().toString() + "." + fileType;
-    	String pathName = "/upload/" + fileName;
+    	String pathName = "/home/ubuntu/apache-tomcat-9.0.62/webapps/upload/" + fileName;
     	File dest = new File(pathName);
     	try {
     		FileCopyUtils.copy(file.getBytes(), dest);
