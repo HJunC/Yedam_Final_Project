@@ -264,11 +264,11 @@
                             <ul class="nav nav-tabs tpl-tabs animate" role="tablist">
 
                                 <li class="nav-item">
-                                    <a href="#item-1" aria-controls="item-1" class="nav-link active" data-bs-toggle="tab" role="tab" aria-selected="true">First Tab</a>
+                                    <a href="#item-1" aria-controls="item-1" class="nav-link active" data-bs-toggle="tab" role="tab" aria-selected="true">프로젝트 개요</a>
                                 </li>
 
                                 <li class="nav-item">
-                                    <a href="#item-2" aria-controls="item-2" class="nav-link" data-bs-toggle="tab" role="tab" aria-selected="false">Second Tab</a>
+                                    <a href="#item-2" aria-controls="item-2" class="nav-link" data-bs-toggle="tab" role="tab" aria-selected="false">참여자</a>
                                 </li>
 
                                 <li class="nav-item">
@@ -282,36 +282,30 @@
                         <!-- Tab panes -->
                         <div class="tab-content tpl-minimal-tabs-cont section-text">
 
-                            <div class="tab-pane fade show active" id="item-1" role="tabpanel">
+                            <div class="tab-pane fade show active" id="item-1" role="tabpanel"></div>
 
-                            </div>
+                            <div class="tab-pane fade" id="item-2" role="tabpanel">22</div>
 
-                            <div class="tab-pane fade" id="item-2" role="tabpanel">
-                                Nam porta elementum tortor, eget tempor orci ullamcorper eget. Aliquam fermentum sem non vulputate dapibus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla at porttitor massa.
-                                Aliquam tortor leo, pharetra non congue sit amet pharetra non congue sit amet, bibendum sit amet enim.
-                            </div>
-
-                            <div class="tab-pane fade" id="item-3" role="tabpanel">
-                                Pellentesque sed vehicula velit, vitae vulputate velit. Morbi nec porta augue, et dignissim enim. Vivamusere suscipit, lorem vitae rhoncus pharetra, erat nisl scelerisque magna, ut mollis dui eros eget libero. Vivamus ut ornare tellus.
-                                Aliquam tortor leo, pharetra pharetra non congue sit amet non congue sit amet, bibendum sit amet enim.
-                            </div>
+                            <div class="tab-pane fade" id="item-3" role="tabpanel">33</div>
 
                         </div>
                         <!-- End Tab panes -->
+
                     </div>
+                    <script src="https://cdn.jsdelivr.net/npm/js-base64@3.6.1/base64.min.js"></script>
                     <script>
                       $.ajax({
                         url: '${project.gitUri}',
                         type: "GET",
                         success: function (res) {
-                          makeGithubLink(res);
+                          makeFirstTab(res);
                         },
                         error: function (res) {
                           $("#item-1").html("연결에러");
                         }
                       })
 
-                      function makeGithubLink(res) {
+                      function makeFirstTab(res) {
                         var str = $(`<div class="card text-white bg-dark mb-3">
                                       <div class="card-header">프로젝트 명 : <a href="`+res.html_url+`" style="text-decoration: none;">`+res.name+`</a></div>
                                       <div class="card-body">
@@ -320,13 +314,67 @@
                                           <img src="`+res.owner.avatar_url+`" alt="프로필" style="width: 30px; border-radius: 30px;">
                                           `+res.owner.login+`
                                         </p>
-                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                        <p class="card-text">`+getReadme(res.url)+`</p>
                                       </div>
                                     </div>`);
                         $("#item-1").append(str);
                       }
+
+                      /**
+                       * 레포지토리 Readme 가지고오는 메소드
+                       * @param url
+                       * @returns string
+                       */
+                      function getReadme(url) {
+                        let result;
+                        $.ajax({
+                          url: url+'/readme',
+                          type: "GET",
+                          async: false,
+                          success: function (res) {
+                            var text = "";
+                            console.log(res)
+                            text = Base64.decode(res.content);
+                            console.log(text);
+                            result = text;
+                          },
+                          error: function (res) {
+                            result = "연결에러";
+                          }
+                        })
+                        result = getMarkdown(result);
+                        return result;
+                      }
+
+                      /**
+                       * 레포지토리 Readme 가지고오는 메소드
+                       * @param url
+                       * @returns string
+                       */
+                      function getMarkdown(text) {
+                        const sendData = JSON.stringify({
+                          "text" : text
+                        })
+                        let result;
+                        $.ajax({
+                          url: 'https://api.github.com/markdown',
+                          type: "POST",
+                          data: sendData,
+                          async: false,
+                          success: function (res) {
+                            result = res;
+                          },
+                          error: function (res) {
+                            result = "연결에러";
+                          }
+                        })
+                        return result;
+                      }
+
                     </script>
                 </c:if>
+
+                <div class="blog-page-title"></div>
 
                 <!-- Post -->
                 <div class="blog-item mb-80 mb-xs-40">
@@ -687,27 +735,6 @@
       success: function(res) {
         console.log(res);
         alert("지원하였습니다.");
-        location.reload();
-      },
-      error: function (error) {
-        alert("에러입니다.")
-        console.log(error);
-      }
-    })
-  }
-
-  /**
-   * todo 프로젝트 수정
-   */
-  function updateProject() {
-    $.ajax({
-      url: "../api/project/update",
-      type: "POST",
-      data: "",
-      dataType: "json",
-      success: function(res) {
-        console.log(res);
-        alert("수정하였습니다.");
         location.reload();
       },
       error: function (error) {
