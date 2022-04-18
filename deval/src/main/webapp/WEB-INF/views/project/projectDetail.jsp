@@ -258,6 +258,7 @@
             <!-- Content -->
             <div class="col-md-8 mb-sm-80">
                 <c:if test="${project.state eq '4'}">
+                    <link rel="stylesheet" href="${resources}/css/common/github-markdown-dark.css">
                     <!-- Nav Tabs -->
                     <div class="blog-item mb-80 mb-xs-40">
                         <div class="align-center mb-40 mb-xxs-30">
@@ -306,15 +307,10 @@
                       })
 
                       function makeFirstTab(res) {
-                        var str = $(`<div class="card text-white bg-dark mb-3">
-                                      <div class="card-header">프로젝트 명 : <a href="`+res.html_url+`" style="text-decoration: none;">`+res.name+`</a></div>
+                        var str = $(`<div class="card text-white mb-3" style="background-color: initial; border-color: rgb(255 255 255 / 14%);">
+                                      <div class="card-header" style="background-color: rgb(60 55 83);">프로젝트 명 : <a href="`+res.html_url+`" style="text-decoration: none;">`+res.name+`</a></div>
                                       <div class="card-body">
-                                        <p class="card-text">
-                                          생성자 :
-                                          <img src="`+res.owner.avatar_url+`" alt="프로필" style="width: 30px; border-radius: 30px;">
-                                          `+res.owner.login+`
-                                        </p>
-                                        <p class="card-text">`+getReadme(res.url)+`</p>
+                                        <div class="markdown-body" style="background-color: initial;">`+getReadme(res.url)+`</p>
                                       </div>
                                     </div>`);
                         $("#item-1").append(str);
