@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <div align="center">
 	<section class="page-section bg-dark light-content" id="home">
 		<div class="container relative text-center">
@@ -44,21 +45,20 @@
 								<td>${review.cqReplyNo }</td>
 									<td align="left">${review.title }</td>
 								<td>${review.writer}</td>
-								<td>${review.replyDate}</td>
+								<td><fmt:formatDate pattern="yyyy-MM-dd" value="${review.replyDate}"/></td>
 								<td>${review.hit}</td>
 								<td>${review.recommend}</td>
 							</tr>
 						</c:forEach>
 					</table>
 					<div align="right">
-					<form id="frm" method="post">
+					<form id="frm" method="get">
 						<input name="${_csrf.parameterName }" value="${_csrf.token}" type="hidden">
 						<input type="hidden" id="cqReplyNo" name="cqReplyNo">
 					</form>
 					<form id="frm2">
 						<input name="${_csrf.parameterName }" value="${_csrf.token}" type="hidden">
 						<input type="hidden" id="cqNo" name="cqNo" value="${cqno}">
-						<input type="hidden" name="boardTypeNo" value="4">
 						<input class="btn btn-mod btn-round btn-border-w btn-small"
 							type="button" value="원문가기" onclick="reviewInput('C')">
 						<input class="btn btn-mod btn-round btn-border-w btn-small"
@@ -73,14 +73,14 @@
 </div>
 <script type="text/javascript">
 	function selectOne(id) {
-		frm.action = "reviewSelectOne.do";
+		frm.action = "reviewSelect.do";
 		frm.cqReplyNo.value = id;
 		frm.submit();
 	}
 	
 	function reviewInput(str) {
 		if(str=="I"){
-			frm2.action = "reviewInsertForm.do";
+			frm2.action = "reviewInsertForm.do?cqNo=${cqno}";
 		} else if (str == "C") {
 			frm2.action = "cqSelect.do";
 		}

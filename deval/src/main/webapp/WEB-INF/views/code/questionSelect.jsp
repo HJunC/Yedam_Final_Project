@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <c:set var="resources" value="${pageContext.request.contextPath}/resources" />
 <link rel="stylesheet" href="${resources}/css/common/toastui-editor.min.css" />
@@ -24,7 +25,6 @@
 						<div class="table-responsive">
 						<form id="frm" name="frm">
 							<input name="${_csrf.parameterName }" value="${_csrf.token}" type="hidden">
-							<input type="hidden" name="boardTypeNo" id="bno" value="0">
 							<table class="table shopping-cart-table">
 								<tr>
 									<th colspan="3">#${cq.cqNo} / [${cq.cqLang}]${cq.title}</th>
@@ -40,13 +40,13 @@
 								</tr>
 								<tr>
 									<th>작성자 : ${cq.writer}</th>
-									<th>작성일자 : ${cq.cqDate}</th>
+									<th>작성일자 : <fmt:formatDate pattern="yyyy-MM-dd hh:mm" value="${cq.cqDate}"/></th>
 									<th>조회수 : ${cq.hit}</th>
 									<th>추천수 : ${cq.recommend}</th>
 								</tr>
 								<tr>
 									<th style="vertical-align: top;" height="500px" colspan="4">
-										<div id="viewer">${cq.subject}</div>
+										<div id="viewer"></div>
 									</th>
 								</tr>
 							</table>
@@ -55,7 +55,7 @@
 									<input type="button" value="답변작성">
 								</c:if>
 								<input class="btn btn-mod btn-round btn-border-w btn-small"
-								type="button" value="목록" onclick="location.href='cqList.do?type=qna'">
+								type="button" value="목록" onclick="location.href='questionList.do'">
 							</div>
 						</form>
 						</div>
@@ -72,7 +72,6 @@
 			frm.action = "cqUpdateForm.do";
 		} else {
 			window.alert('삭제하였습니다.');
-			frm.bno.value = ${cq.boardTypeNo}
 			frm.action = "cqDelete.do";
 			frm.method = 'post'
 		}

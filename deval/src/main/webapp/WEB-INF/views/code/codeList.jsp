@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <div align="center">
 	<section class="page-section bg-dark light-content" id="home">
 		<div class="container relative text-center">
 			<div class="row">
 				<div class="col-lg-10 offset-lg-1">
-					<h2 class="hs-line-7 mb-0 wow fadeInUpShort" data-wow-delay=".2s">코드 리뷰</h2>
+				<h2 class="hs-line-7 mb-0 wow fadeInUpShort" data-wow-delay=".2s">코드 공유</h2>
 				</div>
 			</div>
 		</div>
@@ -18,13 +19,14 @@
 				<div class="row">
 					<div>
 						<form action="#" class="form">
+							<label for="lang">언어</label> 
 							<select id="cqLang" class="input-md round form-control" style="width: 100px">
 								<option>전체</option>
-								<option>제목</option>
-								<option>내용</option>
-								<option>제목/내용</option>
-								<option>작성자</option>
-							</select> 
+								<option>JAVA</option>
+								<option>C#</option>
+								<option>C++</option>
+								<option>USA</option>
+							</select>&nbsp;&nbsp;&nbsp;&nbsp; 
 							<input type="text" name="codeSearch" id="codeSearch" 
 							class="input-sm round" placeholder="검색" 
 							style="width: 300px; height: 48px;" pattern="" required />
@@ -46,31 +48,36 @@
 							<th width="50">추천수</th>
 						</tr>
 						<c:forEach items="${lists}" var="list">
-							<tr align="center" onclick="selectOne('${list.cqReplyNo}')">
-								<td>${list.cqReplyNo}</td>
-									<td align="left">[${list.cqNo}번글 리뷰]${list.title}</td>
+							<tr align="center" onclick="selectOne('${list.cqNo}')">
+								<td>${list.cqNo}</td>
+									<td align="left">[${list.cqLang}]${list.title}</td>
 								<td>${list.writer}</td>
-								<td><fmt:formatDate pattern="yyyy-MM-dd" value="${list.replyDate}"/></td>
+								<td><fmt:formatDate pattern="yyyy-MM-dd" value="${list.cqDate}"/></td>
 								<td>${list.hit}</td>
 								<td>${list.recommend}</td>
 							</tr>
 						</c:forEach>
 					</table>
+					<sec:authorize access="isAuthenticated()">
+						<div align="right">
+							<input class="btn btn-mod btn-round btn-border-w btn-small"
+								type="button" value="글쓰기" onclick="location.href='cqInsertForm.do?type=4'">
+						</div>
+					</sec:authorize>
 				</div>
 			</div>
 	</section>
 	<br>
-
 </div>
 <div>
-	<form id="frm" action="reviewSelect.do" method="get">
+	<form id="frm" action="cqSelect.do" method="get">
 	<input name="${_csrf.parameterName }" value="${_csrf.token}" type="hidden">
-		<input type="hidden" id="cqNo" name="cqReplyNo">
-	</form>
-</div>
+			<input type="hidden" id="cqNo" name="cqNo">
+		</form>
+	</div>
 <script type="text/javascript">
-	function selectOne(id) {
-		frm.cqNo.value = id;
-		frm.submit();
-	}
+function selectOne(id) {
+	frm.cqNo.value = id;
+	frm.submit();
+}
 </script>

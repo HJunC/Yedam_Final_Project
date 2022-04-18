@@ -32,16 +32,17 @@
 										#{title},
 										#{subject},
 										board_no_count_seq.nextval,
-										#{board_type_no})
+										#{writer},
+										#{boardTypeNo})
 	</insert>
 	
 	<update id="replyUpdate" parameterType="co.yd.deval.code.service.ReplyVO">
 		UPDATE CODE_QUESTION_REPLY
 		<set>
 			<if test="title != null and title != ''"> title = #{title}, </if>
-			<if test="subject != null and subject != '"> subject = #{subject}, </if>
+			<if test="subject != null and subject != ''"> subject = #{subject}, </if>
 		</set>
-		WHERE CQ_NO = #{cqNo}
+		WHERE CQ_REPLY_NO = #{cqReplyNo}
 	</update>
 	
 	<delete id="replyDelete">

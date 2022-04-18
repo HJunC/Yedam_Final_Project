@@ -1,18 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <div align="center">
 	<section class="page-section bg-dark light-content" id="home">
 		<div class="container relative text-center">
 			<div class="row">
 				<div class="col-lg-10 offset-lg-1">
-				<c:if test="${type == 4}">
-					<h2 class="hs-line-7 mb-0 wow fadeInUpShort" data-wow-delay=".2s">코드 공유</h2>
-				</c:if>
-				<c:if test="${type == 6}">
-					<h2 class="hs-line-7 mb-0 wow fadeInUpShort" data-wow-delay=".2s">질문 / 답변</h2>
-				</c:if>
+				<h2 class="hs-line-7 mb-0 wow fadeInUpShort" data-wow-delay=".2s">질문 / 답변</h2>
 				</div>
 			</div>
 		</div>
@@ -56,7 +52,7 @@
 								<td>${list.cqNo}</td>
 									<td align="left">[${list.cqLang}]${list.title}</td>
 								<td>${list.writer}</td>
-								<td>${list.cqDate}</td>
+								<td><fmt:formatDate pattern="yyyy-MM-dd" value="${list.cqDate}"/></td>
 								<td>${list.hit}</td>
 								<td>${list.recommend}</td>
 							</tr>
@@ -65,7 +61,7 @@
 					<sec:authorize access="isAuthenticated()">
 						<div align="right">
 							<input class="btn btn-mod btn-round btn-border-w btn-small"
-								type="button" value="글쓰기" onclick="location.href='cqInsertForm.do?type=${type}'">
+								type="button" value="글쓰기" onclick="location.href='cqInsertForm.do?type=6'">
 						</div>
 					</sec:authorize>
 				</div>

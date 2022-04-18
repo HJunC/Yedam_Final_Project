@@ -53,19 +53,19 @@
 							<label for="memberMail">이메일</label>
 							<div class="input-group">
 								<input type="email" name="mail" id="memberMail" class="input-lg round form-control" placeholder="이메일을 입력해주세요" required="required">
-								<button type="button" id="mailBtn" class="btn btn-outline-secondary" onclick="sendEmail()">인증번호 보내기</button>
+								<button type="button" id="mailBtn" class="btn btn-outline-secondary" onclick="sendMail()">인증번호 보내기</button>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="authCheck">이메일 확인</label>
 							<div class="input-group">
-								<input type="text" id="authCheck" class="input-lg round form-control" placeholder="인증번호를 입력해주세요">
-								<button type="button" id="checkBtn" class="btn btn-outline-secondary" value="checkAuth">인증번호 확인</button>
+								<input type="text" id="authCheck" class="input-lg round form-control" disabled placeholder="인증번호를 입력해주세요">
+								<button type="button" id="checkBtn" class="btn btn-outline-secondary" onclick="checkAuth()" disabled value="">인증번호 확인</button>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="memberName">이름</label>
-							<input type="text" name="name" id="memberName" class="input-lg round form-control" placeholder="Enter name" required="required">
+							<input type="text" name="name" id="memberName" class="input-lg round form-control" placeholder="이름을 입력해주세요" required="required">
 						</div>
 
 					</div>
@@ -90,20 +90,25 @@
 <!-- End Divider -->
 
 <script>
-	const auth;
+	var auth;
+	
 	function formCheck(){
-		if(checkWord.style.color != green) {
-			if(checkWord.style.color == red){
+		if(checkWord.style.color != 'green') {
+			if(checkWord.style.color == 'red'){
 				alert('비밀번호를 일치시켜주세요')
 			} else {
 				alert('비밀번호를 확인해주세요')
 			}
 			return false;
-		}
-		if(btn.value == '') {
+		} else if(btn.value == '') {
 			alert('아이디 중복을 확인해주세요');
 			return false;
+		} else if($('#checkBtn').val() == ''){
+			alert('이메일 인증을 해주세요')
+			return false;
 		}
+		
+		return true;
 	}
 
 	function pwdCheck(){
@@ -146,11 +151,36 @@
 	}
 	
 	function sendMail() {
-		$.ajax({
-			url:"sendAuthMail.do",
-			success:function(data) {
-				
+		if($('#memberMail').val() != ''){
+			$.ajax({
+				url : "sendAuthMail.do",
+				data : {mail : $('#memberMail').val()},
+				success : function(data) {
+					alert('인증번호가 발송되었습니다.');
+					$('#authCheck').attr('disabled',false);
+					$('#checkBtn').attr('disabled',false);
+					auth = data;
+				}
+			})
+		} else {
+			alert('이메일을 입력해주세요');
+			$('#memberMail').focus();
+		}
+	}
+	
+	function checkAuth() {
+		if($('#authCheck').val() != '') {
+			if(auth == $('#authCheck').val()) {
+				alert('인증번호가 확인되었습니다.')
+				$('#checkBtn').val('y');
+			} else {
+				alert('인증번호가 일치하지 않습니다. 다시 입력해주세요')
+				$('#authCheck').val('');
+				$('#authCheck').focus();
 			}
-		})
+		} else {
+			alert('인증번호를 입력해주세요');
+			$('#authCheck').focus();
+		}
 	}
 </script>

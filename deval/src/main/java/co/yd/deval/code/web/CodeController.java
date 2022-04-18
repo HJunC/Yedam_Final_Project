@@ -27,16 +27,18 @@ public class CodeController {
 	@Autowired
 	private CommentService commentDAO;
 
-	@GetMapping("/cqList.do")
+	@GetMapping("/codeList.do")
 	public String cqList(Model model,String type) {
-		if(type.equals("qna")) {
-			model.addAttribute("lists", codeDAO.cqList(6));
-			model.addAttribute("type",6);
-		} else {
-			model.addAttribute("lists",codeDAO.cqList(4));
-			model.addAttribute("type",4);
-		}
-		return "code/cqList";
+		model.addAttribute("lists",codeDAO.cqList(4));
+		model.addAttribute("type",4);
+		return "code/codeList";
+	}
+	
+	@GetMapping("/questionList.do")
+	public String queList(Model model) {
+		model.addAttribute("lists", codeDAO.cqList(6));
+		model.addAttribute("type",6);
+		return "code/questionList";
 	}
 	
 	@GetMapping("/reviewList.do")
@@ -104,9 +106,9 @@ public class CodeController {
 		int r = codeDAO.codeInsert(vo);
 		if (r != 0) {
 			if(type == 4) {
-				return "redirect:cqList.do?type=code";
+				return "redirect:codeList.do";
 			} else {
-				return "redirect:cqList.do?type=qna";
+				return "redirect:questionList.do";
 			}
 		} else {
 			return "code/error";
@@ -115,13 +117,14 @@ public class CodeController {
 
 	@PostMapping("/cqDelete.do")
 	public String codeDelete(Model model, CodeVO vo) {
+		vo = codeDAO.cqSelect(vo);
 		int type = vo.getBoardTypeNo();
 		int r = codeDAO.codeDelete(vo);
 		if (r != 0) {
 			if(type == 4) {
-				return "redirect:cqList.do?type=code";
+				return "redirect:codeList.do";
 			} else {
-				return "redirect:cqList.do?type=qna";
+				return "redirect:questionList.do";
 			}
 		}
 		return "code/error";
@@ -146,5 +149,32 @@ public class CodeController {
 		return "code/error";
 	}
 	
-
+	@GetMapping("/reviewInsertForm.do")
+	public String reviewInsertForm(int cqNo, Model model) {
+		model.addAttribute("cqNo",cqNo);
+		return "code/reviewInsertForm";
+	}
+	
+	@PostMapping("/reviewInsert")
+	public String reviewInsert(ReplyVO vo) {
+		vo.setBoardTypeNo(5);
+		replyDAO.replyInsert(vo);
+		return "redirect:reviewList.do";
+	}
+	
+	@GetMapping("/reviewUpdateForm.do")
+	public String reviewUpdateForm(Model model, ReplyVO vo) {
+		model.addAttribute("review",replyDAO.reviewSelect(vo.getCqReplyNo()));
+		return "code/reviewUpdateForm";
+	}
+	
+	@PostMapping("/reviewUpdate.do")
+	public String reviewUpdate(ReplyVO vo) {
+		int r = replyDAO.replyUpdate(vo);
+		if(r != 0) {
+			return "redirect:reviewSelect.do?cqReplyNo="+vo.getCqReplyNo();
+		}
+		return "code/error";
+	}
+	
 }
