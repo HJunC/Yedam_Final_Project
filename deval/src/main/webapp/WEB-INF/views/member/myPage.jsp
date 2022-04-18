@@ -612,8 +612,5 @@
 		frm.roomId.value = n;
 		frm.submit();
 	};
-	
-		return $('<tbody>').append(tr);
-	};
 </script>
 
