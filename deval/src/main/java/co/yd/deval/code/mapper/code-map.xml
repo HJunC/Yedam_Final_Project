@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.yd.deval.code.mapper.CodeMapper">
+
+	<select id="cqList" resultType="co.yd.deval.code.service.CodeVO">
+		SELECT *
+		FROM CODE_QUESTION
+		WHERE BOARD_TYPE_NO = #{no}
+		ORDER BY CQ_NO DESC
+	</select>
+	
+	<select id="cqSelect" resultType="co.yd.deval.code.service.CodeVO">
+		SELECT *
+		FROM CODE_QUESTION
+		WHERE CQ_NO = #{cqNo}
+	</select>
+	
+	<insert id="codeInsert" parameterType="co.yd.deval.code.service.CodeVO">
+		INSERT INTO 
+		CODE_QUESTION (
+						CQ_NO
+			   		  , CQ_LANG
+					  , TITLE
+					  , SUBJECT
+					  , WRITER
+					  , BOARD_TYPE_NO
+					  , GIT_URI
+					  )
+		VALUES (	   
+						BOARD_NO_COUNT_SEQ.NEXTVAL
+			 		  , #{cqLang}
+			 		  , #{title}
+			 		  , #{subject}
+			 		  , #{writer}
+			 		  , #{boardTypeNo}
+			 		  , #{gitUri} 
+			 		  )
+	</insert>
+	
+	<update id="codeUpdate" parameterType="co.yd.deval.code.service.CodeVO">
+		UPDATE CODE_QUESTION
+		<set>
+			<if test="cqLang != null and cqLang != ''">CQ_LANG = #{cqLang},</if>
+			<if test="title != null and title != ''">TITLE = #{title},</if>
+			<if test="subject != null and subject != ''">SUBJECT = #{subject},</if>
+			<if test="gitUri != null and gitUri != ''">GIT_URI = #{gitUri},</if>
+		</set>
+		WHERE CQ_NO = #{cqNo}
+	</update>
+	
+	<delete id="codeDelete" parameterType="co.yd.deval.code.service.CodeVO">
+		DELETE CODE_QUESTION
+		WHERE CQ_NO = #{cqNo}
+	</delete>
+	
+	<update id="codeHitUp" parameterType="co.yd.deval.code.service.CodeVO">
+		UPDATE CODE_QUESTION
+		SET HIT = HIT+1
+		WHERE CQ_NO = #{cqNo}
+	</update>
+	
+	<update id="codeRecommendUp" parameterType="co.yd.deval.code.service.CodeVO">
+		UPDATE CODE_QUESTION
+		SET RECOMMEND = RECOMMEND + 1
+		WHERE CQ_NO = #{cqNo}
+	</update>
+	
+</mapper>

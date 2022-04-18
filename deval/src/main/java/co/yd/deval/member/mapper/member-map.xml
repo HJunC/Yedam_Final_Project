@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.yd.deval.member.mapper.MemberMapper">
+	
+	<select id="memberSelect" resultType="co.yd.deval.member.service.MemberVO">
+		SELECT *
+		FROM   MEMBER
+		WHERE  MEMBER_ID = #{memberId}
+	</select>
+	
+	<select id="memberLogin" resultType="co.yd.deval.member.service.MemberVO">
+		SELECT MEMBER_ID, 
+			   '{noop}'||PASSWORD AS PASSWORD, 
+			   MAIL, 
+			   NAME, 
+			   EXP, 
+			   CASH_PT, 
+			   PROFILE_IMG, 
+			   'ROLE_'||UPPER(ROLE) AS ROLE
+		FROM   MEMBER
+		WHERE  MEMBER_ID = #{id}
+	</select>
+	
+	<insert id="memberInsert" parameterType="co.yd.deval.member.service.MemberVO">
+		INSERT INTO MEMBER (MEMBER_ID,
+							PASSWORD,
+							MAIL,
+							NAME)
+		VALUES      (#{memberId},
+					 #{password},
+					 #{mail},
+					 #{name})
+	</insert>
+	
+	<update id="memberUpdate" parameterType="co.yd.deval.member.service.MemberVO">
+		UPDATE MEMBER
+		<set>
+			<if test="password != null and password != ''"> PASSWORD = #{password}, </if>
+			<if test="mail != null and mail != ''"> MAIL = #{mail}, </if>
+			<if test="name != null and name != ''"> NAME = #{name}, </if>
+			<if test="resume != null and resume != ''"> RESUME = #{resume}, </if>
+			<if test="profileImg != null and profileImg != ''"> PROFILE_IMG = #{profileImg}, </if>
+		</set>
+		WHERE MEMBER_ID = #{memberId}
+	</update>
+	
+	<delete id="memberDelete" parameterType="co.yd.deval.member.service.MemberVO">
+		DELETE FROM MEMBER
+		WHERE  MEMBER_ID = #{memberId}
+		AND    PASSWORD = #{password}
+	</delete>
+	
+	<update id="memberExpUp" parameterType="HashMap">
+		UPDATE MEMBER
+		SET EXP = EXP + #{exp}
+		WHERE MEMBER_ID = #{id}
+	</update>
+	
+	<update id="memberCashUpdate" parameterType="Map">
+		UPDATE MEMBER
+		SET CASH_PT = CASH_PT + #{cashPt}
+		WHERE MEMBER_ID = #{id}
+	</update>
+
+	<update id="refund" parameterType="Map">
+		UPDATE MEMBER
+		SET CASH_PT = CASH_PT + #{cashPt}
+		WHERE MEMBER_ID = #{memberId}
+	</update>
+
+	<select id="memberMailGet" resultType="String">
+		select mail
+		from member
+		where member_id = #{id}
+	</select>
+	
+</mapper>
