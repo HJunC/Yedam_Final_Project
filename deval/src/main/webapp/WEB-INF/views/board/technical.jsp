@@ -102,7 +102,7 @@ td {
 						type="button" value="글쓰기" onclick="location.href='write.do?no=3'">
 				</div>
 			</sec:authorize>
-			<form action="technicSelect.do" method="post" id="boardSS3">
+			<form action="technicSelect.do" id="boardSS3">
 				<input type="hidden" name="boardNo" id="boardSe3" />
 			</form>
 

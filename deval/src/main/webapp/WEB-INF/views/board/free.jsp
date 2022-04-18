@@ -102,7 +102,7 @@ td {
 			</sec:authorize>
 
 
-			<form action="boardSelect.do" method="post" id="boardSS">
+			<form action="boardSelect.do" id="boardSS">
 				<input type="hidden" name="boardNo" id="boardSe" />
 			</form>
 

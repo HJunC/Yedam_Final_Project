@@ -27,7 +27,7 @@
 					<input type="hidden" value="${board.title}" name="title" id="title">${board.title}</h2>
 				<div class="table-responsive">
 					<c:set var="upload" value="/upload" />
-					<form action="boardUpdateForm.do" method="post">
+					<form action="boardUpdateForm.do">
 						<input type="hidden" name="boardTypeNo" value="${board.boardNo}">
 						<div align="right">
 							<c:if test="${board.boardTypeNo != 1}">

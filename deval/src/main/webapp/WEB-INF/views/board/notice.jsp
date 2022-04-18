@@ -95,7 +95,7 @@ td {
 		</table>
 		 
 
-		<form action="noticeSelect.do" method="post" id="boardSS2">
+		<form action="noticeSelect.do" id="boardSS2">
 			<input type="hidden" name="boardNo" id="boardSe2" />
 		</form>
 

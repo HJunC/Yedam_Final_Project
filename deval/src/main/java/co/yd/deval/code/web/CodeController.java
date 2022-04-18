@@ -177,4 +177,10 @@ public class CodeController {
 		return "code/error";
 	}
 	
+	@PostMapping("/reviewDelete.do")
+	public String reviewDelete(ReplyVO vo) {
+		replyDAO.replyDelete(vo.getCqReplyNo());
+		return "redirect:reviewList.do";
+	}
+	
 }

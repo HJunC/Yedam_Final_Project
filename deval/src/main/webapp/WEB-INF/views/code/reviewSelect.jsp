@@ -70,6 +70,7 @@
 		} else if (str == "D") {
 			window.alert('삭제하였습니다.');
 			frm.action = "reviewDelete.do";
+			frm.method="post";
 			frm.submit();
 		}
 	}

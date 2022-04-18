@@ -84,9 +84,9 @@ public class BoardController {
 		int n = boardDao.boardInsert(vo);
 
 		if (vo.getBoardTypeNo() == 1) {
-			return "redirect:free.do";
-		} else if (vo.getBoardTypeNo() == 2) {
 			return "redirect:notice.do";
+		} else if (vo.getBoardTypeNo() == 2) {
+			return "redirect:free.do";
 		} else {
 			return "redirect:technical.do";
 		}
@@ -132,7 +132,7 @@ public class BoardController {
 		return "redirect:free.do";
 	}
 
-	@PostMapping("/boardSelect.do")
+	@GetMapping("/boardSelect.do")
 	public String boardSelect(BoardVO vo, Model model, CommentVO cvo, Principal user) {
 		boardDao.boardHitUp(vo.getBoardNo());
 		cvo.setBoardNo(vo.getBoardNo());
@@ -150,7 +150,7 @@ public class BoardController {
 		return boardDao.boardSelect(vo).getRecommend();
 	}
 
-	@PostMapping("/boardUpdateForm.do")
+	@GetMapping("/boardUpdateForm.do")
 	public String boardUpdateForm(Model model, BoardVO vo) {
 		model.addAttribute("board", boardDao.boardSelect(vo));
 		return "board/boardUpdateForm";
