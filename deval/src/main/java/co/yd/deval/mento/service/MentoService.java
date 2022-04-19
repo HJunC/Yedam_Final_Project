@@ -13,4 +13,5 @@ public interface MentoService {
 	int mentoCount();
 	int kindOfLang();
 	List<String> kindOfAll();
+	
 }

@@ -3,6 +3,8 @@ package co.yd.deval;
 
 import co.yd.deval.board.service.BoardService;
 import co.yd.deval.board.service.BoardVO;
+import oracle.jdbc.proxy.annotation.Post;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -67,5 +69,6 @@ public class HomeController {
 	public String notFoundPage() {
 		return "notFoundPage";
 	}
+	
 	
 }

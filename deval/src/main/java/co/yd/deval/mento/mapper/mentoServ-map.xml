@@ -86,5 +86,10 @@
 		AND STATE != 0 
 		AND STATE != 4 
 	</select>
+	<update id="updateRating" parameterType="map">
+		UPDATE MENTO_SERVICE
+		SET STSFDG = #{ratingNum}, STATE = 2
+		WHERE MENTO_SERVICE_NO = #{mentoServiceNo}
+	</update>
 	
 </mapper>
