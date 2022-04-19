@@ -59,7 +59,6 @@
                                     <div class="team-item-decoration" style="background-image: url(${resources}/images/team/blackbar.jpg);"></div>
                                     <div class="team-item">
                                         <div class="team-item-image">
-                                        <!-- src="${resources}/images/studyimg/devalProfile/deval01.jpg" -->
                                             <img class="introImg" border="0"  alt="" />
                                             <div class="team-item-detail">
                                                 <p class="team-item-detail-title">
