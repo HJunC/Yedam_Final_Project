@@ -258,21 +258,19 @@
             <!-- Content -->
             <div class="col-md-8 mb-sm-80">
                 <c:if test="${project.state eq '4'}">
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                    <link rel="stylesheet" href="${resources}/css/common/github-markdown-dark.css">
                     <!-- Nav Tabs -->
                     <div class="blog-item mb-80 mb-xs-40">
                         <div class="align-center mb-40 mb-xxs-30">
                             <ul class="nav nav-tabs tpl-tabs animate" role="tablist">
 
                                 <li class="nav-item">
-                                    <a href="#item-1" aria-controls="item-1" class="nav-link active" data-bs-toggle="tab" role="tab" aria-selected="true">First Tab</a>
+                                    <a href="#item-1" aria-controls="item-1" class="nav-link active" data-bs-toggle="tab" role="tab" aria-selected="true">프로젝트 개요</a>
                                 </li>
 
                                 <li class="nav-item">
-                                    <a href="#item-2" aria-controls="item-2" class="nav-link" data-bs-toggle="tab" role="tab" aria-selected="false">Second Tab</a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a href="#item-3" aria-controls="item-3" class="nav-link" data-bs-toggle="tab" role="tab" aria-selected="false">Third Tab</a>
+                                    <a href="#item-2" aria-controls="item-2" class="nav-link" data-bs-toggle="tab" role="tab" aria-selected="false">언어</a>
                                 </li>
 
                             </ul>
@@ -282,51 +280,169 @@
                         <!-- Tab panes -->
                         <div class="tab-content tpl-minimal-tabs-cont section-text">
 
-                            <div class="tab-pane fade show active" id="item-1" role="tabpanel">
-
-                            </div>
+                            <div class="tab-pane fade show active" id="item-1" role="tabpanel"></div>
 
                             <div class="tab-pane fade" id="item-2" role="tabpanel">
-                                Nam porta elementum tortor, eget tempor orci ullamcorper eget. Aliquam fermentum sem non vulputate dapibus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla at porttitor massa.
-                                Aliquam tortor leo, pharetra non congue sit amet pharetra non congue sit amet, bibendum sit amet enim.
-                            </div>
-
-                            <div class="tab-pane fade" id="item-3" role="tabpanel">
-                                Pellentesque sed vehicula velit, vitae vulputate velit. Morbi nec porta augue, et dignissim enim. Vivamusere suscipit, lorem vitae rhoncus pharetra, erat nisl scelerisque magna, ut mollis dui eros eget libero. Vivamus ut ornare tellus.
-                                Aliquam tortor leo, pharetra pharetra non congue sit amet non congue sit amet, bibendum sit amet enim.
+                                <canvas id="myChart" width="400" height="400"></canvas>
                             </div>
 
                         </div>
                         <!-- End Tab panes -->
+
                     </div>
+                    <script src="https://cdn.jsdelivr.net/npm/js-base64@3.6.1/base64.min.js"></script>
                     <script>
                       $.ajax({
                         url: '${project.gitUri}',
                         type: "GET",
                         success: function (res) {
-                          makeGithubLink(res);
+                          makeFirstTab(res);
+                          makeProjectLanguages(res);
                         },
                         error: function (res) {
                           $("#item-1").html("연결에러");
                         }
                       })
 
-                      function makeGithubLink(res) {
-                        var str = $(`<div class="card text-white bg-dark mb-3">
-                                      <div class="card-header">프로젝트 명 : <a href="`+res.html_url+`" style="text-decoration: none;">`+res.name+`</a></div>
+                      /**
+                       * 프로젝트 개요 view
+                       * @param res
+                       */
+                      function makeFirstTab(res) {
+                        var str = $(`<div class="card text-white mb-3" style="background-color: initial; border-color: rgb(255 255 255 / 14%);">
+                                      <div class="card-header d-flex justify-content-between" style="background-color: #000">
+                                        <div>프로젝트 명 : <a href="`+res.html_url+`" style="text-decoration: none;">`+res.name+`</a></div>
+                                        <div>
+                                            <div class="align-right"><span class="badge bg-dark">생성: `+moment(res.created_at).format("YYYY-MM-DD HH:mm:ss")+`</span></div>
+                                            <div class="align-right"><span class="badge bg-dark">마지막 업데이트: `+moment(res.updated_at).format("YYYY-MM-DD HH:mm:ss")+`</span></div>
+                                            <div class="align-right"><span class="badge bg-dark">마지막 푸쉬: `+moment(res.pushed_at).format("YYYY-MM-DD HH:mm:ss")+`</span></div>
+                                        </div>
+                                      </div>
                                       <div class="card-body">
-                                        <p class="card-text">
-                                          생성자 :
-                                          <img src="`+res.owner.avatar_url+`" alt="프로필" style="width: 30px; border-radius: 30px;">
-                                          `+res.owner.login+`
-                                        </p>
-                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                        <div class="markdown-body" style="background-color: initial;">`+getReadme(res.url)+`</p>
                                       </div>
                                     </div>`);
                         $("#item-1").append(str);
                       }
+
+                      /**
+                       * 레포지토리 Readme 가지고오는 메소드
+                       * @param url 깃헙 api 레포지토리 주소
+                       * @returns string
+                       */
+                      function getReadme(url) {
+                        let result;
+                        $.ajax({
+                          url: url+'/readme',
+                          type: "GET",
+                          async: false,
+                          success: function (res) {
+                            result = Base64.decode(res.content);
+                          },
+                          error: function (res) {
+                            result = "연결에러";
+                          }
+                        })
+                        result = getMarkdown(result);
+                        return result;
+                      }
+
+                      /**
+                       * 레포지토리 markdown 언어를 html로 변환
+                       * @param text markdown언어
+                       * @returns string
+                       */
+                      function getMarkdown(text) {
+                        let result;
+                        $.ajax({
+                          url: 'https://api.github.com/markdown',
+                          type: "POST",
+                          data: JSON.stringify({
+                            "text" : text
+                          }),
+                          async: false,
+                          success: function (res) {
+                            result = res;
+                          },
+                          error: function (res) {
+                            result = "연결에러";
+                          }
+                        })
+                        return result;
+                      }
+
+                      function makeProjectLanguages(res) {
+                        const githubLang = getProjectLanguages(res.url);
+                        let langList = [];
+                        let langValue = [];
+                        let backgroundList = [];
+                        for (const [key, value] of Object.entries(githubLang)) {
+                          langList.push(key);
+                          langValue.push(value);
+                          backgroundList.push(generateRandomCode());
+                        }
+                        const ctx = document.getElementById('myChart');
+
+                        const data = {
+                          labels: langList,
+                          datasets: [{
+                            label: 'My First Dataset',
+                            data: langValue,
+                            backgroundColor: backgroundList
+                          }]
+                        };
+
+                        const myChart = new Chart(ctx, {
+                          type: 'pie',
+                          data: data,
+                          options: {
+                            legend: {
+                              labels: {
+                                fontColor: "white",
+                                fontSize: 16
+                              }
+                            },
+                          }
+                        })
+
+                      }
+
+                      /**
+                       * 사용언어 불러오는 메소드
+                       * @param url
+                       * @returns { {string: number} }
+                       */
+                      function getProjectLanguages(url) {
+                        var result = {};
+                        $.ajax({
+                          url: url+'/languages',
+                          type: "GET",
+                          async: false,
+                          success: function (res) {
+                            result = res;
+                          },
+                          error: function (res) {
+                            result = "연결에러";
+                          }
+                        })
+                        return result;
+                      }
+
+                      /**
+                       * 랜덤한 색상 얻는 메소드
+                       * @returns {string}
+                       */
+                      function generateRandomCode() {
+                        var RGB_1 = Math.floor(Math.random() * (255 + 1));
+                        var RGB_2 = Math.floor(Math.random() * (255 + 1));
+                        var RGB_3 = Math.floor(Math.random() * (255 + 1));
+                        var strRGBA = 'rgba(' + RGB_1 + ',' + RGB_2 + ',' + RGB_3 + ',0.5)';
+                        return strRGBA;
+                      }
                     </script>
                 </c:if>
+
+                <div class="blog-page-title"></div>
 
                 <!-- Post -->
                 <div class="blog-item mb-80 mb-xs-40">
@@ -697,27 +813,6 @@
   }
 
   /**
-   * todo 프로젝트 수정
-   */
-  function updateProject() {
-    $.ajax({
-      url: "../api/project/update",
-      type: "POST",
-      data: "",
-      dataType: "json",
-      success: function(res) {
-        console.log(res);
-        alert("수정하였습니다.");
-        location.reload();
-      },
-      error: function (error) {
-        alert("에러입니다.")
-        console.log(error);
-      }
-    })
-  }
-
-  /**
    * 프로젝트 삭제
    */
   function deleteProject() {
@@ -731,7 +826,7 @@
       dataType: "json",
       success: function(res) {
         alert("프로젝트가 삭제되었습니다.");
-        location.href = "/project/main.do";
+        location.href = "main.do";
       },
       error: function (error) {
         alert("에러입니다.")
