@@ -103,25 +103,9 @@
                 <!-- Contact Section -->
                 <section class="page-section bg-dark light-content">
                     <div class="container relative">
-                        <div class="row mb-60 mb-xs-40">
+                        <div class="row mb-xs-40">
                             <div class="col-md-10 offset-md-1">
                                 <div class="row">
-                                    <!-- Message -->
-                                    <div class="col-sm-6 col-lg-4 pb-20">
-                                        <div class="contact-item wow fadeScaleIn" data-wow-delay="0" data-wow-duration="1s">
-                                            <a href="#"><div class="ci-icon">
-                                                <i class="fa fa-comments"></i>
-                                            </div></a>
-                                             <a href="#"><div class="ci-title">
-                                                채팅
-                                            </div></a>
-                                            <div class="ci-text">
-                                                스터디장
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- End Message -->
-                                    
                                     <!-- Location -->
                                     <div class="col-sm-6 col-lg-4 pb-20">
                                         <div class="contact-item wow fadeScaleIn" data-wow-delay=".1s" data-wow-duration="1s">
@@ -133,6 +117,22 @@
                                             </div>
                                             <div class="ci-text">
                                                 ${study[0].location }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- End Location -->
+                                    
+                                     <!-- Location -->
+                                    <div class="col-sm-6 col-lg-4 pb-20">
+                                        <div class="contact-item wow fadeScaleIn" data-wow-delay=".1s" data-wow-duration="1s">
+                                            <div class="ci-icon">
+                                                <i class="fa fa-code-branch"></i>
+                                            </div>
+                                            <div class="ci-title">
+                                                언어
+                                            </div>
+                                            <div class="ci-text">
+                                                ${study[0].lang1 }<c:if test="${not empty study[0].lang2 }"> / ${study[0].lang2 }</c:if>
                                             </div>
                                         </div>
                                     </div>
@@ -153,11 +153,53 @@
                                         </div>
                                     </div>
                                     <!-- End Period -->
+                                    
+                                     <!-- Message -->
+                                    <div class="pb-20">
+                                        <div class="contact-item wow fadeScaleIn" data-wow-delay="0" data-wow-duration="1s">
+                                            <div class="ci-icon">
+                                                <i class="fa fa-comments"></i>
+                                            </div>
+                                             <%-- <a href="#" onclick="teamChat('${leaderId.leaderId}')"><div class="ci-title"> --%>
+                                            <div class="ci-title">
+                                            	팀원 오픈톡
+                                            </div>
+                                            <div class="ci-text">
+                                                <a href="${study[0].kakao }">${study[0].kakao }</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- End Message -->
                                 </div>
                             </div>
                         </div>
                     </div>
                 </section>
                 <!-- End Contact Section -->
-</body>
+                
+       <!-- <script type="text/javascript">
+            	function teamChat(id) {
+            		if (id == "") {
+            			alert("id값이 없습니다");
+            			return;
+            		}
+		    		console.log("-- Study Qna Start --");
+		    		$.ajax({
+		    			type: "POST",
+		    			url: "studyChat.do",
+		    			data: {"ownerId": id},
+		    			dataType : "text",
+		    			success: function(result) {
+		    				if (result != 0)
+		    					location.href="chatForm.do?roomId="+result;
+		    				else
+		    					return -1;
+		    			},
+		    			error: function(result) {
+		    			}
+		    		});
+		    		console.log("-- Study Qna End --")
+				}
+        </script> -->
+	</body>
 </html>

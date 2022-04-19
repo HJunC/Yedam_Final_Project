@@ -32,6 +32,7 @@ public class StudyVO {
 	private String lang2;
 	private String[] ck_lang;
 	private int rcnt;
+	private String kakao;
 	
 	//페이징
     private int rn;
