@@ -76,19 +76,21 @@ td {
 		</section>
 				<div class="table-responsive">
 					<table class="table shopping-cart-table">
-						<tr align="center">
-							<th width="50">No</th>
-							<th width="300">제목</th>
-							<th width="100">작성일자</th>
-							<th width="50">조회수</th>
-							<th width="50">추천수</th>
-						</tr>
+								<tr align="center">
+				<th width="50">No</th>
+					<th width="250">제목</th>
+					<th width="100">작성자</th>
+					<th width="100">작성일자</th>
+					<th width="50">조회수</th>
+					<th width="50">추천수</th>
+				</tr>
 
 
 						<c:forEach items="${technicList}" var="list3">
 							<tr class="active" onclick="technicSelect(${list3.boardNo})">
 								<td>${list3.boardNo}</td>
 								<th align="left">${list3.title}</th>
+								<td>${list3.writer}</td>
 								<td><fmt:formatDate pattern="yyyy-MM-dd"
 										value="${list3.boardDate}" /></td>
 								<td>${list3.hit}</td>

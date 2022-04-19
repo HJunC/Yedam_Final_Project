@@ -77,15 +77,17 @@ td {
 			<table class="table shopping-cart-table">
 				<tr align="center">
 					<th width="50">No</th>
-					<th width="300">제목</th>
+					<th width="250">제목</th>
+					<th width="100">작성자</th>
 					<th width="100">작성일자</th>
 					<th width="50">조회수</th>
 					<th width="50">추천수</th>
 				</tr>
 				<c:forEach items="${boardList}" var="list">
-					<tr class="active" onclick="freeSelect(${list.boardNo})">
+					<tr class="active" onclick="freeSelect(${list.boardNo})">				
 						<td>${list.boardNo}</td>
 						<th align="left">${list.title}</th>
+						<td>${list.writer}</td>
 						<td><fmt:formatDate pattern="yyyy-MM-dd"
 								value="${list.boardDate}" /></td>
 						<td>${list.hit}</td>
