@@ -90,7 +90,7 @@
                     		                        	</c:forEach>
                             	            		</c:if>
                             	            		<c:if test="${lengthDay == 3 }">
-                            	            			<c:forEach var="i" begin="10" end="${fn:substring(Day,0,2)}">
+                            	            			<c:forEach var="i" begin="1" end="${fn:substring(day,0,2)}">
                             	            				<option value="${i}일">${i}일</option>
                             	            			</c:forEach>
                             	            		</c:if>
@@ -218,7 +218,12 @@
                 })
                 .done(function (item) {
                     chartData.push(["전체평균",item.all]);
+                    //수정된부분
+                    if(item.one == 0) {
+                    	chartData.push(["평점없음",5]);
+                    }else {
                     chartData.push(["멘토평균",item.one]);
+                    }
                 });
            	data.addRows(chartData);
             

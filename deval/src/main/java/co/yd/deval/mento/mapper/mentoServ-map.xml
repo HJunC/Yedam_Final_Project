@@ -38,7 +38,7 @@
 	</insert>
 	<update id="mentoServUpdate" parameterType="Int">
 		UPDATE MENTO_SERVICE
-		SET STATE = 2
+		SET STATE = 4
 		WHERE MENTO_SERVICE_NO = #{mentoServiceNo}
 	</update>
 	<delete id="mentoServDelete" >

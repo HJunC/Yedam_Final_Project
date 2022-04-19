@@ -9,6 +9,7 @@
 	<select id="mentoSelectOne" resultType="co.yd.deval.mento.service.MentoVO">
 		SELECT * FROM MENTO 
 		WHERE MENTO_ID = #{mentoId}
+		AND LANG = #{lang}
 	</select>
 	<insert id="mentoInsert" parameterType="co.yd.deval.mento.service.MentoVO">
 		insert into mento(mento_id,
@@ -55,5 +56,10 @@
 		SELECT LANG 
 		FROM MENTO
 		GROUP BY LANG
+	</select>
+	<select id="langList" resultType="co.yd.deval.mento.service.MentoVO">
+		SELECT *
+		FROM MENTO
+		WHERE MENTO_ID = #{mentoId}
 	</select>
 </mapper>

@@ -86,6 +86,7 @@
                         	<!-- mentoSelect 처리부분 -->
                         	<form id="frm2" action="mentoSelect.do" method="get">
                         		<input type="hidden" id="mentoId" name="mentoId">
+                        		<input type="hidden" id="lang" name="lang">
                         	</form>
                         </div>
                                 
@@ -96,6 +97,7 @@
             <script type="text/javascript">
             	function selectMento(id) {
             		frm2.mentoId.value = id;
+            		frm2.lang.value = '${mento[0].lang}'
             		frm2.submit();
             	}
             </script>

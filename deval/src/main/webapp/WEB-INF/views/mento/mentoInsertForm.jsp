@@ -17,6 +17,7 @@
             <!-- 멘토등록 글-->
             <div class="text-center mb-80 mb-sm-50">
                 <h2 class="section-title">멘토등록!!</h2>
+                ${mentos}
             </div>
             <!-- 값이 들어가는 곳-->
             <!-- mentoInsert Form tag-->
@@ -171,8 +172,24 @@
 	}
         // --- 값 컨트롤러로 넘겨주기
         function mentoInsert() {
+        	var lang = $('#lang').val();
+         	<c:forEach items="${mentos}" var="mento">
+         	if(lang == '${mento.lang}') {
+        		alert('이미 등록된 언어입니다.');
+        		return
+        	}
+        	</c:forEach>
         	var start = frm.serviceStt.value;
         	var end = frm.serviceEdt.value;
+        	var photo = $('#photo').val();
+        	var price = $('#price').val();
+        	if(photo == '') {
+        		photo = '${resources}/images/mento/prev.bmp';
+        	} 
+        	if(price == '') {
+        		alert('필수값을 등록해주세요!!');
+        		return;
+        	}
         	//시작시관 종료시간 막아주기
         	if(start == end) {
         		alert('시작시간과 종료시간이 같습니다')

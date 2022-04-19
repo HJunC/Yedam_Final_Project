@@ -9,6 +9,7 @@ import lombok.ToString;
 @Getter
 @ToString
 public class MentoVO {
+	private int mentoNum;
 	private String lang;
 	private String photo;
 	private String history;

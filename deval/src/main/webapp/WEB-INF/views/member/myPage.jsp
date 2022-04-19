@@ -194,14 +194,6 @@
 						</thead>
 						<tbody>
 						</tbody>
-						<!-- 	<a href="#test-modal" class="btn btn-mod btn-w btn-medium round mt-10 lightbox-gallery-5 mfp-inline"></a>
-	                                
-	                                <div id="test-modal" class="mfp-hide">
-	                                    <h1>This is lightbox modal window</h1>
-	                                    <p>
-	                                        Lorem ipsum dolor sit amet, adipiscing elit. In maximus ligula semper metus pellentesque mattis. Maecenas volutpat, diam enim.
-	                                    </p>
-	                                </div> -->
 					</table>
 				</div>
 				
@@ -233,7 +225,7 @@
 								<th>멘토서비스 시작일</th>
 								<th>서비스 기간</th>
 								<th>상태</th>
-								<th>평점주기</th>
+								<th>평점</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -252,7 +244,6 @@
 							<tr>
 								<th>채팅방 주인</th>
 								<th>채팅방 손님</th>
-								<th>채팅방 타입</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -414,7 +405,6 @@
 									$('#joinMento').append(makeNotTr(2));
 									$('#waitMento').append(makeNotTr(1));
 								} else {
-									console.log(data);
 									 if(data.mento.length == 0){
 										$('#joinMento>tbody').empty();
 										$('#joinMento').append(makeNotTr(2));	
@@ -574,27 +564,27 @@
 		td2.text(idx.mentiId);
 		td3.text(idx.startDate);
 		td4.text(idx.serviceTerm);
-		console.log(idx.state);
 		if(idx.state == 4) {
 			td5.text('멘토거절(환불)').css('color', 'red');
 		}else if(idx.state == 3) {
 			td5.text('서비스종료(평점부여가능)').css('color', 'blue');
 			td6.append(btn);
 		}else if(idx.state == 2) {
-			td5.text('서비스종료').css('color', 'green');			
+			td5.text('서비스종료').css('color', 'green');
+			td6.text(idx.stsfdg).css('color', 'yellow');
 		}else {
 			td5.text('진행중').css('color', 'yellow');
+			td6.text('미정').css('color', '#2DA6E2');
 		}
 		tr.append(td1, td2, td3, td4, td5, td6)
 		return tr;
 	}
 	
 	function sendRating() {
-		console.log($(event.target).parent().parent().data('id'))
-		var id = $(event.target).parent().parent().data('id')
+		var id = $(event.target).parent().parent().data('id');
 		$('#serviceNo').val(id);
 		var url = "ratingFrom.do";
-		var option = "top=10, left=10, width=500, height=600";
+		var option = "top=500, left=600, width=300, height=400";
 		window.open(url,"",option);
 	}
 	

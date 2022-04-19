@@ -14,7 +14,7 @@
 	<div class="mb-20 mb-md-10">
 	<form action="rating.do" method="post" id="frm">
 	<sec:csrfInput/>
-	<input type="text" id="mentoServiceNo" name="mentoServiceNo">
+	<input type="hidden" id="mentoServiceNo" name="mentoServiceNo">
 		<select class="form-control input-sm round" name="ratingNum">
 			<option value="1">1</option>
 			<option value="1.5">1.5</option>

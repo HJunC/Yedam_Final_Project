@@ -1,13 +1,12 @@
 package co.yd.deval.mento.web;
 
 import java.io.File;
-
 import java.io.IOException;
 import java.security.Principal;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
@@ -59,7 +58,13 @@ public class MentoController {
     }
     
     @GetMapping("/mentoInsertForm.do")
-    public String mentoInsertForm() {
+    public String mentoInsertForm(Model model, Principal principal) {
+    	String mentoId = principal.getName();
+    	List<MentoVO> list = mentoDAO.langList(mentoId);
+    	for(MentoVO li : list) {
+    		System.out.println(li+"======================================");
+    	}
+    	model.addAttribute("mentos", list);
     	return "mento/mentoInsertForm";
     }
     
@@ -90,13 +95,9 @@ public class MentoController {
     
     @GetMapping("/mentoSelect.do")
     public String mentoSelect(Model model, MentoVO vo, Principal principal) {
-    	
-    	  //異붽�
 		  MemberVO user = new MemberVO();
-		  if(principal != null) {
-			  user.setMemberId(principal.getName());
-			  model.addAttribute("member", memberDao.memberSelect(user));
-		  }
+		  user.setMemberId(principal.getName());
+		  model.addAttribute("member", memberDao.memberSelect(user));
 		  
 		  model.addAttribute("mento", mentoDAO.mentoSelectOne(vo));
 		  return "mento/mentoSelect";

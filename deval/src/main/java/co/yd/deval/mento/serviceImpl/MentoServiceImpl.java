@@ -54,6 +54,11 @@ public class MentoServiceImpl implements MentoService{
 		return map.kindOfAll();
 	}
 
+	@Override
+	public List<MentoVO> langList(String mentoId) {
+		return map.langList(mentoId);
+	}
+
 	
 	
 }

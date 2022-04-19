@@ -14,4 +14,7 @@ public interface MentoService {
 	int kindOfLang();
 	List<String> kindOfAll();
 	
+	//인서트시 언어값 비교
+	List<MentoVO> langList(String mentoId);
+	
 }
