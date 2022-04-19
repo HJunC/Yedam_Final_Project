@@ -173,13 +173,13 @@ public class BoardController {
 		return "redirect:boardSelect.do";
 	}
 
-	@PostMapping("/noticeSelect.do")
+	@GetMapping("/noticeSelect.do")
 	public String noticeSelect(BoardVO vo, Model model) {
 		model.addAttribute("board", boardDao.boardSelect(vo));
 		return "board/boardDetail";
 	}
 
-	@PostMapping("/technicSelect.do")
+	@GetMapping("/technicSelect.do")
 	public String technicSelect(BoardVO vo, Model model) {
 		model.addAttribute("board", boardDao.boardSelect(vo));
 		return "board/boardDetail";

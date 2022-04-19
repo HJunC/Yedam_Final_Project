@@ -50,7 +50,7 @@
 
                         <div class="form-group">
                             <label>포지션 인원 / 총 <span id="totalCount"></span>명</label>
-                            <p class="input-info">본인을 포함한 인원수를 넣어주세요. 최대 15명</p>
+                            <p class="input-info">본인의 포지션을 체크 후 본인을 포함한 인원수를 넣어주세요. 최대 15명</p>
 
                             <div class="row" id="positionCountBox">
                                 <div class="col input-group me-3">

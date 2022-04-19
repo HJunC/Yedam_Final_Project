@@ -179,6 +179,10 @@
         		frm.serviceStt.focus();
         		return;
         	}
+        	if($('#photo').val() == ''){
+        		alert('사진을 등록해주세요');
+        		return;
+        	}
         	frm.submit();
         }
         // 종료시간 미니멈 set
