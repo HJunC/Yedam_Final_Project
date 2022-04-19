@@ -42,15 +42,51 @@
 <!-- Section -->
 <section class="page-section">
     <div class="container relative">
+    
         
         <div class="row">
+        
+        <div class="col-md-4 col-lg-3 mt-10">
+                <!-- Widget -->
+                <div class="widget">
+                    
+                    <h3 class="widget-title">Categories</h3>
+                    
+                    <div id="tabs" class="widget-body">
+                        <ul class="clearlist widget-menu">
+                            <li id="myInfo" class="bg-secondary">
+                                나의 정보
+                            </li>
+                               	<ul id="tag">
+                               		<li id="info_update">정보수정</li>
+                               	</ul>
+                            <li id="myProject">
+                                마이 프로젝트
+                            </li>
+                            <li id="myStudy">
+                                마이 스터디
+                            </li>
+                             <li id="myMento">
+                            	마이 멘토
+                            </li>
+                            <li id="chatting">
+                            	마이 채팅
+                            </li>
+                        </ul>
+                    </div>
+                    
+                </div>
+                <!-- End Widget -->
+           </div>
         	<div id="info_box" class="col-md-8 offset-lg-1 mb-sm-80 order-first order-md-last">
 				<!-- 나의 정보가 보이는 div -->
 				<div id="my_info_box" class="border border-white" style="height:1000px;">
 					<h2>나의 정보</h2>
 					<hr>
 					<div>
-						<img src="upload/profile/${member.profileImg}" alt="..">
+						<div style="width:300px;height:300px;">
+							<img src="/upload/profile/${member.profileImg}" alt="..">
+						</div>
 						<table class="table">
 							<tr>
 								<th>아이디</th>
@@ -134,20 +170,23 @@
 					<h2>프로젝트 목록</h2>
 					<hr class="border border-white">
 					<h3>대기중인 프로젝트</h3>
-					<table id="waitProject" class="table">
-						<thead>
-							<tr>
-								<th>프로젝트 이름</th>
-								<th>프로젝트 기간</th>
-								<th>프로젝트 시작일</th>
-								<th>프로젝트 종료일</th>
-							</tr>
-						</thead>
-						<tbody>
-						</tbody>
-					</table>
+					<div class="overflow-auto" style="max-height: 300px;">
+						<table id="waitProject" class="table">
+							<thead>
+								<tr>
+									<th>프로젝트 이름</th>
+									<th>프로젝트 기간</th>
+									<th>프로젝트 시작일</th>
+									<th>프로젝트 종료일</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
 					<hr class="border border-white">
-					<h3>참여한 프로젝트</h3>
+					<h3>진행중인 프로젝트</h3>
+					<div class="overflow-auto" style="max-height:300px;">
 					<table id="joinProject" class="table">
 						<thead>
 							<tr>
@@ -160,7 +199,24 @@
 						</thead>	
 						<tbody>
 						</tbody>
-					</table>				
+					</table>
+					</div>	
+					<hr class="border border-white">
+					<h3>종료된 프로젝트</h3>
+					<div class="overflow-auto" style="max-height: 300px;">
+						<table id="endProject" class="table">
+							<thead>
+								<tr>
+									<th>프로젝트 이름</th>
+									<th>프로젝트 기간</th>
+									<th>프로젝트 시작일</th>
+									<th>프로젝트 종료일</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>			
 				</div>
 				
 				<!-- 모집,신청,진행,완료된 스터디의목록을 보여주는 div -->
@@ -168,41 +224,54 @@
 					<h2>스터디 목록</h2>
 					<hr class="border border-white">
 					<h3>대기중인 스터디</h3>
-					<table id="waitStudy" class="table">
-						<thead>
-							<tr>
-								<th>스터디 이름</th>
-								<th>스터디 장소</th>
-								<th>스터디 시작일</th>
-								<th>스터디 종료일</th>
-							</tr>
-						</thead>
-						<tbody>
-						</tbody>
-					</table>
+					<div class="overflow-auto" style="max-height: 300px;">
+						<table id="waitStudy" class="table">
+							<thead>
+								<tr>
+									<th>스터디 이름</th>
+									<th>스터디 장소</th>
+									<th>스터디 시작일</th>
+									<th>스터디 종료일</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
 					<hr class="border border-white">
 					<h3>진행중인 스터디</h3>
-					<table id="joinStudy" class="table">
-						<thead>
-							<tr>
-								<th>스터디 이름</th>
-								<th>스터디 장소</th>
-								<th>스터디 시작일</th>
-								<th>스터디 종료일</th>
-								<th>상태</th>
-							</tr>
-						</thead>
-						<tbody>
-						</tbody>
-						<!-- 	<a href="#test-modal" class="btn btn-mod btn-w btn-medium round mt-10 lightbox-gallery-5 mfp-inline"></a>
-	                                
-	                                <div id="test-modal" class="mfp-hide">
-	                                    <h1>This is lightbox modal window</h1>
-	                                    <p>
-	                                        Lorem ipsum dolor sit amet, adipiscing elit. In maximus ligula semper metus pellentesque mattis. Maecenas volutpat, diam enim.
-	                                    </p>
-	                                </div> -->
-					</table>
+					<div class="overflow-auto" style="max-height: 300px;">
+						<table id="joinStudy" class="table">
+							<thead>
+								<tr>
+									<th>스터디 이름</th>
+									<th>스터디 장소</th>
+									<th>스터디 시작일</th>
+									<th>스터디 종료일</th>
+									<th>상태</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
+					<hr class="border border-white">
+					<h3>종료된 스터디</h3>
+					<div class="overflow-auto" style="max-height: 300px;">
+						<table id="endStudy" class="table">
+							<thead>
+								<tr>
+									<th>스터디 이름</th>
+									<th>스터디 장소</th>
+									<th>스터디 시작일</th>
+									<th>스터디 종료일</th>
+									<th>상태</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
 				</div>
 				
 				<!-- 모집,신청,진행,완료된 멘토 보여주는 div -->
@@ -211,34 +280,55 @@
 					<input type="hidden" id="serviceNo">
 					<hr class="border border-white">
 					<h3>대기중인 멘토서비스</h3>
-					<table id="waitMento" class="table">
-						<thead>
-							<tr>
-								<th>멘토 이름</th>
-								<th>멘티 이름</th>
-								<th>멘토서비스 시작일</th>
-								<th>서비스 기간</th>
-							</tr>
-						</thead>
-						<tbody>
-						</tbody>
-					</table>
+					<div class="overflow-auto" style="max-height: 300px;">
+						<table id="waitMento" class="table">
+							<thead>
+								<tr>
+									<th>멘토 이름</th>
+									<th>멘티 이름</th>
+									<th>멘토서비스 시작일</th>
+									<th>서비스 기간</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
 					<hr class="border border-white">
 					<h3>진행중인 멘토서비스</h3>
-					<table id="joinMento" class="table">
-						<thead>
-							<tr>
-								<th>멘토 이름</th>
-								<th>멘티 이름</th>
-								<th>멘토서비스 시작일</th>
-								<th>서비스 기간</th>
-								<th>상태</th>
-								<th>평점주기</th>
-							</tr>
-						</thead>
-						<tbody>
-						</tbody>
-					</table>
+					<div class="overflow-auto" style="max-height: 300px;">
+						<table id="joinMento" class="table">
+							<thead>
+								<tr>
+									<th>멘토 이름</th>
+									<th>멘티 이름</th>
+									<th>멘토서비스 시작일</th>
+									<th>서비스 기간</th>
+									<th>상태</th>
+									<th>평점</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
+					<hr class="border border-white">
+					<h3>종료된 멘토서비스</h3>
+					<div class="overflow-auto" style="max-height: 300px;">
+						<table id="endMento" class="table">
+							<thead>
+								<tr>
+									<th>멘토 이름</th>
+									<th>멘티 이름</th>
+									<th>멘토서비스 시작일</th>
+									<th>서비스 기간</th>
+									<th>상태</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
 				</div>
 				
 				
@@ -262,39 +352,6 @@
 								
 			</div>                                    
         
-            <div class="col-md-4 col-lg-3 mt-10">
-                <!-- Widget -->
-                <div class="widget">
-                    
-                    <h3 class="widget-title">Categories</h3>
-                    
-                    <div id="tabs" class="widget-body">
-                        <ul class="clearlist widget-menu">
-                            <li id="myInfo" class="bg-light">
-                                나의 정보
-                            </li>
-                               	<ul id="tag">
-                               		<li id="info_update">정보수정</li>
-                               	</ul>
-                            <li id="myProject">
-                                마이 프로젝트
-                            </li>
-                            <li id="myStudy">
-                                마이 스터디
-                            </li>
-                             <li id="myMento">
-                            	마이 멘토
-                            </li>
-                            <li id="chatting">
-                            	마이 채팅
-                            </li>
-                        </ul>
-                    </div>
-                    
-                </div>
-                <!-- End Widget -->
-                </div>
-              
          </div>
 
 	</div>
@@ -306,14 +363,15 @@
 <script>
 	// category background 컬러 구분
 	$('#tabs>ul>li').on('click',function(){
-						$('#tabs>ul>ul>li').removeClass('bg-info');
-						$('#tabs>ul>li').removeClass('bg-light');
-						$(event.target).attr('class','bg-light');
+						$('#tabs>ul>ul>li').removeClass('bg-success');
+						$('#tabs>ul>li').removeClass('bg-secondary');
+						$(event.target).attr('class','bg-secondary');
+						window.scrollTo(0,250);
 				    })
 				    
 	$('#tabs>ul>ul>li').on('click',function(){
-							$('#tabs>ul>ul>li').removeClass('bg-info');
-							$(event.target).attr('class','bg-info');
+						$(event.target).attr('class','bg-success');
+						window.scrollTo(0,250);
 					  })
 	
 	
@@ -494,11 +552,11 @@
 		var tr = $('<tr>');
 		var td;
 		if(n == 1){
-			td = $('<td colspan="4">').text('신청 이력이 없습니다.')			
+			td = $('<th colspan="6">').text('신청 이력이 없습니다.')			
 		}else if(n == 0) {
-			td = $('<td colspan="4">').text('채팅방이 존재하지 않습니다 ^오^')	
+			td = $('<th colspan="6">').text('채팅방이 존재하지 않습니다 ^오^')	
 		} else {
-			td = $('<td colspan="5">').text('참여 이력이 없습니다.')
+			td = $('<th colspan="6">').text('참여 이력이 없습니다.')
 		}
 		tr.append(td);
 		return tr;
@@ -603,7 +661,6 @@
 		var tr = $('<tr onclick="selectChat('+item.roomId+')">')
 		var td1 = $('<td>')
 		var td2 = $('<td>')
-		var td3 = $('<td>')
 		td1.text(item.ownerId);
 		td2.text(item.entryId);
 		tr.append(td1,td2);
