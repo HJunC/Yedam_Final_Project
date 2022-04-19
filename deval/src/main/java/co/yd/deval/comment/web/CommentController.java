@@ -2,8 +2,8 @@ package co.yd.deval.comment.web;
 
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,24 +29,13 @@ public class CommentController {
 	}
 
 	@PostMapping("/commentInsert.do")
-	public String commentInsert(CommentVO vo) {
-		int type = vo.getBoardTypeNo();
+	@ResponseBody
+	public int commentInsert(CommentVO vo) {
 		int r = commentDAO.commentInsert(vo);
 		if (r != 0) {
-			if (type == 1) {
-				return "redirect:../";
-			} else if (type == 2) {
-				return "redirect:../";
-			} else if (type == 3) {
-				return "redirect:../";
-			} else if (type == 4) {
-				return "redirect:../code/codeSelectOne.do?cqNo=" + vo.getBoardNo();
-			} else if (type == 5) {
-				return "redirect:../";
-			}
-			return "comment/error";
+			return 1;
 		} else {
-			return "comment/error";
+			return 0;
 		}
 	}
 
@@ -57,6 +46,13 @@ public class CommentController {
 		vo.setCommentNo(commentNo);
 		int r = commentDAO.commentDelete(vo);
 		return "1";
+	}
+	
+	@PostMapping("/commentUpdate.do")
+	@ResponseBody
+	public ResponseEntity<Integer> commentUpdate(CommentVO vo) {
+		int r = commentDAO.commentUpdate(vo);
+		return ResponseEntity.ok().body(r);
 	}
 	
 

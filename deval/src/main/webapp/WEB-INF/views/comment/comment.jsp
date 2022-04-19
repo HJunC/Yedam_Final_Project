@@ -1,101 +1,145 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="sec"%>
 <c:set var="resources"
 	value="${pageContext.request.contextPath}/resources" />
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-</head>
-<body>
 <section class="page-section bg-dark light-content pt-0">
 				<div class="container relative">
 					<div class="row">
-						<div class="col-lg-8 offset-lg-2">
-	<form id="frm2" name="frm2">
-		<input name="${_csrf.parameterName }" value="${_csrf.token}"
-			type="hidden">
+						<div class="col-lg">
 		<div align="left">
 			<!-- Accordion -->
 			<dl class="accordion">
 				<dt>
-					<a href="">댓글</a>
+					<a href="" role="button" aria-expanded="false">댓글</a>
 				</dt>
 				<dd class="gray">
 					<table class="table shopping-cart-table">
 					<tbody id="commentBody">
 					<tr>
-							<td>
-								<input style="" class="btn btn-mod btn-round btn-border-w btn-small" 
-								size="90" id="commentSub" name="commentSub"> 
-								<input type="hidden" id="boardNo" name="boardNo" value="${bno }">
-								
-								<c:if test="${not empty asdasd }">
-								<input type="hidden" id="boardTypeNo" name="boardTypeNo" value="1">
-								</c:if>
-								<c:if test="${not empty asdsada }">
-								<input type="hidden" id="boardTypeNo" name="boardTypeNo" value="2">
-								</c:if>
-								<c:if test="${not empty asdsadaddd }">
-								<input type="hidden" id="boardTypeNo" name="boardTypeNo" value="3">
-								</c:if>
-								<c:if test="${not empty code.cqNo }">
-								<input type="hidden" id="boardTypeNo" name="boardTypeNo" value="4">
-								</c:if>
-								<c:if test="${not empty review.cqNo }">
-								<input type="hidden" id="boardTypeNo" name="boardTypeNo" value="5">
-								</c:if>
-							</td>
-							<td>
-								<input type="hidden" id="writer" name="writer"
-								value="${username}">
-							</td>
-							<td>
-								<input class="btn btn-mod btn-round btn-border-w btn-small"
-								type="button" value="등록" onclick="commentUpdate('IN')">
-							</td>
-						</tr>
-						<c:forEach items="${comments }" var="comment">
-							<tr>
-								<td>${comment.writer }: ${comment.commentSub }</td>
-								<!-- <td width="300px"></td> -->
-								<c:if test="${comment.writer eq username }">
-									<td width="135px" align="right">
-									<input class="btn btn-mod btn-round btn-border-w btn-small" type="button" value="수정"> 
-									<input class="btn btn-mod btn-round btn-border-w btn-small" type="button" onclick="commentDelete(${comment.commentNo })" value="삭제">
-									</td>
-								</c:if>
-							</tr>
-						</c:forEach>
-						</tbody>
+						<td>
+							<input class="form-control" size="90" id="commentSub" <c:if test="${empty user}">disabled="disabled"</c:if>> 
+						</td>
+						<td>
+						</td>
+						<td>
+							<input class="btn btn-mod btn-round btn-border-w btn-small" <c:if test="${empty user}">disabled="disabled"</c:if>
+							type="button" value="등록" onclick="commentInsert()">
+						</td>
+					</tr>
+					</tbody>
 					</table>
-				</dd>
-			</dl>
+			
 			<!-- End Accordion -->
+			<!-- Comments -->
+               <div class="mb-80 mb-xs-40">
+                   <ul class="media-list comment-list clearlist">
+                       <!-- Comment Item -->
+                       <c:forEach var="comment" items="${comments}">
+                       <li class="media comment-item">
+							<div class="media-body">
+                               <div class="comment-item-data">
+                                   <div class="comment-author">
+                                       ${comment.writer}
+                                   </div>
+                                   <fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${comment.commentDate}"/> 
+                                   <c:if test="${comment.writer == user}">
+	                                   <span class="separator">&mdash;</span>
+									   <input class="btn btn-mod btn-border-w btn-round" type="button" onclick="updateActive()" value="수정">
+									   <input class="btn btn-mod btn-border-w btn-circle" type="button" style="display:none;"
+									    onclick="commentUpdate(${comment.commentNo})" value="수정">
+									   <input class="btn btn-mod btn-border-w btn-circle" type="button" style="display:none;"
+									    onclick="updateCancle('${comment.commentSubject}')" value="취소">
+									   <input class="btn btn-mod btn-border-w btn-round" type="button" onclick="commentDelete(${comment.commentNo})" value="삭제">
+                                   </c:if>
+                               </div>
+	
+                               <p>${comment.commentSubject}</p>
+                           </div>
+                       </li>
+                       </c:forEach>
+                       <!-- End Comment Item -->
+                   </ul>
+               </div>
+              </dd>
+              </dl>
+<!-- End Comments -->
 		</div>
-	</form>
 	</div>
 	</div>
 	</div>
 	</section>
-</body>
 <script type="text/javascript">
-function commentUpdate(str){
-	if (str == "IN") {
-		frm2.method = "post";
-		frm2.action = "../comment/commentInsert.do";
+function commentInsert(){
+	if($('#commentSub').val != '') {
+		$.ajax({
+			url : "../comment/commentInsert.do",
+			type : 'post',
+			data : {
+						commentSubject : $('#commentSub').val(),
+						writer : '${user}',
+						boardNo : ${bno}
+					},
+			success : function(data){
+				if(data != 0) {
+					window.location.reload();
+				}
+			}
+		})
+	} else {
+		alert('댓글을 입력해주세요')
+		$('#commentSub').focus();
 	}
-	frm2.submit();
+}
+
+function updateActive() {
+	$(event.target).parent().children().eq(2).css('display','none');
+	$(event.target).parent().children().eq(3).css('display','');
+	$(event.target).parent().children().eq(4).css('display','');
+	$(event.target).parent().children().eq(5).css('display','none');
+	var input = $(event.target).parent().parent().children().eq(1);
+	input.empty();
+	input.append($('<input class="form-control" id="updInput">'))
+}
+
+function updateCancle(subject) {
+	$(event.target).parent().children().eq(2).css('display','');
+	$(event.target).parent().children().eq(3).css('display','none');
+	$(event.target).parent().children().eq(4).css('display','none');
+	$(event.target).parent().children().eq(5).css('display','');
+	$(event.target).parent().parent().children().eq(1).empty();
+	$(event.target).parent().parent().children().eq(1).text(subject);
+}
+
+function commentUpdate(no){
+	if($('#updInput').val() != ''){
+		$.ajax({
+			type : 'post',
+			url : '../comment/commentUpdate.do',
+			data : {
+				commentNo : no,
+				commentSubject : $('#updInput').val()
+			},
+			success : function(data) {
+				if(data != 0) {
+					location.reload();
+				}
+			}
+		})
+	} else {
+		alert('수정할 내용을 입력해주세요');
+		$('#updInput').focus();
+	}
 }
 
 function commentDelete(no){
 	$.ajax({
         type:'POST',
         url : "../comment/commentDelete.do",
-        data: {"no":no},
+        data: {no : no},
         success : function(data){
         	location.reload();
         },
@@ -107,4 +151,3 @@ function commentDelete(no){
 
 
 </script>
-</html>

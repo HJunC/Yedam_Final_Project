@@ -39,12 +39,15 @@ public class MentoController {
 	private String uploadPath;
 	
     @GetMapping("/main.do")
-    public String main(Model model) {
+    public String main(Model model, Principal principal) {
     	model.addAttribute("mentoCount", mentoDAO.mentoCount());
     	model.addAttribute("langCount", mentoDAO.kindOfLang());
     	model.addAttribute("choice", mentoDAO.kindOfAll());
     	model.addAttribute("servCount", mentoServDAO.serviceCount());
     	model.addAttribute("stisfied", mentoServDAO.allSatisAvg());
+    	if(principal != null) {
+    		model.addAttribute("member", memberDao.memberLogin(principal.getName()));
+    	}
     	return "mento/mentoMain";
     }
     

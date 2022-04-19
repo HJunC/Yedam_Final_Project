@@ -26,14 +26,14 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	@Override
+	public int commentUpdate(CommentVO vo) {
+		return map.comUpdate(vo);
+	}
+	
+	@Override
 	public int commentDelete(CommentVO vo) {
 		return map.comDelete(vo);
 	}
 
-	@Override
-	public CommentVO commentSelect(CommentVO vo) {
-		// TODO Auto-generated method stub
-		return map.comSelect(vo);
-	}
 
 }

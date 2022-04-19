@@ -73,4 +73,18 @@
 		SET STATE = 1
 		WHERE MENTO_SERVICE_NO = #{mentoServiceNo}
 	</update>
+	<select id="findWaitMento" resultType="co.yd.deval.mento.service.MentoServVO">
+		SELECT * 
+		FROM MENTO_SERVICE
+		WHERE MENTI_ID = #{id}
+		AND STATE = 0
+	</select>
+	<select id="findMentoByNo" resultType="co.yd.deval.mento.service.MentoServVO">
+		SELECT *
+		FROM MENTO_SERVICE
+		WHERE (MENTI_ID = #{id} OR MENTO_ID = #{id})
+		AND STATE != 0 
+		AND STATE != 4 
+	</select>
+	
 </mapper>

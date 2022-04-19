@@ -35,7 +35,7 @@ public class BoardController {
 	private String uploadPath;
 
 	@GetMapping("/free.do")
-	 public String free(Model model, BoardVO vo, Criteria cri) {
+	public String free(Model model, BoardVO vo, Criteria cri) {
 		if (cri.getPageNum() == 0)
 			cri.setPageNum(1);
 		if (cri.getAmount() == 0)
@@ -50,7 +50,12 @@ public class BoardController {
 	}
 
 	@GetMapping("/write.do")
-	public String write() {
+	public String write(Model model, Principal user, int no) {
+		model.addAttribute("member", user);
+		if (no == 0) {
+			no = 1;
+		}
+		model.addAttribute("no", no);
 		return "board/write";
 	}
 
@@ -66,7 +71,7 @@ public class BoardController {
 		String fileName = UUID.randomUUID().toString() + "." + fileType;
 		String pathName = uploadPath + fileName;
 		File dest = new File(pathName);
-
+		System.out.println(vo);
 		try {
 			FileCopyUtils.copy(file.getBytes(), dest);
 		} catch (IllegalStateException e) {
@@ -79,9 +84,9 @@ public class BoardController {
 		int n = boardDao.boardInsert(vo);
 
 		if (vo.getBoardTypeNo() == 1) {
-			return "redirect:free.do";
-		} else if (vo.getBoardTypeNo() == 2) {
 			return "redirect:notice.do";
+		} else if (vo.getBoardTypeNo() == 2) {
+			return "redirect:free.do";
 		} else {
 			return "redirect:technical.do";
 		}
@@ -102,10 +107,20 @@ public class BoardController {
 		return "board/notice";
 	}
 
-	@GetMapping("/technical.do" )
-	public String technical(Model model,  BoardVO vo, Criteria cri) {
-		model.addAttribute("technicList", boardDao.boardSelectList(3));
+	@GetMapping("/technical.do")
+	public String technical(Model model, BoardVO vo, Criteria cri) {
+		if (cri.getPageNum() == 0)
+			cri.setPageNum(1);
+		if (cri.getAmount() == 0)
+			cri.setAmount(10);
+		vo.setBoardTypeNo(3);
+		vo.setCriteria(cri);
+		List<BoardVO> boardList = boardDao.getListWithPaging(vo);
+		model.addAttribute("technicList", boardList);
+		model.addAttribute("board", vo);
+		model.addAttribute("pageMaker", new PageDTO(cri, boardDao.getTotalCount(vo)));
 		return "board/technical";
+
 	}
 
 	@GetMapping("/boardDelete.do")
@@ -118,27 +133,35 @@ public class BoardController {
 	}
 
 	@GetMapping("/boardSelect.do")
-	public String boardSelect(BoardVO vo, Model model, CommentVO cvo) {
+	public String boardSelect(BoardVO vo, Model model, CommentVO cvo, Principal user) {
 		boardDao.boardHitUp(vo.getBoardNo());
 		cvo.setBoardNo(vo.getBoardNo());
 		model.addAttribute("board", boardDao.boardSelect(vo));
 		model.addAttribute("comments", commentDAO.commentSelectList(cvo));
+		if (user != null)
+			model.addAttribute("user", user.getName());
 		return "board/boardDetail";
 	}
 
-  @ResponseBody
+	@ResponseBody
 	@PostMapping("/recommend.do")
 	public int recommend(BoardVO vo) {
 		boardDao.boardRecUp(vo.getBoardNo());
 		return boardDao.boardSelect(vo).getRecommend();
 	}
 
-	@PostMapping("/boardUpdateForm.do")
+	@GetMapping("/boardUpdateForm.do")
 	public String boardUpdateForm(Model model, BoardVO vo) {
-		model.addAttribute("board", vo);
+		model.addAttribute("board", boardDao.boardSelect(vo));
 		return "board/boardUpdateForm";
 
 	}
+
+	/*
+	 * @PostMapping("/boardUpdateForm.do") public String boardUpdateForm(Model
+	 * model, BoardVO vo) { model.addAttribute("board", vo); return
+	 * "board/ boardUpdateForm";
+	 */
 
 	@PostMapping("/boardUpdate.do")
 	public String boardUpdate(BoardVO vo) {
@@ -146,7 +169,6 @@ public class BoardController {
 		if (n != 0) {
 			return "redirect:free.do";
 		}
-
 		return "redirect:boardSelect.do";
 	}
 
@@ -162,5 +184,4 @@ public class BoardController {
 		return "board/boardDetail";
 	}
 
-	
 }

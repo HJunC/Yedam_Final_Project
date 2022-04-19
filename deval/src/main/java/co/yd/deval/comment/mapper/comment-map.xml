@@ -2,13 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.yd.deval.comment.mapper.CommentMapper">
 
-	<select id="comSelect"
-		resultType="co.yd.deval.comment.service.CommentVO">
-		select *
-		from comments
-		where comment_no = #{commentNo}
-	</select>
-
 	<select id="comSelectList"
 		resultType="co.yd.deval.comment.service.CommentVO">
 		SELECT *
@@ -27,11 +20,17 @@
 		, BOARD_NO
 		)
 		VALUES( COMMENT_NO_COUNT_SEQ.NEXTVAL
-		, #{commentSub}
+		, #{commentSubject}
 		, #{writer}
 		, #{boardNo}
 		)
 	</insert>
+	
+	<update id="comUpdate" parameterType="co.yd.deval.comment.service.CommentVO">
+		UPDATE COMMENTS
+		SET COMMENT_SUBJECT = #{commentSubject}
+		WHERE COMMENT_NO = #{commentNo}
+	</update>
 
 	<delete id="comDelete"
 		parameterType="co.yd.deval.comment.service.CommentVO">

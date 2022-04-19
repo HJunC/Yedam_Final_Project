@@ -4,4 +4,5 @@ public interface SchedulerMapper {
 	void updateProjectState();
 	void updateStudyState();
 	void updateTradeState();
+	void updateMentoServieState();
 }

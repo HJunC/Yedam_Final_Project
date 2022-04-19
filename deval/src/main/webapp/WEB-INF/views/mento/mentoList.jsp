@@ -88,17 +88,6 @@
                         		<input type="hidden" id="mentoId" name="mentoId">
                         	</form>
                         </div>
-                        <!-- Pagination -->
-                        <div class="pagination mt-30 mt-xs-10">
-                            <a href=""><i class="fa fa-chevron-left"></i></a>
-                            <a href="" class="active">1</a>
-                            <a href="">2</a>
-                            <a href="">3</a>
-                            <a class="no-active">...</a>
-                            <a href="">9</a>
-                            <a href=""><i class="fa fa-chevron-right"></i></a>
-                        </div>
-                        <!-- End Pagination -->
                                 
                     </div>
                 </section>

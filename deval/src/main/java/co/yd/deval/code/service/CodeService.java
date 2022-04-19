@@ -4,8 +4,9 @@ import java.util.List;
 
 public interface CodeService {
 	
-	List<CodeVO> codeSelectList();
-	CodeVO codeSelectOne(CodeVO vo);
+	List<CodeVO> cqList(int no);
+	CodeVO cqSelect(CodeVO vo);
+	
 	int codeInsert(CodeVO vo);
 	int codeUpdate(CodeVO vo);
 	int codeDelete(CodeVO vo);

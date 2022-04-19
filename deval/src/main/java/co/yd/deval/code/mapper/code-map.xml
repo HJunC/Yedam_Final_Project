@@ -2,22 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.yd.deval.code.mapper.CodeMapper">
 
-	<select id="codeSelectList" resultType="co.yd.deval.code.service.CodeVO">
-		SELECT CQ_NO
-			 , CQ_LANG
-			 , TITLE
-			 , SUBJECT
-			 , CQ_DATE
-			 , HIT
-			 , RECOMMEND
-			 , WRITER
-			 , CQ_TYPE
-			 , GIT_URI 
+	<select id="cqList" resultType="co.yd.deval.code.service.CodeVO">
+		SELECT *
 		FROM CODE_QUESTION
+		WHERE BOARD_TYPE_NO = #{no}
 		ORDER BY CQ_NO DESC
 	</select>
 	
-	<select id="codeSelectOne" resultType="co.yd.deval.code.service.CodeVO">
+	<select id="cqSelect" resultType="co.yd.deval.code.service.CodeVO">
 		SELECT *
 		FROM CODE_QUESTION
 		WHERE CQ_NO = #{cqNo}
@@ -31,7 +23,7 @@
 					  , TITLE
 					  , SUBJECT
 					  , WRITER
-					  , CQ_TYPE
+					  , BOARD_TYPE_NO
 					  , GIT_URI
 					  )
 		VALUES (	   
@@ -40,7 +32,7 @@
 			 		  , #{title}
 			 		  , #{subject}
 			 		  , #{writer}
-			 		  , #{cqType}
+			 		  , #{boardTypeNo}
 			 		  , #{gitUri} 
 			 		  )
 	</insert>
@@ -48,11 +40,10 @@
 	<update id="codeUpdate" parameterType="co.yd.deval.code.service.CodeVO">
 		UPDATE CODE_QUESTION
 		<set>
-			<if test="cqLang != null">CQ_LANG = #{cqLang},</if>
-			<if test="cqType != null">CQ_TYPE = #{cqType},</if>
-			<if test="title != null">TITLE = #{title},</if>
-			<if test="subject != null">SUBJECT = #{subject},</if>
-			<if test="gitUri != null">GIT_URI = #{gitUri},</if>
+			<if test="cqLang != null and cqLang != ''">CQ_LANG = #{cqLang},</if>
+			<if test="title != null and title != ''">TITLE = #{title},</if>
+			<if test="subject != null and subject != ''">SUBJECT = #{subject},</if>
+			<if test="gitUri != null and gitUri != ''">GIT_URI = #{gitUri},</if>
 		</set>
 		WHERE CQ_NO = #{cqNo}
 	</update>
