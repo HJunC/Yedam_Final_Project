@@ -258,6 +258,7 @@
             <!-- Content -->
             <div class="col-md-8 mb-sm-80">
                 <c:if test="${project.state eq '4'}">
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
                     <link rel="stylesheet" href="${resources}/css/common/github-markdown-dark.css">
                     <!-- Nav Tabs -->
                     <div class="blog-item mb-80 mb-xs-40">
@@ -272,10 +273,6 @@
                                     <a href="#item-2" aria-controls="item-2" class="nav-link" data-bs-toggle="tab" role="tab" aria-selected="false">언어</a>
                                 </li>
 
-                                <li class="nav-item">
-                                    <a href="#item-3" aria-controls="item-3" class="nav-link" data-bs-toggle="tab" role="tab" aria-selected="false">Third Tab</a>
-                                </li>
-
                             </ul>
                         </div>
                         <!-- End Nav Tabs -->
@@ -285,9 +282,9 @@
 
                             <div class="tab-pane fade show active" id="item-1" role="tabpanel"></div>
 
-                            <div class="tab-pane fade" id="item-2" role="tabpanel"></div>
-
-                            <div class="tab-pane fade" id="item-3" role="tabpanel">33</div>
+                            <div class="tab-pane fade" id="item-2" role="tabpanel">
+                                <canvas id="myChart" width="400" height="400"></canvas>
+                            </div>
 
                         </div>
                         <!-- End Tab panes -->
@@ -375,19 +372,45 @@
                       }
 
                       function makeProjectLanguages(res) {
-                        var githubLang = getProjectLanguages(res.url);
-                        var str = ""
+                        const githubLang = getProjectLanguages(res.url);
+                        let langList = [];
+                        let langValue = [];
+                        let backgroundList = [];
                         for (const [key, value] of Object.entries(githubLang)) {
-                          console.log(key + " / " + value);
-                          str += "<p class='badge'>"+ key + " / " + value +"</p>"
+                          langList.push(key);
+                          langValue.push(value);
+                          backgroundList.push(generateRandomCode());
                         }
-                        $("#item-2").append(str);
+                        const ctx = document.getElementById('myChart');
+
+                        const data = {
+                          labels: langList,
+                          datasets: [{
+                            label: 'My First Dataset',
+                            data: langValue,
+                            backgroundColor: backgroundList
+                          }]
+                        };
+
+                        const myChart = new Chart(ctx, {
+                          type: 'pie',
+                          data: data,
+                          options: {
+                            legend: {
+                              labels: {
+                                fontColor: "white",
+                                fontSize: 16
+                              }
+                            },
+                          }
+                        })
+
                       }
 
                       /**
                        * 사용언어 불러오는 메소드
                        * @param url
-                       * @returns {*}
+                       * @returns { {string: number} }
                        */
                       function getProjectLanguages(url) {
                         var result = {};
@@ -405,7 +428,17 @@
                         return result;
                       }
 
-
+                      /**
+                       * 랜덤한 색상 얻는 메소드
+                       * @returns {string}
+                       */
+                      function generateRandomCode() {
+                        var RGB_1 = Math.floor(Math.random() * (255 + 1));
+                        var RGB_2 = Math.floor(Math.random() * (255 + 1));
+                        var RGB_3 = Math.floor(Math.random() * (255 + 1));
+                        var strRGBA = 'rgba(' + RGB_1 + ',' + RGB_2 + ',' + RGB_3 + ',0.5)';
+                        return strRGBA;
+                      }
                     </script>
                 </c:if>
 
