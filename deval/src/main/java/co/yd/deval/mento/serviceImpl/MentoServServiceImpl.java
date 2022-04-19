@@ -83,4 +83,11 @@ public class MentoServServiceImpl implements MentoServService {
 		return map.findMentoByNo(id);
 	}
 
+	@Override
+	public int updateRating(Map<String, Object> rate) {
+		return map.updateRating(rate);
+	}
+
+	
+
 }

@@ -208,6 +208,7 @@
 				<!-- 모집,신청,진행,완료된 멘토 보여주는 div -->
 				<div id="mento_box" class="border border-white" style="height:1000px;display:none">
 					<h2>멘토서비스 목록</h2>
+					<input type="hidden" id="serviceNo">
 					<hr class="border border-white">
 					<h3>대기중인 멘토서비스</h3>
 					<table id="waitMento" class="table">
@@ -560,8 +561,8 @@
 	};
 	
 	function mentoTr(idx){
-		var tr = $('<tr>')
-		var td1 = $('<td id="tdId" value="실험성공입니다.">')
+		var tr = $('<tr>').attr("data-id",idx.mentoServiceNo)
+		var td1 = $('<td>')
 		var td2 = $('<td>')
 		var td3 = $('<td>')
 		var td4 = $('<td>')
@@ -584,11 +585,14 @@
 		}else {
 			td5.text('진행중').css('color', 'yellow');
 		}
-		tr.append(td1, td2, td3, td4, td5, td6);
+		tr.append(td1, td2, td3, td4, td5, td6)
 		return tr;
 	}
 	
 	function sendRating() {
+		console.log($(event.target).parent().parent().data('id'))
+		var id = $(event.target).parent().parent().data('id')
+		$('#serviceNo').val(id);
 		var url = "ratingFrom.do";
 		var option = "top=10, left=10, width=500, height=600";
 		window.open(url,"",option);

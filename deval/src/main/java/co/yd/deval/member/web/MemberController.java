@@ -211,7 +211,20 @@ public class MemberController {
 	
 	@GetMapping("/ratingFrom.do")
 	public String ratingFrom() {
-		return "mento/rating";
+		return "mento/mento/rating";
+	}
+	
+	@PostMapping("/rating.do")
+	@ResponseBody
+	public ResponseEntity<Integer> rating(int mentoServiceNo, double ratingNum) {
+		Map<String, Object> rate = new HashMap<String, Object>();
+		rate.put("mentoServiceNo", mentoServiceNo);
+		rate.put("ratingNum", ratingNum);
+		int result = mentoServDAO.updateRating(rate);
+		if (result > 0) {
+			return ResponseEntity.ok().body(result);
+		}
+		return ResponseEntity.badRequest().body(result);
 	}
 	
 
