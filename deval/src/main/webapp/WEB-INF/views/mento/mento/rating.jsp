@@ -7,17 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
 	평점주기
 	<div class="mb-20 mb-md-10">
 	<form action="rating.do" method="post">
+	<input type="text" id="mentoServiceNo" name="mentoServiceNo">
 		<select class="form-control input-sm round" name="ratingNum">
 			<option value="1">1</option>
 			<option value="1.5">1.5</option>
@@ -33,8 +26,8 @@
 	</form>
 	</div>
 	<script type="text/javascript">
-		var qwe = window.opener.document.getElementById("tdId").value;
-		console.log(qwe);
+	mentoServiceNo.value = window.opener.document.getElementById("serviceNo").value;
+		console.log(test.value);
 	</script>
 </body>
 </html>
