@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import co.yd.deval.chat.service.ChatLogService;
 import co.yd.deval.chat.service.ChatRoomService;
 import co.yd.deval.chat.service.ChatRoomVO;
 import co.yd.deval.common.Criteria;
@@ -40,7 +41,10 @@ public class StudyController {
 	private StudyMailSender mail;
 	
 	@Autowired
-	private ChatRoomService chatRoomService;
+	private ChatRoomService chatRoomDAO;
+	
+	@Autowired
+	private ChatLogService chatLogDAO;
 	
 	/* STUDY MAIN */
 	// 스터디 메인
@@ -285,52 +289,52 @@ public class StudyController {
     	return "study/test";
     }
     
-    @RequestMapping("/chatStudy.do")
-    public String chatStudy() {
-    	
+    /* Chat Service */
+    
+    @RequestMapping("/chatForm.do")
+    public String chatStudy(Model model,int roomId, Principal user) {
+    	model.addAttribute("roomId",roomId);
+    	model.addAttribute("userId",user.getName());
+    	model.addAttribute("chats", chatLogDAO.selectChat(roomId));
     	return "chat/chat";
     }
     
-    // 채팅 서비스
-	/*
-	 * @RequestMapping("/studyChat.do")
-	 * public String studyChat(Model model,
-	 * Principal User, StudyVO vo, StudyReqVO rvo){
-	 * ChatRoomVO chatVO = new ChatRoomVO();
-	 * 
-	 * chatVO = chatRoomDao.selectChatRoom(chatVO.getRoomId());
-	 * 
-	 * // if 스터디 방 번호가 없을 경우 insert
-	 * if (chatVO == null) {
-	 * chatVO.setOwnerId(User.getName());
-	 * chatVO.setEntryId(rvo.getMemberId());
-	 * chatRoomDao.makeChatRoom(chatVO);
-	 * } else {
-	 * // else 스터디 방 번호가 있을 경우 스터디 채팅방을 불러온다
-	 * chatRoomDao.selectChatRoom(chatVO.getRoomId()); }
-	 * 
-	 * // studyReq 신청자페이지, studyMember 그룹원페이지, studySelect 상세글 페이지 // 버튼 적용
-	 * 
-	 * return "chat/chat"; }
-	 */
     
-    // 채팅
     @RequestMapping("/studyChat.do")
     @ResponseBody
-    public String studyChat(Principal User, ChatRoomVO vo) {
+    public int studyChat(Principal User, ChatRoomVO vo) {
     	System.out.println("==================================== " + vo.getOwnerId());	// 화면에서 가져오는
-    	System.out.println("==================================== " + User.getName());	// 우리 로그인
+    	System.out.println("==================================== " + User.getName());	// 로그인
+    	
     	vo.setEntryId(User.getName());	// 값 세팅
-    	vo.setRoomId(0);
     	
     	// 채팅이 존재하는가 존재하지 않는가
-    	//vo = chatRoomService.selectChat(vo);
+    	ChatRoomVO cvo = chatRoomDAO.selectChat(vo);
     	
-    	if(vo.getRoomId() == 0){
+    	if(cvo == null){
     		// 새로운 채팅 만들기
-    		//chatRoomService.makeChatRoom(vo);
+    		chatRoomDAO.makeChatRoom(vo);
+    		return vo.getRoomId();
     	}
+    	return cvo.getRoomId();
+    }
+    
+    @RequestMapping("/studyReqMemberChat.do")
+    @ResponseBody
+    public int studyReqMemberChat(Principal User, ChatRoomVO vo) {
+    	System.out.println("==================================== " + vo.getEntryId());	// 화면에서 가져오는
+    	System.out.println("==================================== " + User.getName());	// 로그인
     	
-    	return "1";
+    	vo.setOwnerId(User.getName());	// 값 세팅
+    	
+    	// 채팅이 존재하는가 존재하지 않는가
+    	ChatRoomVO cvo = chatRoomDAO.selectChat(vo);
+    	
+    	if(cvo == null){
+    		// 새로운 채팅 만들기
+    		chatRoomDAO.makeChatRoom(vo);
+    		return vo.getRoomId();
+    	}
+    	return cvo.getRoomId();
     }
 }

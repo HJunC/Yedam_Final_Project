@@ -82,7 +82,6 @@
 	         <button type="submit" class="btn btn-mod btn-w btn-round">수정</button>
 	      </c:if>
 	      <c:if test="${study.leaderId ne member.name}">
-	        <!--  <button type="button" class="btn btn-mod btn-w btn-round" onclick="studyQna()">문의</button> -->
 	         <button type="button" class="btn btn-mod btn-w btn-round" onclick="studyQna('${study.leaderId}')">문의</button>
 	      </c:if>   
 	         <button type="button" class="btn btn-mod btn-w btn-round" onclick="location.href='studyList.do'">목록</button>
@@ -244,8 +243,8 @@
 				    			data: {"ownerId": id},
 				    			dataType : "text",
 				    			success: function(result) {
-				    				if (result == 1)
-				    					location.href="chatStudy.do";
+				    				if (result != 0)
+				    					location.href="chatForm.do?roomId="+result;
 				    				else
 				    					return -1;
 				    			},

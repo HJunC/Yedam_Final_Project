@@ -66,8 +66,8 @@
                                     <div class="social-link list-unstyled m-t-40 m-b-10">
                                     	<button class="btn btn-mod btn-glass btn-round" style="background-color: black; color: white;" onclick="teamGo('${std.memberId }', '${std.studyNo }')">승인</button>
                                     	<button class="btn btn-mod btn-glass btn-round" style="background-color: black; color: white;" onclick="teamBye('${std.memberId }', '${std.studyNo }')">거절</button>
-                                    	<!-- 채팅 기능은 Form 이 좋을지, 버튼이 좋을지.. -->
-                                    	<input class="btn btn-mod btn-glass btn-round" style="background-color: black; color: white;" type="button" id="reqChat" name="reqChat" value="Message">
+                                    	<button class="btn btn-mod btn-glass btn-round" style="background-color: black; color: white;" onclick="reqChat('${std.memberId}')">Message</button>
+                                    	<!-- <input class="btn btn-mod btn-glass btn-round" style="background-color: black; color: white;" type="button" id="reqChat" name="reqChat" value="Message"> -->
                                     </div>
                                 </div>
                             </div>
@@ -106,15 +106,7 @@
     			data: {"memberId": id, "studyNo": sno},
     			success : function(result) {
 					console.log(result);
-					/* if(result == '' || result == null){
-						alert('참가 인원을 초과 했습니다.');
-						location.href='#';
-					}
-					 if (result.state != null || result.state != '0' ) {
-						
-						alert(id + '님이 ' + sno +'번 스터디에 참가했습니다.');
-						location.href = "studyMain.do";
-					}  */
+					
 					if (result == 0){
 						alert('참가 인원을 초과 했습니다.');
 						
@@ -129,6 +121,25 @@
     		});
     		console.log("-- Study Accept End --")
 		} 
+      	
+      	function reqChat(id) {
+    		console.log("-- Study Req Chat Start --");
+    		$.ajax({
+    			type: "POST",
+    			url: "studyReqMemberChat.do",
+    			data: {"entryId": id},
+    			dataType : "text",
+    			success: function(result) {
+    				if (result != 0)
+    					location.href="chatForm.do?roomId="+result;
+    				else
+    					return -1;
+    			},
+    			error: function(result) {
+    			}
+    		});
+    		console.log("-- Study Req Chat End --")
+		}
     </script>
    
 </body>
