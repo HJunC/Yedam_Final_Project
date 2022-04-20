@@ -90,10 +90,13 @@
                             </c:forEach>
                             <!-- End Team item -->
                      </div>
+                 <!-- <div>
+                 	<button id="memberDelBtn" name="memberDelBtn" onclick="memberDelBtn()">팀 나가기</button>
+                 </div> -->
                     </div>
                 </section>
                 <!-- End Section --> 
-                 
+               
                 
                 <!-- Divider -->
                 <hr class="mt-0 mb-0 white" />

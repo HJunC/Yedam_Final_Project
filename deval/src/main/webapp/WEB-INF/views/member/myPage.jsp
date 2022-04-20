@@ -613,8 +613,10 @@
 	}
 	//chat 들어가기
 	function selectChat(n) {
-		frm.roomId.value = n;
-		frm.submit();
+		/* frm.roomId.value = n;
+		frm.submit(); */
+		var option = "top=50, left=60, width=500, height=750, resizable=0, scrollbars=no";
+		window.open("chatSelect.do?roomId="+n,"",option);
 	};
 </script>
 

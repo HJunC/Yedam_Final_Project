@@ -1,17 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="resources" value="${pageContext.request.contextPath}/resources"/>
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>DevEric Chatting</title>
-
-
-<style type="text/css">
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="Rhythm &mdash; One & Multi Page Creative Template">
+		<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+		<!-- Favicons -->
+		<link rel="shortcut icon" href="${resources}/images/favicon.png">
+		<script src="${resources}/js/jquery-3.5.1.min.js"></script>
+		<!-- CSS -->
+		<link rel="stylesheet" href="${resources}/css/bootstrap.min.css">
+		<link rel="stylesheet" href="${resources}/css/template.css">
+		<link rel="stylesheet" href="${resources}/css/custom/custom-style.css">
+		<style type="text/css">
 	*{
 		font-family: 나눔고딕;
 	}
+	body {background-color: black;}
 	#messageWindow{
 		background: black;
 		color: greenyellow;
@@ -129,9 +138,38 @@
 		text-align: right;
 	}
 </style>
+<script>
+var URL_CONFIG = '${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath }';
+var socket = null;
+var room = '${roomId}';
+console.log(room)
+if (room == '') {
+	var webSocket = new WebSocket('ws://' + URL_CONFIG + '/socket');
+} else {
+	var webSocket = new WebSocket('ws://' + URL_CONFIG + '/socket?roomId=${roomId}');
+}
+console.log(webSocket)
+socket = webSocket;
+webSocket.onopen = function(e) {
+	console.log(e);
+	console.log("웹소켓이 연결되었습니다.");
+	webSocket.onmessage = function(e) {
+		console.log(e)
+			$('#alarmText').text(e.data);
+			$('#alarm').css("display","block");
+			setTimeout(function() {
+				$('#alarm').css("display","none");
+			},5000);
+		}
+	};
+</script>
 </head>
 <body>
-	<br><br><br><br><br><br><br><br><br>
+<!-- Page Loader -->
+		<div class="page-loader dark">
+			<div class="loader">Loading...</div>
+		</div>
+		<!-- End Page Loader -->
 	<div id="main-container">
 		<div id="header-container">${chatting }</div>
 		<div id="chat-container">
@@ -248,4 +286,29 @@ function send(roomNum){
 		
 	})
 </script>
+<script src="${resources}/js/jquery.easing.1.3.js"></script>
+		<script src="${resources}/js/bootstrap.bundle.min.js"></script>
+		<script src="${resources}/js/SmoothScroll.js"></script>
+		<script src="${resources}/js/jquery.scrollTo.min.js"></script>
+		<script src="${resources}/js/jquery.localScroll.min.js"></script>
+		<script src="${resources}/js/jquery.viewport.mini.js"></script>
+		<script src="${resources}/js/jquery.countTo.js"></script>
+		<script src="${resources}/js/jquery.appear.js"></script>
+		<script src="${resources}/js/jquery.parallax-1.1.3.js"></script>
+		<script src="${resources}/js/jquery.fitvids.js"></script>
+		<script src="${resources}/js/owl.carousel.min.js"></script>
+		<script src="${resources}/js/isotope.pkgd.min.js"></script>
+		<script src="${resources}/js/imagesloaded.pkgd.min.js"></script>
+		<script src="${resources}/js/jquery.magnific-popup.min.js"></script>
+		<script src="${resources}/js/masonry.pkgd.min.js"></script>
+		<script src="${resources}/js/jquery.lazyload.min.js"></script>
+		<script src="${resources}/js/wow.min.js"></script>
+		<script src="${resources}/js/morphext.js"></script>
+		<script src="${resources}/js/typed.min.js"></script>
+		<script src="${resources}/js/all.js"></script>
+		<script src="${resources}/js/contact-form.js"></script>
+		<script src="${resources}/js/jquery.ajaxchimp.min.js"></script>
+		<script src="${resources}/js/objectFitPolyfill.min.js"></script>
+		<script src="${resources}/js/splitting.min.js"></script>
+	</body>
 </html>
