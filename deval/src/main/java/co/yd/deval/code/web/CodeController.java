@@ -46,7 +46,7 @@ public class CodeController {
 		CodeVO vo = new CodeVO();
 		vo.setBoardTypeNo(6);
 		model.addAttribute("lists", codeDAO.cqList(vo));
-		model.addAttribute("type",6);
+		model.addAttribute("type", vo.getBoardTypeNo());
 		return "code/questionList";
 	}
 	
@@ -104,8 +104,8 @@ public class CodeController {
 	}
 
 	@GetMapping("/cqInsertForm.do")
-	public String codeInsertForm(Model model,int type) {
-		model.addAttribute("type",type);
+	public String codeInsertForm(Model model, int type) {
+		model.addAttribute("type", type);
 		return "code/cqInsertForm";
 	}
 
