@@ -69,11 +69,11 @@
                                                    경력: ${std.career }<br>
                                                    자격증: ${std.license }<br> 
                                                 </p>
-                                                <div class="team-social-links">
+                                                <!-- <div class="team-social-links">
                                                     <a href="#" target="_blank"><i class="fab fa-facebook"></i><span class="sr-only">Facebook profile</span></a>
                                                     <a href="#" target="_blank"><i class="fab fa-twitter"></i><span class="sr-only">Twitter profile</span></a>
                                                     <a href="#" target="_blank"><i class="fab fa-pinterest"></i><span class="sr-only">Pinterest profile</span></a>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
                                         <div class="team-item-descr">

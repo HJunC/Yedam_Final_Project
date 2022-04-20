@@ -32,7 +32,7 @@
 			                            <span class="separator">&nbsp;</span>
 			                            <span><i class="fa fa-map-marker-alt"></i> ${study.location}</span>
 			                            <span class="separator">&nbsp;</span>
-			                            <span><i class="fa fa-code-branch"></i> ${study.lang1}<c:if test="${not empty study.lang2 }"> / ${study.lang2 }></c:if></span>
+			                            <span><i class="fa fa-code-branch"></i> ${study.lang1}<c:if test="${not empty study.lang2 }"> / ${study.lang2 }</c:if></span>
 			                            <span class="separator">&nbsp;</span>
 			                             <span><i class="fa fa-users"></i> 인원 ${study.rcnt}/${study.maxRcnt }</span>
 			                            <span class="separator">&nbsp;</span>
