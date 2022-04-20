@@ -76,27 +76,32 @@ public class MentoController {
     
     @PostMapping("/mentoInsert.do")
     public String mentoInsert(MentoVO mento, MultipartFile file, Principal principal) {
-		//MemberVO user = (MemberVO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     	MemberVO user = new MemberVO();
     	if(principal != null) {
     		mento.setMentoId(principal.getName());
     	}
-    	System.out.println(file.getOriginalFilename()+ "==========");
-    	String originalName = file.getOriginalFilename();
-    	String fileType = originalName.substring(originalName.lastIndexOf(".") + 1, originalName.length());
-    	String fileName = UUID.randomUUID().toString() + "." + fileType;
-    	String pathName = uploadPath + fileName;
-    	File dest = new File(pathName);
-    	try {
-    		FileCopyUtils.copy(file.getBytes(), dest);
-    	} catch (IllegalStateException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-    	mento.setPhoto(fileName);
+    	
+    	String originalName = file.getOriginalFilename(); 
+    	if(!originalName.equals("")) {
+    		String fileType = originalName.substring(originalName.lastIndexOf(".") + 1, originalName.length());
+    		String fileName = UUID.randomUUID().toString() + "." + fileType;
+    		String pathName = uploadPath + fileName;
+    		File dest = new File(pathName);
+    		try {
+    			FileCopyUtils.copy(file.getBytes(), dest);
+    		} catch (IllegalStateException e) {
+    			e.printStackTrace();
+    		} catch (IOException e) {
+    			e.printStackTrace();
+    		}
+    		mento.setPhoto(fileName);
+    	}
     	int n = mentoDAO.mentoInsert(mento);
-    	return "redirect:mentoList.do?lang=" + mento.getLang();
+    	if(n > 0) {
+    		return "redirect:mentoList.do?lang=" + mento.getLang();
+    	}else {
+    		return "redirect:mentoInsertForm.do";
+    	}
     }
     
     @GetMapping("/mentoSelect.do")

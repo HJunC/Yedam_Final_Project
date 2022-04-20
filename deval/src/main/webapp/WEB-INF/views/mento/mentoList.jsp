@@ -21,12 +21,12 @@
                         <div class="row">
                             
                             <div class="col-md-8">
-                                <div class="wow fadeInUpShort" data-wow-delay=".1s">
+                                <div class="wow fadeInUpShort" data-wow-delay=".1s" style="width: 954px;">
                                     <h1 class="hs-line-7 mb-20 mb-xs-10">실력있는 멘토들을 소개합니다</h1>
                                 </div>
                                 <div class="wow fadeInUpShort" data-wow-delay=".2s">
                                     <p class="hs-line-6 opacity-075 mb-20 mb-xs-0">
-                                        특정레벨이상의 멘토들을 선정했습니다 골라주세요
+                                        특정레벨이상의 멘토들을 선정했습니다
                                     </p>
                                 </div>
                             </div>
@@ -36,7 +36,9 @@
                     </div>
                 </section>
                 <!-- End Home Section -->
-                
+                <div style="width: 843px;height: 457px;margin: 0 auto;">
+                	<img alt="mentoImage" src="${resources}/images/mento/mento1.png" style="width: 100%;height: 100%;object-fit: cover;">
+                </div>
                 
                 <!-- Section -->
                 <section class="page-section bg-dark light-content">
@@ -63,9 +65,16 @@
                     		<c:forEach var="mento" items="${mento }">
                             <!-- Shop Item -->
                             <div class="col-sm-6 col-md-3 mb-60 mb-xs-40">
-                                <div class="post-prev-img" style="border-radius: 70%;">
-                                    <!-- 사진출력 -->
-                                    <a href="#"><img src="${upload}/${mento.photo}" alt=".." /></a>
+                                <div class="post-prev-img" style="border-radius: 70%;" >
+                                	<div class="sdsdssdsds">
+	                                    <!-- 사진출력 -->
+	                                    <c:if test="${not empty mento.photo }">
+	                                    	<img src="/upload/${mento.photo}" alt=".."/>
+	                                    </c:if>
+	                                    <c:if test="${empty mento.photo }">
+	                                    	<img src="${resources}/images/mento/prev.bmp" alt=".."/>
+	                                    </c:if>
+                                	</div>                                
                                 </div>
                                 
                                 <div class="post-prev-title align-center">

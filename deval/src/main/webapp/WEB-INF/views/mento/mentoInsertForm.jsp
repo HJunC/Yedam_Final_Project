@@ -33,8 +33,7 @@
                             사진을 등록해주세요.
                         </label>
                         <div>
-                        <input type="file" id="photo" name="file"
-                            onchange="setThumbnail(event)"  accept="image/*">
+                        <input type="file" id="photo" name="file" onchange="setThumbnail(event)"  accept="image/*">
                        </div>
                     </div>
                     <!-- 자기소개글-->
@@ -54,7 +53,7 @@
                         <option value="C#">C#</option>
                         <option value="Visual Basic">Visual Basic</option>
                         <option value="JavaScript">JavaScript</option>
-                        <option value="PHP">"PHP"</option>
+                        <option value="PHP">PHP</option>
                         <option value="SQL">SQL</option>
                         <option value="R">R</option>
                         <option value="Ruby">Ruby</option>
@@ -95,20 +94,7 @@
 	                        <option value="${i}달">${i}달</option>
                         </c:forEach>
                     </select>
-                    <!-- 모달창 띄우기 -->
-                       	<!-- <a href="#test-modal" class="btn btn-mod btn-w btn-medium round mt-10 lightbox-gallery-5 mfp-inline" onclick="insertButton()">기간정하기</a>
-                                <div id="test-modal" class="mfp-hide">
-                                    <p>
-                                        선택하신 기간이 확실합니까?
-                                    </p>
-                                    <div class="col-sm-6 col-md-3 col-lg-3 mb-40">
-                                    <div class="mb-10">
-				                        <button type="button" class="btn btn-mod btn-w btn-round btn-small"  onclick="changeTerm()" id="modalSelect">예</button>
-				                        <button type="button" class="btn btn-mod btn-w btn-round btn-small" style="color:red" onclick="closeModal()">취소</button>
-                                	</div>
-                                	</div>
-                                </div> -->
-                </div>
+					</div>
             </div>
             <div class="row">
                 <div class="col-sm-4 mb-40">
@@ -169,25 +155,24 @@
 		}
 		
 	}
+        
         // --- 값 컨트롤러로 넘겨주기
         function mentoInsert() {
+	        var check = $('input:radio[name=choiceRadio]').is(':checked');
         	var lang = $('#lang').val();
+        	var photo = $('#photo').val();
          	<c:forEach items="${mentos}" var="mento">
          	if(lang == '${mento.lang}') {
         		alert('이미 등록된 언어입니다.');
         		return
         	}
+         	
         	</c:forEach>
         	var start = frm.serviceStt.value;
         	var end = frm.serviceEdt.value;
-        	var photo = $('#photo').val();
         	var price = $('#price').val();
-        /* 	var day = $('#dayDate').val();
-        	var week = $('#dayWeek').val();
-        	var month = $('#dayMont').val(); */
-        	if(photo == '') {
-        		photo = '${resources}/images/mento/prev.bmp';
-        	} 
+         	if(photo == '') {
+         		photo = null; 
         	if(price == '') {
         		alert('가격을 정해주세요!!');
         		return;
@@ -203,6 +188,7 @@
         		return;
         	}
         	frm.submit();
+        }
         }
         // 종료시간 미니멈 set
         function endTime(target) {
@@ -229,7 +215,6 @@
         	}
         }
         //radio button 이용 term 값 변경하기
-        var check = $('input:radio[name=choiceRadio]').is(':checked');
        function changeTerm() {
         	var dayDate = document.getElementById('dayDate');
         	var dayWeek = document.getElementById('dayWeek');
