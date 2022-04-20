@@ -19,7 +19,7 @@
   .ui-tabs-vertical .ui-tabs-panel { padding: 1em; float: right; width: 40em;}
   </style>
 <!-- Home Section -->
-<section class="small-section bg-dark-alfa-50 bg-scroll light-content" data-background="images/full-width-images/section-bg-19.jpg" id="home">
+<section class="small-section bg-dark-alfa-50 bg-scroll light-content" id="home">
     <div class="container relative pt-70">
     
         <div class="row">
@@ -38,19 +38,62 @@
 </section>
 <!-- End Home Section -->
 
-
+<style>
+	.widget-menu{
+		cursor:pointer;
+	}
+	.widget-menu li:hover{
+		background-color:gray;
+	}
+</style>
 <!-- Section -->
 <section class="page-section">
     <div class="container relative">
+    
         
         <div class="row">
+        
+        <div class="col-md-4 col-lg-3 mt-10">
+                <!-- Widget -->
+                <div class="widget">
+                    
+                    <h3 class="widget-title">Categories</h3>
+                    
+                    <div id="tabs" class="widget-body table-hover">
+                        <ul class="clearlist widget-menu">
+                            <li id="myInfo" class="bg-secondary">
+                                나의 정보
+                            </li>
+                               	<ul id="tag">
+                               		<li id="info_update">정보수정</li>
+                               	</ul>
+                            <li id="myProject">
+                                마이 프로젝트
+                            </li>
+                            <li id="myStudy">
+                                마이 스터디
+                            </li>
+                             <li id="myMento">
+                            	마이 멘토
+                            </li>
+                            <li id="chatting">
+                            	마이 채팅
+                            </li>
+                        </ul>
+                    </div>
+                    
+                </div>
+                <!-- End Widget -->
+           </div>
         	<div id="info_box" class="col-md-8 offset-lg-1 mb-sm-80 order-first order-md-last">
 				<!-- 나의 정보가 보이는 div -->
-				<div id="my_info_box" class="border border-white" style="height:1000px;">
+				<div id="my_info_box" class="border border-secondary" style="height:1000px;">
 					<h2>나의 정보</h2>
 					<hr>
 					<div>
-						<img src="upload/profile/${member.profileImg}" alt="..">
+						<div style="width:300px;height:300px;">
+							<img src="/upload/profile/${member.profileImg}" alt="..">
+						</div>
 						<table class="table">
 							<tr>
 								<th>아이디</th>
@@ -77,7 +120,7 @@
 				</div>
 			
 				<!-- 나의 정보를 수정하는 div -->
-				<div id="info_update_box" class="border border-white" style="height:1000px;display:none">
+				<div id="info_update_box" class="border border-secondary" style="height:1000px;display:none">
 					<h2>정보 수정</h2>
 					<hr>
 					<div>
@@ -130,124 +173,181 @@
 				</div>
 				
 				<!-- 모집,신청,진행,완료된 프로젝트의 목록을 보여주는 div -->
-				<div id="project_box" class="border border-white" style="height:1000px;display:none">
+				<div id="project_box" class="border border-secondary" style="height:1000px;display:none">
 					<h2>프로젝트 목록</h2>
 					<hr class="border border-white">
 					<h3>대기중인 프로젝트</h3>
-					<table id="waitProject" class="table">
-						<thead>
-							<tr>
-								<th>프로젝트 이름</th>
-								<th>프로젝트 기간</th>
-								<th>프로젝트 시작일</th>
-								<th>프로젝트 종료일</th>
-							</tr>
-						</thead>
-						<tbody>
-						</tbody>
-					</table>
+					<div class="overflow-auto" style="height: 200px;">
+						<table id="waitProject" class="table table-hover table-dark">
+							<thead>
+								<tr style="color:#A7A9A5;">
+									<th>이름</th>
+									<th>기간</th>
+									<th>사용 언어</th>
+									<th>모집 종료일</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
 					<hr class="border border-white">
-					<h3>참여한 프로젝트</h3>
-					<table id="joinProject" class="table">
+					<h3>진행중인 프로젝트</h3>
+					<div class="overflow-auto" style="height:200px;">
+					<table id="joinProject" class="table table-hover table-dark">
 						<thead>
-							<tr>
-								<th>프로젝트 이름</th>
-								<th>프로젝트 기간</th>
-								<th>프로젝트 시작일</th>
-								<th>프로젝트 종료일</th>
+							<tr style="color:#A7A9A5;">
+								<th>이름</th>
+								<th>기간</th>
+								<th>시작일</th>
+								<th>종료일</th>
 								<th>상태</th>
 							</tr>
 						</thead>	
 						<tbody>
 						</tbody>
-					</table>				
+					</table>
+					</div>	
+					<hr class="border border-white">
+					<h3>종료된 프로젝트</h3>
+					<div class="overflow-auto" style="height:200px;">
+						<table id="endProject" class="table table-hover table-dark">
+							<thead>
+								<tr style="color:#A7A9A5;">
+									<th>이름</th>
+									<th>기간</th>
+									<th>시작일</th>
+									<th>종료일</th>
+									<th>상태</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>			
 				</div>
 				
 				<!-- 모집,신청,진행,완료된 스터디의목록을 보여주는 div -->
-				<div id="study_box" class="border border-white" style="height:1000px;display:none">
+				<div id="study_box" class="border border-secondary" style="height:1000px;display:none">
 					<h2>스터디 목록</h2>
 					<hr class="border border-white">
 					<h3>대기중인 스터디</h3>
-					<table id="waitStudy" class="table">
-						<thead>
-							<tr>
-								<th>스터디 이름</th>
-								<th>스터디 장소</th>
-								<th>스터디 시작일</th>
-								<th>스터디 종료일</th>
-							</tr>
-						</thead>
-						<tbody>
-						</tbody>
-					</table>
+					<div class="overflow-auto" style="height: 200px;">
+						<table id="waitStudy" class="table table-hover table-dark">
+							<thead>
+								<tr style="color:#A7A9A5;">
+									<th>이름</th>
+									<th>장소</th>
+									<th>시작일</th>
+									<th>종료일</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
 					<hr class="border border-white">
 					<h3>진행중인 스터디</h3>
-					<table id="joinStudy" class="table">
-						<thead>
-							<tr>
-								<th>스터디 이름</th>
-								<th>스터디 장소</th>
-								<th>스터디 시작일</th>
-								<th>스터디 종료일</th>
-								<th>상태</th>
-							</tr>
-						</thead>
-						<tbody>
-						</tbody>
-						<!-- 	<a href="#test-modal" class="btn btn-mod btn-w btn-medium round mt-10 lightbox-gallery-5 mfp-inline"></a>
-	                                
-	                                <div id="test-modal" class="mfp-hide">
-	                                    <h1>This is lightbox modal window</h1>
-	                                    <p>
-	                                        Lorem ipsum dolor sit amet, adipiscing elit. In maximus ligula semper metus pellentesque mattis. Maecenas volutpat, diam enim.
-	                                    </p>
-	                                </div> -->
-					</table>
+					<div class="overflow-auto" style="height: 200px;">
+						<table id="joinStudy" class="table table-hover table-dark">
+							<thead>
+								<tr style="color:#A7A9A5;">
+									<th>이름</th>
+									<th>장소</th>
+									<th>시작일</th>
+									<th>종료일</th>
+									<th>상태</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
+					<hr class="border border-white">
+					<h3>종료된 스터디</h3>
+					<div class="overflow-auto" style="height: 200px;">
+						<table id="endStudy" class="table table-hover table-dark">
+							<thead>
+								<tr style="color:#A7A9A5;">
+									<th>이름</th>
+									<th>장소</th>
+									<th>시작일</th>
+									<th>종료일</th>
+									<th>상태</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
 				</div>
 				
 				<!-- 모집,신청,진행,완료된 멘토 보여주는 div -->
-				<div id="mento_box" class="border border-white" style="height:1000px;display:none">
+				<div id="mento_box" class="border border-secondary" style="height:1000px;display:none">
 					<h2>멘토서비스 목록</h2>
 					<input type="hidden" id="serviceNo">
 					<hr class="border border-white">
 					<h3>대기중인 멘토서비스</h3>
-					<table id="waitMento" class="table">
-						<thead>
-							<tr>
-								<th>멘토 이름</th>
-								<th>멘티 이름</th>
-								<th>멘토서비스 시작일</th>
-								<th>서비스 기간</th>
-							</tr>
-						</thead>
-						<tbody>
-						</tbody>
-					</table>
+					<div class="overflow-auto" style="height: 200px;">
+						<table id="waitMento" class="table table-dark">
+							<thead>
+								<tr style="color:#A7A9A5;">
+									<th>멘토</th>
+									<th>시작일</th>
+									<th>종료일</th>
+									<th>시간</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
 					<hr class="border border-white">
 					<h3>진행중인 멘토서비스</h3>
-					<table id="joinMento" class="table">
-						<thead>
-							<tr>
-								<th>멘토 이름</th>
-								<th>멘티 이름</th>
-								<th>멘토서비스 시작일</th>
-								<th>서비스 기간</th>
-								<th>상태</th>
-								<th>평점주기</th>
-							</tr>
-						</thead>
-						<tbody>
-						</tbody>
-					</table>
+					<div class="overflow-auto" style="height: 200px;">
+						<table id="joinMento" class="table table-hover table-dark">
+							<thead>
+								<tr style="color:#A7A9A5;">
+									<th>멘토</th>
+									<th>멘티</th>
+									<th>시작일</th>
+									<th>종료일</th>
+									<th>시간</th>
+									<th>상태</th>
+									<th>평점</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
+					<hr class="border border-white">
+					<h3>종료된 멘토서비스</h3>
+					<div class="overflow-auto" style="height: 200px;">
+						<table id="endMento" class="table table-hover table-dark">
+							<thead>
+								<tr style="color:#A7A9A5;">
+									<th>멘토</th>
+									<th>멘티</th>
+									<th>시작일</th>
+									<th>기간</th>
+									<th>상태</th>
+									<th>평점</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
 				</div>
 				
 				
 				<!-- chating -->
 				<!-- 모집,신청,진행,완료된 멘토 보여주는 div -->
-				<div id="chatList_box" class="border border-white" style="height:1000px;display:none">
+				<div id="chatList_box" class="border border-secondary" style="height:1000px;display:none">
 					<h2>채팅 목록</h2>
 					<hr class="border border-white">
-					<table id="chatList" class="table">
+					<table id="chatList" class="table table-hover table-dark">
 						<thead>
 							<tr>
 								<th>채팅방 주인</th>
@@ -262,39 +362,6 @@
 								
 			</div>                                    
         
-            <div class="col-md-4 col-lg-3 mt-10">
-                <!-- Widget -->
-                <div class="widget">
-                    
-                    <h3 class="widget-title">Categories</h3>
-                    
-                    <div id="tabs" class="widget-body">
-                        <ul class="clearlist widget-menu">
-                            <li id="myInfo" class="bg-light">
-                                나의 정보
-                            </li>
-                               	<ul id="tag">
-                               		<li id="info_update">정보수정</li>
-                               	</ul>
-                            <li id="myProject">
-                                마이 프로젝트
-                            </li>
-                            <li id="myStudy">
-                                마이 스터디
-                            </li>
-                             <li id="myMento">
-                            	마이 멘토
-                            </li>
-                            <li id="chatting">
-                            	마이 채팅
-                            </li>
-                        </ul>
-                    </div>
-                    
-                </div>
-                <!-- End Widget -->
-                </div>
-              
          </div>
 
 	</div>
@@ -306,14 +373,13 @@
 <script>
 	// category background 컬러 구분
 	$('#tabs>ul>li').on('click',function(){
-						$('#tabs>ul>ul>li').removeClass('bg-info');
-						$('#tabs>ul>li').removeClass('bg-light');
-						$(event.target).attr('class','bg-light');
+						$('#tabs>ul>ul>li').removeClass('bg-success');
+						$('#tabs>ul>li').removeClass('bg-secondary');
+						$(event.target).attr('class','bg-secondary');
 				    })
 				    
 	$('#tabs>ul>ul>li').on('click',function(){
-							$('#tabs>ul>ul>li').removeClass('bg-info');
-							$(event.target).attr('class','bg-info');
+						$(event.target).attr('class','bg-success');
 					  })
 	
 	
@@ -333,28 +399,40 @@
 							url:"myProjects.do",
 							success : function(data){
 								if(data === ''){
-									$('#joinProject>tbody').empty();
 									$('#waitProject>tbody').empty();
-									$('#joinProject').append(makeNotTr(2));
-									$('#waitProject').append(makeNotTr(1));
+									$('#joinProject>tbody').empty();
+									$('#endProject>tbody').empty();
+									$('#waitProject').append(makeNotTr(0));
+									$('#joinProject').append(makeNotTr(1));
+									$('#endProject').append(makeNotTr(2));
 								} else {
 									if(data.project.length == 0){
 										$('#joinProject>tbody').empty();
-										$('#joinProject').append(makeNotTr(2));	
+										$('#joinProject').append(makeNotTr(1));
 									} else {
 										$('#joinProject>tbody').empty();
 										$.each(data.project,function(item,idx){
-											$('#joinProject>tbody').append(makeTr(idx,4));
+											$('#joinProject').append(makeDoingTr(idx,1));
+										})
+									}
+									
+									if(data.end.length == 0){
+										$('#endProject>tbody').empty();
+										$('#endProject').append(makeNotTr(2));
+									} else {
+										$('#endProject>tbody').empty();
+										$.each(data.end,function(item,idx){
+											$('#endProject').append(makeEndTr(idx,1))
 										})
 									}
 									
 									if(data.wait.length == 0){
 										$('#waitProject>tbody').empty();
-										$('#waitProject').append(makeNotTr(1))	
+										$('#waitProject').append(makeNotTr(0))	
 									} else {
 										$('#waitProject>tbody').empty();
 										$.each(data.wait,function(item,idx){
-											$('#waitProject>tbody').append(makeTr(idx,2))	
+											$('#waitProject').append(makeWaitTr(idx,1))	
 										})
 									}
 								}
@@ -371,28 +449,40 @@
 							url:"myStudies.do",
 							success : function(data){
 								if(data === ''){
-									$('#joinStudy>tbody').empty();
 									$('#waitStudy>tbody').empty();
-									$('#joinStudy').append(makeNotTr(2));
-									$('#waitStudy').append(makeNotTr(1))
+									$('#joinStudy>tbody').empty();
+									$('#endStudy>tbody').empty();
+									$('#waitStudy').append(makeNotTr(0))
+									$('#joinStudy').append(makeNotTr(1));
+									$('#endProject').append(makeNotTr(2));
 								} else {
 									if(data.study.length == 0){
 										$('#joinStudy>tbody').empty();
-										$('#joinStudy').append(makeNotTr(2));	
+										$('#joinStudy').append(makeNotTr(1));
 									} else {
 										$('#joinStudy>tbody').empty();
 										$.each(data.study,function(item,idx){
-											$('#joinStudy>tbody').append(makeTr(idx,3));
+											$('#joinStudy>tbody').append(makeDoingTr(idx,2));
+										})
+									}
+									
+									if(data.end.length == 0){
+										$('#endStudy>tbody').empty();
+										$('#endStudy').append(makeNotTr(2));
+									} else {
+										$('#endStudy>tbody').empty();
+										$.each(data.end,function(item,idx){
+											$('#endStudy').append(makeEndTr(idx,2))
 										})
 									}
 									
 								 	if(data.wait.length == 0){
 										$('#waitStudy>tbody').empty();
-										$('#waitStudy').append(makeNotTr(1))	
+										$('#waitStudy').append(makeNotTr(0))	
 									} else { 
 										$('#waitStudy>tbody').empty();
 										$.each(data.wait,function(item,idx){
-											$('#waitStudy>tbody').append(makeTr(idx,1))	
+											$('#waitStudy').append(makeWaitTr(idx,2))	
 										})
 									}
 								}
@@ -409,29 +499,40 @@
 							url:"myMento.do",
 							success : function(data){
 								if(data === ''){
+									$('#waitMento>tbody').empty();
 									$('#joinMento>tbody').empty();
-									$('#joinMento>tbody').empty();
-									$('#joinMento').append(makeNotTr(2));
-									$('#waitMento').append(makeNotTr(1));
+									$('#endMento>tbody').empty();
+									$('#waitMento').append(makeNotTr(0));
+									$('#joinMento').append(makeNotTr(1));
+									$('#endMento').appned(makeNotTr(2));
 								} else {
-									console.log(data);
 									 if(data.mento.length == 0){
 										$('#joinMento>tbody').empty();
-										$('#joinMento').append(makeNotTr(2));	
+										$('#joinMento').append(makeNotTr(1));
 									} else {
 										$('#joinMento>tbody').empty();
 										$.each(data.mento,function(item,idx){
-											$('#joinMento>tbody').append(mentoTr(idx));
+											$('#joinMento').append(makeDoingTr(idx,3));
 										})
 									}
+									 
+									 if(data.end.length == 0){
+										 $('#endMento>tbody').empty();
+										 $('#endMento').append(makeNotTr(2));
+									 } else {
+										 $('#endMento>tbody').empty();
+										 $.each(data.end,function(item,idx){
+											 $('#endMento').append(makeEndTr(idx,3))
+										 })
+									 }
 									
 									if(data.wait == null){
 										$('#waitMento>tbody').empty();
-										$('#waitMento').append(makeNotTr(1))	
+										$('#waitMento').append(makeNotTr(0))	
 									} else {
 										$('#waitMento>tbody').empty();
 										$.each(data.wait,function(item,idx){
-											$('#waitMento>tbody').append(mentoTr(idx))	
+											$('#waitMento').append(makeWaitTr(idx,3))	
 										})
 									}
 								}
@@ -448,11 +549,11 @@
 												success : function(data) {
 													if(data === '') {
 														$('#chatList>tbody').empty();
-														$('#chatList').append(makeNotTr(0));
+														$('#chatList').append(makeNotTr(3));
 													}else {
 														if(data.chat.length == 0) {
 															$('#chatList>tbody').empty();
-															$('#chatList').append(makeNotTr(0));
+															$('#chatList').append(makeNotTr(3));
 														}else {
 															$('#chatList>tbody').empty();
 															$.each(data.chat,function(item,idx) {
@@ -490,102 +591,167 @@
 		}
 	}
 	
+	// 정보가 없는 항목의 tr을 만들어주는 기능
 	function makeNotTr(n){
 		var tr = $('<tr>');
 		var td;
-		if(n == 1){
-			td = $('<td colspan="4">').text('신청 이력이 없습니다.')			
-		}else if(n == 0) {
-			td = $('<td colspan="4">').text('채팅방이 존재하지 않습니다 ^오^')	
+		if(n == 0){
+			td = $('<th colspan="6">').text('신청 이력이 없습니다').css('color','#A7A9A5')
+		}else if(n == 1) {
+			td = $('<th colspan="7">').text('참여 이력이 없습니다.').css('color','#A7A9A5')		
+		} else if(n == 2) {
+			td = $('<th colspan="6">').text('종료 이력이 없습니다.').css('color','#A7A9A5')
 		} else {
-			td = $('<td colspan="5">').text('참여 이력이 없습니다.')
+			td = $('th colspan="6"').text('채팅방이 존재하지 않습니다.').css('color','#A7A9A5')
 		}
 		tr.append(td);
 		return tr;
 	}
 	
-	function makeTr(idx,n){
-		var tr = $('<tr>')
+	// 수락 대기중인 정보의 tr을 만들어주는 기능
+	function makeWaitTr(idx,n) {
+		var tr = $('<tr>').css('color','#A7A9A5')
 		var td1 = $('<td>')
 		var td2 = $('<td>')
 		var td3 = $('<td>')
-		var td4 = $('<td>')
-		var td5 = $('<td>')
-		
-		if(n == 1 || n == 3){
+		var no;
+		if(n == 1) {
+			no = idx.projectNo
+			tr.on('click',function(){
+				location.href='project/projectDetail.do?no='+no;
+			})
+			td1.text(idx.projectName);
+			td2.text(idx.projectTerm);
+			td3.text(idx.lang);
+			td4.text(idx.recruitEdt)
+		} else if(n == 2){
+			no = idx.studyNo
+			tr.on('click',function(){
+				location.href='study/studySelect.do?studyNo='+no;
+			})
 			td1.text(idx.studyNm);
 			td2.text(idx.location);
 			td3.text(idx.studySdt);
 			td4.text(idx.studyEdt);
-		} else if(n == 2 || n == 4 ){
-			td1.text(idx.projectName);
-			td2.text(idx.projectTerm);
-			td3.text(idx.projectSdt);
-			td4.text(idx.projectEdt);
-		} else if(n == 7 || n == 8) {
+		} else {
 			td1.text(idx.mentoId);
-			td2.text(idx.mentiId);
-			td3.text(idx.startDate);
-			td4.text(idx.serviceTerm);
-		}
-		if(idx.leaderId == '${member.memberId}'){
-			tr.css('color','green');
+			td2.text(idx.startDate)
+			td3.text(idx.endDate)
+			td4.text(idx.startTm+'-'+idx.endTm)
 		}
 		tr.append(td1,td2,td3,td4);
-		if (n==3) {
-			if(idx.state == 0){
-				td5.text('모집중')
-			} else if(idx.state == 1){
-				td5.text('마감')
-			} else if(idx.state == 2){
-				td5.text('진행중').css('color','blue')
+		return tr;
+	}
+	
+	// 진행중인 정보의 tr을 만들어주는 기능
+	function makeDoingTr(idx,n) {
+		var tr = $('<tr>');
+		var no;
+		var state;
+		if(n == 1){
+			no = idx.projectNo;
+			console.log(no);
+			state = idx.state;
+			tr.on('click',function(){
+				location.href='project/projectDetail.do?no='+no;
+			})
+			var td1 = $('<td>').text(idx.projectName);
+			var td2 = $('<td>').text(idx.projectTerm);
+			var td3 = $('<td>').text(idx.projectSdt);
+			var td4 = $('<td>').text(idx.projectEdt);
+			if(state == 3){
+				var td5 = $('<td>').text('진행중').css('color','#7F8DF5');
 			} else {
-				td5.text('종료').css('color','green')
+				var td5 = $('<td>').text('시작 대기중').css('color','#F1F57F');
 			}
-			tr.append(td5)
-		} else if(n == 4){
-			if(idx.state == 1){
-				td5.text('모집중')
-			} else if(idx.state == 2){
-				td5.text('마감')
-			} else if(idx.state == 3){
-				td5.text('진행중').css('color','blue')
-			} else if(idx.state == 4){
-				td5.text('종료').css('color','green')
+			tr.append(td1,td2,td3,td4,td5);
+		} else if(n == 2) {
+			no = idx.studyNo
+			state = idx.state
+			tr.on('click',function(){
+				location.href='study/studySelect.do?studyNo='+no;
+			})
+			var td1 = $('<td>').text(idx.studyNm);
+			var td2 = $('<td>').text(idx.location);
+			var td3 = $('<td>').text(idx.studySdt);
+			var td4 = $('<td>').text(idx.studyEdt);
+			if(state == 0){
+				var td5 = $('<td>').text('시작 대기중').css('color','#F1F57F');
 			} else {
-				td5.text('취소').css('color','red')
+				var td5 = $('<td>').text('진행중').css('color','#7F8DF5');
 			}
-			tr.append(td5)
+			tr.append(td1,td2,td3,td4,td5);
+		} else {
+			state = idx.state
+			var td1 = $('<td>').text(idx.mentoId);
+			var td2 = $('<td>').text(idx.mentiId);
+			var td3 = $('<td>').text(idx.startDate);
+			var td4 = $('<td>').text(idx.endDate);
+			var td5 = $('<td>').text(idx.startTm+'-'+idx.endTm);
+			if(state == 1){
+				var td6 = $('<td>').text('진행중').css('color','#7F8DF5');
+				var td7 = $('<td>')
+			} else {
+				var td6 = $('<td>').text('평점 대기중').css('color','#F1F57F');
+				var td7 = $('<td>').append($('<button type="button" onclick="sendRating()" class="btn btn-mod btn-w btn-circle btn-small">평점주기</button>'));
+			}
+			tr.append(td1,td2,td3,td4,td5,td6,td7);
 		}
 		return tr;
-	};
+	}
 	
-	function mentoTr(idx){
-		var tr = $('<tr>').attr("data-id",idx.mentoServiceNo)
-		var td1 = $('<td>')
-		var td2 = $('<td>')
-		var td3 = $('<td>')
-		var td4 = $('<td>')
-		var td5 = $('<td>')
-		var td6 = $('<td>')
-		var btn = $('<button type="button" onclick="sendRating()" class="btn btn-mod btn-w btn-circle btn-small">평점주기</button>');
-		
-		td1.text(idx.mentoId);
-		td2.text(idx.mentiId);
-		td3.text(idx.startDate);
-		td4.text(idx.serviceTerm);
-		console.log(idx.state);
-		if(idx.state == 4) {
-			td5.text('멘토거절(환불)').css('color', 'red');
-		}else if(idx.state == 3) {
-			td5.text('서비스종료(평점부여가능)').css('color', 'blue');
-			td6.append(btn);
-		}else if(idx.state == 2) {
-			td5.text('서비스종료').css('color', 'green');			
-		}else {
-			td5.text('진행중').css('color', 'yellow');
+	// 종료된 정보의 tr을 만들어주는 기능
+	function makeEndTr(idx,n){
+		var no;
+		var state;
+		var tr = $('<tr>')
+		if(n == 1){
+			no = idx.projectNo;
+			state = idx.state;
+			tr.on('click',function(){
+				location.href='project/projectDetail.do?no='+no;
+			})
+			var td1 = $('<td>').text(idx.projectName);
+			var td2 = $('<td>').text(idx.projectTerm);
+			var td3 = $('<td>').text(idx.projectSdt);
+			var td4 = $('<td>').text(idx.projectEdt);
+			if(state == 4){
+				var td5 = $('<td>').text('완료').css('color','#7FF38F');
+			} else {
+				var td5 = $('<td>').text('취소').css('color','#F2625F');
+			}
+			tr.append(td1,td2,td3,td4,td5)
+		} else if(n == 2){
+			no = idx.studyNo;
+			state = idx.state;
+			tr.on('click',function(){
+				location.href='study/studySelect.do?studyNo='+no;
+			})
+			var td1 = $('<td>').text(idx.studyNm);
+			var td2 = $('<td>').text(idx.location);
+			var td3 = $('<td>').text(idx.studySdt);
+			var td4 = $('<td>').text(idx.studyEdt);
+			if(state == 1) {
+				var td5 = $('<td>').text('중단').css('color','#F2625F');
+			} else {
+				var td5 = $('<td>').text('완료').css('color','#7FF38F');
+			}
+			tr.append(td1,td2,td3,td4,td5);
+		} else {
+			state = idx.state;
+			var td1 = $('<td>').text(idx.mentoId);
+			var td2 = $('<td>').text(idx.mentiId);
+			var td3 = $('<td>').text(idx.startDate);
+			var td4 = $('<td>').text(idx.serviceTerm);
+			if(state == 2) {
+				var td5 = $('<td>').text('완료').css('color','#7FF38F');
+				var td6 = $('<td>').text(idx.stsfdg);
+			} else {
+				var td5 = $('<td>').text('취소').css('color','#F2625F');
+				var td6 = $('<td>');
+			}
+			tr.append(td1,td2,td3,td4,td5,td6);
 		}
-		tr.append(td1, td2, td3, td4, td5, td6)
 		return tr;
 	}
 	
@@ -603,7 +769,6 @@
 		var tr = $('<tr onclick="selectChat('+item.roomId+')">')
 		var td1 = $('<td>')
 		var td2 = $('<td>')
-		var td3 = $('<td>')
 		td1.text(item.ownerId);
 		td2.text(item.entryId);
 		tr.append(td1,td2);
