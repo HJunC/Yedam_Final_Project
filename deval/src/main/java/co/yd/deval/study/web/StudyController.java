@@ -141,7 +141,7 @@ public class StudyController {
     }
     
     // 스터디 상세글
-    @PostMapping("/studySelect.do")
+    @GetMapping("/studySelect.do")
     public String studySelect(StudyVO vo, Model model, Principal User) {
 		vo = studyDao.studySelectNo(vo);
     	if(vo != null) {
