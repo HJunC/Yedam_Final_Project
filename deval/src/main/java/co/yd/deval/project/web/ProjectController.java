@@ -125,8 +125,6 @@ public class ProjectController {
      */
     @GetMapping("/search.do")
     public String projectSearch(Model model, ProjectVO vo, Criteria cri) {
-        if (cri.getPageNum() == 0) cri.setPageNum(1);
-        if (cri.getAmount() == 0) cri.setAmount(10);
         vo.setCriteria(cri);
         model.addAttribute("search", vo);
         model.addAttribute("projectList", projectService.getListWithPaging(vo));

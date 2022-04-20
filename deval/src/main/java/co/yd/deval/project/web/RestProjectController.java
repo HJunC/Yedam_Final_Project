@@ -30,8 +30,8 @@ public class RestProjectController {
         this.projectRequestService = projectRequestService;
     }
 
-    @GetMapping("/detail")
-    public ResponseEntity<Object> detailProject(@RequestParam("no") int projectNo) {
+    @GetMapping("/detail/{no}")
+    public ResponseEntity<Object> detailProject(@PathVariable(name = "no") int projectNo) {
         try {
             ProjectInfoDTO dto = projectService.getProject(projectNo);
             return ResponseEntity.ok().body(dto);

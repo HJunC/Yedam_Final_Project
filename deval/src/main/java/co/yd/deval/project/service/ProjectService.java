@@ -73,4 +73,6 @@ public interface ProjectService {
 
     List<ProjectVO> findProjectByNo(String id);
     List<ProjectVO> findWaitingProject(String id);
+
+    void cancelRequest(String memberId, int exceptionProjectNo);
 }
