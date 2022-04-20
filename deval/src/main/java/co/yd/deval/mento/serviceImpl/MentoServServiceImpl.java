@@ -77,10 +77,15 @@ public class MentoServServiceImpl implements MentoServService {
 	public MentoServVO findWaitMento(String id) {
 		return map.findWaitMento(id);
 	}
+	
+	@Override
+	public List<MentoServVO> findEndMento(String id) {
+		return map.findEndMento(id);
+	}
 
 	@Override
-	public List<MentoServVO> findMentoByNo(String id) {
-		return map.findMentoByNo(id);
+	public List<MentoServVO> findDoingMento(String id) {
+		return map.findDoingMento(id);
 	}
 
 	@Override

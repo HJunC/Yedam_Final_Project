@@ -167,10 +167,14 @@ public class ProjectServiceImpl implements ProjectService {
         mapper.updateApplyCount(projectNo);
     }
 
-
+    @Override
+    public List<ProjectVO> findEndProject(String id) {
+    	return mapper.findEndProject(id);
+    }
+    
 	@Override
-	public List<ProjectVO> findProjectByNo(String id) {
-		return mapper.findProjectByNo(id);
+	public List<ProjectVO> findDoingProject(String id) {
+		return mapper.findDoingProject(id);
 	}
 
 	@Override
