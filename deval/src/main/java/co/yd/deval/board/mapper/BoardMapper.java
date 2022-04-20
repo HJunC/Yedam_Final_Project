@@ -4,6 +4,8 @@ import co.yd.deval.board.service.BoardVO;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 public interface BoardMapper {
 
 	List<BoardVO> boardSelectList(int b);
@@ -21,6 +23,8 @@ public interface BoardMapper {
 	int boardRecUp(int board_no);
 
 	List<BoardVO> getListWithPaging(BoardVO vo);
+	
+	List<BoardVO> getSearchList(@Param("option") String option,@Param("keyvalue") String keyvalue);
 
 	int getTotalCount(BoardVO vo);
 

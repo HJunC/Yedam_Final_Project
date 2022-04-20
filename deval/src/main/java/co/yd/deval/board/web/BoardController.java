@@ -141,6 +141,7 @@ public class BoardController {
 		model.addAttribute("comments", commentDAO.commentSelectList(cvo));
 		if (user != null)
 			model.addAttribute("user", user.getName());
+			System.out.println("username: " + user.getName());
 		return "board/boardDetail";
 	}
 
@@ -158,6 +159,12 @@ public class BoardController {
 
 	}
 
+	@GetMapping("/boardSearch.do")
+	@ResponseBody
+	public List<BoardVO> boardSearch(String option, String keyvalue){
+		return boardDao.getSearchList(option, keyvalue);
+	}
+	
 	/*
 	 * @PostMapping("/boardUpdateForm.do") public String boardUpdateForm(Model
 	 * model, BoardVO vo) { model.addAttribute("board", vo); return

@@ -45,8 +45,9 @@
                                    <div class="comment-author">
                                        ${comment.writer}
                                    </div>
+                                   <br>
                                    <fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${comment.commentDate}"/> 
-                                   <c:if test="${comment.writer == user}">
+                                   <c:if test="${comment.writer eq user}">
 	                                   <span class="separator">&mdash;</span>
 									   <input class="btn btn-mod btn-border-w btn-round" type="button" onclick="updateActive()" value="수정">
 									   <input class="btn btn-mod btn-border-w btn-circle" type="button" style="display:none;"

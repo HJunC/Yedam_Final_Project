@@ -57,18 +57,22 @@ td {
 		<section class="page-section bg-dark light-content pt-0">
 			<div class="container relative">
 				<div class="row">
-					<form id="searchForm" class="row">
-						<div align="left">
-							<input type="text" name="title" id="codeSearch"
-								class="input-sm round" placeholder="검색"
-								style="width: 300px; height: 48px;" /> &nbsp;
-							<button type="submit"
-								class="btn btn-mod btn-round btn-border-w btn-small">검색</button>
-							<input type="hidden" name="pageNum"
-								value="${pageMaker.cri.pageNum}"> <input type="hidden"
-								name="amount" value="${pageMaker.cri.amount}">
-						</div>
-					</form>
+<form id="form1">
+ 
+    <select name="option">
+        <option value="all" >전체</option>
+        <option value="writer">작성자</option>
+ 
+        <option value="title">제목</option>
+ 
+        <option value="subject">내용</option>
+ 
+ 
+    </select>
+    <input name="keyword">
+    <input type="button" onclick="searchData()" value="조회">
+</form>
+
 				</div>
 			</div>
 		</section>
@@ -145,6 +149,20 @@ td {
    console.log(page);
    searchForm.find("input[name='pageNum']").val(page);
    searchForm.submit();
+ }
+ 
+ function searchData(){
+	 console.log(JSON.stringify($('#form1').serializeObject));
+	 $.ajax({
+		 url:"boardSearch.do",
+		 data:JSON.stringify($('#form1').serializeObject()),
+		 success:function(data){
+			 console.log(data)
+		 },
+		 error:function(err){
+			 console.log(err)
+		 }
+	 })
  }
  
  function search() {

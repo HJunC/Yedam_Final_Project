@@ -21,10 +21,12 @@ public interface BoardService {
 	List<BoardVO> getListWithPaging(BoardVO vo);
 
 	int getTotalCount(BoardVO vo);
+	
+	List<BoardVO> getSearchList(String option,String keyvalue);
 
 	/***
-	 * 첫화면에서 보여주기위한 데이터
-	 * @return BoardVO 리스트
+	 * 泥ロ솕硫댁뿉�꽌 蹂댁뿬二쇨린�쐞�븳 �뜲�씠�꽣
+	 * @return BoardVO 由ъ뒪�듃
 	 */
 	List<BoardVO> getMainPageList();
 }

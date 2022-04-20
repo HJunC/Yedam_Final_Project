@@ -117,5 +117,17 @@
 	where board_no=#{boardNo}
 </update>
 
+<select id="getSearchList" 	resultType="co.yd.deval.board.service.BoardVO">
+	select *
+	from board
+	<where>
+		<if test="option == 'all'"> and 1=1 </if>
+		<if test="option == 'writer'"> and writer like '%'||#{keyword}||'%'</if>
+		<if test="option == 'subject'"> and subject like '%'||#{keyword}||'%'</if>
+		<if test="option == 'title'"> and title like '%'||#{keyword}||'%'</if>
+	</where>
+
+</select>
+
 
 </mapper>
