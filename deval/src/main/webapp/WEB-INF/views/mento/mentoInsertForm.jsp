@@ -17,7 +17,6 @@
             <!-- 멘토등록 글-->
             <div class="text-center mb-80 mb-sm-50">
                 <h2 class="section-title">멘토등록!!</h2>
-                ${mentos}
             </div>
             <!-- 값이 들어가는 곳-->
             <!-- mentoInsert Form tag-->
@@ -97,7 +96,7 @@
                         </c:forEach>
                     </select>
                     <!-- 모달창 띄우기 -->
-                       	<a href="#test-modal" class="btn btn-mod btn-w btn-medium round mt-10 lightbox-gallery-5 mfp-inline" onclick="insertButton()">기간정하기</a>
+                       	<!-- <a href="#test-modal" class="btn btn-mod btn-w btn-medium round mt-10 lightbox-gallery-5 mfp-inline" onclick="insertButton()">기간정하기</a>
                                 <div id="test-modal" class="mfp-hide">
                                     <p>
                                         선택하신 기간이 확실합니까?
@@ -108,7 +107,7 @@
 				                        <button type="button" class="btn btn-mod btn-w btn-round btn-small" style="color:red" onclick="closeModal()">취소</button>
                                 	</div>
                                 	</div>
-                                </div>
+                                </div> -->
                 </div>
             </div>
             <div class="row">
@@ -135,7 +134,7 @@
                     </select>
                 </div>
             </div>
-            <input type="hidden" id="btn" class="btn btn-mod btn-w btn-round btn-large" value="등록" onclick="mentoInsert()">
+            <input type="button" id="btn" class="btn btn-mod btn-w btn-round btn-large" value="등록" onclick="mentoInsert()">
                 
             </form>
 
@@ -183,11 +182,18 @@
         	var end = frm.serviceEdt.value;
         	var photo = $('#photo').val();
         	var price = $('#price').val();
+        /* 	var day = $('#dayDate').val();
+        	var week = $('#dayWeek').val();
+        	var month = $('#dayMont').val(); */
         	if(photo == '') {
         		photo = '${resources}/images/mento/prev.bmp';
         	} 
         	if(price == '') {
-        		alert('필수값을 등록해주세요!!');
+        		alert('가격을 정해주세요!!');
+        		return;
+        	}
+        	if(check == false) {
+        		alert('기간을 정해주세요!');
         		return;
         	}
         	//시작시관 종료시간 막아주기
@@ -223,6 +229,7 @@
         	}
         }
         //radio button 이용 term 값 변경하기
+        var check = $('input:radio[name=choiceRadio]').is(':checked');
        function changeTerm() {
         	var dayDate = document.getElementById('dayDate');
         	var dayWeek = document.getElementById('dayWeek');
@@ -231,7 +238,6 @@
         	var termDay = document.getElementById('termDay');
         	var termWeek = document.getElementById('termWeek');
         	var termMonth = document.getElementById('termMonth');
-        	var check = $('input:radio[name=choiceRadio]').is(':checked');
         	if(check == true) {
 	        	if(dayDate.checked) {
 	        		termWeek.disabled = 'true';	
@@ -243,7 +249,7 @@
 	        		termDay.disabled = 'true';	
 	        		termWeek.disabled = 'true';
 	        	}
-	        	$.magnificPopup.close();
+	        	closeModal();
         }	
         else {
         	alert('기간체크를 해주세요!');

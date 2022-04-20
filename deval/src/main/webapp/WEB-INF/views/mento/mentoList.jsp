@@ -46,7 +46,7 @@
                         <div class="clearfix mb-40">
                             <c:if test="${not empty mento}">
                             <div class="float-sm-start mt-10 mb-sm-20">
-								${mento[0].lang }언어의 멘토들은 현재 ${fn:length(mento)}명입니다
+								${mento[0].lang }언어의 멘토들은 현재 ${pageMaker.total}명입니다
 							</div>
                             </c:if>
                         </div>
@@ -89,17 +89,58 @@
                         		<input type="hidden" id="lang" name="lang">
                         	</form>
                         </div>
-                                
-                    </div>
+						<!-- Pagination -->
+						<form method="get" id="searchForm">
+							<div class="pagination mt-30 mt-xs-10">
+								<ul class="pagination" id="pagination"></ul>
+							</div>
+							<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
+	                    	<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
+	                    	<input type="hidden" name="lang" value="${mento[0].lang}">
+						</form>
+						<!-- End Pagination -->
+
+			</div>
                 </section>
                 <!-- End Section -->                
             </main>
+            <script src="${resources}/js/common/jQueryPage.js"></script>
             <script type="text/javascript">
             	function selectMento(id) {
             		frm2.mentoId.value = id;
             		frm2.lang.value = '${mento[0].lang}'
             		frm2.submit();
             	}
+            	
+            	<!-- paging -->
+            	var endPage = ${pageMaker.endPage}
+                var current = ${pageMaker.cri.pageNum}
+
+                window.pagObj = $('#pagination').twbsPagination({
+                  totalPages: endPage,
+                  startPage: current,
+                  visiblePages: 5, // 최대로 보여줄 페이지
+                  prev: "<i class='fa fa-chevron-left'></i>", // Previous Button Label
+                  next: "<i class='fa fa-chevron-right'></i>", // Next Button Label
+                  first: '«', // First Button Label
+                  last: '»', // Last Button Label
+                  onPageClick: function (event, page) { // Page Click event
+                    console.info("current page : " + page);
+                  } }).on('page', function (event, page) {
+                  searchPage(page);
+                });
+
+              function searchPage(page) {
+                var searchForm = $("#searchForm");
+                searchForm.find("input[name='pageNum']").val(page);
+                searchForm.submit();
+              }
+
+              function search() {
+                var searchForm = $("#searchForm");
+                searchForm.find("input[name='pageNum']").val("1");
+                searchForm.submit();
+              }
             </script>
 </body>
 </html>

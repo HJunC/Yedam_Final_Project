@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import co.yd.deval.common.Criteria;
+import co.yd.deval.common.PageDTO;
 import co.yd.deval.member.service.MemberService;
 import co.yd.deval.member.service.MemberVO;
 import co.yd.deval.mento.service.MentoServService;
@@ -51,9 +53,13 @@ public class MentoController {
     }
     
     @RequestMapping("/mentoList.do")
-    public String mentoList(Model model, @RequestParam("lang") String lang) {
-    	//MemberVO user = (MemberVO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	model.addAttribute("mento", mentoDAO.mentoSelectList(lang));
+    public String mentoList(Model model, MentoVO vo, Criteria criteria) {
+    	if (criteria.getAmount()%4 != 0) {
+    		criteria.setAmount(12);
+    	}
+        vo.setCriteria(criteria);
+    	model.addAttribute("mento", mentoDAO.mentoSelectList(vo));
+    	model.addAttribute("pageMaker", new PageDTO(criteria, mentoDAO.getTotalCount(vo)));
     	return "mento/mentoList";
     }
     

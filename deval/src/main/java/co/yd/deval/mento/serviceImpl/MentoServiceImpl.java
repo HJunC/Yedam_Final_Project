@@ -15,8 +15,8 @@ public class MentoServiceImpl implements MentoService{
 	public MentoMapper map;
 	
 	@Override
-	public List<MentoVO> mentoSelectList(String lang) {
-		return map.mentoSelectList(lang);
+	public List<MentoVO> mentoSelectList(MentoVO vo) {
+		return map.mentoSelectList(vo);
 	}
 
 	@Override
@@ -57,6 +57,11 @@ public class MentoServiceImpl implements MentoService{
 	@Override
 	public List<MentoVO> langList(String mentoId) {
 		return map.langList(mentoId);
+	}
+
+	@Override
+	public int getTotalCount(MentoVO vo) {
+		return map.getTotalCount(vo);
 	}
 
 	

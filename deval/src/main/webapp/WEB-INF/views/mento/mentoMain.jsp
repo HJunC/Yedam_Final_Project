@@ -19,7 +19,7 @@
                                 <div class="col-md-9 col-lg-7">
                                     <h1 class="hs-line-3 mb-30 mb-xs-20 wow fadeInUpShort" data-wow-delay=".1s">열정교육!</h1>
                             
-                                    <h2 class="hs-line-5 mb-60 mb-xs-40 wow fadeInUpShort" data-wow-delay=".2s">
+                                    <h2 class="hs-line-5 mb-60 mb-xs-40 wow fadeInUpShort" data-wow-delay=".2s" style="color:lime">
                                         교육의 차별화!
                                         Mento service!
                                         <span class="sr-only"></span>
@@ -45,15 +45,16 @@
                             
                                 <div class="col-md-12 col-lg-4 mb-md-50 mb-xs-30">
                                     <div class="lead-alt wow linesAnimIn" data-splitting="lines">
-                                        멘토링서비스 소개말
+                                        Developers Valley's Mentoring
                                     </div>
                                 </div>
                                 
                                 <div class="col-md-6 col-lg-4 mb-sm-50 mb-xs-30 wow linesAnimIn" data-splitting="lines">
-                                	우리는 차별화를 뒀습니다! 특정 레벨이상 강사!
+                                	우리는 차별화를 뒀습니다! 특정 레벨이상 강사!<br>
+                                	1대1 교육시스템으로 확실한 교육을 받아보세요~
                                 </div>
 								<div class="col-md-6 col-lg-4 mb-sm-50 mb-xs-30 wow linesAnimIn" data-splitting="lines">
-                                	1대1 교육시스템으로 확실한 교육을 받아보세요~
+                                	
                                 </div>
                             </div>
                         </div>
