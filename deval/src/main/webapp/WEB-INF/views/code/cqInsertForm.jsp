@@ -41,7 +41,7 @@
 						</select>&nbsp;&nbsp;&nbsp;&nbsp;
 						<c:if test="${type == 4}">
 							<label for="type">프로젝트 번호</label>
-							<input type="text" value="" readonly>
+							<input type="text" value=${projectNo}" readonly>
 						</c:if>
 					</div>
 				</div>

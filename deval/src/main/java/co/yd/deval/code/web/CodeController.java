@@ -8,7 +8,8 @@ import co.yd.deval.comment.service.CommentService;
 import co.yd.deval.comment.service.CommentVO;
 import co.yd.deval.common.Criteria;
 import co.yd.deval.common.PageDTO;
-import org.springframework.beans.factory.annotation.Autowired;
+import co.yd.deval.project.service.ProjectService;
+import co.yd.deval.project.service.ProjectTeamVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,11 +25,13 @@ public class CodeController {
 	private final CodeService codeDAO;
 	private final ReplyService replyDAO;
 	private final CommentService commentDAO;
+	private final ProjectService projectService;
 
-	public CodeController(CodeService codeDAO, ReplyService replyDAO, CommentService commentDAO) {
+	public CodeController(CodeService codeDAO, ReplyService replyDAO, CommentService commentDAO, ProjectService projectService) {
 		this.codeDAO = codeDAO;
 		this.replyDAO = replyDAO;
 		this.commentDAO = commentDAO;
+		this.projectService = projectService;
 	}
 
 	@GetMapping("/codeList.do")
@@ -104,7 +107,9 @@ public class CodeController {
 	}
 
 	@GetMapping("/cqInsertForm.do")
-	public String codeInsertForm(Model model, int type) {
+	public String codeInsertForm(Model model, int type, Principal user) {
+		ProjectTeamVO teamVO = projectService.getOngoingProject(user.getName());
+		model.addAttribute("projectNo", teamVO.getProjectNo());
 		model.addAttribute("type", type);
 		return "code/cqInsertForm";
 	}
