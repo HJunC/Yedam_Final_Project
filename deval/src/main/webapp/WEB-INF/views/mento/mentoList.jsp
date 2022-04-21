@@ -37,7 +37,7 @@
                 </section>
                 <!-- End Home Section -->
                 <div style="width: 843px;height: 457px;margin: 0 auto;">
-                	<img alt="mentoImage" src="${resources}/images/mento/mento1.png" style="width: 100%;height: 100%;object-fit: cover;">
+                	<img alt="mentoImage" src="${resources}/images/mento/mento1.png" style="width: 100%;height: 100%;object-fit: cover;border-radius:210px;">
                 </div>
                 
                 <!-- Section -->
@@ -48,7 +48,7 @@
                         <div class="clearfix mb-40">
                             <c:if test="${not empty mento}">
                             <div class="float-sm-start mt-10 mb-sm-20">
-								${mento[0].lang }언어의 멘토들은 현재 ${pageMaker.total}명입니다
+								<p><strong>${mento[0].lang }</strong>언어의 멘토들은 현재 <strong>${pageMaker.total}</strong>명입니다</p>
 							</div>
                             </c:if>
                         </div>
@@ -81,10 +81,16 @@
                                 	<!-- 멘토 이름이 들어가는 곳 -->
                                    <p> <Strong>${mento.mentoId }</Strong>(${mento.history})</p>
                                 </div>
-
+								<c:if test="${empty mento.info }">
+									<div class="post-prev-text align-center">
+										<strong>안녕하세요.</strong>
+									</div>
+								</c:if>
+								<c:if test="${!empty mento.info}">
                                 <div class="post-prev-text align-center">
                                     <strong>${mento.info }</strong>
                                 </div>
+								</c:if>
                                 <div class="post-prev-more align-center">
                                     <button type="button" class="btn btn-mod btn-w btn-round" onclick="selectMento('${mento.mentoId}')"><i class="fa fa-search"></i> 멘토상세보기</button>
                                 </div>
