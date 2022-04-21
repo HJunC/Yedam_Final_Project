@@ -87,40 +87,47 @@
            </div>
         	<div id="info_box" class="col-md-8 offset-lg-1 mb-sm-80 order-first order-md-last">
 				<!-- 나의 정보가 보이는 div -->
-				<div id="my_info_box" class="border border-secondary" style="height:1000px;">
+				<div id="my_info_box" class="border border-secondary" style="height:400px;">
 					<h2>나의 정보</h2>
 					<hr>
 					<div>
-						<div style="width:300px;height:300px;">
-							<img src="/upload/profile/${member.profileImg}" alt="..">
+						<div class="row">
+							<div class="col">
+								<div style="width:300px;height:300px;">
+									<img src="/upload/profile/${member.profileImg}" alt=".." style="object-fit: fill;width: 300px;height: 300px;">
+								</div>
+							</div>
+						<div class="col">
+							<table class="table">
+								<tr>
+									<th>아이디</th>
+									<td colspan="5">${member.memberId}</td>
+								</tr>
+								<tr>
+									<th>이메일</th>
+									<td colspan="3">${member.mail}</td>
+									<th>이름</th>
+									<td>${member.name}</td>
+								</tr>
+								<tr>
+									<th>등급</th>
+									<td>
+										${member.tier}
+									</td>
+									<th>경험치</th>
+									<td>${member.exp}</td>
+									<th>포인트</th>
+									<td>${member.cashPt}</td>
+								</tr>
+							</table>
+							<button type="button" class="btn btn-mod btn-border-w btn-round btn-small" onclick="memberOut()">회원탈퇴</button>
+							</div>
 						</div>
-						<table class="table">
-							<tr>
-								<th>아이디</th>
-								<td colspan="5">${member.memberId}</td>
-							</tr>
-							<tr>
-								<th>이메일</th>
-								<td colspan="3">${member.mail}</td>
-								<th>이름</th>
-								<td>${member.name}</td>
-							</tr>
-							<tr>
-								<th>등급</th>
-								<td>
-									${member.tier}
-								</td>
-								<th>경험치</th>
-								<td>${member.exp}</td>
-								<th>포인트</th>
-								<td>${member.cashPt}</td>
-							</tr>
-						</table>
 					</div>
 				</div>
 			
 				<!-- 나의 정보를 수정하는 div -->
-				<div id="info_update_box" class="border border-secondary" style="height:1000px;display:none">
+				<div id="info_update_box" class="border border-secondary" style="height:500px;display:none">
 					<h2>정보 수정</h2>
 					<hr>
 					<div>
@@ -166,8 +173,8 @@
 									</td>
 								</tr>
 							</table>
-							<input type="submit" class="btn btn-primary" value="수정">
-							<input type="reset" class="btn btn-danger" value="취소">
+							<input type="submit" class="btn btn-mod btn-w btn-round btn-small" value="수정">
+							<input type="reset" class="btn btn-mod btn-border-w btn-round btn-small" value="취소">
 						</form>
 					</div>
 				</div>
@@ -569,6 +576,33 @@
 							$('#info_box').children().css('display','none');
 							$('#info_update_box').css('display','block');
 						})
+						
+	//회원탈퇴 확인을 위한 기능
+	function memberOut(){
+		var pwd = prompt('비밀번호를 입력해주세요');
+		if(pwd == '${member.password}'){
+			var result = confirm('정말로 탈퇴하시겠습니까?');
+			if(result){
+				$.ajax({
+					url:"memberOut.do",
+					data:{memberId:'${member.memberId}'},
+					type:'post',
+					success:function(data){
+						if(data == 1){
+							alert('탈퇴되었습니다.')
+							location.href="home.do";
+						} else {
+							alert('오류로 인해 탈퇴되지 않았습니다.');
+						}
+					}
+				})
+			} else {
+				alert('탈퇴가 취소되었습니다.');
+			}
+		} else {
+			alert('비밀번호가 일치하지 않습니다.');
+		}
+	}
 	
 	// 비밀번호 변경시 입력한 비밀번호가 비밀번호 확인에 입력한 비밀번호와 일치하는지 확인하는 function					
 	$('#pwdCheck').on('change',function(){

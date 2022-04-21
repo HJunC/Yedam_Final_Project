@@ -11,6 +11,7 @@ import java.util.UUID;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -126,6 +127,17 @@ public class MemberController {
 		vo.setMemberId(user.getName());
 		model.addAttribute("member", memberDao.memberSelect(vo));
 		return "member/myPage";
+	}
+	
+	//회원탈퇴 기능
+	@PostMapping("/memberOut.do")
+	@ResponseBody
+	public int memberOut(MemberVO vo, HttpSession sess) {
+		int r =  memberDao.memberDelete(vo);
+		if(r != 0) {
+			sess.invalidate();
+		}
+		return r;
 	}
 
 	//마이페이지에서 내 정보 수정

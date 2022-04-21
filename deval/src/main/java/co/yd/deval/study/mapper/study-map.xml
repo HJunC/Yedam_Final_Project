@@ -134,6 +134,7 @@
 						     FROM    STUDY_TEAM
 						     WHERE   MEMBER_ID = #{id})
 		AND STATE IN (1,3)
+		ORDER BY STUDY_NO DESC
 	</select>
 	
 	<select id="findDoingStudy" resultType="co.yd.deval.study.service.StudyVO">
@@ -143,6 +144,7 @@
 						     FROM    STUDY_TEAM
 						     WHERE   MEMBER_ID = #{id})
 		AND STATE IN (0,2)
+		ORDER BY STUDY_NO DESC
 	</select>
 	
 	<select id="findWaitingStudy" resultType="co.yd.deval.study.service.StudyVO">
@@ -152,6 +154,7 @@
 						     FROM    STUDY_REQUEST
 						     WHERE   MEMBER_ID     = #{id}
 						     AND     STATE         = 0)
+		ORDER BY STUDY_NO DESC
 	</select>
 
 	<insert id="studyUserInsert"

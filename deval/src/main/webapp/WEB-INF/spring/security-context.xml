@@ -25,9 +25,7 @@
 						 delete-cookies="JSESSIONID,remember-me"
 						 />
 		<security:csrf disabled="true" />
-		<security:remember-me key="deval" token-validity-seconds="86400"
-							  authentication-success-handler-ref="loginHandler"
-							  />
+		<security:remember-me key="deval" token-validity-seconds="86400"/>
 		
 	</security:http>
 	
