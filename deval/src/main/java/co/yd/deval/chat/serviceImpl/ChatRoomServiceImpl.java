@@ -30,8 +30,8 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 	}
 
 	@Override
-	public List<ChatRoomVO> chatList() {
-		return map.chatList();
+	public ChatRoomVO selectChat(ChatRoomVO vo) {
+		return map.selectChat(vo);
 	}
 
 }

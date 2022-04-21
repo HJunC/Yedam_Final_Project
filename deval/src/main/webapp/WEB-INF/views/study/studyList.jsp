@@ -341,7 +341,7 @@
 	</div>
 	<!-- 게시글 번호 값으로 상세글 넘기기 -->
 	<div>
-		<form id="selfrm" action="studySelect.do" method="post">
+		<form id="selfrm" action="studySelect.do" method="get">
 			<sec:csrfInput />
 			<input type="hidden" id="studyNo" name="studyNo">
 		</form>

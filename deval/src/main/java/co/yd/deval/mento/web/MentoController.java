@@ -76,10 +76,7 @@ public class MentoController {
     
     @PostMapping("/mentoInsert.do")
     public String mentoInsert(MentoVO mento, MultipartFile file, Principal principal) {
-    	MemberVO user = new MemberVO();
-    	if(principal != null) {
-    		mento.setMentoId(principal.getName());
-    	}
+    	mento.setMentoId(principal.getName());
     	
     	String originalName = file.getOriginalFilename(); 
     	if(!originalName.equals("")) {

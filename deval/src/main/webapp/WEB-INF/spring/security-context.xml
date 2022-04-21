@@ -7,19 +7,29 @@
 
 	<security:http pattern="/resources/**" security="none" />
 	<security:http>
-		<security:intercept-url pattern="/study/studyList.do" access="isAuthenticated()"/>
 		<security:intercept-url pattern="/mento/mentoSelect.do" access="isAuthenticated()"/>
+		<security:intercept-url pattern="/study/**" access="isAuthenticated()"/>
 		<security:intercept-url pattern="/board/write.do" access="hasAnyAuthority('ROLE_USER','ROLE_ADMIN')"/>
 		<security:intercept-url pattern="/myPage.do" access="hasAnyAuthority('ROLE_USER','ROLE_ADMIN')"/>
 		<security:intercept-url pattern="/project/projectInsertForm.do" access="hasAnyAuthority('ROLE_USER','ROLE_ADMIN')"/>
 		<security:intercept-url pattern="/coPage.do" access="hasAnyAuthority('ROLE_COMPANY','ROLE_ADMIN')"/>
+		<security:intercept-url pattern="/study/studyMain.do" access="permitAll()"/>
 		<security:intercept-url pattern="/**" access="permitAll()" />
 		<security:form-login login-page="/loginForm.do" 
 							 login-processing-url="/login" 
-							 default-target-url="/" />
+							 default-target-url="/" 
+							 authentication-success-handler-ref="loginHandler"
+							 />
 		<security:logout logout-url="/logout" 
-						 logout-success-url="/" />
+						 logout-success-url="/"
+						 invalidate-session="true" 
+						 delete-cookies="JSESSIONID,remember-me"
+						 />
 		<security:csrf disabled="true" />
+		<security:remember-me key="deval" token-validity-seconds="86400"
+							  authentication-success-handler-ref="loginHandler"
+							  />
+		
 	</security:http>
 	
 	<security:authentication-manager>
@@ -27,7 +37,8 @@
 		</security:authentication-provider>
 	</security:authentication-manager>
 	
-	<bean class="co.yd.deval.member.serviceImpl.LoginDetailService" id="mds"></bean>
+	<bean class="co.yd.deval.member.serviceImpl.LoginDetailService" id="mds"/>
+	<bean class="co.yd.deval.member.serviceImpl.LoginSuccessHandler" id="loginHandler"/>
 	
 
 

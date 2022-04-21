@@ -208,12 +208,14 @@
                     </script>
                     <div>
                         <div>
-                            <span class="badge me-1 ${item.frontRcnt > 0 ? 'bg-custom-primary' : 'bg-dark'}">프론트엔드 ${item.frontRcnt}</span>
-                            <span class="badge me-1 ${item.backRcnt > 0 ? 'bg-custom-primary' : 'bg-dark'}">백엔드 ${item.backRcnt}</span>
-                            <span class="badge me-1 ${item.fullRcnt > 0 ? 'bg-custom-primary' : 'bg-dark'}">풀스택 ${item.fullRcnt}</span>
-                            <span class="badge me-1 ${item.designRcnt > 0 ? 'bg-custom-primary' : 'bg-dark'}">디자인 ${item.designRcnt}</span>
-                            <span class="badge ${item.plannerRcnt > 0 ? 'bg-custom-primary' : 'bg-dark'}">기획 ${item.plannerRcnt}</span>
+                            <span class="info-search-list">남은 포지션</span>
+                            <span class="badge me-1 ${item.frontRcnt > 0 ? 'bg-custom-primary' : 'bg-dark'}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="프론트엔드 개발자">FE ${item.frontRcnt}</span>
+                            <span class="badge me-1 ${item.backRcnt > 0 ? 'bg-custom-primary' : 'bg-dark'}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="백엔드 개발자">BE ${item.backRcnt}</span>
+                            <span class="badge me-1 ${item.fullRcnt > 0 ? 'bg-custom-primary' : 'bg-dark'}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="풀스택 개발자">FS ${item.fullRcnt}</span>
+                            <span class="badge me-1 ${item.designRcnt > 0 ? 'bg-custom-primary' : 'bg-dark'}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="디자이너">DE ${item.designRcnt}</span>
+                            <span class="badge ${item.plannerRcnt > 0 ? 'bg-custom-primary' : 'bg-dark'}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="기획자">PL ${item.plannerRcnt}</span>
                         </div>
+
                         <div class="info-search-list mt-40">
                             <i class="fa fa-eye"></i> ${item.hit}&nbsp;&nbsp;&nbsp;
                             <i class="fa fa-user-clock"></i> ${item.applyRcnt} 지원</span>

@@ -62,12 +62,12 @@
 <!-- End Home Section -->
 
 <style>
-   .widget-menu{
-      cursor:pointer;
-   }
-   .widget-menu li:hover{
-      background-color:gray;
-   }
+	.widget-menu{
+		cursor:pointer;
+	}
+	.widget-menu li:hover{
+		background-color:gray;
+	}
 </style>
 <!-- Section -->
 <section class="page-section">
@@ -867,4 +867,19 @@
     const drawStar = (target) => {
            document.querySelector(`.star span`).style.width = `${target.value * 10}%`;
            }
+    
+    function rate() {
+		$.ajax({
+			url : "rating.do",
+			type : "post",
+			data : $("#frm").serialize(),
+			success : function() {
+				opener.parent.location.reload();
+				window.close();
+			},
+			error: function() {
+				alert("에러");
+			}
+		})
+	}
 </script>

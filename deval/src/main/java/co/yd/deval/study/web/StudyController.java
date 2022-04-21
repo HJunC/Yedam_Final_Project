@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import co.yd.deval.chat.service.ChatLogService;
+import co.yd.deval.chat.service.ChatRoomService;
+import co.yd.deval.chat.service.ChatRoomVO;
 import co.yd.deval.common.Criteria;
 import co.yd.deval.common.PageDTO;
 import co.yd.deval.member.service.MemberService;
@@ -28,7 +31,6 @@ import co.yd.deval.study.service.StudyVO;
 @Controller
 @RequestMapping("/study")
 public class StudyController {
-	
 	@Autowired
 	private StudyService studyDao;
 	
@@ -38,6 +40,11 @@ public class StudyController {
 	@Autowired
 	private StudyMailSender mail;
 	
+	@Autowired
+	private ChatRoomService chatRoomDAO;
+	
+	@Autowired
+	private ChatLogService chatLogDAO;
 	
 	/* STUDY MAIN */
 	// 스터디 메인
@@ -48,6 +55,7 @@ public class StudyController {
 	    	model.addAttribute("member", User);
 	    	model.addAttribute("list", studyDao.studyUnfinedTeamBtn(User.getName()));
     	}
+
         return "study/studyMain";
     }
     
@@ -133,7 +141,7 @@ public class StudyController {
     }
     
     // 스터디 상세글
-    @PostMapping("/studySelect.do")
+    @GetMapping("/studySelect.do")
     public String studySelect(StudyVO vo, Model model, Principal User) {
 		vo = studyDao.studySelectNo(vo);
     	if(vo != null) {
@@ -266,6 +274,9 @@ public class StudyController {
     	return "study/studyMember";
     }
     
+    
+    // 디자인 테스트
+    
     @RequestMapping("/designList.do")
     public String designList(Model model) {
     	
@@ -277,5 +288,53 @@ public class StudyController {
     	
     	return "study/test";
     }
-
+    
+    /* Chat Service */
+    
+    @RequestMapping("/chatForm.do")
+    public String chatStudy(Model model,int roomId, Principal user) {
+    	model.addAttribute("roomId",roomId);
+    	model.addAttribute("userId",user.getName());
+    	model.addAttribute("chats", chatLogDAO.selectChat(roomId));
+    	return "chat/chat";
+    }
+    
+    
+    @RequestMapping("/studyChat.do")
+    @ResponseBody
+    public int studyChat(Principal User, ChatRoomVO vo) {
+    	System.out.println("==================================== " + vo.getOwnerId());	// 화면에서 가져오는
+    	System.out.println("==================================== " + User.getName());	// 로그인
+    	
+    	vo.setEntryId(User.getName());	// 값 세팅
+    	
+    	// 채팅이 존재하는가 존재하지 않는가
+    	ChatRoomVO cvo = chatRoomDAO.selectChat(vo);
+    	
+    	if(cvo == null){
+    		// 새로운 채팅 만들기
+    		chatRoomDAO.makeChatRoom(vo);
+    		return vo.getRoomId();
+    	}
+    	return cvo.getRoomId();
+    }
+    
+    @RequestMapping("/studyReqMemberChat.do")
+    @ResponseBody
+    public int studyReqMemberChat(Principal User, ChatRoomVO vo) {
+    	System.out.println("==================================== " + vo.getEntryId());	// 화면에서 가져오는
+    	System.out.println("==================================== " + User.getName());	// 로그인
+    	
+    	vo.setOwnerId(User.getName());	// 값 세팅
+    	
+    	// 채팅이 존재하는가 존재하지 않는가
+    	ChatRoomVO cvo = chatRoomDAO.selectChat(vo);
+    	
+    	if(cvo == null){
+    		// 새로운 채팅 만들기
+    		chatRoomDAO.makeChatRoom(vo);
+    		return vo.getRoomId();
+    	}
+    	return cvo.getRoomId();
+    }
 }

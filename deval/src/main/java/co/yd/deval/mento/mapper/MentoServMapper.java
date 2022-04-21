@@ -29,7 +29,11 @@ public interface MentoServMapper {
 		
 		//my Page
 		MentoServVO findWaitMento(String id);
-		List<MentoServVO> findMentoByNo(String id);
+		List<MentoServVO> findDoingMento(String id);
+		List<MentoServVO> findEndMento(String id);
+		
+		//서비스 평점업데이트
+		int updateRating(Map<String, Object> rate);
 		
 		//서비스 평점업데이트
 		int updateRating(Map<String, Object> rate);

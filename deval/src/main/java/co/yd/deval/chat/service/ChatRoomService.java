@@ -10,4 +10,6 @@ public interface ChatRoomService {
 	List<ChatRoomVO> selectListChat(String id);
 	//roomId 땡겨오기
 	ChatRoomVO selectChatRoom(int roomId);
+	ChatRoomVO selectChat(ChatRoomVO vo);
 }
+

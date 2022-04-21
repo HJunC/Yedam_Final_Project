@@ -82,7 +82,7 @@
 	         <button type="submit" class="btn btn-mod btn-w btn-round">수정</button>
 	      </c:if>
 	      <c:if test="${study.leaderId ne member.name}">
-	         <button type="button" class="btn btn-mod btn-w btn-round" onclick="">문의</button>
+	         <button type="button" class="btn btn-mod btn-w btn-round" onclick="studyQna('${study.leaderId}')">문의</button>
 	      </c:if>   
 	         <button type="button" class="btn btn-mod btn-w btn-round" onclick="location.href='studyList.do'">목록</button>
 	          <input type="hidden" name="studyNo" value="${study.studyNo }">
@@ -233,7 +233,26 @@
 									});
 									console.log("-- Study Req End --")
 								});
-				      	}		      	
+				      	}
+				      	
+				      	function studyQna(id) {
+				    		console.log("-- Study Qna Start --");
+				    		$.ajax({
+				    			type: "POST",
+				    			url: "studyChat.do",
+				    			data: {"ownerId": id},
+				    			dataType : "text",
+				    			success: function(result) {
+				    				if (result != 0)
+				    					location.href="chatForm.do?roomId="+result;
+				    				else
+				    					return -1;
+				    			},
+				    			error: function(result) {
+				    			}
+				    		});
+				    		console.log("-- Study Qna End --")
+						}
       				</script>
       			</div>
       		</div>

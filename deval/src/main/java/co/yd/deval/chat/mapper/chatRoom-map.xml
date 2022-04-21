@@ -20,8 +20,9 @@
 		SELECT * FROM CHATROOM
 		WHERE ROOM_ID = #{roomId}
 	</select>
-	<select id="chatList" resultType="co.yd.deval.chat.service.ChatRoomVO">
-		SELECT *
-		FROM CHATROOM
+	
+	<select id="selectChat" resultType="co.yd.deval.chat.service.ChatRoomVO">
+		SELECT * FROM CHATROOM 
+		WHERE OWNER_ID = #{ownerId} AND ENTRY_ID = #{entryId}
 	</select>
 </mapper>

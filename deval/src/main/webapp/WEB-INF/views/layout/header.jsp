@@ -4,6 +4,8 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <c:set var="resources" value="${pageContext.request.contextPath}/resources"/>
 <c:set var="root" value="${pageContext.request.contextPath}"/>
+
+
 <script>
 var URL_CONFIG = '${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath }';
 var socket = null;
@@ -69,6 +71,7 @@ webSocket.onopen = function(e) {
 	<span id="alarmText"></span>
 	<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
+
 <nav class="main-nav dark transparent stick-fixed wow-menubar">
 	<div class="full-wrapper relative clearfix">
 		<!-- Logo ( * your text or image into link tag *) -->
@@ -113,17 +116,6 @@ webSocket.onopen = function(e) {
 				</li>
 
 				<li>
-					<a href="#" class="mn-has-sub">채용 <i class="mn-has-sub-icon"></i></a>
-					<ul class="mn-sub mn-has-multi">
-						<li class="mn-sub-multi">
-							<ul>
-								<li><a href="${root}/job/seeking.do">채용정보</a></li>
-							</ul>
-						</li>
-					</ul>
-				</li>
-
-				<li>
 					<a href="${root}/project/main.do">팀 프로젝트</a>
 				</li>
 				
@@ -143,17 +135,16 @@ webSocket.onopen = function(e) {
 					<li><a href="${root}/loginForm.do">로그인</a></li>
 					<li><a href="${root}/signUpForm.do">회원가입</a></li>
 				</sec:authorize>
-
+				
 				<sec:authorize access="isAuthenticated()">
 					<li>
-						<a href="#" class="mn-has-sub">내 정보 <i class="mn-has-sub-icon"></i></a>
+						<a href="#" class="mn-has-sub">
+						<img class="img-profile rounded-circle" style="width:2rem;height:2rem;" src="/upload/profile/<sec:authentication property='principal.profileImg'/>">
+						<sec:authentication property="principal.username"/>
+						<i class="mn-has-sub-icon"></i></a>
 						<ul class="mn-sub">
-						<sec:authorize access="hasAnyRole('USER','ADMIN')">
+							<li>등급 : <sec:authentication property="principal.tier"/></li>
 							<li><a href="${root}/myPage.do">마이페이지</a></li>						
-						</sec:authorize>
-						<sec:authorize access="hasRole('COMPANY')">
-							<li><a href="${root}/coPage.do">회사페이지</a></li>
-						</sec:authorize>
 							<li><form action="${root}/logout" method="post">
 									<sec:csrfInput/>
 									<button type="submit">로그아웃</button>
