@@ -35,5 +35,8 @@ public interface MentoServMapper {
 		//서비스 평점업데이트
 		int updateRating(Map<String, Object> rate);
 		
+		//서비스 평점업데이트
+		int updateRating(Map<String, Object> rate);
+		
 		
 }

@@ -1,6 +1,7 @@
 package co.yd.deval.mento.service;
 
 
+import co.yd.deval.common.Criteria;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -9,6 +10,7 @@ import lombok.ToString;
 @Getter
 @ToString
 public class MentoVO {
+	private int mentoNum;
 	private String lang;
 	private String photo;
 	private String history;
@@ -21,4 +23,8 @@ public class MentoVO {
 	private String termDay;
 	private String termWeek;
 	private String termMonth;
+	
+	//paging
+	private int rn;
+	private Criteria criteria;
 }
