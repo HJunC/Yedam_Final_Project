@@ -468,7 +468,6 @@
                                  $('#joinProject').append(makeDoingTr(idx,1));
                               })
                            }
-                           
                            if(data.end.length == 0){
                               $('#endProject>tbody').empty();
                               $('#endProject').append(makeNotTr(2));
