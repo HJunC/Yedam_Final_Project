@@ -8,51 +8,71 @@
 <fmt:parseNumber var="stis" integerOnly="true" value="${satis}"/>
 <link rel="stylesheet" href="${resources}/css/custom/team-project-style.css">
 <main id="main">    
-            
                 <!-- Home Section -->
-                <section class="home-section parallax-5" data-background="" id="home">
-                    <div class="container min-height-100vh d-flex align-items-center pt-100 pb-100" style="background-image: url('${resources}/images/mento/mentoMain2.PNG');background-size : 100%; background-repeat: no-repeat;">
-                        
-                        <!-- Hero Content -->
-                        <div class="home-content text-start">
-                            <div class="row">
-                                <div class="col-md-9 col-lg-7">
-                                    <h1 class="hs-line-3 mb-30 mb-xs-20 wow fadeInUpShort" data-wow-delay=".1s">열정교육!</h1>
+                <section class="small-section bg-dark-alfa-50 bg-scroll light-content" data-background="${resources}/images/mento/mentoMain2.PNG" id="home" style="height: 950px">
+                    <div class="container relative pt-70">
+                    
+                        <div class="row">
                             
-                                    <h2 class="hs-line-5 mb-60 mb-xs-40 wow fadeInUpShort" data-wow-delay=".2s">
+                            <div class="col-md-8">
+                                   	
+                                <div class="wow fadeInUpShort" data-wow-delay=".1s" style="height: 370px">
+                                </div>
+                                <div class="wow fadeInUpShort" data-wow-delay=".2s">
+                                <h2 class="hs-line-5 mb-60 mb-xs-40 wow fadeInUpShort" data-wow-delay=".2s">
                                         교육의 차별화!
                                         Mento service!
                                         <span class="sr-only"></span>
                                         <span data-period="2800" data-type='[ " 1대1 멘토링!", "입맛대로 골라먹는 언어", "다양한경험의 멘토들"]' class="typewrite" aria-hidden="true"><span class="wrap"></span></span>
-                                    </h2>
-                                   	
-                                    </div>
+                                </h2>
                                 </div>
                             </div>
-                        <!-- End Hero Content -->
-                        
                         </div>
+                    
+                    </div>
                 </section>
                 <!-- End Home Section -->
-                
-                
-                <!-- About Section -->
+                <div style="height: 30px"></div>
+    <!-- Language Section -->
+	<div style="width: 1286px; margin: auto;">
+		<div>
+			<h3 class="mb-30">배우고 싶은 프로그래밍 언어가 있으신가요?</h3>
+		</div>
+		<sec:csrfInput />
+		<div class="mb-20 mb-md-10" id="langBtnDiv">
+			<div class="tags mb-60">
+				<c:forEach var="lang" items="${choice}">
+					<a href="mentoList.do?lang=${lang}"
+						class="btn btn-mod btn-border-w btn-round btn-medium">${lang}</a>
+				</c:forEach>
+			</div>
+		</div>
+		
+		<div class="d-flex justify-content-center">
+			<c:if test="${member.exp >= 1000 }">
+				<a href="mentoInsertForm.do" type="submit" class="btn btn-mod btn-w btn-round btn-medium me-3">
+					<i class="fa fa-chalkboard-teacher"></i>멘토등록
+				</a>
+				<a href="mentiCheck.do" type="submit" class="btn btn-mod btn-w btn-round btn-medium">
+					<i class="fa fa-chalkboard-teacher"></i>서비스신청현황
+				</a>
+			</c:if>
+		</div>
+
+	</div>
+	<!-- End Language Section -->
+	<!-- About Section -->
                 <section class="page-section bg-dark light-content" id="about">
                     <div class="container relative">
-                        
                         <div class="mb-120 mb-sm-50 mb-xs-20">
                             <div class="row section-text">
-                            
                                 <div class="col-md-12 col-lg-4 mb-md-50 mb-xs-30">
                                     <div class="lead-alt wow linesAnimIn" data-splitting="lines">
-                                        멘토링서비스 소개말
+                                        Developers Valley's Mentoring
                                     </div>
                                 </div>
-                                
                                 <div class="col-md-6 col-lg-4 mb-sm-50 mb-xs-30 wow linesAnimIn" data-splitting="lines">
-                                	우리는 차별화를 뒀습니다! 특정 레벨이상 강사!
-                                </div>
-								<div class="col-md-6 col-lg-4 mb-sm-50 mb-xs-30 wow linesAnimIn" data-splitting="lines">
+                                	우리는 차별화를 뒀습니다! 특정 레벨이상 강사!<br>
                                 	1대1 교육시스템으로 확실한 교육을 받아보세요~
                                 </div>
                             </div>
@@ -137,32 +157,6 @@
                     </div>
                 </section>
                 <!-- End About Section -->
-                
-                <!-- Language Section -->
-                <div style="width:700px; margin:auto;">
-                <div>
-                	<h3 class="mb-30">배우고 싶은 프로그래밍 언어가 있으신가요?</h3>
-                </div>
-                      <form action="mentoList.do" id="frm" class="frm">
-                      <sec:csrfInput/>
-                                    <div class="mb-20 mb-md-10">
-                                        <select class="input-md round form-control" style="width:200px" id="lang" name="lang">
-                                            <c:forEach var="lang" items="${choice}">
-                                            	<option value="${lang}">${lang}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-                       <button type="submit" class="btn btn-mod btn-w btn-medium btn-round me-md-1" style="background-color:#00D8FF">언어 선택</button>
-                      </form>
-                      <c:if test="${member.exp >= 1000 }">
-                      <form action="mentoInsertForm.do" id="frm2" method="get">
-                      		<button type="submit" class="btn btn-mod btn-w btn-circle"> <i class="fa fa-chalkboard-teacher"></i>멘토등록</button>
-                 		</form>
-                 		<form action="mentiCheck.do" id="frm3" method="get">
-                      		<button type="submit" class="btn btn-mod btn-w btn-circle"> <i class="fa fa-chalkboard-teacher"></i>서비스신청현황</button>
-                 		</form>
-                 	</c:if>
-                 </div>
                  <div>
                  	<section class="page-section bg-dark light-content">
                     <div class="container relative">
@@ -226,5 +220,6 @@
                 
                 
             </main>
+           
             
             

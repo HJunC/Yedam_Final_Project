@@ -93,6 +93,10 @@ public class MentoServServiceImpl implements MentoServService {
 		return map.updateRating(rate);
 	}
 
+	@Override
+	public int updateRating(Map<String, Object> rate) {
+		return map.updateRating(rate);
+	}
 	
 
 }
