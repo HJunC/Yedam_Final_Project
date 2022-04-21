@@ -113,6 +113,39 @@ td {
 				type="button" value="글쓰기" onclick="location.href='write.do?no=1'">
 		</div>
 	</sec:authorize>
+				<th width="50">No</th>
+				<th width="300">제목</th>
+				<th width="100">작성일자</th>
+				<th width="50">조회수</th>
+ 			</tr>
+
+			<c:forEach items="${noticeList}" var="list2">
+				<tr class="active" onclick="noticeSelect(${list2.boardNo})">
+					<td>${list2.boardNo}</td>
+					<th align="left">${list2.title}</th>
+					<td><fmt:formatDate pattern="yyyy-MM-dd"
+							value="${list2.boardDate}" /></td>
+					<td>${list2.hit}</td>
+ 				</tr>
+			</c:forEach>
+		</table>
+		 
+
+		<form action="noticeSelect.do" method="post" id="boardSS2">
+			<input type="hidden" name="boardNo" id="boardSe2" />
+		</form>
+
+		<div class="pagination">
+			<ul class="pagination" id="pagination"></ul>
+		</div>
+	</div>
+
+<sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+				<div align="right">
+					<input class="btn btn-mod btn-round btn-border-w btn-small"
+						type="button" value="글쓰기" onclick="location.href='write.do?no=1'">
+				</div>
+			</sec:authorize>
 
 
 	<script src="${resources}/js/common/jQueryPage.js"></script>

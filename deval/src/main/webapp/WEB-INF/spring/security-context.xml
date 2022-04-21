@@ -7,7 +7,11 @@
 
 	<security:http pattern="/resources/**" security="none" />
 	<security:http>
+<<<<<<< HEAD
 		<security:intercept-url pattern="/study/**" access="isAuthenticated()"/>
+=======
+		<security:intercept-url pattern="/study/studyList.do" access="isAuthenticated()"/>
+>>>>>>> branch 'board' of https://github.com/HJunC/Yedam_Final_Project.git
 		<security:intercept-url pattern="/board/write.do" access="hasAnyAuthority('ROLE_USER','ROLE_ADMIN')"/>
 		<security:intercept-url pattern="/myPage.do" access="hasAnyAuthority('ROLE_USER','ROLE_ADMIN')"/>
 		<security:intercept-url pattern="/project/projectInsertForm.do" access="hasAnyAuthority('ROLE_USER','ROLE_ADMIN')"/>
