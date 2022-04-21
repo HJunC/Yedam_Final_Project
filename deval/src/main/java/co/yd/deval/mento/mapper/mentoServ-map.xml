@@ -48,6 +48,7 @@
 	<select id="allSatisAvg" resultType="double">
 		SELECT nvl(TRUNC(AVG(STSFDG),1),0) 
 		FROM MENTO_SERVICE
+		WHERE STSFDG != 0
 	</select>
 	
 	<!-- 그래프 데이터 -->
@@ -55,6 +56,7 @@
 		SELECT NVL(TRUNC(AVG(STSFDG),1),0) 
 		FROM MENTO_SERVICE
 		WHERE MENTO_ID = #{id}
+		AND STSFDG != 0
 	</select>
 	<select id="serviceCount" resultType="int">
 		SELECT COUNT(*) FROM MENTO_SERVICE
