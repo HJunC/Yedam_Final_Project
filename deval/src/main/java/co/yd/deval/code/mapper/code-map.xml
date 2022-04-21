@@ -57,7 +57,7 @@
 			<if test="cqLang != null and cqLang != ''">CQ_LANG = #{cqLang},</if>
 			<if test="title != null and title != ''">TITLE = #{title},</if>
 			<if test="subject != null and subject != ''">SUBJECT = #{subject},</if>
-			<if test="gitUri != null and gitUri != ''">PROJECT_NO = #{projectNo},</if>
+			<if test="projectNo != null and projectNo != ''">PROJECT_NO = #{projectNo},</if>
 		</set>
 		WHERE CQ_NO = #{cqNo}
 	</update>

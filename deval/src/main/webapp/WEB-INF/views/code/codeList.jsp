@@ -36,7 +36,10 @@
 						</form>
 					</div>
 				</div><br>
-
+                <style>
+                    .table-list {cursor: pointer;}
+                    .table-list:hover {background-color: #2c2c2c;}
+                </style>
 				<!-- 리스트 테이블 -->
 				<div class="table-responsive">
 					<table class="table shopping-cart-table">
@@ -48,14 +51,14 @@
 							<th width="50">조회수</th>
 							<th width="50">추천수</th>
 						</tr>
-						<c:forEach items="${lists}" var="list">
-							<tr align="center" onclick="selectOne('${list.cqNo}')">
-								<td>${list.cqNo}</td>
-									<td align="left">[${list.cqLang}]${list.title}</td>
-								<td>${list.writer}</td>
-								<td><fmt:formatDate pattern="yyyy-MM-dd" value="${list.cqDate}"/></td>
-								<td>${list.hit}</td>
-								<td>${list.recommend}</td>
+						<c:forEach items="${lists}" var="item">
+							<tr class="table-list" align="center" onclick="selectOne('${item.cqNo}')">
+								<td>${item.cqNo}</td>
+                                <td align="left">${item.projectNo != 0 ? '<i class="fa fa-compass"></i> ' : null}[${item.cqLang}]${item.title}</td>
+								<td>${item.writer}</td>
+								<td><fmt:formatDate pattern="yyyy-MM-dd" value="${item.cqDate}"/></td>
+								<td>${item.hit}</td>
+								<td>${item.recommend}</td>
 							</tr>
 						</c:forEach>
 					</table>

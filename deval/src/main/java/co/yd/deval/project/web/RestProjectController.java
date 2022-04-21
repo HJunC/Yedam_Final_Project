@@ -41,6 +41,17 @@ public class RestProjectController {
         }
     }
 
+    @GetMapping("/info/{no}")
+    public ResponseEntity<Object> infoProject(@PathVariable(name = "no") int projectNo) {
+        try {
+            ProjectInfoDTO dto = projectService.getProject(projectNo);
+            return ResponseEntity.ok().body(dto);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("error");
+        }
+    }
+
     /***
      * 프로젝트 생성
      * @param vo 프로젝트 vo

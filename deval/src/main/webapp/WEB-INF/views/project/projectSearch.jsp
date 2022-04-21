@@ -38,6 +38,14 @@
     .widget {
         margin-bottom: 24px;
     }
+    .list-title {
+        margin: 0;
+        display: inline-block;
+        max-width: 366px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
 </style>
 <!-- Section -->
 <section class="page-section bg-dark light-content" style="overflow: initial;">
@@ -61,7 +69,10 @@
                                         <i class="fa fa-stopwatch"></i> 마감 <span id="timer${item.projectNo}"></span>
                                     </div>
                                     <div>
-                                        <h5 class="mb-2">${item.projectName} <span class="fs-6" style="color: #727272">(${item.projectTerm}일)</span></h5>
+                                        <div class="mb-2">
+                                            <h5 class="list-title">${item.projectName}</h5>
+                                            <span class="fs-6" style="color: #727272">(${item.projectTerm}일)</span>
+                                        </div>
                                         <div class="lang-search-list">${item.lang}</div>
                                     </div>
                                 </div>
@@ -161,9 +172,9 @@
                         <h3 class="widget-title">기술</h3>
 
                         <script src="${resources}/js/common/Languages.js"></script>
-
+                        <div id="viewLang" class="mb-3" style="color: #44e6b0;"></div>
                         <div>
-                            <dl class="toggle">
+                            <dl class="toggle" id="positionCountBox">
 
                                 <dt>
                                     <a href="" role="button" aria-expanded="false">언어</a>
@@ -221,6 +232,33 @@
                           })
                           $("#databaseBox").append(checkBox);
                           checkBox = "";
+
+                          var langArrayInit = '';
+
+                          <c:if test="${not empty search.langArray}">
+                          <c:forEach items="${search.langArray}" var="item">
+                          langArrayInit += '${item}, ';
+                          </c:forEach>
+                          </c:if>
+
+                          $("#viewLang").html(langArrayInit)
+                          /**
+                           * 기술 체크박스 관련
+                           */
+                          function handleLangCheckbox() {
+                            var lang = "";
+                            var list = $("input[name=langArray]:checked");
+                            for(var i = 0; i < list.length; i++) {
+                              if(i + 1 !== list.length) {
+                                lang += list[i].value + ", ";
+                              } else {
+                                lang += list[i].value;
+                              }
+                            }
+                            $("#viewLang").html(lang);
+                          }
+
+                          $("input[name=langArray]").change(handleLangCheckbox);
                         </script>
                     </div>
                     <!-- End Widget -->
@@ -348,6 +386,7 @@
     $("input[name=termEnd]").val(365);
     $("input[type=radio]").prop("checked", false);
     $("input[type=checkbox]").prop("checked", false);
+    $("#viewLang").html('');
   }
 
 </script>

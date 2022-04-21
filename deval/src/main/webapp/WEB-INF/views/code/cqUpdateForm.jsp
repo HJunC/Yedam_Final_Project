@@ -40,8 +40,7 @@
 						</c:if>
 					</select>&nbsp;&nbsp;&nbsp;&nbsp;
 					<c:if test="${type == 4}">
-						<label for="git">GIT URI</label> 
-						<input type="url" size="90" id="gitUri" name="gitUri" class="input-sm round" placeholder="GIT주소" style="height: 48px;">
+
 					</c:if>
 				</div>
 			</div>

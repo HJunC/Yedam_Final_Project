@@ -643,7 +643,7 @@
                         <div class="widget-body">
                             <div class="tags">
                                 <c:forEach var="item" items="${project.langArray}">
-                                    <a href="#">${item}</a>
+                                    <a href="search.do?langArray=${item}">${item}</a>
                                 </c:forEach>
                             </div>
                         </div>

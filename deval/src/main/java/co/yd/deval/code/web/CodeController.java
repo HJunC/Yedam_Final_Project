@@ -108,10 +108,16 @@ public class CodeController {
 
 	@GetMapping("/cqInsertForm.do")
 	public String codeInsertForm(Model model, int type, Principal user) {
-		ProjectTeamVO teamVO = projectService.getOngoingProject(user.getName());
-		model.addAttribute("projectNo", teamVO.getProjectNo());
-		model.addAttribute("type", type);
-		return "code/cqInsertForm";
+		if (user != null) {
+			ProjectTeamVO teamVO = projectService.getOngoingProject(user.getName());
+			if (teamVO != null) {
+				model.addAttribute("projectNo", teamVO.getProjectNo());
+			}
+			model.addAttribute("type", type);
+			return "code/cqInsertForm";
+		} else {
+			return "redirect:codeList.do";
+		}
 	}
 
 	@PostMapping("/cqInsert.do")
