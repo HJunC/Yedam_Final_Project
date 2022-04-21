@@ -99,9 +99,6 @@
                              <li id="myMento">
                                마이 멘토
                             </li>
-                            <li id="chatting">
-                               마이 채팅
-                            </li>
                         </ul>
                     </div>
                     
@@ -371,24 +368,6 @@
                   </table>
                </div>
             </div>
-            
-            
-            <!-- chating -->
-            <!-- 모집,신청,진행,완료된 멘토 보여주는 div -->
-            <div id="chatList_box" class="border border-secondary" style="height:1000px;display:none">
-               <h2>채팅 목록</h2>
-               <hr class="border border-white">
-               <table id="chatList" class="table table-hover table-dark">
-                  <thead>
-                     <tr>
-                        <th>채팅방 주인</th>
-                        <th>채팅방 손님</th>
-                     </tr>
-                  </thead>
-                  <tbody>
-                  </tbody>
-               </table>
-            </div>
                         
          </div>                                    
         
@@ -595,31 +574,6 @@
                      }
                   });
                   }); //End Mento
-         // 마이채팅을 누를 시 ajax를 통해 나의 채팅목록을 보여줌
-                  $('#chatting').on('click',function(){
-                                 $('#tag').children().css('display','none');
-                                 $('#info_box').children().css('display','none');
-                                 $('#chatList_box').css('display','block');
-                                 $.ajax({
-                                    url : "myChat.do",
-                                    success : function(data) {
-                                       if(data === '') {
-                                          $('#chatList>tbody').empty();
-                                          $('#chatList').append(makeNotTr(3));
-                                       }else {
-                                          if(data.chat.length == 0) {
-                                             $('#chatList>tbody').empty();
-                                             $('#chatList').append(makeNotTr(3));
-                                          }else {
-                                             $('#chatList>tbody').empty();
-                                             $.each(data.chat,function(item,idx) {
-                                                $('#chatList>tbody').append(makeChatTr(idx));
-                                             })
-                                          }
-                                       }
-                                    }
-                                    });   
-                                 });
    // myInfo 하위의 메뉴들이 보여줄 div들의 display에 관한 기능들
    $('#info_update').on('click',function(){
                      $('#info_box').children().css('display','none');
@@ -682,11 +636,8 @@
          td = $('<th colspan="6">').text('신청 이력이 없습니다').css('color','#A7A9A5')
       }else if(n == 1) {
          td = $('<th colspan="7">').text('참여 이력이 없습니다.').css('color','#A7A9A5')      
-      } else if(n == 2) {
-         td = $('<th colspan="6">').text('종료 이력이 없습니다.').css('color','#A7A9A5')
       } else {
-         td = $('th colspan="6"').text('채팅방이 존재하지 않습니다.').css('color','#A7A9A5')
-      }
+         td = $('<th colspan="6">').text('종료 이력이 없습니다.').css('color','#A7A9A5')
       tr.append(td);
       return tr;
    }

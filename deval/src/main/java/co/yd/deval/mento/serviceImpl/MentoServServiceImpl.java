@@ -6,7 +6,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import co.yd.deval.member.service.MemberVO;
 import co.yd.deval.mento.mapper.MentoServMapper;
 import co.yd.deval.mento.service.MentoServService;
 import co.yd.deval.mento.service.MentoServVO;
@@ -86,11 +85,6 @@ public class MentoServServiceImpl implements MentoServService {
 	@Override
 	public List<MentoServVO> findDoingMento(String id) {
 		return map.findDoingMento(id);
-	}
-
-	@Override
-	public int updateRating(Map<String, Object> rate) {
-		return map.updateRating(rate);
 	}
 
 	@Override
