@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="${resources}/css/custom/study_modal_style.css">
 </head>
 <body>
-				<!-- Title -->
+			<!-- Title -->
                <section class="small-section bg-dark-alfa-50 bg-scroll light-content" data-background="${resources}/images/full-width-images/section-bg-19.jpg" id="home">
     			<div class="container relative pt-70">
                      <div class="row">
@@ -66,11 +66,11 @@
                  <div class="container relative">
                        <div class="row">
                             <!-- Content -->
-                            <div class="col-lg-8 offset-lg-2 mb-sm-80">
+                            <div class="col-lg-8 offset-lg-1 mb-sm-50">
                                 <!-- Post -->
                                 <div class="blog-item mb-80 mb-xs-40">
                                     <!-- Text -->
-        							<div class="blog-item-body">
+        							<div class="blog-item-body" style="font-size: 15px;">
         								<p>
                                             ${study.subject }
                                         </p>

@@ -8,24 +8,25 @@
 <link rel="stylesheet" href="${resources}/css/common/toastui-editor.min.css" />
 <link rel="stylesheet" href="${resources}/css/common/toastui-editor-dark.min.css" />
 
-<!-- Title -->
-                <section class="small-section bg-dark-alfa-50" data-background="images/full-width-images/section-bg-19.jpg">
-                    <div class="container relative">
-                        <div class="row">
-                            <div class="col-md-8">
-                                <div class="wow fadeInUpShort" data-wow-delay=".1s">
-                                    <h1 class="hs-line-7 mb-20 mb-xs-10">STUDY</h1>
-                                </div>
-                                <div class="wow fadeInUpShort" data-wow-delay=".2s">
-                                    <p class="hs-line-6 opacity-075 mb-20 mb-xs-0">
-                                         스터디 수정
+ 
+        <!-- Title -->
+               <section class="small-section bg-dark-alfa-50 bg-scroll light-content" data-background="${resources}/images/full-width-images/section-bg-19.jpg" id="home">
+    			<div class="container relative pt-70">
+                     <div class="row">
+                        <div class="col-md-8">
+                              <div class="wow fadeInUpShort" data-wow-delay=".1s">
+                                  <h3 class="hs-line-7 mb-20 mb-xs-20" style="font-size: 52px;">${study.studyNm}</h3>
+                              </div>
+                            <div class="wow fadeInUpShort" data-wow-delay=".2s">
+                               		<p class="hs-line-6 opacity-075 mb-20 mb-xs-0">
+                               			⌨ Modify STUDY
                                     </p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </section>
-        <!-- End Title -->
+               </section>
+                <!-- End Title -->
 
 <style>
     .input-info {
@@ -41,7 +42,7 @@
         <!-- Write Form -->
         <div class="row">
             <div>
-                <form class="form contact-form" id="frm" action="editStudy.do" method="post">
+                <form class="form contact-form" id="frm" action="editStudy.do" method="post" onsubmit="inputSubject()">
                     <sec:csrfInput />
                     <div class="clearfix">
                         <div class="form-group">
@@ -281,5 +282,9 @@
 	  });
 	
 	  editorObject.getMarkdown();
+	  
+	  function inputSubject() {
+		  $('#editor').prev().val(editorObject.getHTML());
+	  }
 	 
 	</script>

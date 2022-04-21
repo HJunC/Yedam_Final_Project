@@ -19,16 +19,16 @@
 <body>
 
 	<!-- Title -->
-                <section class="small-section bg-dark-alfa-50">
+                <section class="page-section bg-dark-alfa-50 bg-scroll" data-background="${resources}/images/studyimg/title/stbg1.jpg">
                     <div class="container relative">
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="wow fadeInUpShort" data-wow-delay=".1s">
-                                    <h1 class="hs-line-7 mb-20 mb-xs-10">STUDY</h1>
+                                    <h1 class="hs-line-7 mb-20 mb-xs-10">Search STUDY</h1>
                                 </div>
                                 <div class="wow fadeInUpShort" data-wow-delay=".2s">
-                                    <p class="hs-line-6 opacity-075 mb-20 mb-xs-0">
-                                         스터디 찾기
+                                    <p class="hs-line-6 opacity-075 mb-20 mb-xs-0" style="font-size: 20px;">
+                                    	더 좋은 개발자가 되기 위한 첫 걸음을 시작하세요
                                     </p>
                                 </div>
                             </div>
@@ -52,7 +52,7 @@
 			<div class="container relative">
 					<div class="row">
 						<div>
-							<form class="form" id="searchForm" action="studyList.do" style="position: sticky; top: 100px" method="get">
+							<form class="form mt-80 mb-10" id="searchForm" action="studyList.do" style="position: sticky; top: 100px;" method="get">
 							<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
 	  						<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
 	  						
@@ -151,8 +151,8 @@
 					<div class="container relative text-center" >
 						<table id="locSearch" class="table shopping-cart-table" >
 						  <thead>
-							<tr align="center">
-								<th width="120">팀번호</th>
+							<tr align="center" style="font-size: 15px;">
+								<th width="120">#</th>
 								<th width="250">지역</th>
 								<th width="300">언어</th>
 								<th width="500">스터디명</th>
@@ -163,7 +163,7 @@
 								<th width="150">현재상태</th>
 							 </tr>
 							</thead>
-							<tbody style="font-size: 15px;">
+							<tbody style="font-size: 14px;">
 							<c:forEach items="${study }" var="std">
 								<tr onclick="studySearch('${std.studyNo }')">
 									<td>${std.studyNo }</td>
@@ -172,10 +172,12 @@
 									<td>${std.studyNm }</td>
 									<td>${std.leaderId }</td>
 									<td>${std.defficulty }</td>
-									<%-- <td>${std.rcnt}/${std.maxRcnt }</td> --%>
 									<td>
 									<c:if test="${std.maxRcnt-1 eq std.rcnt }">
-					                  <p class="badge bg-danger" style="font-size: 14px; margin: 0;"><i class="fa fa-users"> ${std.rcnt}/${std.maxRcnt }</i></p>
+					                  <%-- <p class="badge bg-danger" style="font-size: 14px; margin: 0;">
+					                  	<i class="fa fa-user-clock"> ${std.rcnt}/${std.maxRcnt }</i> --%>
+					                  <span class="new  blink" style="font-size: 14px; margin: 0;"><i class="fa fa-user-clock"></i></span> ${std.rcnt}/${std.maxRcnt }
+					                  <!-- </p> -->
 					                </c:if>
 					                <c:if test="${std.maxRcnt-1 ne std.rcnt }">
 					                	<i class="fa fa-users"></i>  ${std.rcnt}/${std.maxRcnt }
@@ -203,6 +205,18 @@
 						</div>
 						<!-- End Study List -->
 						
+						<style>
+							.new {color:#FF8888; padding-left:5px; font-style:italic;}
+							.blink {
+							      -webkit-animation: blink 1.0s linear infinite;
+							        }
+							@keyframes blink {
+							        5% { color:#FF8888;}
+							        70% {color:#111; }
+							       
+							        }
+						</style>
+						
 						
 						<!-- Study Add button -->
 						<div align="right">
@@ -217,7 +231,7 @@
 								
 						
 						<!-- Pagination -->
-					       <div class="pagination" align="center">
+					       <div class="pagination" align="center" style="padding: 1px 0;">
 					          <ul class="pagination" id="pagination"></ul>
 					       </div>
     				   <!-- End Pagination -->

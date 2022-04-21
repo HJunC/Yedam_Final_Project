@@ -42,7 +42,7 @@
                             <div class="col-lg-10 offset-lg-1">
                                 <h1 class="hs-line-4 mb-30 mb-xs-20 wow fadeInUpShort" data-wow-delay=".1s"><span class="d-inline-block bg-gray-dark round px-3 pb-1"><i class="fas fa-code-branch"></i></span></h1>
                                 <h2 class="hs-line-7 mb-0 wow fadeInUpShort" data-wow-delay=".2s">DEVELOPER<br>STUDY GROUP MEMBER</h2>
-                                <a href="studySelect.do?studyNo=${study[0].studyNo}"><p class="badge bg-dark">STUDY INFO POST</p></a>
+                                <a href="studySelect.do?studyNo=${study[0].studyNo}"><p class="badge bg-dark mt-20">STUDY INFO POST</p></a>
                             </div>
                         </div>
                     </div>
@@ -56,7 +56,7 @@
                             <!-- Team item -->
                             <c:forEach items="${study}" var="std">
                             <div class="col-md-4 mb-xs-30">
-                                <div class="team-item-wrap wow fadeInUp" data-wow-delay=".1s" data-wow-duration="1.2s">
+                                <div class="team-item-wrap wow fadeInUp" data-wow-delay=".1s" data-wow-duration="1.2s" style="margin: 20px;">
                                     <div class="team-item-decoration" style="background-image: url(${resources}/images/team/blackbar.jpg);"></div>
                                     <div class="team-item">
                                         <div class="team-item-image">
@@ -115,10 +115,10 @@
                                             <div class="ci-icon">
                                                 <i class="fa fa-map-marker-alt"></i>
                                             </div>
-                                            <div class="ci-title">
+                                            <div class="ci-title" style="font-size: 18px;">
                                                 지역
                                             </div>
-                                            <div class="ci-text">
+                                            <div class="ci-text" style="font-size: 15px;">
                                                 ${study[0].location }
                                             </div>
                                         </div>
@@ -131,10 +131,10 @@
                                             <div class="ci-icon">
                                                 <i class="fa fa-code-branch"></i>
                                             </div>
-                                            <div class="ci-title">
+                                            <div class="ci-title" style="font-size: 18px;">
                                                 언어
                                             </div>
-                                            <div class="ci-text">
+                                            <div class="ci-text" style="font-size: 15px;">
                                                 ${study[0].lang1 }<c:if test="${not empty study[0].lang2 }"> / ${study[0].lang2 }</c:if>
                                             </div>
                                         </div>
@@ -147,10 +147,10 @@
                                             <div class="ci-icon">
                                                 <i class="fa fa-calendar"></i>
                                             </div>
-                                            <div class="ci-title">
+                                            <div class="ci-title" style="font-size: 18px;">
                                                 공부기간
                                             </div>
-                                            <div class="ci-text">
+                                            <div class="ci-text" style="font-size: 15px;">
                                                 ${study[0].studySdt } ~ ${study[0].studyEdt }
                                             </div>
                                         </div>
@@ -158,16 +158,16 @@
                                     <!-- End Period -->
                                     
                                      <!-- Message -->
-                                    <div class="pb-20">
+                                    <div class="pt-40">
                                         <div class="contact-item wow fadeScaleIn" data-wow-delay="0" data-wow-duration="1s">
                                             <div class="ci-icon">
                                                 <i class="fa fa-comments"></i>
                                             </div>
                                              <%-- <a href="#" onclick="teamChat('${leaderId.leaderId}')"><div class="ci-title"> --%>
-                                            <div class="ci-title">
+                                            <div class="ci-title" style="font-size: 18px;">
                                             	팀원 오픈톡
                                             </div>
-                                            <div class="ci-text">
+                                            <div class="ci-text" style="font-size: 15px;">
                                                 <a href="${study[0].kakao }">${study[0].kakao }</a>
                                             </div>
                                         </div>
