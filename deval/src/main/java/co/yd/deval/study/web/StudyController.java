@@ -142,7 +142,7 @@ public class StudyController {
     }
     
     // 스터디 상세글
-    @PostMapping("/studySelect.do")
+    @GetMapping("/studySelect.do")
     public String studySelect(StudyVO vo, Model model, Principal User) {
 		vo = studyDao.studySelectNo(vo);
     	if(vo != null) {
@@ -277,6 +277,7 @@ public class StudyController {
     		StudyVO vo = new StudyVO();
     		vo.setStudyNo(list.get(0).getStudyNo());
         	model.addAttribute("leaderId", studyDao.studySelectNo(vo));
+        	model.addAttribute("user", User.getName());
     	}
     	return "study/studyMember";
     }
@@ -331,6 +332,38 @@ public class StudyController {
     	return cvo.getRoomId();
     }
     
+    @PostMapping("/studyPause")
+    @ResponseBody
+    public int studyPause(StudyVO vo) {
+    	int r = studyDao.studyPause(vo);
+    	return r;
+    }
+    
+    @PostMapping("/studyRestart")
+    @ResponseBody
+    public int studyRestart(StudyVO vo) {
+    	int r = studyDao.studyRestart(vo);
+    	return r;
+    }
+    
+    @PostMapping("/studyteambye")
+    @ResponseBody
+    public int studyteambye(StudyReqVO vo) {
+    	int no = vo.getStudyNo();
+    	int r = studyDao.studyTeamDel(vo);
+    	
+    	if (r != 0) {
+    		studyDao.minusRcnt(no);
+    	}
+    	return r;
+    }
+    
+    @GetMapping("/infochecking")
+    @ResponseBody
+    public int infochecking(Principal user) {
+    	int r = studyDao.addInfoCheck(user.getName());
+    	return r;
+    }
     
    // 디자인 테스트
     @RequestMapping("/designList.do")

@@ -130,10 +130,12 @@
     			data: {"entryId": id},
     			dataType : "text",
     			success: function(result) {
-    				if (result != 0)
-    					location.href="chatForm.do?roomId="+result;
-    				else
+    				if (result != 0) {
+    					var option = "top=50, left=60, width=500, height=750, resizable=0, scrollbars=no";
+    					window.open("../chatSelect.do?roomId="+result,"",option);	
+    				} else {
     					return -1;
+    				}
     			},
     			error: function(result) {
     			}

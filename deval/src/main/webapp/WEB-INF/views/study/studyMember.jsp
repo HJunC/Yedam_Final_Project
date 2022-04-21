@@ -42,6 +42,7 @@
                             <div class="col-lg-10 offset-lg-1">
                                 <h1 class="hs-line-4 mb-30 mb-xs-20 wow fadeInUpShort" data-wow-delay=".1s"><span class="d-inline-block bg-gray-dark round px-3 pb-1"><i class="fas fa-code-branch"></i></span></h1>
                                 <h2 class="hs-line-7 mb-0 wow fadeInUpShort" data-wow-delay=".2s">DEVELOPER<br>STUDY GROUP MEMBER</h2>
+                                <a href="studySelect.do?studyNo=${study[0].studyNo}"><p class="badge bg-dark">STUDY INFO POST</p></a>
                             </div>
                         </div>
                     </div>
@@ -59,7 +60,7 @@
                                     <div class="team-item-decoration" style="background-image: url(${resources}/images/team/blackbar.jpg);"></div>
                                     <div class="team-item">
                                         <div class="team-item-image">
-                                            <img class="introImg" border="0"  alt="" />
+                                            <img class="introImg" border="0" alt="" />
                                             <div class="team-item-detail">
                                                 <p class="team-item-detail-title">
                                                     ${std.present }
@@ -67,13 +68,15 @@
                                                 <p>
                                                    학력: ${std.college }<br>
                                                    경력: ${std.career }<br>
-                                                   자격증: ${std.license }<br> 
+                                                   자격증: ${std.license }<br>
                                                 </p>
-                                                <!-- <div class="team-social-links">
-                                                    <a href="#" target="_blank"><i class="fab fa-facebook"></i><span class="sr-only">Facebook profile</span></a>
-                                                    <a href="#" target="_blank"><i class="fab fa-twitter"></i><span class="sr-only">Twitter profile</span></a>
-                                                    <a href="#" target="_blank"><i class="fab fa-pinterest"></i><span class="sr-only">Pinterest profile</span></a>
-                                                </div> -->
+                                                <c:if test="${leaderId.leaderId eq user }">
+                                                	<c:if test="${leaderId.leaderId ne std.memberId}">
+	                                                	<button type="button" onclick="teambyebyeBtn('${std.studyNo }', '${std.memberId }')" class="btn btn-mod btn-glass btn-round btn-small">
+			                                              <i class="fa fa-minus-circle"></i> 내보내기
+			                                            </button>
+                                                	</c:if>
+                                                </c:if>	
                                             </div>
                                         </div>
                                         <div class="team-item-descr">
@@ -87,12 +90,9 @@
                                     </div>
                                 </div>
                             </div>
-                            </c:forEach>
+                         </c:forEach>
                             <!-- End Team item -->
                      </div>
-                 <!-- <div>
-                 	<button id="memberDelBtn" name="memberDelBtn" onclick="memberDelBtn()">팀 나가기</button>
-                 </div> -->
                     </div>
                 </section>
                 <!-- End Section --> 
@@ -176,33 +176,91 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                	</div>
                 </section>
                 <!-- End Contact Section -->
                 
-       <!-- <script type="text/javascript">
-            	function teamChat(id) {
-            		if (id == "") {
-            			alert("id값이 없습니다");
-            			return;
-            		}
-		    		console.log("-- Study Qna Start --");
-		    		$.ajax({
-		    			type: "POST",
-		    			url: "studyChat.do",
-		    			data: {"ownerId": id},
-		    			dataType : "text",
-		    			success: function(result) {
-		    				if (result != 0)
-		    					location.href="chatForm.do?roomId="+result;
-		    				else
-		    					return -1;
-		    			},
-		    			error: function(result) {
-		    			}
-		    		});
-		    		console.log("-- Study Qna End --")
-				}
-        </script> -->
-	</body>
-</html>
+                <!-- button -->
+               <c:if test="${leaderId.leaderId ne user }">
+	                <div align="center" style="border-radius: 5px; margin: 20px;">
+			           	<button class="btn btn-mod btn-glass btn-round btn-small" id="teambyebye" name="teambyebye" onclick="teambyebyeBtn('${study[0].studyNo}', '${user}')">팀 나가기</button>
+			        </div>
+			   </c:if>     
+               
+               <c:if test="${leaderId.leaderId eq user }">
+                <c:if test="${leaderId.state eq 0 }">
+	               <div align="center" style="border-radius: 5px; margin: 20px;">
+			           	<button class="btn btn-mod btn-glass btn-round btn-small" id="teamPause" name="teamPause" onclick="teamPauseBtn(${study[0].studyNo})">스터디 모집중단</button>
+			        </div>
+             	</c:if>
+              
+              	<c:if test="${leaderId.state eq 1 }">
+	                <div align="center" style="border-radius: 5px; margin: 20px;">
+			           	<button class="btn btn-mod btn-glass btn-round btn-small" id="teamRestart" name="teamRestart" onclick="teamRestartBtn(${study[0].studyNo})">스터디 모집재개</button>
+			        </div>
+              	</c:if>
+              </c:if>
+             <script type="text/javascript">
+             	function teamPauseBtn(sno){
+             		console.log("Study teamPause");
+        			
+        			$.ajax({
+        				url : "studyPause.do",
+        				type : "post",
+        				data : {"studyNo": sno},
+        				success : function(result) {
+        					console.log("succ", result);
+        					if (result == 1) {
+        						alert("스터디 모집을 중단하였습니다.");
+        						location.reload();
+        					}
+        				},
+        				error : function(err) {
+        					console.log("err", err);
+        				}
+        			});
+             	}
+             	
+             	
+             	function teamRestartBtn(sno){
+					console.log("Study teamRestart");
+        			
+        			$.ajax({
+        				url : "studyRestart.do",
+        				type : "post",
+        				data : {"studyNo": sno},
+        				success : function(result) {
+        					console.log("succ", result);
+        					if (result == 1) {
+        						alert("스터디 모집을 재개하였습니다.");
+        						location.reload();
+        					}
+        				},
+        				error : function(err) {
+        					console.log("err", err);
+        				}
+        			});
+             	}
+             	
+            	function teambyebyeBtn(sno, id){
+					console.log("Study teambyebye");
+        			
+        			$.ajax({
+        				url : "studyteambye.do",
+        				type : "post",
+        				data : {"studyNo": sno, "memberId": id},
+        				success : function(result) {
+        					console.log("succ", result);
+        					if (result == 1) {
+        						alert(id + "님 " + sno +"번 스터디를 중단하였습니다.");
+        						location.href = "studyMain.do";
+        					}
+        				},
+        				error : function(err) {
+        					console.log("err", err);
+        				}
+        			});
+             	}	
+             </script> 
+		</body>
+	</html>

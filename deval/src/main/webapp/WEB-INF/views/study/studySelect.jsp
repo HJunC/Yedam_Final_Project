@@ -19,8 +19,9 @@
                         <div class="col-md-8">
                               <div class="wow fadeInUpShort" data-wow-delay=".1s">
                                <c:choose>
-                              	  <c:when test="${std.state eq '0'}">
+                              	  		<c:when test="${std.state eq '0'}">
 					                    	<td><p class="badge bg-success">모집중</p></td>
+					                    	
 					                    </c:when>
 					                    <c:when test="${std.state eq '1'}">
 					                    	<td><p class="badge bg-light text-dark">모집중단</p></td>
@@ -256,11 +257,12 @@
 				    			data: {"ownerId": id},
 				    			dataType : "text",
 				    			success: function(result) {
-				    				if (result != 0)
-				    					location.href="chatForm.do?roomId="+result;
-				    					
-				    				else
+				    				if (result != 0) {
+				    					var option = "top=50, left=60, width=500, height=750, resizable=0, scrollbars=no";
+				    					window.open("../chatSelect.do?roomId="+result,"",option);	
+				    				} else {
 				    					return -1;
+				    				}
 				    			},
 				    			error: function(result) {
 				    			}

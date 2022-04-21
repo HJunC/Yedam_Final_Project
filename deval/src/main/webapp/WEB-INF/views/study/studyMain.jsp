@@ -25,12 +25,12 @@
 							<span class="wrap"></span></span>
 						</h2>
 						<div class="local-scroll wow fadeInUpShort" data-wow-delay=".3s">
-                           <a href="studyList.do" class="btn btn-mod btn-w btn-small btn-round mx-md-1">Start Study</a>
+                           <a href="studyList.do" class="btn btn-mod btn-w btn-small btn-round mx-md-1">Search Study</a>
                          <c:if test="${not empty list[0]}">
-                           <a href="studyMember.do" class="btn btn-mod btn-w btn-small btn-round mx-md-1">Study Team</a>
+                           <a href="studyMember.do" class="btn btn-mod btn-w btn-small btn-round mx-md-1">My Team</a>
                          </c:if>
                          <c:if test="${not empty study}">
-                           <a href="studyReq.do" class="btn btn-mod btn-w btn-small btn-round mx-md-1">Team Applicant </a>
+                           <a href="studyReq.do" class="btn btn-mod btn-w btn-small btn-round mx-md-1">Team Applicant</a>
                         </c:if>
                           <!--  <a href="chat.do">채팅</a> -->
                         </div>

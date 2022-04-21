@@ -322,7 +322,7 @@
         SELECT * FROM (
               SELECT ROWNUM rn, t.* 
               FROM (
-              		SELECT  * FROM STUDY ORDER BY STUDY_NO)t
+              		SELECT  * FROM STUDY ORDER BY STUDY_NO DESC)t
         ]]>
         <where>
             <include refid="option"></include>
@@ -342,5 +342,38 @@
 	        AND study_no > 0
         </where>
     </select>
+    
+    <update id="studyPause" parameterType="co.yd.deval.study.service.StudyVO">
+		UPDATE STUDY
+		SET STATE = 1
+		WHERE STUDY_NO = #{studyNo}
+	</update>
+	
+	<update id="studyRestart" parameterType="co.yd.deval.study.service.StudyVO">
+		UPDATE STUDY
+		SET STATE = 0
+		WHERE STUDY_NO = #{studyNo}
+	</update>
+	
+	<delete id="studyTeamDel" parameterType="co.yd.deval.study.service.StudyReqVO">
+		DELETE
+		FROM STUDY_REQUEST
+		WHERE STUDY_NO = #{studyNo}
+		AND MEMBER_ID = #{memberId}
+	</delete>
+	
+	<update id="minusRcnt" parameterType="co.yd.deval.study.service.StudyVO">
+		UPDATE STUDY
+		SET RCNT = RCNT -1 
+		WHERE STUDY_NO = #{studyNo}
+	</update>
+	
+	<select id="addInfoCheck" resultType="int">
+		SELECT CASE COUNT(*)
+        WHEN 1 THEN 1
+        ELSE 0 END
+		FROM STUDY_INFO
+		WHERE MEMBER_ID = #{memberId}
+	</select>
 
 </mapper>
