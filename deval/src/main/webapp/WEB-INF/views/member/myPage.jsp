@@ -108,6 +108,7 @@
                 </div>
                 <!-- End Widget -->
            </div>
+
            <div id="info_box" class="col-md-8 offset-lg-1 mb-sm-80 order-first order-md-last">
             <!-- 나의 정보가 보이는 div -->
             <div id="my_info_box" class="border border-secondary" style="height:400px;">
@@ -424,6 +425,7 @@
 </section>
 <!-- End Section -->                
 <script>
+
    // category background 컬러 구분
    $('#tabs>ul>li').on('click',function(){
                   $('#tabs>ul>ul>li').removeClass('bg-success');

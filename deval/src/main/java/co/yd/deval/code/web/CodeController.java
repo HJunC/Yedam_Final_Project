@@ -2,6 +2,10 @@ package co.yd.deval.code.web;
 
 import java.security.Principal;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -55,23 +59,40 @@ public class CodeController {
 	}
 
 	@GetMapping("/cqSelect.do")
-	public String cqSelect(Model model, CodeVO vo, Principal principal) {
+	public String cqSelect(Model model, CodeVO vo, Principal principal,HttpServletRequest req,HttpServletResponse resp) {
 		vo = codeDAO.cqSelect(vo);
 		if (vo != null) {
-			model.addAttribute("cq", vo);
 			CommentVO cmVo = new CommentVO();
 			cmVo.setBoardNo(vo.getCqNo());
 			model.addAttribute("comments", commentDAO.commentSelectList(cmVo));
 			if(principal != null) {
 				model.addAttribute("user", principal.getName());
 			}
+			
+			// 쿠키 체크
+			Cookie viewCookie = null;
+			Cookie cookies[] = req.getCookies();
+			if(cookies != null) {
+				for(int i=0; i<cookies.length; i++) {
+					if(cookies[i].getName().equals("|"+vo.getCqNo()+"|")) {
+						viewCookie = cookies[i];
+					}
+				}
+			}
+			if(viewCookie == null) {
+				Cookie newCookie =new Cookie("|"+vo.getCqNo()+"|","readCount");
+				resp.addCookie(newCookie);
+				codeDAO.codeHitUp(vo);
+			}
+			model.addAttribute("cq", vo);
 			model.addAttribute("bno", vo.getCqNo());
-			codeDAO.codeHitUp(vo);
 			if(vo.getBoardTypeNo() == 4) {
 				return "code/codeSelect";
 			} else {
 				return "code/questionSelect";
 			}
+			
+			
 		}
 		return "code/error";
 	}
