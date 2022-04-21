@@ -3,15 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <c:set var="resources" value="${pageContext.request.contextPath }/resources" />
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>mentoInsertForm</title>
-</head>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="${resources }/css/custom/team-project-style.css">
-<body>
+<script src="${resources}/js/common/Languages.js"></script>
 	<section class="page-section bg-dark light-content">
         <div class="container relative">
             <!-- 멘토등록 글-->
@@ -20,7 +13,7 @@
             </div>
             <!-- 값이 들어가는 곳-->
             <!-- mentoInsert Form tag-->
-            <form action="mentoInsert.do" id="frm" method="post" enctype="multipart/form-data">
+            <form action="mentoInsert.do" id="frm" method="post" enctype="multipart/form-data" class="contact-form form">
             <sec:csrfInput/>
                 <div class="row">
                     <!-- 사진 미리보기 div-->
@@ -37,33 +30,21 @@
                        </div>
                     </div>
                     <!-- 자기소개글-->
-                    <div class="mb-20 mb-md-10">
-                        <textarea name="text" id="info" name="info" class="input-md round form-control" rows="6" placeholder="자기소개글을 써주세요." maxlength="400" style="width: 400px"></textarea>
+                    <div class="mb-20 mb-md-10" >
+                        <textarea name="text" id="info" name="info" class="input-md round form-control bg-dark-input" rows="4" placeholder="자기소개글을 써주세요." maxlength="400"></textarea>
                     </div>
                 </div>
-                
-                <div class="row">
-                <div class="col-sm-4 mb-40">
-                    프로그래밍언어를 골라주세요.
-                    <select class="input-md round form-control" style="width: 170px;" id="lang" name="lang">
-                        <option value="C">C</option>
-                        <option value="C++">C++</option>
-                        <option value="Java">Java</option>
-                        <option value="Python">Python</option>
-                        <option value="C#">C#</option>
-                        <option value="Visual Basic">Visual Basic</option>
-                        <option value="JavaScript">JavaScript</option>
-                        <option value="PHP">PHP</option>
-                        <option value="SQL">SQL</option>
-                        <option value="R">R</option>
-                        <option value="Ruby">Ruby</option>
-                        <option value="Assembly language">Assembly language</option>
-                        <option value="Go">Go</option>
-                    </select>
+                <div class="form-group">
+                    <label for="projectTerm">프로그래밍 언어</label>
+                    <p class="input-info">보기중에 언어 한개를 선택해주세요.</p>
+	                 <div id="languagesBox" class="tags">
+	                    	
+	                  </div>
                 </div>
-                <div class="col-sm-4 mb-40">
-                    경력이 어떻게 되십니까
-                    <select class="input-md round form-control" style="width: 170px;" id="history" name="history">
+                <div class="form-group">
+                    <label for="projectTerm">경력</label>
+                    <p class="input-info">멘토님의 프로그래밍 경력을 적어주세요.</p>
+                    <select class="input-md round form-control bg-dark-input" id="history" name="history">
                         <option value="2년이상">2년이상</option>
                         <option value="3년이상">3년이상</option>
                         <option value="5년이상">5년이상</option>
@@ -71,59 +52,76 @@
                         <option value="10년이상">10년이상</option>
                     </select>
                 </div>
-                <div class="col-sm-4 mb-40">
-                    기간설정<br>
-                    <input type="radio" name="choiceRadio" class="radio-value" id="dayDate">
-                    일별로 정하기
-                    <select class="input-md round form-control" style="width: 170px;" id="termDay" name="termDay">
-                        <c:forEach var="i" begin="1" end="13">
-	                        <option value="${i}일">${i}일</option>
-                        </c:forEach>
-                    </select>
-                    <input type="radio" name="choiceRadio" class="radio-value" id="dayWeek">
-                    주별로 정하기
-                    <select class="input-md round form-control" style="width: 170px;" id="termWeek" name="termWeek">
-                        <c:forEach var="i" begin="2" end="7">
-	                        <option value="${i}주">${i}주</option>
-                        </c:forEach>
-                    </select>
-                   	<input type="radio" name="choiceRadio" class="radio-value" id="dayMonth">
-                   	달별로 정하기
-                   	<select class="input-md round form-control" style="width: 170px;" id="termMonth" name="termMonth">
-                        <c:forEach var="i" begin="2" end="6">
-	                        <option value="${i}달">${i}달</option>
-                        </c:forEach>
-                    </select>
+                <div class="form-group">
+                    <label>기간설정</label>
+                    <p class="input-info">일별, 주별, 월별 중 하나를 선택해주세요  최대값을 정해주세요</p>
+                    <div class="row">
+                    	<div class="col input-group me-3">
+                             <span class="input-group-text bg-dark" style="border-color: #5e646a;">일별</span>
+                             <div class="input-group-text bg-dark" style="border-color: #5e646a;">
+                                 <input class="form-check-input mt-0" type="radio" name="choiceRadio" id="dayDate" required="">
+                             </div>
+                             <select class="input-lg round form-control bg-dark-input" id="termDay" name="termDay">
+		                        <c:forEach var="i" begin="1" end="13">
+			                        <option value="${i}일">${i}일</option>
+		                        </c:forEach>
+		                    </select>
+                         </div>
+                         <div class="col input-group me-3">
+                             <span class="input-group-text bg-dark" style="border-color: #5e646a;">주별</span>
+                             <div class="input-group-text bg-dark" style="border-color: #5e646a;">
+                                 <input class="form-check-input mt-0" type="radio" name="choiceRadio" id="dayWeek" required="">
+                             </div>
+                             <select class="input-lg round form-control bg-dark-input" id="termWeek" name="termWeek">
+		                        <c:forEach var="i" begin="2" end="7">
+			                        <option value="${i}주">${i}주</option>
+		                        </c:forEach>
+		                    </select>
+                         </div>
+                         <div class="col input-group me-3">
+                             <span class="input-group-text bg-dark" style="border-color: #5e646a;">달별</span>
+                             <div class="input-group-text bg-dark" style="border-color: #5e646a;">
+                                 <input class="form-check-input mt-0" type="radio" name="choiceRadio" id="dayMonth" required="">
+                             </div>
+                             <select class="input-lg round form-control bg-dark-input" id="termMonth" name="termMonth">
+		                        <c:forEach var="i" begin="2" end="6">
+			                        <option value="${i}달">${i}달</option>
+		                        </c:forEach>
+		                    </select>
+                         </div>
+                    </div>
+                </div>
+                <!-- 금액설정 -->
+                <div class="form-group">
+                    <label for="projectTerm">금액설정</label>
+                    <p class="input-info">시간당 금액을 설정해주세요.</p>
+                     <input type="number" name="price" id="price" class="input-md round form-control bg-dark-input" placeholder="숫자만 입력해주세요" maxlength="100"">
+                </div>
+                <!-- 금액설정 끝 -->
+                <div class="row">
+					<div class="col input-group me-3">
+						<span class="input-group-text bg-dark" style="border-color: #5e646a;">시작시간</span> 
+							<select class="input-lg round form-control bg-dark-input" id="serviceStt" name="serviceStt" onchange="endTime(this)">
+							<c:forEach var="i" begin="0" end="9">
+								<option value="${i}">0${i}:00</option>
+							</c:forEach>
+							<c:forEach var="i" begin="10" end="23">
+								<option value="${i}">${i}:00</option>
+							</c:forEach>
+						</select>
 					</div>
-            </div>
-            <div class="row">
-                <div class="col-sm-4 mb-40">
-                    1시간이용금액
-                    <!-- Name -->
-                    <input type="number" name="price" id="price" class="input-md round form-control" placeholder="숫자만 입력해주세요" maxlength="100" style="width: 250px;">
-                </div>
-                <div class="col-sm-4 mb-40">
-                    시작시간
-                    <select class="input-md round form-control" style="width: 170px;" id="serviceStt" name="serviceStt" onchange="endTime(this)">
-                    	<c:forEach var="i" begin="0" end="9">
-                        <option value="${i}">0${i}:00</option>
-                        </c:forEach>
-                        <c:forEach var="i" begin="10" end="23">
-                        <option value="${i}">${i}:00</option>
-                        </c:forEach>
-                    </select>
-                </div>
-                <div class="col-sm-4 mb-40">
-                    종료시간
-                    <select class="input-md round form-control" style="width: 170px;" id="serviceEdt" name="serviceEdt">
-                        <option value="01:00">01:00</option>
-                    </select>
-                </div>
-            </div>
-            <input type="button" id="btn" class="btn btn-mod btn-w btn-round btn-large" value="등록" onclick="mentoInsert()">
-                
+					<div class="col input-group me-3">
+	                             <span class="input-group-text bg-dark" style="border-color: #5e646a;">종료시간</span>
+	                             <select class="input-lg round form-control bg-dark-input" id="serviceEdt" name="serviceEdt">
+	                        			<option value="1">01:00</option>
+	                    		</select>
+	                </div>
+                 </div>
+                 <hr class="mt-0 mb-30 white" />
+                 <div class="col input-group me-3" style="justify-content:center">
+            		<input type="button" id="btn" class="btn btn-mod btn-w btn-round btn-large" value="등록" onclick="mentoInsert()">
+            	</div>
             </form>
-
         </div>
         
     </section>
@@ -159,15 +157,37 @@
         // --- 값 컨트롤러로 넘겨주기
         function mentoInsert() {
 	        var check = $('input:radio[name=choiceRadio]').is(':checked');
-        	var lang = $('#lang').val();
+        	var lang = $('input:radio[name=lang]:checked').val();
         	var photo = $('#photo').val();
+        	if(typeof lang == "undefined") {
+         		alert('언어를 정해주세요');
+         		return;
+         	}
          	<c:forEach items="${mentos}" var="mento">
          	if(lang == '${mento.lang}') {
         		alert('이미 등록된 언어입니다.');
         		return
         	}
-         	
         	</c:forEach>
+        	var dayDate = document.getElementById('dayDate');
+        	var dayWeek = document.getElementById('dayWeek');
+        	var dayMonth = document.getElementById('dayMonth');
+        	
+        	var termDay = document.getElementById('termDay');
+        	var termWeek = document.getElementById('termWeek');
+        	var termMonth = document.getElementById('termMonth');
+        	if(check == true) {
+	        	if(dayDate.checked) {
+	        		termWeek.disabled = 'true';	
+	        		termMonth.disabled = 'true';
+	        	}else if(dayWeek.checked) {
+	        		termMonth.disabled = 'true';
+	        		termDay.disabled = 'true';
+	        	}else if(dayMonth.checked) {
+	        		termDay.disabled = 'true';	
+	        		termWeek.disabled = 'true';
+	        	}
+       		}	
         	var start = frm.serviceStt.value;
         	var end = frm.serviceEdt.value;
         	var price = $('#price').val();
@@ -214,7 +234,7 @@
 	        		selectId.appendChild(option);
         	}
         }
-        //radio button 이용 term 값 변경하기
+       //radio button 이용 term 값 변경하기
        function changeTerm() {
         	var dayDate = document.getElementById('dayDate');
         	var dayWeek = document.getElementById('dayWeek');
@@ -249,6 +269,11 @@
         	btn.type = 'button';
         }
         
+        var checkBox = "";
+        Language.forEach((item, index) => {
+          checkBox += '<input type="radio" class="btn-check" id="btncheck'+item+'" name="lang"  value="' + item + '">';
+          checkBox += '<label class="btn btn-outline-primary" for="btncheck'+item+'">' + item + '</label>';
+        })
+        $("#languagesBox").append(checkBox);
+        
     </script>
-</body>
-</html>
