@@ -143,10 +143,13 @@ public class StudyController {
     
     // 스터디 상세글
     @GetMapping("/studySelect.do")
-    public String studySelect(StudyVO vo, Model model, Principal User) {
+    public String studySelect(StudyVO vo, StudyReqVO rvo, Model model, Principal User) {
 		vo = studyDao.studySelectNo(vo);
+		List<StudyReqVO> list = studyDao.teamAllMember(rvo);
+		System.out.println("=============================="+list);
     	if(vo != null) {
     		model.addAttribute("study", vo);
+    		model.addAttribute("studyreq", list);
     		model.addAttribute("member", User);
     		model.addAttribute("list", studyDao.studyMemberFind(User.getName()));
     		return "study/studySelect";

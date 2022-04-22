@@ -183,7 +183,7 @@
                             <script>
                               $("input[name=lang]").val('${study.lang1 }');
                               var ck_lang = '${study.lang1 }'.split(", ");
-                              langArr.forEach(item => {
+                              ck_lang.forEach(item => {
                                 var checkId = 'btncheck' + (item.indexOf('.') !== -1) ? item.replace('.', '') : item;
                                 $("#"+checkId).attr("checked", true);
                               })
@@ -244,9 +244,6 @@
 	
 	<script type="text/javascript">
 	
-
-		
-		
 		//언어 체크박스 - 2개만 체크되게 하기
 		function count_ck(obj){
 			var chkbox = document.getElementsByName("ck_lang");
@@ -274,7 +271,7 @@
 	
 	  const editorObject = new Editor({
 	    el: document.querySelector('#editor'),
-	    previewStyle: 'vertical', 
+	    previewStyle: 'vertical',
 	    initialValue: '${study.subject }',
 	    height: '500px',
 	    initialEditType: 'wysiwyg',
@@ -285,6 +282,7 @@
 	  
 	  function inputSubject() {
 		  $('#editor').prev().val(editorObject.getHTML());
+		  
 	  }
 	 
 	</script>

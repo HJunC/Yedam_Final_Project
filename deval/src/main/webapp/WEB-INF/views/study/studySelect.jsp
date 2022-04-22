@@ -10,110 +10,236 @@
 <meta charset="UTF-8">
 <title>StudySelect.jsp</title> 
 <link rel="stylesheet" href="${resources}/css/custom/study_modal_style.css">
+      <style>
+      	.comment-avatar {
+		    width: 30px;
+		    margin-right: 10px;
+		    -webkit-border-radius: 50%;
+		    -moz-border-radius: 50%;
+		    border-radius: 50%;
+		}
+      </style>
 </head>
 <body>
-			<!-- Title -->
-               <section class="small-section bg-dark-alfa-50 bg-scroll light-content" data-background="${resources}/images/full-width-images/section-bg-19.jpg" id="home">
-    			<div class="container relative pt-70">
-                     <div class="row">
-                        <div class="col-md-8">
-                              <div class="wow fadeInUpShort" data-wow-delay=".1s">
-                               <c:choose>
-                              	  		<c:when test="${study.state eq '0'}">
-					                    	<p class="badge bg-success">모집중</p>
-					                    </c:when>
-					                    <c:when test="${study.state eq '1'}">
-					                    	<p class="badge bg-light text-dark">모집중단</p>
-					                    </c:when>
-					                    <c:when test="${study.state eq '2'}">
-					                    	<p class="badge bg-warning text-dark">모집완료</p>
-					                    </c:when>
-					                    <c:when test="${study.state eq '3'}">
-					                    	<p class="badge bg-secondary">기간종료</p>
-					                    </c:when>
-                              </c:choose>
-                                  <h3 class="hs-line-7 mb-20 mb-xs-20" style="font-size: 52px;">${study.studyNm}</h3>
-                              </div>
-                            <div class="wow fadeInUpShort" data-wow-delay=".2s">
-                               		<div class="mb-20 mb-xs-0">
-                                    <div class="blog-item-data">
-			                            <span><i class="fa fa-user"></i> ${study.leaderId}</span>
-			                            &nbsp;
-			                            <span class="separator">&nbsp;</span>
-			                            <span><i class="fa fa-map-marker-alt"></i> ${study.location}</span>
-			                            <span class="separator">&nbsp;</span>
-			                            <span><i class="fa fa-code-branch"></i> ${study.lang1}<c:if test="${not empty study.lang2 }"> / ${study.lang2 }</c:if></span>
-			                            <span class="separator">&nbsp;</span>
-			                             <span><i class="fa fa-users"></i> 인원 ${study.rcnt}/${study.maxRcnt }</span>
-			                            <span class="separator">&nbsp;</span>
-			                            <span><i class="fa fa-clock"></i>
-			                                공부기간 ${study.studySdt} ~ ${study.studyEdt}
-			                            </span>
-			                            <span class="separator">&nbsp;</span>
-			                        </div>
+	<!-- Title -->
+                <section class="page-section bg-dark-alfa-50 bg-scroll" data-background="${resources}/images/studyimg/bg5.png" id="home">
+                    <div class="container relative">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="wow fadeInUpShort" data-wow-delay=".1s">
+                                    <h1 class="hs-line-7 mb-20 mb-xs-10">Recruitment STUDY</h1>
+                                </div>
+                                <div class="wow fadeInUpShort" data-wow-delay=".2s">
+                                    <p class="hs-line-6 opacity-075 mb-20 mb-xs-0" style="font-size: 20px;">
+                                    	팀원들과 함께 경험을 공유하세요
+                                    </p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                  </div> 
-               </section>
-                <!-- End Title -->
+                </section>
+      <!-- End Title -->
+ <main id="main">  
+   <section class="page-section bg-dark light-content">
+      <div class="container relative">	
+         <div class="row">  
+            <!-- Content -->
+			<div class="col-md-8 offset-lg-1 mb-sm-80 order-first order-md-last">
 
- 		<!-- Section -->
-             <section class="page-section bg-dark light-content">
-                 <div class="container relative">
-                       <div class="row">
-                            <!-- Content -->
-                            <div class="col-lg-8 offset-lg-1 mb-sm-50">
-                                <!-- Post -->
-                                <div class="blog-item mb-80 mb-xs-40">
-                                    <!-- Text -->
-        							<div class="blog-item-body" style="font-size: 15px;">
-        								<p>
-                                            ${study.subject }
-                                        </p>
-        							</div>
-                                    <!-- End Text -->
-        						</div>
-        						<!-- End Post -->
-        					</div>
-        				</div>
-        			</div>
-        		</section>
-        		
-        	<!-- Divider -->
-	           <hr class="mt-0 mb-0 white" />
-	        <!-- End Divider -->
-     
-     <!-- Start Button -->
-      <div align="center" style="padding: 20px;">
-      	 <form action="studyUpdateForm.do" method="post" style="padding: 15px;">
-      	 <sec:csrfInput/>
-      	   <%-- <sec:authentication property="principal.username"/> --%>  
-      	  <c:if test="${study.leaderId eq member.name}">
-	         <button type="submit" class="btn btn-mod btn-w btn-round">수정</button>
-	      </c:if>
-	      <c:if test="${study.leaderId ne member.name}">
-	         <button type="button" class="btn btn-mod btn-w btn-round" onclick="studyQna('${study.leaderId}')">문의</button>
-	      </c:if>   
-	         <button type="button" class="btn btn-mod btn-w btn-round" onclick="location.href='studyList.do'">목록</button>
-	          <input type="hidden" name="studyNo" value="${study.studyNo }">
-	          </form>
-	          <!-- Modal Button -->
-	          <c:if test="${study.state eq '0'}">
-	           <c:if test="${study.leaderId ne member.name}">
-        		<c:if test="${empty list[0]}">
-         		 <c:if test="${study.rcnt ne study.maxRcnt}">	
-					<button onclick="MyInfoModal()" id="joinBtn" class="btn btn-mod btn-w btn-round btn-small mfp-inline">참가</button>
-				 </c:if>
-				</c:if>
-	  		   </c:if>
-	  		  </c:if> 
-         
-      </div>
-      <!-- End Button -->
-      
-      <!-- Start Modal -->
+				<!-- Post -->
+				<div class="blog-item">
+					<c:choose>
+	                    <c:when test="${study.state eq '0'}">
+	                    	<p class="badge bg-success">모집중</p>
+	                    </c:when>
+	                    <c:when test="${study.state eq '1'}">
+	                    	<p class="badge bg-light text-dark">모집중단</p>
+	                    </c:when>
+	                    <c:when test="${study.state eq '2'}">
+	                    	<p class="badge bg-warning text-dark">모집완료</p>
+	                    </c:when>
+	                    <c:when test="${study.state eq '3'}">
+	                    	<p class="badge bg-secondary">기간종료</p>
+	                    </c:when>
+                    </c:choose>
+					<!-- Post Title -->
+					<h2 class="blog-item-title">
+						${study.studyNm}
+					</h2>
+					
+
+					<!-- Author, Categories, Comments -->
+					<div class="blog-item-data">
+						 <span><i class="fa fa-user"></i> ${study.leaderId}</span>&nbsp;
+                          <span class="separator">&nbsp;</span>
+                          <span><i class="fa fa-map-marker-alt"></i> ${study.location}</span>
+                          <span class="separator">&nbsp;</span>
+                          <span><i class="fa fa-code-branch"></i> ${study.lang1}<c:if test="${not empty study.lang2 }"> / ${study.lang2 }</c:if></span>
+                          <span class="separator">&nbsp;</span>
+                           <span><i class="fa fa-users"></i> ${study.rcnt}/${study.maxRcnt }</span>
+                          <span class="separator">&nbsp;</span>
+                          <span><i class="fa fa-clock"></i>
+                              ${study.studySdt} ~ ${study.studyEdt}
+                          </span>
+                          <span class="separator">&nbsp;</span>
+					</div>
+					
+					<!-- Text Intro -->
+					<div class="blog-item-body col-lg-11">
+						<p style="margin-top: 82px; margin-bottom: 80px; padding: 24px; font-size: 15px;">${study.subject }</p>
+					</div>
+					
+					<!-- Divider -->
+           				<hr class="mt-0 mb-0 white" />
+        			<!-- End Divider -->
+        			
+					 <!-- Start Button -->
+				      <div align="center" style="padding: 20px;">
+				      	 <form action="studyUpdateForm.do" method="post" style="padding: 15px;">
+				      	 <sec:csrfInput/>
+				      	   <%-- <sec:authentication property="principal.username"/> --%>  
+				      	  <c:if test="${study.leaderId eq member.name}">
+					         <button type="submit" class="btn btn-mod btn-w btn-round">수정</button>
+					      </c:if>
+					      <c:if test="${study.leaderId ne member.name}">
+					         <button type="button" class="btn btn-mod btn-w btn-round" style="border-radius: 24px;" onclick="studyQna('${study.leaderId}')">문의</button>
+					      </c:if>   
+					         <button type="button" class="btn btn-mod btn-w btn-round" style="border-radius: 24px;" onclick="location.href='studyList.do'">목록</button>
+					          <input type="hidden" name="studyNo" value="${study.studyNo }">
+					      </form>
+					      <div class="mb-30" align="center">
+					<!-- Modal Button -->
+			          <c:if test="${study.state eq '0'}">
+			           <c:if test="${study.leaderId ne member.name}">
+		        		<c:if test="${empty list[0]}">
+		         		 <c:if test="${study.rcnt ne study.maxRcnt}">	
+							<button onclick="MyInfoModal()" id="joinBtn" class="btn btn-mod btn-glass btn-round btn" style="border-radius: 24px; font-size: 13px; padding: 6px 25px 6px;">참가하기</button>
+						 </c:if>
+						</c:if>
+			  		   </c:if>
+			  		  </c:if> 
+				    </div>
+				  </div>
+					      
+				<!-- End Button -->
+				</div>
+				<!-- End Post -->
+			</div>
+			<!-- End Content -->
+			    
+         <!-- Sidebar -->
+            <div class="col-md-4 col-lg-3 mt-10">
+                <!-- Widget -->
+                <div class="widget">
+                <input type="hidden" name="studyNo" value="${study.studyNo }">
+                    <h3 class="widget-title">팀원 ${study.rcnt}/${study.maxRcnt }</h3>
+                    <div class="widget-body">
+                        <ul class="clearlist widget-menu">
+                        
+                       		<c:forEach items="${studyreq }" var="item">
+                            <li>
+                            <a class="float-start" href="#">
+                    			<img class="media-object comment-avatar" src="${resources}/images/user-avatar.png" width="25" >
+                			</a>
+                                ${item.memberId }
+                                <c:if test="${item.isLeader eq '1' }">
+	                                <small>
+	                				 👑
+	                				</small>
+                				</c:if>
+                            </li>
+                           </c:forEach>
+                        </ul>
+                    </div>
+                </div>
+                <!-- End Widget -->
+                
+                <!-- Widget -->
+                <div class="widget">
+                    <h3 class="widget-title"><i class="fa fa-code-branch"></i> 언어</h3>
+                    <div class="widget-body">
+                        <div class="tags">
+                         	<a href="studyList.do?lang1=${study.lang1}">${study.lang1}</a>
+                         	<a href="studyList.do?lang1=${study.lang2}">${study.lang2}</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Widget -->
+                
+            	<div class="widget">
+         		<h3 class="widget-title"><i class="fa fa-clock"></i> 공부기간</h3>
+           <div class="widget-body" style="font-size: 18px;">
+               ${study.studySdt} ~ ${study.studyEdt}
+           </div>
+   				</div>
+   				 <!-- End Widget -->
+   				 
+   				  <div class="widget">
+         		<h3 class="widget-title"><i class="fa fa-map-marker-alt"></i> 지역</h3>
+           <div class="widget-body" style="font-size: 18px;">
+               ${study.location }
+           </div>
+   				</div>
+   				<!-- End Widget -->
+                
+                <!-- Widget -->
+               <div class="widget">
+         		<h3 class="widget-title"># Project</h3>
+                    <div class="widget-body">
+                        <ul class="clearlist widget-posts">
+                            <li class="clearfix">
+                                <a href=""><img src="${resources}/images/blog/previews/post-prev-1.jpg" alt="" width="100" class="widget-posts-img" /></a>
+                                <div class="widget-posts-descr">
+                                    <a href="#" title="">프로젝트명 테스트 1</a>
+                                    <i class="fa fa-clock"></i> 2022.02.14  
+                                </div>
+                            </li>
+                            <li class="clearfix">
+                                <a href=""><img src="${resources}/images/blog/previews/post-prev-2.jpg" alt="" width="100" class="widget-posts-img" /></a>
+                                <div class="widget-posts-descr">
+                                    <a href="#" title="">프로젝트명 테스트 2</a>
+                                   <i class="fa fa-clock"></i> 2022.03.14  
+                                </div>
+                            </li>
+                            <li class="clearfix">
+                                <a href=""><img src="${resources}/images/blog/previews/post-prev-3.jpg" alt="" width="100" class="widget-posts-img" /></a>
+                                <div class="widget-posts-descr">
+                                    <a href="#" title="">프로젝트명 테스트 3</a>
+                                    <i class="fa fa-clock"></i> 2022.04.14  
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- End Widget -->
+                
+                <!-- Widget -->
+                <div class="widget">
+                    <h3 class="widget-title"># Developer Vally</h3>
+                    <div class="widget-body">
+                        <ul class="clearlist widget-menu" style="font-size: 18px;">
+                            <li>
+                                <a href="studyList.do" title="">✔ 스터디 검색</a>
+                            </li>
+                            <li>
+                                <a href="${pageContext.request.contextPath}/project/main.do" title="">✔ 프로젝트 참가</a>
+                            </li>
+                            <li>
+                                <a href="${pageContext.request.contextPath}/mento/main.do" title="">✔ 멘토&멘티 신청</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- End Widget -->
+            </div>
+            <!-- End Sidebar -->
+         </div>
+        <!-- Divider -->
+           <hr class="mt-0 mb-0 white" />
+        <!-- End Divider -->            
+    </div>
+  	</section>
+  	<!-- Start Modal -->
 		<style>
 			.mfp-content {
 				border: 1px solid #ddd;
@@ -274,5 +400,6 @@
       		</div>
       	</form>
       </div>
+  </main>
 </body>
 </html>
