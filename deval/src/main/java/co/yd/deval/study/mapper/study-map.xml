@@ -11,13 +11,6 @@
 		ORDER BY STUDY_NO DESC
 	</select>
 	
-<!-- 	<select id="studyEndStateHide" resultType="co.yd.deval.study.service.StudyVO">
-		SELECT COUNT(*)
-		FROM STUDY
-		WHERE LEADER_ID = #{leaderId}
-		AND STATE != 2
-	</select> -->
-	
 	<select id="studyLocSearch" resultType="co.yd.deval.study.service.StudyVO">
 		SELECT *
 		FROM STUDY
@@ -53,6 +46,7 @@
 						, STUDY_NM
 						, LANG2
 						, RCNT
+						, KAKAO
 						)
 						
 		VALUES (		#{studyNo} 
@@ -69,6 +63,7 @@
 						, #{studyNm}
 						, #{lang2}
 						, 1
+						, #{kakao}
 						)
 	</insert>
 	
@@ -115,6 +110,7 @@
 			<if test="studyEdt   != null"> STUDY_EDT  = #{studyEdt},</if>
 			<if test="studyNm    != null and studyNm 	!= ''"> STUDY_NM   = #{studyNm},</if>
 			<if test="lang2   	 != null and lang2 		!= ''"> LANG2      = #{lang2},</if>
+			<if test="kakao   	 != null and kakao 		!= ''"> KAKAO      = #{kakao},</if>
 		</set>
 		WHERE STUDY_NO = #{studyNo}
 	</update>
@@ -126,13 +122,25 @@
 		FROM	STUDY_INFO
 		WHERE	MEMBER_ID = #{memberId}
 	</select>
-
-	<select id="findStudyByNo" resultType="co.yd.deval.study.service.StudyVO">
+	
+	<select id="findEndStudy" resultType="co.yd.deval.study.service.StudyVO">
 		SELECT  *
 		FROM    STUDY
 		WHERE   STUDY_NO IN (sELECT  STUDY_NO
 						     FROM    STUDY_TEAM
 						     WHERE   MEMBER_ID = #{id})
+		AND STATE IN (1,3)
+		ORDER BY STUDY_NO DESC
+	</select>
+	
+	<select id="findDoingStudy" resultType="co.yd.deval.study.service.StudyVO">
+		SELECT  *
+		FROM    STUDY
+		WHERE   STUDY_NO IN (sELECT  STUDY_NO
+						     FROM    STUDY_TEAM
+						     WHERE   MEMBER_ID = #{id})
+		AND STATE IN (0,2)
+		ORDER BY STUDY_NO DESC
 	</select>
 	
 	<select id="findWaitingStudy" resultType="co.yd.deval.study.service.StudyVO">
@@ -142,6 +150,7 @@
 						     FROM    STUDY_REQUEST
 						     WHERE   MEMBER_ID     = #{id}
 						     AND     STATE         = 0)
+		ORDER BY STUDY_NO DESC
 	</select>
 
 	<insert id="studyUserInsert"
@@ -207,12 +216,22 @@
 									, STATE
 									, MEMBER_ID
 									, ISLEADER
+									, COLLEGE
+									, CAREER
+									, LICENSE
+									, PRESENT
+									, PROFILE_IMG
 								   )
 								   
 						   VALUES (  #{studyNo}
 						   		   , 1
 						   		   , #{memberId}
 						   		   , 1
+						   		   , #{college}
+						   		   , #{career}
+						   		   , #{license}
+						   		   , #{present}
+						   		   , #{profileImg}
 						   		   )					
 	</insert>
 	
@@ -283,8 +302,10 @@
 		WHERE STUDY_NO = (	SELECT STUDY_NO
                             FROM STUDY_REQUEST
                             WHERE MEMBER_ID = #{memberId}
+                            AND STATE = 1
                             )
 		AND STATE = 1
+		ORDER BY ISLEADER DESC
 	</select>
 	
 	<!-- Paging -->
@@ -312,13 +333,15 @@
     <select id="getListWithPaging" resultType="co.yd.deval.study.service.StudyVO">
         <![CDATA[
         SELECT * FROM (
-              SELECT ROWNUM rn, t.*
-              FROM STUDY t
+              SELECT ROWNUM rn, t.* 
+              FROM (
+              		SELECT  * FROM STUDY ORDER BY STUDY_NO DESC)t
         ]]>
         <where>
             <include refid="option"></include>
             AND rownum <![CDATA[<=]]> #{criteria.pageNum} * #{criteria.amount}
         </where>
+        	
         )
         <![CDATA[
         WHERE rn > (#{criteria.pageNum} - 1) * #{criteria.amount}
@@ -332,5 +355,38 @@
 	        AND study_no > 0
         </where>
     </select>
+    
+    <update id="studyPause" parameterType="co.yd.deval.study.service.StudyVO">
+		UPDATE STUDY
+		SET STATE = 1
+		WHERE STUDY_NO = #{studyNo}
+	</update>
+	
+	<update id="studyRestart" parameterType="co.yd.deval.study.service.StudyVO">
+		UPDATE STUDY
+		SET STATE = 0
+		WHERE STUDY_NO = #{studyNo}
+	</update>
+	
+	<delete id="studyTeamDel" parameterType="co.yd.deval.study.service.StudyReqVO">
+		DELETE
+		FROM STUDY_REQUEST
+		WHERE STUDY_NO = #{studyNo}
+		AND MEMBER_ID = #{memberId}
+	</delete>
+	
+	<update id="minusRcnt" parameterType="co.yd.deval.study.service.StudyVO">
+		UPDATE STUDY
+		SET RCNT = RCNT -1 
+		WHERE STUDY_NO = #{studyNo}
+	</update>
+	
+	<select id="addInfoCheck" resultType="int">
+		SELECT CASE COUNT(*)
+        WHEN 1 THEN 1
+        ELSE 0 END
+		FROM STUDY_INFO
+		WHERE MEMBER_ID = #{memberId}
+	</select>
 
 </mapper>

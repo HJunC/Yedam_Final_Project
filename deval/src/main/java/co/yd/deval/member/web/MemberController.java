@@ -11,6 +11,7 @@ import java.util.UUID;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -63,7 +64,7 @@ public class MemberController {
 	@RequestMapping("/loginForm.do")
 	public String loginForm(HttpServletRequest request) {
 		String referer = (String) request.getHeader("REFERER");
-		System.out.println(referer);
+		request.getSession().setAttribute("prevPage", referer);
 		return "member/loginForm";
 	}
 	
@@ -127,6 +128,17 @@ public class MemberController {
 		model.addAttribute("member", memberDao.memberSelect(vo));
 		return "member/myPage";
 	}
+	
+	//회원탈퇴 기능
+	@PostMapping("/memberOut.do")
+	@ResponseBody
+	public int memberOut(MemberVO vo, HttpSession sess) {
+		int r =  memberDao.memberDelete(vo);
+		if(r != 0) {
+			sess.invalidate();
+		}
+		return r;
+	}
 
 	//마이페이지에서 내 정보 수정
 	@PostMapping("/myInfoUpdate.do")
@@ -156,7 +168,8 @@ public class MemberController {
 	public ResponseEntity<Map<String, Object>> myStudies(Principal user) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("wait", studyDao.findWaitingStudy(user.getName()));
-		map.put("study", studyDao.findStudyByNo(user.getName()));
+		map.put("study", studyDao.findDoingStudy(user.getName()));
+		map.put("end", studyDao.findEndStudy(user.getName()));
 		return ResponseEntity.ok().body(map);
 	}
 
@@ -166,16 +179,18 @@ public class MemberController {
 	public ResponseEntity<Map<String, Object>> myProjects(Principal user) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("wait", projectDao.findWaitingProject(user.getName()));
-		map.put("project", projectDao.findProjectByNo(user.getName()));
+		map.put("project", projectDao.findDoingProject(user.getName()));
+		map.put("end", projectDao.findEndProject(user.getName()));
 		return ResponseEntity.ok().body(map);
 	}
 	// 마이페이지에서 내가 참여한 멘토서비스 이력들 불러오는 ajax
 	  @GetMapping("/myMento.do")
 	  @ResponseBody 
-	  public ResponseEntity<Map<String, Object>> myMento(Principal principal) {
+	  public ResponseEntity<Map<String, Object>> myMento(Principal user) {
 		  Map<String, Object> map = new HashMap<String, Object>();
-		  map.put("wait", mentoServDAO.findWaitMento(principal.getName()));
-		  map.put("mento", mentoServDAO.findMentoByNo(principal.getName()));
+		  map.put("wait", mentoServDAO.findWaitMento(user.getName()));
+		  map.put("mento", mentoServDAO.findDoingMento(user.getName()));
+		  map.put("end", mentoServDAO.findEndMento(user.getName()));
 		  return ResponseEntity.ok().body(map);
 	  }
 	  //마이페이지에서 내가 가지고 있는 채팅목록 보여주는 ajax

@@ -196,7 +196,10 @@
                             <i class="fa fa-stopwatch"></i> 마감 <span id="timer${item.projectNo}"></span>
                         </div>
                         <div>
-                            <h5 class="mb-2">${item.projectName} <span class="fs-6" style="color: #727272">(${item.projectTerm}일)</span></h5>
+                            <div class="mb-2">
+                                <h5 class="list-title">${item.projectName}</h5>
+                                <span class="fs-6" style="color: #727272">(${item.projectTerm}일)</span>
+                            </div>
                             <div class="lang-search-list">${item.lang}</div>
                         </div>
                     </div>

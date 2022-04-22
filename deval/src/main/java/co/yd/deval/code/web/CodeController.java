@@ -1,6 +1,11 @@
 package co.yd.deval.code.web;
 
+
 import java.security.Principal;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,29 +20,50 @@ import co.yd.deval.code.service.ReplyService;
 import co.yd.deval.code.service.ReplyVO;
 import co.yd.deval.comment.service.CommentService;
 import co.yd.deval.comment.service.CommentVO;
+import co.yd.deval.common.Criteria;
+import co.yd.deval.common.PageDTO;
+import co.yd.deval.project.service.ProjectService;
+import co.yd.deval.project.service.ProjectTeamVO;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/cq")
 public class CodeController {
 
-	@Autowired
-	private CodeService codeDAO;
-	@Autowired
-	private ReplyService replyDAO;
-	@Autowired
-	private CommentService commentDAO;
+	private final CodeService codeDAO;
+	private final ReplyService replyDAO;
+	private final CommentService commentDAO;
+	private final ProjectService projectService;
+
+	public CodeController(CodeService codeDAO, ReplyService replyDAO, CommentService commentDAO, ProjectService projectService) {
+		this.codeDAO = codeDAO;
+		this.replyDAO = replyDAO;
+		this.commentDAO = commentDAO;
+		this.projectService = projectService;
+	}
 
 	@GetMapping("/codeList.do")
-	public String cqList(Model model,String type) {
-		model.addAttribute("lists",codeDAO.cqList(4));
+	public String cqList(Model model, CodeVO vo, Criteria cri) {
+		vo.setBoardTypeNo(4);
+		vo.setCriteria(cri);
+		model.addAttribute("lists", codeDAO.cqList(vo));
 		model.addAttribute("type",4);
+		model.addAttribute("pageMaker", new PageDTO(cri, codeDAO.getTotalCount(vo)));
 		return "code/codeList";
 	}
 	
 	@GetMapping("/questionList.do")
 	public String queList(Model model) {
-		model.addAttribute("lists", codeDAO.cqList(6));
-		model.addAttribute("type",6);
+		CodeVO vo = new CodeVO();
+		vo.setBoardTypeNo(6);
+		model.addAttribute("lists", codeDAO.cqList(vo));
+		model.addAttribute("type", vo.getBoardTypeNo());
 		return "code/questionList";
 	}
 	
@@ -55,23 +81,40 @@ public class CodeController {
 	}
 
 	@GetMapping("/cqSelect.do")
-	public String cqSelect(Model model, CodeVO vo, Principal principal) {
+	public String cqSelect(Model model, CodeVO vo, Principal principal,HttpServletRequest req,HttpServletResponse resp) {
 		vo = codeDAO.cqSelect(vo);
 		if (vo != null) {
-			model.addAttribute("cq", vo);
 			CommentVO cmVo = new CommentVO();
 			cmVo.setBoardNo(vo.getCqNo());
 			model.addAttribute("comments", commentDAO.commentSelectList(cmVo));
 			if(principal != null) {
 				model.addAttribute("user", principal.getName());
 			}
+			
+			// 쿠키 체크
+			Cookie viewCookie = null;
+			Cookie cookies[] = req.getCookies();
+			if(cookies != null) {
+				for(int i=0; i<cookies.length; i++) {
+					if(cookies[i].getName().equals("|"+vo.getCqNo()+"|")) {
+						viewCookie = cookies[i];
+					}
+				}
+			}
+			if(viewCookie == null) {
+				Cookie newCookie =new Cookie("|"+vo.getCqNo()+"|","readCount");
+				resp.addCookie(newCookie);
+				codeDAO.codeHitUp(vo);
+			}
+			model.addAttribute("cq", vo);
 			model.addAttribute("bno", vo.getCqNo());
-			codeDAO.codeHitUp(vo);
 			if(vo.getBoardTypeNo() == 4) {
 				return "code/codeSelect";
 			} else {
 				return "code/questionSelect";
 			}
+			
+			
 		}
 		return "code/error";
 	}
@@ -95,9 +138,17 @@ public class CodeController {
 	}
 
 	@GetMapping("/cqInsertForm.do")
-	public String codeInsertForm(Model model,int type) {
-		model.addAttribute("type",type);
-		return "code/cqInsertForm";
+	public String codeInsertForm(Model model, int type, Principal user) {
+		if (user != null) {
+			ProjectTeamVO teamVO = projectService.getOngoingProject(user.getName());
+			if (teamVO != null) {
+				model.addAttribute("projectNo", teamVO.getProjectNo());
+			}
+			model.addAttribute("type", type);
+			return "code/cqInsertForm";
+		} else {
+			return "redirect:codeList.do";
+		}
 	}
 
 	@PostMapping("/cqInsert.do")

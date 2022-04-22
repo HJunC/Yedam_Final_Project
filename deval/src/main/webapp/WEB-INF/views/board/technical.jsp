@@ -91,8 +91,7 @@ td {
 								<td>${list3.boardNo}</td>
 								<th align="left">${list3.title}</th>
 								<td>${list3.writer}</td>
-								<td><fmt:formatDate pattern="yyyy-MM-dd"
-										value="${list3.boardDate}" /></td>
+								<td><fmt:formatDate pattern="yyyy-MM-dd" value="${list3.boardDate}" /></td>
 								<td>${list3.hit}</td>
 								<td>${list3.recommend}</td>
 							</tr>

@@ -25,12 +25,12 @@
 							<span class="wrap"></span></span>
 						</h2>
 						<div class="local-scroll wow fadeInUpShort" data-wow-delay=".3s">
-                           <a href="studyList.do" class="btn btn-mod btn-w btn-small btn-round mx-md-1">Start Study</a>
+                           <a href="studyList.do" class="btn btn-mod btn-w btn-small btn-round mx-md-1">Search Study</a>
                          <c:if test="${not empty list[0]}">
-                           <a href="studyMember.do" class="btn btn-mod btn-w btn-small btn-round mx-md-1">Study Team</a>
+                           <a href="studyMember.do" class="btn btn-mod btn-w btn-small btn-round mx-md-1">My Team</a>
                          </c:if>
                          <c:if test="${not empty study}">
-                           <a href="studyReq.do" class="btn btn-mod btn-w btn-small btn-round mx-md-1">Team Applicant </a>
+                           <a href="studyReq.do" class="btn btn-mod btn-w btn-small btn-round mx-md-1">Team Applicant</a>
                         </c:if>
                           <!--  <a href="chat.do">채팅</a> -->
                         </div>
@@ -179,36 +179,36 @@
                                     <!-- Accordion -->
                                     <dl class="accordion">
                                         <dt>
-                                            <a href=""># Q1. 스터디 참가는 어디서 신청하나요?</a>
+                                            <a href="" style="font-size: 18px;"># Q1. 스터디 참가는 어디서 신청하나요?</a>
                                         </dt>
-                                        <dd class="gray">
+                                        <dd class="gray" style="font-size: 15px;">
                                            스터디 카테고리 중 '스터디찾기' 에서 가능합니다.<br>
                                            <br>
                                            가까운 지역, 배우고 싶은 언어, 언어의 적정 난이도를 지정하여 참가 하실 수 있습니다.
                                         </dd>
                                         <dt>
-                                            <a href=""># Q2. 스터디모임중에 다른 스터디에도 가입이 가능한가요?</a>
+                                            <a href="" style="font-size: 18px;"># Q2. 스터디모임중에 다른 스터디에도 가입이 가능한가요?</a>
                                         </dt>
-                                        <dd class="gray">
+                                        <dd class="gray" style="font-size: 15px;">
                                             저희 Developers Vally 에서는 원칙적으로<br>
                                             스터디의 기간이 끝나기 전까지는 1인당 1스터디를 원칙으로 하고 있습니다.<br>
                                             <br>
                                             현재 참가중인 스터디에서 중도포기 시 다른 스터디에 참가가 가능합니다.
                                         </dd>
                                         <dt>
-                                            <a href=""># Q3. 스터디장에게 문의를 원합니다</a>
+                                            <a href="" style="font-size: 18px;"># Q3. 스터디장에게 문의를 원합니다</a>
                                         </dt>
-                                        <dd class="gray">
+                                        <dd class="gray" style="font-size: 15px;">
                                            # 스터디를 참여하지 않았을 경우<br>
                                            상세글 하단, 문의하기를 통해서 스터디장에게 문의를 할 수 있습니다.<br>
                                            <br>
                                            # 스터디에 참여를 했을 경우<br>
-                                           그룹원 정보 페이지에서 스터디장에게 문의가 가능합니다.<br>
+                                           그룹원 정보 페이지 하단의 오픈톡 링크를 통해서 문의가 가능합니다.<br>
                                         </dd>
                                         <dt>
-                                            <a href=""># Q4. 스터디 모집글을 변경, 삭제 하고 싶습니다</a>
+                                            <a href="" style="font-size: 18px;"># Q4. 스터디 모집글을 변경, 삭제 하고 싶습니다</a>
                                         </dt>
-                                        <dd class="gray">
+                                        <dd class="gray" style="font-size: 15px;">
                                             변경은 상세글을 통하여 수정이 가능합니다.<br>
                                             삭제는 불가능 하지만, 현재상태를 모집마감으로 변경 하실 수 있습니다.<br>
                                         </dd>
