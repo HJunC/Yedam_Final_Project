@@ -100,6 +100,7 @@
 	          <input type="hidden" name="studyNo" value="${study.studyNo }">
 	          </form>
 	          <!-- Modal Button -->
+	          <c:if test="${study.state eq '0'}">
 	           <c:if test="${study.leaderId ne member.name}">
         		<c:if test="${empty list[0]}">
          		 <c:if test="${study.rcnt ne study.maxRcnt}">	
@@ -107,6 +108,7 @@
 				 </c:if>
 				</c:if>
 	  		   </c:if>
+	  		  </c:if> 
          
       </div>
       <!-- End Button -->
