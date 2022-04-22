@@ -122,13 +122,25 @@
 		FROM	STUDY_INFO
 		WHERE	MEMBER_ID = #{memberId}
 	</select>
-
-	<select id="findStudyByNo" resultType="co.yd.deval.study.service.StudyVO">
+	
+	<select id="findEndStudy" resultType="co.yd.deval.study.service.StudyVO">
 		SELECT  *
 		FROM    STUDY
 		WHERE   STUDY_NO IN (sELECT  STUDY_NO
 						     FROM    STUDY_TEAM
 						     WHERE   MEMBER_ID = #{id})
+		AND STATE IN (1,3)
+		ORDER BY STUDY_NO DESC
+	</select>
+	
+	<select id="findDoingStudy" resultType="co.yd.deval.study.service.StudyVO">
+		SELECT  *
+		FROM    STUDY
+		WHERE   STUDY_NO IN (sELECT  STUDY_NO
+						     FROM    STUDY_TEAM
+						     WHERE   MEMBER_ID = #{id})
+		AND STATE IN (0,2)
+		ORDER BY STUDY_NO DESC
 	</select>
 	
 	<select id="findWaitingStudy" resultType="co.yd.deval.study.service.StudyVO">
@@ -138,6 +150,7 @@
 						     FROM    STUDY_REQUEST
 						     WHERE   MEMBER_ID     = #{id}
 						     AND     STATE         = 0)
+		ORDER BY STUDY_NO DESC
 	</select>
 
 	<insert id="studyUserInsert"

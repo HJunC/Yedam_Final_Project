@@ -72,8 +72,13 @@ public class StudyServiceImpl implements StudyService {
 	}
 
 	@Override
-	public List<StudyVO> findStudyByNo(String id) {
-		return map.findStudyByNo(id);
+	public List<StudyVO> findEndStudy(String id) {
+		return map.findEndStudy(id);
+	}
+	
+	@Override
+	public List<StudyVO> findDoingStudy(String id) {
+		return map.findDoingStudy(id);
 	}
 
 	@Override

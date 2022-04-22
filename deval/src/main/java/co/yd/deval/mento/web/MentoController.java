@@ -1,13 +1,12 @@
 package co.yd.deval.mento.web;
 
 import java.io.File;
-
 import java.io.IOException;
 import java.security.Principal;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
@@ -17,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import co.yd.deval.common.Criteria;
+import co.yd.deval.common.PageDTO;
 import co.yd.deval.member.service.MemberService;
 import co.yd.deval.member.service.MemberVO;
 import co.yd.deval.mento.service.MentoServService;
@@ -52,50 +53,59 @@ public class MentoController {
     }
     
     @RequestMapping("/mentoList.do")
-    public String mentoList(Model model, @RequestParam("lang") String lang) {
-    	//MemberVO user = (MemberVO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	model.addAttribute("mento", mentoDAO.mentoSelectList(lang));
+    public String mentoList(Model model, MentoVO vo, Criteria criteria) {
+    	if (criteria.getAmount()%4 != 0) {
+    		criteria.setAmount(12);
+    	}
+        vo.setCriteria(criteria);
+    	model.addAttribute("mento", mentoDAO.mentoSelectList(vo));
+    	model.addAttribute("pageMaker", new PageDTO(criteria, mentoDAO.getTotalCount(vo)));
     	return "mento/mentoList";
     }
     
     @GetMapping("/mentoInsertForm.do")
-    public String mentoInsertForm() {
+    public String mentoInsertForm(Model model, Principal principal) {
+    	String mentoId = principal.getName();
+    	List<MentoVO> list = mentoDAO.langList(mentoId);
+    	for(MentoVO li : list) {
+    		System.out.println(li+"======================================");
+    	}
+    	model.addAttribute("mentos", list);
     	return "mento/mentoInsertForm";
     }
     
     @PostMapping("/mentoInsert.do")
     public String mentoInsert(MentoVO mento, MultipartFile file, Principal principal) {
-		// MemberVO user = (MemberVO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	MemberVO user = new MemberVO();
-    	if(principal != null) {
-    		mento.setMentoId(principal.getName());
+    	mento.setMentoId(principal.getName());
+    	
+    	String originalName = file.getOriginalFilename(); 
+    	if(!originalName.equals("")) {
+    		String fileType = originalName.substring(originalName.lastIndexOf(".") + 1, originalName.length());
+    		String fileName = UUID.randomUUID().toString() + "." + fileType;
+    		String pathName = uploadPath + fileName;
+    		File dest = new File(pathName);
+    		try {
+    			FileCopyUtils.copy(file.getBytes(), dest);
+    		} catch (IllegalStateException e) {
+    			e.printStackTrace();
+    		} catch (IOException e) {
+    			e.printStackTrace();
+    		}
+    		mento.setPhoto(fileName);
     	}
-    	System.out.println(file.getOriginalFilename()+ "==========");
-    	String originalName = file.getOriginalFilename();
-    	String fileType = originalName.substring(originalName.lastIndexOf(".") + 1, originalName.length());
-    	String fileName = UUID.randomUUID().toString() + "." + fileType;
-    	String pathName = uploadPath + fileName;
-    	File dest = new File(pathName);
-    	try {
-    		FileCopyUtils.copy(file.getBytes(), dest);
-    	} catch (IllegalStateException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-    	mento.setPhoto(fileName);
     	int n = mentoDAO.mentoInsert(mento);
-    	return "redirect:mentoList.do?lang=" + mento.getLang();
+    	if(n > 0) {
+    		return "redirect:mentoList.do?lang=" + mento.getLang();
+    	}else {
+    		return "redirect:mentoInsertForm.do";
+    	}
     }
     
     @GetMapping("/mentoSelect.do")
     public String mentoSelect(Model model, MentoVO vo, Principal principal) {
-
 		  MemberVO user = new MemberVO();
-		  if(principal != null) {
-			  user.setMemberId(principal.getName());
-			  model.addAttribute("member", memberDao.memberSelect(user));
-		  }
+		  user.setMemberId(principal.getName());
+		  model.addAttribute("member", memberDao.memberSelect(user));
 		  
 		  model.addAttribute("mento", mentoDAO.mentoSelectOne(vo));
 		  return "mento/mentoSelect";

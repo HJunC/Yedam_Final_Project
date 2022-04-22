@@ -4,28 +4,35 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <c:set var="resources" value="${pageContext.request.contextPath}/resources"/>
 <c:set var="root" value="${pageContext.request.contextPath}"/>
-<script>
-var URL_CONFIG = '${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath }';
-var socket = null;
-var room = '${roomId}';
-console.log(room)
-if (room == '') {
-	var webSocket = new WebSocket('ws://' + URL_CONFIG + '/socket');
-} else {
-	var webSocket = new WebSocket('ws://' + URL_CONFIG + '/socket?roomId=${roomId}');
+
+<style>
+.mfp-content {
+	max-width: 500px !important;
 }
-console.log(webSocket)
-socket = webSocket;
-webSocket.onopen = function(e) {
-	console.log(e);
-	console.log("웹소켓이 연결되었습니다.");
-	webSocket.onmessage = function(e) {
-		console.log(e)
+</style>
+<script>
+	var URL_CONFIG = '${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath }';
+	var socket = null;
+	var room = '${roomId}';
+	console.log(room)
+	if (room == '') {
+		var webSocket = new WebSocket('ws://' + URL_CONFIG + '/socket');
+	} else {
+		var webSocket = new WebSocket('ws://' + URL_CONFIG
+				+ '/socket?roomId=${roomId}');
+	}
+	console.log(webSocket)
+	socket = webSocket;
+	webSocket.onopen = function(e) {
+		console.log(e);
+		console.log("웹소켓이 연결되었습니다.");
+		webSocket.onmessage = function(e) {
+			console.log(e)
 			$('#alarmText').text(e.data);
-			$('#alarm').css("display","block");
+			$('#alarm').css("display", "block");
 			setTimeout(function() {
-				$('#alarm').css("display","none");
-			},5000);
+				$('#alarm').css("display", "none");
+			}, 5000);
 		}
 	};
 </script>
@@ -69,6 +76,9 @@ webSocket.onopen = function(e) {
 	<span id="alarmText"></span>
 	<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
+
+
+
 <nav class="main-nav dark transparent stick-fixed wow-menubar">
 	<div class="full-wrapper relative clearfix">
 		<!-- Logo ( * your text or image into link tag *) -->
@@ -113,17 +123,6 @@ webSocket.onopen = function(e) {
 				</li>
 
 				<li>
-					<a href="#" class="mn-has-sub">채용 <i class="mn-has-sub-icon"></i></a>
-					<ul class="mn-sub mn-has-multi">
-						<li class="mn-sub-multi">
-							<ul>
-								<li><a href="${root}/job/seeking.do">채용정보</a></li>
-							</ul>
-						</li>
-					</ul>
-				</li>
-
-				<li>
 					<a href="${root}/project/main.do">팀 프로젝트</a>
 				</li>
 				
@@ -143,17 +142,16 @@ webSocket.onopen = function(e) {
 					<li><a href="${root}/loginForm.do">로그인</a></li>
 					<li><a href="${root}/signUpForm.do">회원가입</a></li>
 				</sec:authorize>
-
+				
 				<sec:authorize access="isAuthenticated()">
 					<li>
-						<a href="#" class="mn-has-sub">내 정보 <i class="mn-has-sub-icon"></i></a>
+						<a href="#" class="mn-has-sub">
+						<img class="img-profile rounded-circle" style="width:2rem;height:2rem;" src="/upload/profile/<sec:authentication property='principal.profileImg'/>">
+						<sec:authentication property="principal.username"/>
+						<i class="mn-has-sub-icon"></i></a>
 						<ul class="mn-sub">
-						<sec:authorize access="hasAnyRole('USER','ADMIN')">
-							<li><a href="${root}/myPage.do">마이페이지</a></li>						
-						</sec:authorize>
-						<sec:authorize access="hasRole('COMPANY')">
-							<li><a href="${root}/coPage.do">회사페이지</a></li>
-						</sec:authorize>
+							<li><a href="${root}/myPage.do">마이페이지</a></li>	
+							<li><a href="#mod_chatList" id="mod_open" class="lightbox-gallery-5 mfp-inline" onclick="myChatList()">채팅목록</a></li>					
 							<li><form action="${root}/logout" method="post">
 									<sec:csrfInput/>
 									<button type="submit">로그아웃</button>
@@ -169,3 +167,48 @@ webSocket.onopen = function(e) {
 	</div>
 </nav>
 <!-- End Navigation panel -->
+<div id="mod_chatList" class="mfp-hide">
+	<h4>채팅방 리스트</h4>
+	<div class="overflow-auto" style="height:500px;">
+		<table id="chatList" class="table table-hover">
+			<thead>
+				<tr>
+					<th>생성자</th>
+					<th>참가자</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+	</div>
+</div>
+<script>
+	function myChatList() {
+		$.ajax({
+			url:"${root}/myChatList.do",
+			type:"get",
+			success:function(data){
+				if(data.length == 0){
+					$('#chatList>tbody').empty();
+					$('#chatList').append($('<tr>').append($('<th colspan="2">').text('참여한 채팅방이 없습니다.')))
+				} else {
+					$('#chatList>tbody').empty();
+					$.each(data,function(item,idx){
+						$('#chatList').append(makeTr(idx));
+					})
+				}
+			},
+			error:function(err){
+				console.log(err)
+			}
+		})
+	}
+	
+	function makeTr(data){
+		var tr = $('<tr>').on('click',function(){
+			window.open("${root}/chatSelect.do?roomId="+data.roomId)
+		});
+		tr.append($('<td>').text(data.ownerId),$('<td>').text(data.entryId))
+		return tr;
+	}
+</script>

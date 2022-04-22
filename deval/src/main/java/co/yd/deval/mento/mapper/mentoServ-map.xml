@@ -38,7 +38,7 @@
 	</insert>
 	<update id="mentoServUpdate" parameterType="Int">
 		UPDATE MENTO_SERVICE
-		SET STATE = 2
+		SET STATE = 4
 		WHERE MENTO_SERVICE_NO = #{mentoServiceNo}
 	</update>
 	<delete id="mentoServDelete" >
@@ -73,19 +73,30 @@
 		SET STATE = 1
 		WHERE MENTO_SERVICE_NO = #{mentoServiceNo}
 	</update>
+
+	<!-- 마이페이지 정보용 -->
 	<select id="findWaitMento" resultType="co.yd.deval.mento.service.MentoServVO">
 		SELECT * 
 		FROM MENTO_SERVICE
 		WHERE MENTI_ID = #{id}
 		AND STATE = 0
+		ORDER BY MENTO_SERVICE_NO DESC
 	</select>
-	<select id="findMentoByNo" resultType="co.yd.deval.mento.service.MentoServVO">
+	<select id="findDoingMento" resultType="co.yd.deval.mento.service.MentoServVO">
 		SELECT *
 		FROM MENTO_SERVICE
 		WHERE (MENTI_ID = #{id} OR MENTO_ID = #{id})
-		AND STATE != 0 
-		AND STATE != 4 
+		AND STATE IN (1,3)
+		ORDER BY MENTO_SERVICE_NO DESC 
 	</select>
+	<select id="findEndMento" resultType="co.yd.deval.mento.service.MentoServVO">
+		SELECT *
+		FROM MENTO_SERVICE
+		WHERE (MENTI_ID = #{id} OR MENTO_ID = #{id})
+		AND STATE IN (2,4)
+		ORDER BY MENTO_SERVICE_NO DESC
+	</select>
+	
 	<update id="updateRating" parameterType="map">
 		UPDATE MENTO_SERVICE
 		SET STSFDG = #{ratingNum}, STATE = 2

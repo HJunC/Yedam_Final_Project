@@ -22,6 +22,11 @@ import co.yd.deval.comment.service.CommentService;
 import co.yd.deval.comment.service.CommentVO;
 import co.yd.deval.common.Criteria;
 import co.yd.deval.common.PageDTO;
+import java.io.File;
+import java.io.IOException;
+import java.security.Principal;
+import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/board")
@@ -174,13 +179,13 @@ public class BoardController {
 		return "redirect:boardSelect.do";
 	}
 
-	@PostMapping("/noticeSelect.do")
+	@GetMapping("/noticeSelect.do")
 	public String noticeSelect(BoardVO vo, Model model) {
 		model.addAttribute("board", boardDao.boardSelect(vo));
 		return "board/boardDetail";
 	}
 
-	@PostMapping("/technicSelect.do")
+	@GetMapping("/technicSelect.do")
 	public String technicSelect(BoardVO vo, Model model) {
 		model.addAttribute("board", boardDao.boardSelect(vo));
 		return "board/boardDetail";
