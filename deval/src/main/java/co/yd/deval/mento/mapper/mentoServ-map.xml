@@ -23,8 +23,7 @@
 								  START_TM,
 								  END_TM,
 								  START_DATE,
-								  END_DATE,
-								  MENTI_INFO)
+								  END_DATE)
 		VALUES					 (MENTO_SERVICE_SEQ.NEXTVAL,
 								  #{mentoId},
 								  #{mentiId},
@@ -32,8 +31,7 @@
 								  #{startTm},
 								  #{endTm},
 								  #{startDate},
-								  #{endDate},
-								  #{mentiInfo})	  
+								  #{endDate})	  
 		
 	</insert>
 	<update id="mentoServUpdate" parameterType="Int">

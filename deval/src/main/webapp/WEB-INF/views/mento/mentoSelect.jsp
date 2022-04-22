@@ -73,7 +73,7 @@
 							<form method="post" action="mentoServInsert.do" class="form"
 								id="frm">
 								<div class="mb-20 mb-md-10">
-									<div>원하는 시간대를 정해주세요</div>
+									<div>시간설정</div>
 									<div>
 										<!-- 시간 가져오기 -->
 										<select class="input-lg round form-control bg-dark-input me-3"
@@ -93,12 +93,9 @@
 								</div>
 								<hr class="mt-0 mb-30 white" />
 								<div class="mb-20 mb-md-10">
-									원하는 기간를 정해주세요
-									<div style="float: right;">
-										서비스시작날자 <input type="date" name="startDate" id="startDate"
-											class="input-lg round form-control bg-dark-input">
-									</div>
-									<div>
+									
+									<div class="d-inline-block me-3">
+										<div>기간설정</div>
 										<c:if test="${!empty mento.termDay }">
 											<select class="input-lg round form-control bg-dark-input"
 												style="width: 150px" name="serviceTerm" id="termTime">
@@ -131,6 +128,11 @@
 												</c:forEach>
 											</select>
 										</c:if>
+									</div>
+									<div class="d-inline-block">
+										<div>서비스시작날짜</div>
+										<input type="date" name="startDate" id="startDate"
+											class="input-lg round form-control bg-dark-input">
 									</div>
 								</div>
 								<!-- 서비스신청모달창 -->
@@ -306,6 +308,14 @@
  
         // 기간과 시간 계산 펑션
         function selectTime(target) {
+        	var timeSelect = document.getElementById('serviceEdt');
+        	$('#serviceEdt').empty()
+        	
+        	if($('#serviceStt').val() == '시작시간') {
+        		var option = document.createElement('option');
+				option.innerText = '죵료시간';
+        		timeSelect.appendChild(option);
+            }
         	// 시작시간값 가져오기
         	var startTime = parseInt(target.value);
         	
@@ -313,8 +323,7 @@
         	var endTime = ${fn:substring(edT,0,2)};
         	
         	// select 찾아서 값넣어주기
-        	var timeSelect = document.getElementById('serviceEdt');
-        	$('#serviceEdt').empty()
+        	
        		for(var i=startTime+1; i<endTime+1; i++) {
 		        var option = document.createElement('option');
 				option.value = i;
@@ -367,7 +376,9 @@
       	  	} 
       	    $('#endDate').val(moment(std.setDate(std.getDate() + numTerm)).format("YYYY-MM-DD"));
         }
-       
+
+        
+        
         function checkTime() {
         	var edTime = document.getElementById('serviceEdt').value;
         	var stTime = document.getElementById('serviceStt').value;

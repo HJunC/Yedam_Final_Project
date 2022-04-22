@@ -65,7 +65,7 @@
                                         <c:forEach var="menti" items="${mentis}">
                                         	<tr>
                                         	<td>
-                                        		<input type="checkbox" name="checkBox" id="checkBox">
+                                        		<input type="radio" name="checkBox" id="checkBox">
                                         	</td>
                                             <td>
                                             <div>
@@ -91,7 +91,7 @@
                                             <td>
                                             </td>
                                             <td class="text-end text-nowrap">
-                                                <a href="#" onclick="serviceDelete()" title="Remove item"><i class="fa fa-trash-alt"></i><span class="sr-only">Remove item</span></a>
+                                                <a href="#" onclick="serviceDelete('${menti.mentoServiceNo}')" title="Remove item"><i class="fa fa-trash-alt"></i><span class="sr-only">Remove item</span></a>
                                             </td>
 	                                        <td>
 	                                        	<input type="hidden" name="mentoServiceNo" id="mentoServiceNo" value="${menti.mentoServiceNo}"/>
@@ -148,10 +148,9 @@
             <script type="text/javascript">
             	
             	
-            	function serviceDelete() {
+            	function serviceDelete(no) {
             		var tag = $(event.target).parent().parent().parent();
             		
-            		var no = document.getElementById('mentoServiceNo').value;
             		var serviceNo = parseInt(no);
             		
             		$.ajax({
