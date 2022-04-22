@@ -203,7 +203,7 @@
                     <!-- Send Button -->
                     <div align="center">
 					<input type="button" id="btnStdAdd" name="btnStdAdd" value="등록" onclick="StdAdd()" class="btn btn-mod btn-glass btn-round btn-small">
-					<input type="reset" value="취소" class="btn btn-mod btn-glass btn-round btn-small">
+					<input type="reset" value="초기화" class="btn btn-mod btn-glass btn-round btn-small">
 					</div>
 				</form>
             </div>

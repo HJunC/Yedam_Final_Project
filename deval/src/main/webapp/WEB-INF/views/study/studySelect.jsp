@@ -19,19 +19,17 @@
                         <div class="col-md-8">
                               <div class="wow fadeInUpShort" data-wow-delay=".1s">
                                <c:choose>
-                              	  		<c:when test="${std.state eq '0'}">
-					                    	<td><p class="badge bg-success">모집중</p></td>
-					                    	
+                              	  		<c:when test="${study.state eq '0'}">
+					                    	<p class="badge bg-success">모집중</p>
 					                    </c:when>
-					                    <c:when test="${std.state eq '1'}">
-					                    	<td><p class="badge bg-light text-dark">모집중단</p></td>
+					                    <c:when test="${study.state eq '1'}">
+					                    	<p class="badge bg-light text-dark">모집중단</p>
 					                    </c:when>
-					                    <c:when test="${std.state eq '2'}">
-					                    	<td><p class="badge bg-warning text-dark">모집완료</p></td>
+					                    <c:when test="${study.state eq '2'}">
+					                    	<p class="badge bg-warning text-dark">모집완료</p>
 					                    </c:when>
-					                   
-					                    <c:when test="${std.state eq '3'}">
-					                    	<td><p class="badge bg-secondary">기간종료</p></td>
+					                    <c:when test="${study.state eq '3'}">
+					                    	<p class="badge bg-secondary">기간종료</p>
 					                    </c:when>
                               </c:choose>
                                   <h3 class="hs-line-7 mb-20 mb-xs-20" style="font-size: 52px;">${study.studyNm}</h3>

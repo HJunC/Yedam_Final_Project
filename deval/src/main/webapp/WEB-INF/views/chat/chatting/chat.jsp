@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <c:set var="resources" value="${pageContext.request.contextPath}/resources"/>
 <!DOCTYPE html>
 <html lang="ko">
@@ -177,13 +178,13 @@ webSocket.onopen = function(e) {
 			<c:if test="${chat.writer == userId}">
 			<div class='my-chat-box'>
 				<div class='chat my-chat'>${chat.subject}</div>
-				<div class='chat-info'>${chat.logDate}</div>
+				<div class='chat-info'><fmt:formatDate value="${chat.logDate}" pattern="yyyy-MM-dd hh:mm:ss"/></div>
 			</div>
 			</c:if>
 			<c:if test="${chat.writer != userId}">
 			<div class='chat-box'>
 				<div class='chat'>${chat.writer}:${chat.subject}</div>
-				<div class='chat-info chat-box'>${chat.logDate}</div>
+				<div class='chat-info chat-box'><fmt:formatDate value="${chat.logDate}" pattern="yyyy-MM-dd hh:mm:ss"/></div>
 			</div>
 			</c:if>
 		</c:forEach>

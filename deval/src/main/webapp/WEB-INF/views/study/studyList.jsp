@@ -78,45 +78,30 @@
 	  							<option>제주특별자치도</option>
 	  							</select>&nbsp;&nbsp;&nbsp;&nbsp;
 	  							
+	  							
+	  							<script src="${resources}/js/common/Languages.js"></script>
 								<label for="lang" style="font-size: 17px;">언어 </label> 
-								<select id="cqLang" name="lang1" class="input-md round form-control" style="width: 100px; height: 30px; font-size: 13px;">
+								<select id="selLang" name="lang1" class="input-md round form-control" style="width: 100px; height: 30px; font-size: 13px;">
 									<option value="">전체</option>
-									<option>Apache Groovy</option>
-									<option>C</option>
-									<option>C#</option>
-									<option>C++</option>
-									<option>Crystal</option>
-									<option>Clojure</option>
-									<option>Dart</option>
-									<option>Elixir</option>
-									<option>Elm</option>
-									<option>Erlang</option>
-									<option>Fortran</option>
-									<option>Go</option>
-									<option>GraphQL</option>
-									<option>Haskell</option>
-									<option>Java</option>
-									<option>Javascript</option>
-									<option>Julia</option>
-									<option>Kotlin</option>
-									<option>LaTeX</option>
-									<option>Lua</option>
-									<option>Markdown</option>
-									<option>Nim</option>
-									<option>Octave</option>
-									<option>PHP</option>
-									<option>Perl</option>
-									<option>Python</option>
-									<option>R</option>
-									<option>Ruby</option>
-									<option>Rust</option>
-									<option>Scala</option>
-									<option>Shell Script</option>
-									<option>Solidity</option>
-									<option>Swift</option>
-									<option>TypeScript</option>
-									<option>Zig</option>
-								</select>&nbsp;&nbsp;&nbsp;&nbsp;
+								</select>&nbsp;&nbsp;&nbsp;&nbsp;	
+								<script>
+									var selBox = "";
+									Language.forEach(item => {
+										selBox += '<option value="' + item + '">'+item+'</option>';
+		                              })
+		                              FPL.forEach(item => {
+		                            	  selBox += '<option value="' + item + '">'+item+'</option>';
+		                              })
+		                              versionControl.forEach(item => {
+		                            	  selBox += '<option value="' + item + '">'+item+'</option>';
+		                              })
+		                              Database.forEach(item => {
+		                            	  selBox += '<option value="' + item + '">'+item+'</option>';
+		                              })
+		                              $("#selLang").append(selBox);
+									selBox = "";
+								</script>
+								
 								
 								<label for="type" style="font-size: 17px;">난이도</label> 
 								<select id="cqType" name="defficulty" class="input-md round form-control" style="width: 100px; height: 30px; font-size: 13px;">
