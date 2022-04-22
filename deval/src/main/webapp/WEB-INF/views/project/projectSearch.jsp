@@ -24,7 +24,7 @@
 
             <div class="col-md-4 mt-30 wow fadeInUpShort" data-wow-delay=".1s">
                 <div class="mod-breadcrumbs text-end">
-                    <a href="/project/main.do">프로젝트</a>&nbsp;<span class="mod-breadcrumbs-slash">•</span>&nbsp;<span>프로젝트 검색</span>
+                    <a href="/project/main.do">프로젝트 메인</a>
                 </div>
             </div>
 
@@ -38,14 +38,6 @@
     .widget {
         margin-bottom: 24px;
     }
-    .list-title {
-        margin: 0;
-        display: inline-block;
-        max-width: 366px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
 </style>
 <!-- Section -->
 <section class="page-section bg-dark light-content" style="overflow: initial;">
@@ -55,8 +47,8 @@
 
             <!-- Content -->
             <div class="col-md-8 offset-lg-1 mb-sm-80 order-first order-md-last">
-
                 <div class="list-group project-list">
+                    <span style="position: absolute; top: -40px; font-size: 14px; color: #a1a1a1;">모집중인 프로젝트 총 <span class="text-white">${pageMaker.total}</span>건</span>
                     <c:if test="${not empty projectList}">
                         <script>
                           var timeArray = [];
