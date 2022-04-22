@@ -23,8 +23,7 @@
 								  START_TM,
 								  END_TM,
 								  START_DATE,
-								  END_DATE,
-								  MENTI_INFO)
+								  END_DATE)
 		VALUES					 (MENTO_SERVICE_SEQ.NEXTVAL,
 								  #{mentoId},
 								  #{mentiId},
@@ -32,8 +31,7 @@
 								  #{startTm},
 								  #{endTm},
 								  #{startDate},
-								  #{endDate},
-								  #{mentiInfo})	  
+								  #{endDate})	  
 		
 	</insert>
 	<update id="mentoServUpdate" parameterType="Int">
@@ -48,6 +46,7 @@
 	<select id="allSatisAvg" resultType="double">
 		SELECT nvl(TRUNC(AVG(STSFDG),1),0) 
 		FROM MENTO_SERVICE
+		WHERE STSFDG != 0
 	</select>
 	
 	<!-- 그래프 데이터 -->
@@ -55,6 +54,7 @@
 		SELECT NVL(TRUNC(AVG(STSFDG),1),0) 
 		FROM MENTO_SERVICE
 		WHERE MENTO_ID = #{id}
+		AND STSFDG != 0
 	</select>
 	<select id="serviceCount" resultType="int">
 		SELECT COUNT(*) FROM MENTO_SERVICE

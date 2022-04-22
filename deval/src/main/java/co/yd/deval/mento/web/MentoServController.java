@@ -82,9 +82,9 @@ public class MentoServController {
 			trade.setBuyer(service.getMentiId());
 			trade.setSeller(service.getMentoId());
 			tradeDAO.insertTradeLog(trade);
-			return "mento/mentoSuccess";
+			return "redirect:../home.do";
 		}else {
-			return "notFoundPage";
+			return "redirect:notFoundPage.do";
 		}
 	}
 	
@@ -142,6 +142,7 @@ public class MentoServController {
 		int count = 0;
 		for(MentoServVO vo : list) {
 			//수락할려고 하는 서비스에 대해 가능한지 확인
+			System.out.println(vo + "0000000000000000000000000000000000000");
 			int n = testDAO.timeCheck(vo);
 			System.out.println(vo);
 			if(n == 0) {

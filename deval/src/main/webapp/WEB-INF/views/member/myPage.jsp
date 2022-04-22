@@ -386,13 +386,14 @@
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
-					<span class="star"> ★★★★★ <span>★★★★★</span> <input
-						type="range" oninput="drawStar(this)" value="1" step="1" min="1" max="10">
+				<h3 style="color: black">멘토 평점</h3>
+					<span class="star"> ★★★★★ <span>★★★★★</span> 
+					<input id="stars" type="range" oninput="drawStar(this)" value="1" step="1" min="2" max="10">
 					</span>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-					<button type="button" class="btn btn-primary">평점등록!</button>
+					<button type="button" class="btn btn-primary" onclick="rate()">평점등록!</button>
 				</div>
 			</div>
 		</div>
@@ -639,6 +640,7 @@
       } else {
          td = $('<th colspan="6">').text('종료 이력이 없습니다.').css('color','#A7A9A5')
       tr.append(td);
+      }
       return tr;
    }
    
@@ -717,6 +719,7 @@
          tr.append(td1,td2,td3,td4,td5);
       } else {
          state = idx.state
+         tr.attr('data-id',idx.mentoServiceNo);
          var td1 = $('<td>').text(idx.mentoId);
          var td2 = $('<td>').text(idx.mentiId);
          var td3 = $('<td>').text(idx.startDate);
@@ -727,7 +730,11 @@
             var td7 = $('<td>')
          } else {
             var td6 = $('<td>').text('평점 대기중').css('color','#F1F57F');
-            var td7 = $('<td>').append($('<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">평점주기</button>'));
+            if(idx.mentoId != '${member.memberId}'){
+            	var td7 = $('<td>').append($('<button type="button" onclick="sendRating()" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">평점주기</button>'));
+            } else {
+            	var td7 = $('<td>');
+            }
          }
          tr.append(td1,td2,td3,td4,td5,td6,td7);
       }
@@ -793,42 +800,25 @@
       console.log($(event.target).parent().parent().data('id'))
       var id = $(event.target).parent().parent().data('id')
       $('#serviceNo').val(id);
-      var url = "ratingFrom.do";
-      var option = "top=10, left=10, width=500, height=600";
-      window.open(url,"",option);
    }
    
-   //채팅 td만들어주는곳
-   function makeChatTr(item) {
-      var tr = $('<tr onclick="selectChat('+item.roomId+')">')
-      var td1 = $('<td>')
-      var td2 = $('<td>')
-      td1.text(item.ownerId);
-      td2.text(item.entryId);
-      tr.append(td1,td2);
-      //tr.addEventListener('click', selectChat(item.roomId));
-      
-      return tr;
-   }
-   //chat 들어가기
-   function selectChat(n) {
-      frm.roomId.value = n;
-      frm.submit();
-   };
    
    //별점 처리
     const drawStar = (target) => {
-           document.querySelector(`.star span`).style.width = `${target.value * 10}%`;
+           document.querySelector('.star span').style.width = target.value * 10 + '%';
            }
     
     function rate() {
 		$.ajax({
 			url : "rating.do",
 			type : "post",
-			data : $("#frm").serialize(),
+			data : {
+				ratingNum : ($('#stars').val())/2,
+				mentoServiceNo : $('#serviceNo').val()
+				},
 			success : function() {
-				opener.parent.location.reload();
-				window.close();
+				alert('평점이 등록되었습니다.');
+				location.reload();
 			},
 			error: function() {
 				alert("에러");

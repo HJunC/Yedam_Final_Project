@@ -191,8 +191,14 @@
         	var start = frm.serviceStt.value;
         	var end = frm.serviceEdt.value;
         	var price = $('#price').val();
+        	if(price.length > 7) {
+        		alert('가격이 너무 높습니다! 확인해주세요!');
+        		$('#price').focus();
+        		return;
+        	}
          	if(photo == '') {
          		photo = null; 
+         		}
         	if(price == '') {
         		alert('가격을 정해주세요!!');
         		return;
@@ -207,13 +213,11 @@
         		frm.serviceStt.focus();
         		return;
         	}
-        	if($('#photo').val() == ''){
-        		alert('사진을 등록해주세요');
-        		return;
-        	}
+        	console.log(4);
         	frm.submit();
+        	console.log(3);
         }
-        }
+        
         // 종료시간 미니멈 set
         function endTime(target) {
         	// 클릭한 값들고오기
