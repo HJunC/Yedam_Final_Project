@@ -154,7 +154,11 @@ public class BoardController {
 	@PostMapping("/recommend.do")
 	public int recommend(BoardVO vo) {
 		boardDao.boardRecUp(vo.getBoardNo());
-		return boardDao.boardSelect(vo).getRecommend();
+		System.out.println("========================"+vo+"=================");
+		vo = boardDao.boardSelect(vo);
+		System.out.println("========================="+vo+"===================");
+		return 1;
+
 	}
 
 	@GetMapping("/boardUpdateForm.do")
@@ -162,6 +166,12 @@ public class BoardController {
 		model.addAttribute("board", boardDao.boardSelect(vo));
 		return "board/boardUpdateForm";
 
+	}
+
+	@GetMapping("/boardSearch.do")
+	@ResponseBody
+	public List<BoardVO> boardSearch(String option, String keyvalue) {
+		return boardDao.getSearchList(option, keyvalue);
 	}
 
 	/*

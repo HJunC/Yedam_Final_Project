@@ -4,11 +4,11 @@
 	xmlns:security="http://www.springframework.org/schema/security"
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-5.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-
 	<security:http pattern="/resources/**" security="none" />
 	<security:http>
 		<security:intercept-url pattern="/mento/mentoSelect.do" access="isAuthenticated()"/>
 		<security:intercept-url pattern="/study/**" access="isAuthenticated()"/>
+		<security:intercept-url pattern="/study/studyList.do" access="isAuthenticated()"/>
 		<security:intercept-url pattern="/board/write.do" access="hasAnyAuthority('ROLE_USER','ROLE_ADMIN')"/>
 		<security:intercept-url pattern="/myPage.do" access="hasAnyAuthority('ROLE_USER','ROLE_ADMIN')"/>
 		<security:intercept-url pattern="/project/projectInsertForm.do" access="hasAnyAuthority('ROLE_USER','ROLE_ADMIN')"/>
@@ -29,7 +29,6 @@
 		<security:remember-me key="deval" token-validity-seconds="86400"/>
 		
 	</security:http>
-	
 	<security:authentication-manager>
 		<security:authentication-provider user-service-ref="mds">
 		</security:authentication-provider>
