@@ -82,9 +82,9 @@ public class MentoServController {
 			trade.setBuyer(service.getMentiId());
 			trade.setSeller(service.getMentoId());
 			tradeDAO.insertTradeLog(trade);
-			return "mento/mentoSuccess";
+			return "redirect:../home.do";
 		}else {
-			return "notFoundPage";
+			return "redirect:notFoundPage.do";
 		}
 	}
 	
@@ -142,6 +142,7 @@ public class MentoServController {
 		int count = 0;
 		for(MentoServVO vo : list) {
 			//수락할려고 하는 서비스에 대해 가능한지 확인
+			System.out.println(vo + "0000000000000000000000000000000000000");
 			int n = testDAO.timeCheck(vo);
 			System.out.println(vo);
 			if(n == 0) {
@@ -149,9 +150,22 @@ public class MentoServController {
 				mentoDAO.mentoUpdate(vo.getMentoId());
 				//수락시 채팅방 생성
 				ChatRoomVO chatVo = new ChatRoomVO();
-				chatVo.setOwnerId(vo.getMentoId());
+				List<ChatRoomVO> roomList = chatRoomDAO.chatList();
 				chatVo.setEntryId(vo.getMentiId());
-				chatRoomDAO.makeChatRoom(chatVo);
+				chatVo.setOwnerId(vo.getMentoId());
+				Boolean isContainMento = false; //초기값
+				Boolean isContainMenti = false;
+				for (ChatRoomVO cahChatRoomVO : roomList) {
+					if(cahChatRoomVO.getOwnerId().equals(chatVo.getOwnerId())) {
+						isContainMento = true;
+					}
+					if(cahChatRoomVO.getEntryId().equals(chatVo.getEntryId())) {
+						isContainMenti = true;
+					}
+				}
+				if(!isContainMento && !isContainMenti) {
+					chatRoomDAO.makeChatRoom(chatVo);
+				}
 				// tradeLog 상태 변경 '처리전'-> '처리중'
 				tradeDAO.AcceptTradeLog(vo.getTradeLogNo());
 				//해당 서비스의 시작날짜 부터 종료날짜까지 for문을 돌립니다.

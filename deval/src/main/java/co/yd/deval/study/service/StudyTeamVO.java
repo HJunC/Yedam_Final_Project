@@ -19,12 +19,15 @@ public class StudyTeamVO {
 	private String license;
 	private String career;
 	private String college;
-	private String studyNo;
+	private int studyNo;
 	private String mail;
 	private String name;
 	private String studyNm;
 	private Date studySdt;
 	private Date studyEdt;
 	private String location;
+	private String kakao;
+	private String lang1;
+	private String lang2;
 
 }

@@ -48,7 +48,9 @@
 									<label for="password">비밀번호</label>
 									<input type="password" name="password" id="password" class="input-lg round form-control" placeholder="Enter your password">
 								</div>
-
+								<div class="form-group">
+									<input type="checkbox" name="remember-me" value="True">로그인 유지
+								</div>
 							</div>
 
 							<div class="clearfix">

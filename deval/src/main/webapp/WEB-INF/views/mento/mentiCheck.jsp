@@ -20,7 +20,7 @@
                     <div class="container relative text-center">
                         <div class="row">
                             <div class="col-lg-10 offset-lg-1">
-                                <h2 class="hs-line-7 mb-0 wow fadeInUpShort" data-wow-delay=".2s">멘토링서비스 신청목록</h2>
+                                <h2 class="hs-line-7 mb-0 wow fadeInUpShort" data-wow-delay=".2s">My Mentoring Service List</h2>
                             </div>
                         </div>
                     </div>
@@ -35,6 +35,7 @@
                         <div class="row">
                             <div class="col-lg-8 offset-lg-2">
                                 
+                                <c:if test="${!empty mentis}">
                                 <div class="table-responsive">
                                     <table class="table shopping-cart-table">
                                         <tr>
@@ -61,39 +62,10 @@
                                             </th>
                                             <th></th>
                                         </tr>
-                                        <tr>
-                                        	<td>
-                                        		<input type="checkbox">
-                                        	</td>
-                                            <td>
-                                            <div>
-                                                <img src="${resources}/images/mento/prev.bmp" alt="" width="100" />
-                                            </div>
-                                            </td>
-                                            <td>
-                                            	회원아이디exam
-                                            </td>
-                                            <td class="shopping-cart-table-title">
-                                                시간1
-                                            </td>
-                                            <td>
-                                                1주일
-                                            </td>
-                                            <td>
-                                                100원
-                                            </td>
-                                            
-                                            <td>
-                                            </td>
-                                            <td class="text-end text-nowrap">
-                                                <a href="#" onclick="serviceDelete()" title="Remove item"><i class="fa fa-trash-alt"></i></a>
-                                            </td>
-                                        </tr>
                                         <c:forEach var="menti" items="${mentis}">
-                                        	
                                         	<tr>
                                         	<td>
-                                        		<input type="checkbox" name="checkBox" id="checkBox">
+                                        		<input type="radio" name="checkBox" id="checkBox">
                                         	</td>
                                             <td>
                                             <div>
@@ -119,7 +91,7 @@
                                             <td>
                                             </td>
                                             <td class="text-end text-nowrap">
-                                                <a href="#" onclick="serviceDelete()" title="Remove item"><i class="fa fa-trash-alt"></i><span class="sr-only">Remove item</span></a>
+                                                <a href="#" onclick="serviceDelete('${menti.mentoServiceNo}')" title="Remove item"><i class="fa fa-trash-alt"></i><span class="sr-only">Remove item</span></a>
                                             </td>
 	                                        <td>
 	                                        	<input type="hidden" name="mentoServiceNo" id="mentoServiceNo" value="${menti.mentoServiceNo}"/>
@@ -149,11 +121,18 @@
                                         </c:forEach>
                                     </table>
                                 </div>
+                                </c:if>
+                                <c:if test="${empty mentis }">
+                                	<div>
+                                		<div><h2><strong>텅!</strong></h2></div>
+                                		<div><h3>들어온 서비스가 없습니다!</h3></div>
+                                	</div>
+                                </c:if>
                                 
                                 <hr class="white" />
                                 
                                 <div class="row">
-                                    <div class="col-md-4 text text-md-end order-first order-md-last mb-sm-10">
+                                    <div class="col-md-4 text text-md-end order-first order-md-last mb-sm-10" style="width:860px">
                                         <input type="button" onclick="serviceAccept()" class="btn btn-mod btn-border-w btn-round btn-small" value="서비스수락">
                                     </div>
                                 </div>
@@ -169,10 +148,9 @@
             <script type="text/javascript">
             	
             	
-            	function serviceDelete() {
+            	function serviceDelete(no) {
             		var tag = $(event.target).parent().parent().parent();
             		
-            		var no = document.getElementById('mentoServiceNo').value;
             		var serviceNo = parseInt(no);
             		
             		$.ajax({

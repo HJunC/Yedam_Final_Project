@@ -47,7 +47,6 @@
 	<delete id="memberDelete" parameterType="co.yd.deval.member.service.MemberVO">
 		DELETE FROM MEMBER
 		WHERE  MEMBER_ID = #{memberId}
-		AND    PASSWORD = #{password}
 	</delete>
 	
 	<update id="memberExpUp" parameterType="HashMap">

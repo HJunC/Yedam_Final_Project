@@ -13,8 +13,9 @@ public interface StudyService {
 	int findMaxStudyNo();
 	int studyInsert(StudyVO vo);
 	int studyUpdate(StudyVO vo);
-
-  List<StudyVO> findStudyByNo(String id);
+	
+	List<StudyVO> findEndStudy(String id);
+	List<StudyVO> findDoingStudy(String id);
 	List<StudyVO> findWaitingStudy(String id);
 	
 	// 모달창 회원정보
@@ -43,8 +44,19 @@ public interface StudyService {
     List<StudyVO> getListWithPaging(StudyVO vo);
     int getTotalCount(StudyVO vo);
     
-    //현재인원
+    // 현재인원
     int studyRcntSelect(StudyVO vo);
     int rcntLeader(StudyVO vo);
     int rcntMember(StudyVO vo);
+    
+    // 그룹원페이지 스터디 일시정지 재개
+    int studyPause(StudyVO vo);
+    int studyRestart(StudyVO vo);
+    
+    // 그룹원페이지 팀나가기
+    int studyTeamDel(StudyReqVO vo);
+    int minusRcnt(int no);
+    
+    //모달창 체크
+    int addInfoCheck(String id);
 }
