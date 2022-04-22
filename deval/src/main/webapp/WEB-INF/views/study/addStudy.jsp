@@ -48,6 +48,11 @@
                             <label for="StudyName">스터디 명</label>
                             <input type="text" name="studyNm" id="studyNm" class="input-lg round form-control bg-dark-input" placeholder="스터디명을 입력해주세요" pattern=".{6,40}" required aria-required="true">
                         </div>
+                        
+                        <div class="form-group">
+                            <label for="kakao">카카오톡</label>
+                            <input type="text" name="kakao" id="kakao" class="input-lg round form-control bg-dark-input" placeholder="오픈톡 주소를 입력해주세요" pattern=".{6,40}" required aria-required="true">
+                        </div>
 
                         <div class="form-group">
                             <label for="location">지역</label>
@@ -88,11 +93,43 @@
                             <label for="lang">학습 언어<h6 id="viewLang"></h6></label>
                             <script src="${resources}/js/common/Languages.js"></script>
 
-                            <div>
+                           <!--  <div>
                                 <div class="tags" id="languagesBox"><p class="input-info mb-1">언어</p></div>
                                 <div class="tags" id="fplBox"><p class="input-info mb-1">프레임워크</p></div>
                                 <div class="tags" id="versionControlBox"><p class="input-info mb-1">버전관리</p></div>
                                 <div class="tags" id="databaseBox"><p class="input-info mb-1">DB</p></div>
+                            </div> -->
+                            <div>
+                                <dl class="toggle">
+
+                                    <dt>
+                                        <a href="" role="button" aria-expanded="false">언어</a>
+                                    </dt>
+                                    <dd style="display: none;">
+                                        <div class="tags" id="languagesBox"></div>
+                                    </dd>
+
+                                    <dt>
+                                        <a href="" role="button" aria-expanded="false">프레임워크</a>
+                                    </dt>
+                                    <dd style="display: none;">
+                                        <div class="tags" id="fplBox"></div>
+                                    </dd>
+
+                                    <dt>
+                                        <a href="" role="button" aria-expanded="false">버전관리</a>
+                                    </dt>
+                                    <dd style="display: none;">
+                                        <div class="tags" id="versionControlBox"></div>
+                                    </dd>
+
+                                    <dt>
+                                        <a href="" role="button" aria-expanded="false">DB</a>
+                                    </dt>
+                                    <dd style="display: none;">
+                                        <div class="tags" id="databaseBox"></div>
+                                    </dd>
+                                </dl>
                             </div>
                             <input type="hidden" name="lang" value="">
 
@@ -166,7 +203,7 @@
                     <!-- Send Button -->
                     <div align="center">
 					<input type="button" id="btnStdAdd" name="btnStdAdd" value="등록" onclick="StdAdd()" class="btn btn-mod btn-glass btn-round btn-small">
-					<input type="reset" value="취소" class="btn btn-mod btn-glass btn-round btn-small">
+					<input type="reset" value="초기화" class="btn btn-mod btn-glass btn-round btn-small">
 					</div>
 				</form>
             </div>
@@ -177,70 +214,8 @@
 </section>
 <!-- End Section -->
 
-
-
- <!-- 아코디언  -->
-             <section class="page-section bg-dark light-content">
-                 <div class="container relative">
-                     <div class="row section-text">
-                         <div class="col-md-6 mb-sm-20">
-                             <!-- Accordion -->
-                             <dl class="accordion">
-                                 <dt>
-                                     <a href="">First</a>
-                                 </dt>
-                                 <dd>
-                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vehicula porttitor rutrum. Ut laoreet sodales rutrum. Ut eget tristique nibh. Cras mattis est eget lacus dignissim, non consectetur velit pellentesque. Ut sit amet placerat eros, id gravida arcu. Sed felis purus, tempor ac vestibulum nec, consectetur at purus. 
-                                 </dd>
-                                 
-                                 <dt>
-                                     <a href="">Second</a>
-                                 </dt>
-                                 <dd>
-                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vehicula porttitor rutrum. Ut laoreet sodales rutrum. Ut eget tristique nibh. Cras mattis est eget lacus dignissim, non consectetur velit pellentesque. Ut sit amet placerat eros, id gravida arcu. Sed felis purus, tempor ac vestibulum nec, consectetur at purus. 
-                                 </dd>
-                                 
-                                 <dt>
-                                     <a href="">Third</a>
-                                 </dt>
-                                 <dd>
-                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vehicula porttitor rutrum. Ut laoreet sodales rutrum. Ut eget tristique nibh. Cras mattis est eget lacus dignissim, non consectetur velit pellentesque. Ut sit amet placerat eros, id gravida arcu. Sed felis purus, tempor ac vestibulum nec, consectetur at purus. 
-                                 </dd>
-                                 <dt>
-                                     <a href="">FFFFF</a>
-                                 </dt>
-                                 <dd>
-                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vehicula porttitor rutrum. Ut laoreet sodales rutrum. Ut eget tristique nibh. Cras mattis est eget lacus dignissim, non consectetur velit pellentesque. Ut sit amet placerat eros, id gravida arcu. Sed felis purus, tempor ac vestibulum nec, consectetur at purus. 
-                                 </dd>
-                             </dl>
-                             <!-- End Accordion -->
-                         </div>
-                     </div>
-                 </div>
-             </section>
-             <!-- 아코디언끝 -->
-
-
-
-
-
 <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 	<script src="${resources}/js/study/common.js"></script>
-	
-	
-	<!-- 언어선택 Languages.js 불러오기 -->
-	<%-- <script src="${resources}/js/common/Languages.js"></script>
-	<script type="text/javascript">
-	Language.forEach((item, index) => {
-		console.log(item);
-		var str =
-				'<label class="checkbox-inline">'+
-				'<input type="checkbox" name="ck_lang" onclick="count_ck(this);" id="lang"' + index + ' value="' + item + '">'+
-				'<span class="small">' + item + '</span>'+
-				'</label>';
-		$("#langSelect").append(str);
-	})
-	</script> --%>
 	
 	<script type="text/javascript">
 		$(document).ready(function(){
@@ -278,7 +253,7 @@
 			}
 			
 			if(chkCnt > 2){
-				alert("언어는 2개까지 선택가능합니다");
+				alert("스터디 기술은 2개까지 선택가능합니다.");
 				obj.checked = false;
 				return false;
 			}
@@ -293,7 +268,8 @@
 	
 	  const editorObject = new Editor({
 	    el: document.querySelector('#editor'),
-	    previewStyle: 'vertical',
+	    previewStyle: 'vertical', 
+	    initialValue: '스터디 모임 장소, 시간을 필수로 입력해주세요.',
 	    height: '500px',
 	    initialEditType: 'wysiwyg',
 	    theme: 'dark'

@@ -12,15 +12,25 @@
 <link rel="stylesheet" href="${resources}/css/custom/study_modal_style.css">
 </head>
 <body>
-				<!-- Title -->
+			<!-- Title -->
                <section class="small-section bg-dark-alfa-50 bg-scroll light-content" data-background="${resources}/images/full-width-images/section-bg-19.jpg" id="home">
     			<div class="container relative pt-70">
                      <div class="row">
                         <div class="col-md-8">
                               <div class="wow fadeInUpShort" data-wow-delay=".1s">
                                <c:choose>
-                              	<c:when test="${study.state eq '0'}"><p class="badge bg-success">모집중</p></c:when>
-                              	<c:when test="${study.state eq '2'}"><p class="badge bg-warning text-dark">모집완료</p></c:when>
+                              	  		<c:when test="${study.state eq '0'}">
+					                    	<p class="badge bg-success">모집중</p>
+					                    </c:when>
+					                    <c:when test="${study.state eq '1'}">
+					                    	<p class="badge bg-light text-dark">모집중단</p>
+					                    </c:when>
+					                    <c:when test="${study.state eq '2'}">
+					                    	<p class="badge bg-warning text-dark">모집완료</p>
+					                    </c:when>
+					                    <c:when test="${study.state eq '3'}">
+					                    	<p class="badge bg-secondary">기간종료</p>
+					                    </c:when>
                               </c:choose>
                                   <h3 class="hs-line-7 mb-20 mb-xs-20" style="font-size: 52px;">${study.studyNm}</h3>
                               </div>
@@ -32,7 +42,9 @@
 			                            <span class="separator">&nbsp;</span>
 			                            <span><i class="fa fa-map-marker-alt"></i> ${study.location}</span>
 			                            <span class="separator">&nbsp;</span>
-			                            <span><i class="fa fa-code-branch"></i> ${study.lang1}<c:if test="${not empty std.lang2 }"> / ${std.lang2 }></c:if></span>
+			                            <span><i class="fa fa-code-branch"></i> ${study.lang1}<c:if test="${not empty study.lang2 }"> / ${study.lang2 }</c:if></span>
+			                            <span class="separator">&nbsp;</span>
+			                             <span><i class="fa fa-users"></i> 인원 ${study.rcnt}/${study.maxRcnt }</span>
 			                            <span class="separator">&nbsp;</span>
 			                            <span><i class="fa fa-clock"></i>
 			                                공부기간 ${study.studySdt} ~ ${study.studyEdt}
@@ -52,11 +64,11 @@
                  <div class="container relative">
                        <div class="row">
                             <!-- Content -->
-                            <div class="col-lg-8 offset-lg-2 mb-sm-80">
+                            <div class="col-lg-8 offset-lg-1 mb-sm-50">
                                 <!-- Post -->
                                 <div class="blog-item mb-80 mb-xs-40">
                                     <!-- Text -->
-        							<div class="blog-item-body">
+        							<div class="blog-item-body" style="font-size: 15px;">
         								<p>
                                             ${study.subject }
                                         </p>
@@ -243,10 +255,12 @@
 				    			data: {"ownerId": id},
 				    			dataType : "text",
 				    			success: function(result) {
-				    				if (result != 0)
-				    					location.href="chatForm.do?roomId="+result;
-				    				else
+				    				if (result != 0) {
+				    					var option = "top=50, left=60, width=500, height=750, resizable=0, scrollbars=no";
+				    					window.open("../chatSelect.do?roomId="+result,"",option);	
+				    				} else {
 				    					return -1;
+				    				}
 				    			},
 				    			error: function(result) {
 				    			}

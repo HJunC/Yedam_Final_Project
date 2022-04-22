@@ -24,17 +24,19 @@ public class ChatController {
 	private ChatLogService chatLogDAO;
 	
 	@RequestMapping("/chatSelect.do")
-	public String chat(int roomId, Model model, Principal principal) {
+	public String chat(int roomId, ChatRoomVO vo, Model model, Principal principal) {
 		model.addAttribute("roomId", roomId);
 		MemberVO user = new MemberVO();
 		if(principal != null) {
 			user.setMemberId(principal.getName());
 			System.out.println(user.getMemberId());
 		}
+		vo = chatRoomDAO.selectChatRoom(vo.getRoomId());
 		
 		model.addAttribute("userId", user.getMemberId());
 		model.addAttribute("chats", chatLogDAO.selectChat(roomId));
-		return "chat/chat";
+		model.addAttribute("chatting", vo.getOwnerId());
+		return "chat/chatting/chat";
 	}
 	
 	@GetMapping("/chatList.do")

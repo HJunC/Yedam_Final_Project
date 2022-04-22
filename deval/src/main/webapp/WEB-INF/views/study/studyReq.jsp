@@ -13,8 +13,40 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- 로딩창 -->
+    <style>
+	    	.wrap-loading{ /*화면 전체를 어둡게*/
+	    position: fixed;
+	    left:0;
+	    right:0;
+	    top:0;
+	    bottom:0;
+	    background: rgba(0,0,0,0.3);
+	    filter: progid:DXImageTransform.Microsoft.Gradient(startColorstr='#20000000', endColorstr='#20000000');
+	    z-index: 10;
+	}
+	
+	.wrap-loading div{ /*로딩 이미지*/
+	   width: 50px;   
+	   height: 50px;
+	    position: fixed;
+	    top:50%;
+	    left:50%;
+	    margin-left: -21px;
+	    margin-top: -21px;
+	    z-index: 10;
+	}
+	
+	.display-none{ /*감추기*/
+	   display:none;
+	}
+    </style>
 </head>
 <body>
+	<div class="wrap-loading display-none" id="div_ajax_load_image">
+   		 <div><img src="${resources }/images/load.gif"/></div>
+	</div>
 				 <!-- Home Section -->
                 <section class="page-section bg-dark light-content" id="home">
                     <div class="container relative text-center">
@@ -79,6 +111,8 @@
         </div>
     </div>
     
+    
+    
     <script type="text/javascript">
      	function teamBye(id, sno) {
     		console.log("-- StudyReq Member Refuse Start --");
@@ -86,6 +120,12 @@
     			type: "POST",
     			url: "studyReqRefuse.do",
     			data: {"memberId": id, "studyNo": sno},
+   			  	beforeSend : function() {
+                     $("#div_ajax_load_image").show();
+                 },
+                complete : function() {
+                     $("#div_ajax_load_image").hide();
+                 },
     			success: function(json) {
     				alert(id + '님을 거절했습니다.');
     				location.reload();
@@ -99,20 +139,25 @@
      	
       	function teamGo(id, sno) {
     		console.log("-- StudyReq Member Accept Start --");
-
+		    
     		$.ajax({
     			type: "POST",
     			url: "studyReqAccept.do",
     			data: {"memberId": id, "studyNo": sno},
+                beforeSend : function() {
+                    	$("#div_ajax_load_image").show();
+					},
+                   complete : function() {
+                    	$("#div_ajax_load_image").hide();
+                	},
     			success : function(result) {
 					console.log(result);
 					
 					if (result == 0){
 						alert('참가 인원을 초과 했습니다.');
-						
 					} else {
 						alert(id + '님이 ' + sno + '번 스터디에 참가했습니다.');
-						location.href = "studyMain.do";
+						location.reload();
 					}
 				},
 				error : function(err) {
@@ -122,6 +167,7 @@
     		console.log("-- Study Accept End --")
 		} 
       	
+      	
       	function reqChat(id) {
     		console.log("-- Study Req Chat Start --");
     		$.ajax({
@@ -130,10 +176,12 @@
     			data: {"entryId": id},
     			dataType : "text",
     			success: function(result) {
-    				if (result != 0)
-    					location.href="chatForm.do?roomId="+result;
-    				else
+    				if (result != 0) {
+    					var option = "top=50, left=60, width=500, height=750, resizable=0, scrollbars=no";
+    					window.open("../chatSelect.do?roomId="+result,"",option);	
+    				} else {
     					return -1;
+    				}
     			},
     			error: function(result) {
     			}
@@ -141,6 +189,7 @@
     		console.log("-- Study Req Chat End --")
 		}
     </script>
+    
    
 </body>
 </html>
