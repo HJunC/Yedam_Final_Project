@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="sec"%>
@@ -15,188 +14,160 @@
 		<div class="container relative text-center">
 			<div class="row">
 				<div class="col-lg-10 offset-lg-1">
-					<h2 class="hs-line-7 mb-0 wow fadeInUpShort" data-wow-delay=".2s">글수정</h2>
+					<h2 class="hs-line-7 mb-0 wow fadeInUpShort" data-wow-delay=".2s">글작성</h2>
 				</div>
-			</div>
-		</div>
-	</section>
-	<section class="page-section bg-dark light-content pt-0">
-		<form action="boardUpdate.do" method="post">
-			<input name="${_csrf.parameterName }" value="${_csrf.token}"
-				type="hidden"> <input type="hidden" name="boardNo"
-				value="${board.boardNo}"> <input id="subject" type="hidden"
-				name="subject">
-			<div class="container relative">
-				<br>
-				<table class="table shopping-cart-table">
-					<tr>
-						<th>제 목</th>
-						<td><input size="122" id="title" name="title" value=""
-							value="${board.title}"></td>
-					</tr>
-					<tr>
-						<th style="vertical-align: top;">내 용</th>
-						<td><div id="editor">${board.subject}</div></td>
-						<td><input type="hidden" id="writer" name="writer"
-							value=""></td>
-					</tr>
-				</table>
-				<div class="container relative">
+					<form action="boardUpdate.do" enctype="multipart/form-data"
+						method="post" id="writeForm">
+							<h4 class="blog-page-title"></h4>
+						<table class="table shopping-cart-table">
+						<tr>
+							
+								<td>
+								<td>글번호
+							<input type="hidden" value="${board.boardNo}"
+									name="boardNo" id="boardNo" readonly>${board.boardNo}</td>
 
-					<button type="button" onclick="boardUpdate.do"  
-						class="btn btn-mod btn-round btn-border-w btn-medium">수정하기</button>
+							</tr>
+							<tr>
+								<td>Title</td>
+								<td><input type="text" value="${board.title}" name="title"
+									id="title"></td>
+							</tr>
+							<tr>
+								<td>Subject</td>
+								<td><textarea rows="5" cols="30" name="subject"
+										id="subject">${board.subject}</textarea>
+							</tr>
+
+						</table>
+						<button type="submit" class="button">수정</button>
+
+					</form>
+
 				
-				<div align="right">
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
-<%@ taglib uri="http://www.springframework.org/security/tags"
-	prefix="sec"%>
-<c:set var="resources"
-	value="${pageContext.request.contextPath}/resources" />
-<link rel="stylesheet" href="${resources}/css/common/toastui-editor.min.css" />
-<link rel="stylesheet" href="${resources}/css/common/toastui-editor-dark.min.css" />
-<style>
-.input-info {
-	font-size: 14px;
-	color: #c0c0c0;
-}
-</style>
-<body>
-	<section class="small-section bg-dark-alfa-50 bg-scroll light-content"
-		data-background="${resources}/images/full-width-images/section-bg-19.jpg"
-		id="home">
-		<div class="container relative pt-70">
-			<div class="row">
-				<div class="col-lg-10 offset-lg-1">
-					<br>
-					<h1>수정페이지 💭</h1>
-					<h4 class="blog-page-title"></h4>
-					<div align="center">
-						<div class="container relative">
-							<div class="row">
-								<div class="col-md-8">
-									<form action="boardUpdate.do" method="post">
-										<table>
-											<tr>
-								<c:if test="${board.boardTypeNo == 1}">
-									<a href="notice.do"
-										class="btn btn-mod btn-round btn-border-w btn-small">목록으로</a>
-								</c:if>
-												<td>글번호 : <input type="hidden" value="${board.boardNo}"
-													name="boardNo" id="boardNo">${board.boardNo}</td>
-											</tr>
-											<tr>
-												<td>분류 : <input type="hidden"
-													value="${board.boardTypeNo}" name="boardTypeNo"
-													id="boardTypeNo">${boardTypeNo}
-												<c:if test="${board.boardTypeNo == 1}">공지사항</c:if>
-												<c:if test="${board.boardTypeNo == 2}">자유게시판</c:if>
-												<c:if test="${board.boardTypeNo == 3}">최신기술동향</c:if>
-											</td>
-											</tr>
-											<tr>
-												<td align="center">제목 <input value="${board.title}"
-													name="title" id="title"
-													class="input-md square form-control"></td>
-											</tr>
-											<tr>
-								<c:if test="${board.boardTypeNo == 2}">
-									<a href="free.do"
-										class="btn btn-mod btn-round btn-border-w btn-small">목록으로</a>
-								</c:if>
-								<c:if test="${board.boardTypeNo == 3}">
-									<a href="technical.do"
-										class="btn btn-mod btn-round btn-border-w btn-small">목록으로</a>
-								</c:if>
-							</div>
-							</div>
-												<td id="editor">${board.subject}</td>
-											</tr>
-											<tr>
-										</table>
+
+						<c:if test="${no == 1}">
+							<a href="notice.do"
+							                                                                                	class="btn btn-mod btn-round btn-border-w btn-medium">목록으로</a>
+						</c:if>
+						<c:if test="${no == 2}">
+							<a href="free.do"
+								class="btn btn-mod btn-round btn-border-w btn-medium">목록으로</a>
+						</c:if>
+						<c:if test="${no == 3}">
+							<a href="technical.do"
+								class="btn btn-mod btn-round btn-border-w btn-medium">목록으로</a>
+						</c:if>
+				</section>
 			</div>
-		</form>
+
+ 
+
+
+			<%-- <c:if test = "${board.boardTypeNo == 1}" > 
+ <a href="free.do" class="btn btn-mod btn-g btn-small btn-square">목록으로</a></c:if>
+ 	<br>
+  		 
+
+<c:if test = "${board.boardTypeNo == 2}" > 
+ <a href="notice.do" class="btn btn-mod btn-g btn-small btn-square">목록으로</a></c:if>
+ 	
+
+<c:if test = "${board.boardTypeNo == 3}" > 
+ <a href="technical.do" class="btn btn-mod btn-g btn-small btn-square">목록으로</a></c:if>
+ 	
+</div> --%>
 	</section>
-</div>
-<script src="${resources}/js/common/toastui-editor-all.min.js"></script>
-<script type="text/javascript">
-   const { Editor } = toastui;
-   
-   const editorObject = new Editor({
-     el: document.querySelector('#editor'),
-     previewStyle: 'vertical',
-     initialValue: '${cq.subject}',
-     height: '500px',
-     initialEditType: 'wysiwyg',
-     theme: 'dark'
-   });
-   
-   editorObject.getMarkdown();
-  
-   function boardUpdate(str) {
-      if (str == "U") {
-         window.alert('수정하였습니다.');
-         frm.action = "boardUpdate.do";
-      } else {
-         frm.action = "boardSelect.do";
-         frm.method="get";
-      }
-      $('#subject').val(editorObject.getHTML());
-      frm.submit();
-   }
-   
-</script>
-										<button type="submit"
-											class="submit_btn btn btn-mod btn-w btn-large btn-round">수정</button>
 
-									</form>
-
-									<!-- Send Button -->
-									<div align="right">
-
-										<c:if test="${board.boardTypeNo == 1}">
-											<a href="free.do"
-												class="btn btn-mod btn-g btn-small btn-square">목록으로</a>
-										</c:if>
-										<br>
-
-
-										<c:if test="${board.boardTypeNo == 2}">
-											<a href="notice.do"
-												class="btn btn-mod btn-g btn-small btn-square">목록으로</a>
-										</c:if>
-
-
-										<c:if test="${board.boardTypeNo == 3}">
-											<a href="technical.do"
-												class="btn btn-mod btn-g btn-small btn-square">목록으로</a>
-										</c:if>
-									</div>
-								</div>
-
-							</div>
-						</div>
-
-					</div>
-				</div>
-			</div>
 		</div>
-	</section>
+</body>
+</html>
 
-	<script src="${resources}/js/common/toastui-editor-all.min.js"></script>
+<%--   
+</head>
+<body>
+ 
+    <br>
+    <b><font size="6" color="gray">글 수정</font></b>
+    <br>
+    
+  <form action="boardUpdate.do" method="post">
+ 
+ 
+ 
+      
+        </tr>
+            <tr>
+            <td id="title">
+                제 목
+            </td>
+            <td>
+                <input name="board_subject" type="text" size="70" maxlength="100" 
+                    value="${board.board_subject}"/>
+            </td>        
+        </tr>
+        <tr>
+            <td id="title">
+                내 용
+            </td>
+            <td>
+                <textarea name="board_content" cols="72" rows="20">
+                    ${board.board_content}
+                </textarea>            
+            </td>        
+        </tr>
+                <!-- 답글이 아닐 경우에만 파일 첨부 가능하도록 처리 -->
+        <c:if test="${board.board_parent==0}">    
+            <tr>
+                <td id="title">
+                    기존 파일
+                </td>
+                <td>
+                    &nbsp;&nbsp; ${board.board_file}
+                </td>    
+            </tr>
+            <tr>
+                <td id="title">
+                    첨부파일
+                </td>
+                <td>
+                    <input type="file" name="board_file"/>
+                </td>    
+            </tr>
+        </c:if> --%>
 
-	<script>
-	  const { Editor } = toastui;
 
-	  const editorObject = new Editor({
-	    el: document.querySelector('#editor'),
-	    previewStyle: 'vertical',
-	    height: '500px',
-	    initialEditType: 'wysiwyg',
-	    theme: 'dark'
-	  });
 
-	  editorObject.getMarkdown();
 
-	</script>
+
+
+
+<script src="${resources}/js/common/toastui-editor-all.min.js"></script>
+<script>
+  const { Editor } = toastui;
+
+  const editorObject = new Editor({
+    el: document.querySelector('#editor'),
+    previewStyle: 'vertical',
+    height: '500px',
+    initialEditType: 'wysiwyg',
+    theme: 'dark'
+  });
+
+  editorObject.getMarkdown();
+  
+  function inputCheck(){
+     if(editor.innerText == '\n\n\nMarkdownWYSIWYG'){
+        alert('내용을 입력해주세요');
+        return false;
+     }
+     if($('#title').val() == ''){
+        alert('제목을 입력해주세요')
+        $('#title').focus();
+        return false;
+     }
+     $('#cqType').attr('disabled',false);
+     $('#subject').val(editorObject.getHTML());
+     return true;
+  } 
+   </script>

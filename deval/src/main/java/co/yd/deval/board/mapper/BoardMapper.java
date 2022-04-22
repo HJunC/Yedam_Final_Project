@@ -1,9 +1,7 @@
 package co.yd.deval.board.mapper;
 
 import co.yd.deval.board.service.BoardVO;
-
 import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
 
 public interface BoardMapper {
@@ -28,10 +26,6 @@ public interface BoardMapper {
 
 	int getTotalCount(BoardVO vo);
 
-	/***
-	 * 첫화면에서 보여주기위한 데이터
-	 * @return BoardVO 리스트
-	 */
 	List<BoardVO> getMainPageList();
 
 }

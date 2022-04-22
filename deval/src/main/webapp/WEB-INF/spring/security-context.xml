@@ -4,14 +4,10 @@
 	xmlns:security="http://www.springframework.org/schema/security"
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-5.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-
 	<security:http pattern="/resources/**" security="none" />
 	<security:http>
-<<<<<<< HEAD
 		<security:intercept-url pattern="/study/**" access="isAuthenticated()"/>
-=======
 		<security:intercept-url pattern="/study/studyList.do" access="isAuthenticated()"/>
->>>>>>> branch 'board' of https://github.com/HJunC/Yedam_Final_Project.git
 		<security:intercept-url pattern="/board/write.do" access="hasAnyAuthority('ROLE_USER','ROLE_ADMIN')"/>
 		<security:intercept-url pattern="/myPage.do" access="hasAnyAuthority('ROLE_USER','ROLE_ADMIN')"/>
 		<security:intercept-url pattern="/project/projectInsertForm.do" access="hasAnyAuthority('ROLE_USER','ROLE_ADMIN')"/>
@@ -25,12 +21,10 @@
 						 logout-success-url="/" />
 		<security:csrf disabled="true" />
 	</security:http>
-	
 	<security:authentication-manager>
 		<security:authentication-provider user-service-ref="mds">
 		</security:authentication-provider>
 	</security:authentication-manager>
-	
 	<bean class="co.yd.deval.member.serviceImpl.LoginDetailService" id="mds"></bean>
 	
 

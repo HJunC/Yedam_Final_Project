@@ -24,9 +24,5 @@ public interface BoardService {
 	
 	List<BoardVO> getSearchList(String option,String keyvalue);
 
-	/***
-	 * 泥ロ솕硫댁뿉�꽌 蹂댁뿬二쇨린�쐞�븳 �뜲�씠�꽣
-	 * @return BoardVO 由ъ뒪�듃
-	 */
 	List<BoardVO> getMainPageList();
 }

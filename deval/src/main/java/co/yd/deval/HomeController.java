@@ -2,6 +2,7 @@ package co.yd.deval;
 
 
 import co.yd.deval.board.service.BoardService;
+
 import co.yd.deval.board.service.BoardVO;
 import oracle.jdbc.proxy.annotation.Post;
 
@@ -17,7 +18,7 @@ import java.util.List;
 /**
 * @package : co.yd.deval
 * @name : HomeController.java
-* @date : 2022-04-02 오전 1:12
+* @date : 2022-04-02 �삤�쟾 1:12
 * @author : ByungHo Park
 * @version : 1.0.0
 * @modifyed : ByungHo Park

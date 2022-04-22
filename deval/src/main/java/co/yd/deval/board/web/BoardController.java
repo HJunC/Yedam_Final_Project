@@ -1,11 +1,11 @@
 package co.yd.deval.board.web;
 
-import java.io.File;
-import java.io.IOException;
-import java.security.Principal;
-import java.util.List;
-import java.util.UUID;
-
+import co.yd.deval.board.service.BoardService;
+import co.yd.deval.board.service.BoardVO;
+import co.yd.deval.comment.service.CommentService;
+import co.yd.deval.comment.service.CommentVO;
+import co.yd.deval.common.Criteria;
+import co.yd.deval.common.PageDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,13 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-
-import co.yd.deval.board.service.BoardService;
-import co.yd.deval.board.service.BoardVO;
-import co.yd.deval.comment.service.CommentService;
-import co.yd.deval.comment.service.CommentVO;
-import co.yd.deval.common.Criteria;
-import co.yd.deval.common.PageDTO;
+import java.io.File;
+import java.io.IOException;
+import java.security.Principal;
+import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/board")
@@ -149,7 +147,11 @@ public class BoardController {
 	@PostMapping("/recommend.do")
 	public int recommend(BoardVO vo) {
 		boardDao.boardRecUp(vo.getBoardNo());
-		return boardDao.boardSelect(vo).getRecommend();
+		System.out.println("========================"+vo+"=================");
+		vo = boardDao.boardSelect(vo);
+		System.out.println("========================="+vo+"===================");
+		return 1;
+
 	}
 
 	@GetMapping("/boardUpdateForm.do")
@@ -161,9 +163,10 @@ public class BoardController {
 
 	@GetMapping("/boardSearch.do")
 	@ResponseBody
-	public List<BoardVO> boardSearch(String option, String keyvalue){
+	public List<BoardVO> boardSearch(String option, String keyvalue) {
 		return boardDao.getSearchList(option, keyvalue);
 	}
+
 	/*
 	 * @PostMapping("/boardUpdateForm.do") public String boardUpdateForm(Model
 	 * model, BoardVO vo) { model.addAttribute("board", vo); return

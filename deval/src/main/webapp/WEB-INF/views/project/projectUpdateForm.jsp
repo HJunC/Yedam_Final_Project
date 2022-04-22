@@ -5,8 +5,6 @@
 <c:set var="resources" value="${pageContext.request.contextPath}/resources"/>
 <link rel="stylesheet" href="${resources}/css/common/toastui-editor.min.css" />
 <link rel="stylesheet" href="${resources}/css/common/toastui-editor-dark.min.css" />
-
-<!-- Home Section -->
 <section class="page-section bg-dark-alfa-50 bg-scroll" data-background="${resources}/images/full-width-images/section-bg-11.jpg" id="home">
     <div class="container relative">
 
