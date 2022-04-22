@@ -104,19 +104,11 @@
 					<ul class="mn-sub mn-has-multi">
 
 						<li class="mn-sub-multi">
-							<a class="mn-group-title">Free</a>
 							<ul>
-								<li><a href="${root}/board/free.do">자유게시판</a></li>
 								<li><a href="${root}/board/notice.do">공지사항</a></li>
-								<li><a href="${root}/board/technical.do">최신기술</a></li>
-							</ul>
-						</li>
-						<li class="mn-sub-multi">
-							<a class="mn-group-title">Code</a>
-							<ul>
 								<li><a href="${root}/cq/codeList.do">코드공유</a></li>
-								<li><a href="${root}/cq/reviewList.do">코드리뷰</a></li>
-								<li><a href="${root}/cq/questionList.do">질문</a></li>
+								<li><a href="${root}/board/technical.do">최신기술</a></li>
+								<li><a href="${root}/board/free.do">자유게시판</a></li>
 							</ul>
 						</li>
 					</ul>

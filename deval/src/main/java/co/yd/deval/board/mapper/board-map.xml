@@ -98,7 +98,7 @@
 </select>
 
 	<select id="getMainPageList" resultType="co.yd.deval.board.service.BoardVO">
-		SELECT BOARD_NO, TITLE, HIT, BOARD_TYPE_NO
+		SELECT BOARD_NO, TITLE, HIT, BOARD_TYPE_NO, BOARD_DATE
 		FROM MAIN_PAGE_BOARD_VIEW
 	</select>
 

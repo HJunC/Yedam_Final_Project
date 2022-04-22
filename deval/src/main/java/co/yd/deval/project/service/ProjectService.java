@@ -47,6 +47,8 @@ public interface ProjectService {
      */
     ProjectInfoDTO getProject(int projectNo);
 
+
+
     /***
      * 검색 서비스 / 페이징 처리
      * @param vo
@@ -74,4 +76,6 @@ public interface ProjectService {
     List<ProjectVO> findEndProject(String id);
     List<ProjectVO> findDoingProject(String id);
     List<ProjectVO> findWaitingProject(String id);
+
+    void cancelRequest(String memberId, int exceptionProjectNo);
 }

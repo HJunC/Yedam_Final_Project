@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface CodeService {
 	
-	List<CodeVO> cqList(int no);
+	List<CodeVO> cqList(CodeVO vo);
 	CodeVO cqSelect(CodeVO vo);
 	
 	int codeInsert(CodeVO vo);
@@ -13,4 +13,6 @@ public interface CodeService {
 	
 	void codeHitUp(CodeVO vo);
 	void codeRecommendUp(CodeVO vo);
+
+	int getTotalCount(CodeVO vo);
 }

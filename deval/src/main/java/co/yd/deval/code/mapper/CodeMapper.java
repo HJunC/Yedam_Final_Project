@@ -6,7 +6,7 @@ import co.yd.deval.code.service.CodeVO;
 
 public interface CodeMapper {
 
-	List<CodeVO> cqList(int no);
+	List<CodeVO> cqList(CodeVO vo);
 	CodeVO cqSelect(CodeVO vo);
 	int codeInsert(CodeVO vo);
 	int codeUpdate(CodeVO vo);
@@ -14,5 +14,7 @@ public interface CodeMapper {
 	
 	void codeHitUp(CodeVO vo);
 	void codeRecommendUp(CodeVO vo);
+
+	int getTotalCount(CodeVO vo);
 	
 }

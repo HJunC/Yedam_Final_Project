@@ -3,10 +3,7 @@ package co.yd.deval.project.serviceImpl;
 import co.yd.deval.project.mapper.ProjectMapper;
 import co.yd.deval.project.mapper.ProjectRequestMapper;
 import co.yd.deval.project.mapper.ProjectTeamMapper;
-import co.yd.deval.project.service.ProjectRequestService;
-import co.yd.deval.project.service.ProjectRequestVO;
-import co.yd.deval.project.service.ProjectTeamVO;
-import co.yd.deval.project.service.ProjectVO;
+import co.yd.deval.project.service.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,11 +23,13 @@ public class ProjectRequestServiceImpl implements ProjectRequestService {
     private final ProjectRequestMapper mapper;
     private final ProjectTeamMapper teamMapper;
     private final ProjectMapper projectMapper;
+    private final ProjectService projectService;
 
-    public ProjectRequestServiceImpl(ProjectRequestMapper mapper, ProjectTeamMapper teamMapper, ProjectMapper projectMapper) {
+    public ProjectRequestServiceImpl(ProjectRequestMapper mapper, ProjectTeamMapper teamMapper, ProjectMapper projectMapper, ProjectService projectService) {
         this.mapper = mapper;
         this.teamMapper = teamMapper;
         this.projectMapper = projectMapper;
+        this.projectService = projectService;
     }
 
     @Override
@@ -89,6 +88,9 @@ public class ProjectRequestServiceImpl implements ProjectRequestService {
                 .projectNo(vo.getProjectNo())
                 .state("1").build();
         teamMapper.insertProjectTeam(teamVO);
+
+        // 지원중인 나머지 요청 삭제
+        projectService.cancelRequest(vo.getMemberId(), vo.getProjectNo());
 
         // 요청 상태 변경
         vo.setUpdateState("2"); // 승인

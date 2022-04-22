@@ -2,6 +2,7 @@ package co.yd.deval.code.service;
 
 import java.util.Date;
 
+import co.yd.deval.common.Criteria;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Getter;
@@ -21,7 +22,9 @@ public class CodeVO {
 	private int hit;
 	private int recommend;
 	private String writer;
-	private String gitUri;
+	private int projectNo;
 	private int boardTypeNo;
 
+	private int rn;
+	private Criteria criteria;
 }

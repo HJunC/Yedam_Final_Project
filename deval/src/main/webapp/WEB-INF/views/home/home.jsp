@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <c:set var="resources" value="${pageContext.request.contextPath}/resources"/>
 <!-- Fullwidth Slider -->
 <div class="home-section fullwidth-slider-fade bg-dark light-content" id="home">
@@ -94,7 +95,7 @@
                 <c:forEach items="${noticeList}" var="item">
                     <li class="d-flex justify-content-between align-items-center">
                         <a href="boardNo${item.boardNo}">${item.title}</a>
-                        <span style="color: #919191">2022-03-20</span>
+                        <span style="color: #919191"><fmt:formatDate pattern="yyyy-MM-dd" value="${item.boardDate}" /></span>
                     </li>
                 </c:forEach>
             </ul>
@@ -113,7 +114,7 @@
                     <ul class="clearlist">
                         <c:forEach items="${codeList}" var="item">
                             <li class="d-flex justify-content-between">
-                                <a href="code/codeSelectOne.do?boardNo=${item.boardNo}">${item.title}</a>
+                                <a href="cq/cqSelect.do?cqNo=${item.boardNo}">${item.title}</a>
                                 <span style="color: #919191; padding-right: 8px;"><i class="fa fa-eye"></i>&nbsp;&nbsp;${item.hit}</span>
                             </li>
                         </c:forEach>
