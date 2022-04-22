@@ -29,7 +29,7 @@ public interface MentoServService {
 	int mentoServAccept(List<MentoServVO> mentoServiceNo);
 	
 	//my Page
-	MentoServVO findWaitMento(String id);
+	List<MentoServVO> findWaitMento(String id);
 	List<MentoServVO> findDoingMento(String id);
 	List<MentoServVO> findEndMento(String id);
 	

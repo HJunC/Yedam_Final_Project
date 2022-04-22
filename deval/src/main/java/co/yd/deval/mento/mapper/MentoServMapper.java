@@ -26,7 +26,7 @@ public interface MentoServMapper {
 		int mentoServAccept(MentoServVO vo);
 		
 		//my Page
-		MentoServVO findWaitMento(String id);
+		List<MentoServVO> findWaitMento(String id);
 		List<MentoServVO> findDoingMento(String id);
 		List<MentoServVO> findEndMento(String id);
 		

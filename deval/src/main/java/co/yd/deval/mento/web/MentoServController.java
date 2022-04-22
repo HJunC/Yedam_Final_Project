@@ -150,20 +150,11 @@ public class MentoServController {
 				mentoDAO.mentoUpdate(vo.getMentoId());
 				//수락시 채팅방 생성
 				ChatRoomVO chatVo = new ChatRoomVO();
-				List<ChatRoomVO> roomList = chatRoomDAO.chatList();
 				chatVo.setEntryId(vo.getMentiId());
 				chatVo.setOwnerId(vo.getMentoId());
-				Boolean isContainMento = false; //초기값
-				Boolean isContainMenti = false;
-				for (ChatRoomVO cahChatRoomVO : roomList) {
-					if(cahChatRoomVO.getOwnerId().equals(chatVo.getOwnerId())) {
-						isContainMento = true;
-					}
-					if(cahChatRoomVO.getEntryId().equals(chatVo.getEntryId())) {
-						isContainMenti = true;
-					}
-				}
-				if(!isContainMento && !isContainMenti) {
+				ChatRoomVO cahChatRoomVO = chatRoomDAO.selectChat(chatVo);
+					
+				if(cahChatRoomVO == null) {
 					chatRoomDAO.makeChatRoom(chatVo);
 				}
 				// tradeLog 상태 변경 '처리전'-> '처리중'

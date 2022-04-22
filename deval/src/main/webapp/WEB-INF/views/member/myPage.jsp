@@ -650,6 +650,7 @@
       var td1 = $('<td>')
       var td2 = $('<td>')
       var td3 = $('<td>')
+      var td4 = $('<td>')
       var no;
       if(n == 1) {
          no = idx.projectNo
