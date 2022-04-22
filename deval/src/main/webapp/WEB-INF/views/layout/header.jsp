@@ -222,7 +222,8 @@
 	
 	function makeTr(data){
 		var tr = $('<tr>').on('click',function(){
-			window.open("${root}/chatSelect.do?roomId="+data.roomId)
+			var option = "top=50, left=60, width=500, height=750, resizable=0, scrollbars=no";
+			window.open("${root}/chatSelect.do?roomId="+data.roomId,"",option)
 		});
 		tr.append($('<td>').text(data.ownerId),$('<td>').text(data.entryId))
 		return tr;
