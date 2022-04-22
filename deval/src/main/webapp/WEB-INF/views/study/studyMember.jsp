@@ -183,20 +183,23 @@
                 <!-- button -->
                <c:if test="${leaderId.leaderId ne user }">
 	                <div align="center" style="border-radius: 5px; margin: 20px;">
-			           	<button class="btn btn-mod btn-glass btn-round btn-small" id="teambyebye" name="teambyebye" onclick="teambyebyeBtn('${study[0].studyNo}', '${user}')">팀 나가기</button>
+			           	<button class="btn btn-mod btn-glass btn-round btn-small" id="teambyebye" name="teambyebye" onclick="teambyebyeBtn('${study[0].studyNo}', '${user}')"
+			           	style="border-radius: 82px; margin-bottom: 30px; padding: 10px 25px 10px;">팀 나가기</button>
 			        </div>
 			   </c:if>     
                
                <c:if test="${leaderId.leaderId eq user }">
                 <c:if test="${leaderId.state eq 0 }">
 	               <div align="center" style="border-radius: 5px; margin: 20px;">
-			           	<button class="btn btn-mod btn-glass btn-round btn-small" id="teamPause" name="teamPause" onclick="teamPauseBtn(${study[0].studyNo})">스터디 모집중단</button>
+			           	<button class="btn btn-mod btn-glass btn-round btn-small" id="teamPause" name="teamPause" onclick="teamPauseBtn(${study[0].studyNo})"
+			           	style="border-radius: 82px; margin-bottom: 30px; padding: 10px 25px 10px;">스터디 모집중단</button>
 			        </div>
              	</c:if>
               
               	<c:if test="${leaderId.state eq 1  || (leaderId.rcnt ne leaderId.maxRcnt && leaderId.state eq 2)}">
 	                <div align="center" style="border-radius: 5px; margin: 20px;">
-			           	<button class="btn btn-mod btn-glass btn-round btn-small" id="teamRestart" name="teamRestart" onclick="teamRestartBtn(${study[0].studyNo})">스터디 모집재개</button>
+			           	<button class="btn btn-mod btn-glass btn-round btn-small" id="teamRestart" name="teamRestart" onclick="teamRestartBtn(${study[0].studyNo})"
+			           	style="border-radius: 82px; margin-bottom: 30px; padding: 10px 25px 10px;">스터디 모집재개</button>
 			        </div>
               	</c:if>
               </c:if>

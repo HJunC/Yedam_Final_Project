@@ -4,48 +4,44 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<!-- Section -->
-<section class="page-section bg-dark light-content">
-	<div class="container relative">
-
-		<div class="row">
-
-			<!-- Content -->
-			<div class="col-md-8 offset-lg-1 mb-sm-80 order-first order-md-last">
-
-				<!-- Post -->
-				<div class="blog-item">
-
-					<!-- Post Title -->
-					<h2 class="blog-item-title">
-						<a href="blog-single-sidebar-right-dark.html">Post with media
-							gallery</a>
-					</h2>
-
-					<!-- Author, Categories, Comments -->
-					<div class="blog-item-data">
-						<a href="#"><i class="fa fa-clock"></i> 5 December</a> <span
-							class="separator">&nbsp;</span> <a href="#"><i
-							class="fa fa-user"></i> John Doe</a> <span class="separator">&nbsp;</span>
-						<i class="fa fa-folder-open"></i> <a href="">Design</a>, <a
-							href="#">Branding</a> <span class="separator">&nbsp;</span> <a
-							href="#"><i class="fa fa-comments"></i> 5 Comments</a>
-					</div>
-
-					<!-- Text Intro -->
-					<div class="blog-item-body">
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-							Mauris non laoreet dui. Morbi lacus massa, euismod ut turpis
-							molestie, aliquam in ligula ac lacus blandit commodo vel luctus
-							quam. tristique sodales est. Integer sit amet mi id sapien tempor
-							molestie in nec massa.</p>
-					</div>
-				</div>
-				<!-- End Post -->
-			</div>
-			<!-- End Content -->
-		</div>
-	</div>
-</section>
+<body>
+<div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active" data-bs-interval="10000">
+      <img src="..." class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>First slide label</h5>
+        <p>Some representative placeholder content for the first slide.</p>
+      </div>
+    </div>
+    <div class="carousel-item" data-bs-interval="2000">
+      <img src="..." class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Second slide label</h5>
+        <p>Some representative placeholder content for the second slide.</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="..." class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Third slide label</h5>
+        <p>Some representative placeholder content for the third slide.</p>
+      </div>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
 </body>
 </html>

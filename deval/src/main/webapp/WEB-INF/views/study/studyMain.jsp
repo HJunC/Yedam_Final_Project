@@ -32,7 +32,6 @@
                          <c:if test="${not empty study}">
                            <a href="studyReq.do" class="btn btn-mod btn-w btn-small btn-round mx-md-1">Team Applicant</a>
                         </c:if>
-                          <!--  <a href="chat.do">채팅</a> -->
                         </div>
 					</div>
 				</div>
