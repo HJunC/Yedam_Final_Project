@@ -99,7 +99,7 @@
 				      	 <sec:csrfInput/>
 				      	   <%-- <sec:authentication property="principal.username"/> --%>  
 				      	  <c:if test="${study.leaderId eq member.name}">
-					         <button type="submit" class="btn btn-mod btn-w btn-round">수정</button>
+					         <button type="submit" class="btn btn-mod btn-w btn-round" style="border-radius: 24px;">수정</button>
 					      </c:if>
 					      <c:if test="${study.leaderId ne member.name}">
 					         <button type="button" class="btn btn-mod btn-w btn-round" style="border-radius: 24px;" onclick="studyQna('${study.leaderId}')">문의</button>
