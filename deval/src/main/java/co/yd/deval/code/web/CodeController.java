@@ -7,7 +7,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,13 +23,6 @@ import co.yd.deval.common.Criteria;
 import co.yd.deval.common.PageDTO;
 import co.yd.deval.project.service.ProjectService;
 import co.yd.deval.project.service.ProjectTeamVO;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.security.Principal;
 
 @Controller
 @RequestMapping("/cq")
@@ -65,12 +57,6 @@ public class CodeController {
 		model.addAttribute("lists", codeDAO.cqList(vo));
 		model.addAttribute("type", vo.getBoardTypeNo());
 		return "code/questionList";
-	}
-	
-	@GetMapping("/reviewList.do")
-	public String reviewList(Model model) {
-		model.addAttribute("lists",replyDAO.reviewList());
-		return "code/reviewList";
 	}
 	
 	@GetMapping("/reviewSelectList.do")
