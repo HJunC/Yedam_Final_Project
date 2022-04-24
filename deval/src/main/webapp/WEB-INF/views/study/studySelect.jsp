@@ -85,8 +85,8 @@
 					</div>
 					
 					<!-- Text Intro -->
-					<div class="blog-item-body col-lg-11">
-						<p style="margin-top: 82px; margin-bottom: 80px; padding: 24px; font-size: 15px;">${study.subject }</p>
+					<div class="blog-item-body col-lg-11" style="margin-top: -128px; padding: 10px;">
+						<p style="margin-top: 40px; margin-bottom: 80px; padding: 24px; font-size: 15px;">${study.subject }</p>
 					</div>
 					
 					<!-- Divider -->

@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="${resources}/css/common/toastui-editor-dark.min.css" />
 <link rel="stylesheet" href="${resources}/css/common/toastui-editor.min.css" />
 <link rel="stylesheet" href="${resources}/css/common/toastui-editor-dark.min.css" />
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <!-- Title -->
                 <section class="small-section bg-dark-alfa-50" data-background="images/full-width-images/section-bg-19.jpg">
@@ -253,7 +254,8 @@
 			}
 			
 			if(chkCnt > 2){
-				alert("스터디 기술은 2개까지 선택가능합니다.");
+				/* alert("스터디 기술은 2개까지 선택가능합니다."); */
+				swal("주의!", "스터디 기술은 2개까지 선택가능합니다.", "warning");
 				obj.checked = false;
 				return false;
 			}
@@ -308,7 +310,8 @@
 				},
 				error : function(err) {
 					console.log("err", err);
-					alert('모든 정보를 입력해주세요');
+					/* alert('모든 정보를 입력해주세요'); */
+					swal("주의!", "모든 정보를 입력해주세요.", "warning");
 				}
 			});
 		}

@@ -7,6 +7,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <c:set var="resources" value="${pageContext.request.contextPath}/resources" />
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <!-- 모달창 링크 -->
 <link rel="stylesheet" href="${resources}/css/custom/study_modal_style.css">
@@ -399,7 +400,7 @@
 			type:"get",
 			success:function(result){
 				if(result == 0){
-					alert('내정보를 등록해주세요');
+					swal('모집을 원하시면 먼저 내정보를 등록해주세요');
 				} else {
 					location.href='addStudy.do';
 				}
