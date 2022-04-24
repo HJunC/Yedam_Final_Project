@@ -362,7 +362,12 @@
 									success : function(result) {
 										console.log("succ", result);
 										if (result != "0") {
-											alert("나의 스터디 정보 입력을 성공하였습니다.");
+										/* 	alert("나의 스터디 정보 입력을 성공하였습니다."); */
+										
+											swal('내정보 입력이 완료되었습니다!', '스터디 참가와 모집이 가능합니다.', 'success')
+											.then(function(e){
+												location.href="studyList.do";             
+											});
 										}
 									},
 									error : function(err) {
@@ -400,7 +405,8 @@
 			type:"get",
 			success:function(result){
 				if(result == 0){
-					swal('모집을 원하시면 먼저 내정보를 등록해주세요');
+					swal('등록된 내정보가 없습니다!', '모집을 원하시면 내정보를 등록해주세요.', 'info');
+					
 				} else {
 					location.href='addStudy.do';
 				}

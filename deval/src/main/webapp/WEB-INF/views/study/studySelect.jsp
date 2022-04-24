@@ -10,6 +10,7 @@
 <meta charset="UTF-8">
 <title>StudySelect.jsp</title> 
 <link rel="stylesheet" href="${resources}/css/custom/study_modal_style.css">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
       <style>
       	.comment-avatar {
 		    width: 30px;
@@ -339,8 +340,13 @@
 										},
 									error : function(err) {
 										    console.log("error", err);
-											alert('참가 신청을 원하시면, 스터디 검색란에서 내 정보를 입력해주세요.');
-											history.back();
+											/* alert('참가 신청을 원하시면, 스터디 검색란에서 내 정보를 입력해주세요.');
+											history.back(); */
+
+											swal('주의!', '참가 신청을 원하시면 내정보를 등록해주세요.', 'info')
+											.then(function(){
+												history.back();
+											});
 										}
 								});
 				      		
@@ -362,8 +368,13 @@
 											console.log(result);
 											 if (result.state != null || result.state != '0' ) {
 												
-												alert("스터디 참가 신청을하였습니다.");
-												location.href = "studyMain.do";
+												// alert("스터디 참가 신청을하였습니다.");
+												//location.href = "studyMain.do";
+												
+												swal('완료!', '스터디 참가 신청을하였습니다.', 'success')
+												.then(function(e){
+													location.href = "studyMain.do";
+												});
 												
 											} 
 										},

@@ -7,6 +7,8 @@
 <head>
 	<meta charset="UTF-8">
 	<title>studyReq.jsp</title>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	
 	<!-- 정보 창 탬플릿 링크 -->
 	<link rel="stylesheet" href="${resources}/css/custom/study_req_style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/3.6.95/css/materialdesignicons.css">
@@ -127,8 +129,13 @@
                      $("#div_ajax_load_image").hide();
                  },
     			success: function(json) {
-    				alert(id + '님을 거절했습니다.');
-    				location.reload();
+    				/* alert(id + '님을 거절했습니다.');
+    				location.reload(); */
+    				
+    				swal('거절', id + '님을 거절했습니다.', 'error')
+					.then(function(){
+						location.reload();           
+					});
     			},
     			error: function(json) {
     			}
@@ -154,10 +161,17 @@
 					console.log(result);
 					
 					if (result == 0){
-						alert('참가 인원을 초과 했습니다.');
+						/* alert('참가 인원을 초과 했습니다.'); */
+						swal('인원을 초과했습니다!', '승인이 불가능합니다', 'error');
+						
 					} else {
-						alert(id + '님이 ' + sno + '번 스터디에 참가했습니다.');
-						location.reload();
+						/* alert(id + '님이 ' + sno + '번 스터디에 참가했습니다.');
+						location.reload(); */
+						
+						swal('참가!', id + '님이 ' + sno + '번 스터디에 참가했습니다.', 'success')
+						.then(function(){
+							location.reload();           
+						});
 					}
 				},
 				error : function(err) {

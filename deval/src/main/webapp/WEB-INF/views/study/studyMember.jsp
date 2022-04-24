@@ -7,6 +7,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>studyMember.jsp</title>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	
 	<!-- image 반복 -->
 	<script type="text/javascript">
@@ -214,8 +215,13 @@
         				success : function(result) {
         					console.log("succ", result);
         					if (result == 1) {
-        						alert("스터디 모집을 중단하였습니다.");
-        						location.reload();
+        						/* alert("스터디 모집을 중단하였습니다.");
+        						location.reload(); */
+        						
+        						swal('모집중단!', '스터디 모집을 중단하였습니다.', 'success')
+								.then(function(e){
+									location.reload();        
+								});
         					}
         				},
         				error : function(err) {
@@ -235,8 +241,13 @@
         				success : function(result) {
         					console.log("succ", result);
         					if (result == 1) {
-        						alert("스터디 모집을 재개하였습니다.");
-        						location.reload();
+        						/* alert("스터디 모집을 재개하였습니다.");
+        						location.reload(); */
+        						
+        						swal('모집재개!', '스터디 모집을 재개하였습니다.', 'success')
+								.then(function(e){
+									location.reload();        
+								});
         					}
         				},
         				error : function(err) {
@@ -255,8 +266,13 @@
         				success : function(result) {
         					console.log("succ", result);
         					if (result == 1) {
-        						alert(id + "님 " + sno +"번 스터디를 중단하였습니다.");
-        						location.href = "studyMain.do";
+        						/* alert(id + "님 " + sno +"번 스터디를 중단하였습니다.");
+        						location.href = "studyMain.do"; */
+        						
+        						swal('스터디 중단', id + '님 ' + sno +'번 스터디를 나갔습니다.', 'success')
+								.then(function(e){
+									location.href = "studyMain.do";       
+								});
         					}
         				},
         				error : function(err) {

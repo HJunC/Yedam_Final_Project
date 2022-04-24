@@ -304,8 +304,13 @@
 				success : function(result) {
 					console.log("succ", result);
 					if (result != "0") {
-						alert("스터디 등록이 되었습니다");
-						location.href="studyMain.do";
+						/* alert("스터디 등록이 되었습니다");
+						location.href="studyMain.do"; */
+						
+						swal('완료!', '스터디 등록이 되었습니다.', 'success')
+						.then(function(){
+							location.href="studyMain.do";             
+						});
 					}
 				},
 				error : function(err) {

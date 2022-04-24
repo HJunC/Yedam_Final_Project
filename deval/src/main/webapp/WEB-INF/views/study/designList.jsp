@@ -7,7 +7,7 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <body>
 <script>
-swal("Good job!", "You clicked the button!", "warning");
+
 </script>
 </body>
 </html>
