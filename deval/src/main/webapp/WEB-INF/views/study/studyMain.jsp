@@ -43,7 +43,7 @@
 		<!-- End Hero Content -->
 	 	<!-- Scroll Down -->
            <div class="local-scroll scroll-down-wrap wow fadeInUpShort" data-wow-offset="0">
-               <a href="#about" class="scroll-down"><i class="scroll-down-icon"></i><span class="sr-only">Scroll to the next section</span></a>
+               <a href="#faq" class="scroll-down"><i class="scroll-down-icon"></i><span class="sr-only">Scroll to the next section</span></a>
            </div>
         <!-- End Scroll Down -->
 		</div>
@@ -152,7 +152,7 @@
                     </div>
 	
  			<!-- FAQ Section -->
-                <section class="page-section bg-dark light-content">
+                <section class="page-section bg-dark light-content" id="faq">
                     <div class="container relative">
                         
                         <div class="section-text mb-60 mb-sm-40">
