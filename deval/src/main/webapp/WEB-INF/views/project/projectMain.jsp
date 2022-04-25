@@ -12,7 +12,7 @@
 
             <div class="col-md-8">
                 <div class="wow fadeInUpShort" data-wow-delay=".1s">
-                    <h1 class="hs-line-7 mb-20 mb-xs-10">개발 프로젝트</h1>
+                    <h1 class="hs-line-7 mb-20 mb-xs-10">프로젝트</h1>
                 </div>
                 <div class="wow fadeInUpShort" data-wow-delay=".2s">
                     <p class="hs-line-6 opacity-075 mb-20 mb-xs-0">
@@ -181,7 +181,7 @@
 <section class="small-section bg-dark light-content">
     <div class="container relative">
         <div>
-            <h3 class="me-4" style="display: inline-block;">팀 프로젝트 찾기</h3>
+            <h3 class="me-4" style="display: inline-block;">프로젝트 찾기</h3>
             <a href="search.do?pageNum=1&amount=10" class="btn btn-mod btn-border-w btn-round btn-small">프로젝트 더보기</a>
         </div>
         <div class="list-group project-list">
@@ -274,18 +274,16 @@
 
         <div class="row">
             <h3 class="me-4" style="display: inline-block;">완료된 프로젝트</h3>
-            <%--<c:forEach items="${completedList }" var="item">
-                ${item.projectName}
-            </c:forEach>--%>
+
             <!-- Post Item -->
             <div class="col-sm-6 col-md-4 col-lg-4 mb-md-50">
 
                 <div class="post-prev-img">
-                    <img src="${resources}/images/blog/post-prev-1.jpg" alt="" class="wow scaleOutIn" data-wow-duration="1.2s" />
+                    <img src="${resources}/images/project/00af24e03e3053570ac798b1e9bc0f56.jpg" alt="" class="wow scaleOutIn" data-wow-duration="1.2s" />
                 </div>
 
                 <div class="post-prev-title mb-10">
-                    Branding
+                    실시간 배송 알림 서비스
                 </div>
 
             </div>
@@ -295,11 +293,11 @@
             <div class="col-sm-6 col-md-4 col-lg-4 mb-md-50">
 
                 <div class="post-prev-img">
-                    <img src="${resources}/images/blog/post-prev-2.jpg" alt="" class="wow scaleOutIn" data-wow-duration="1.2s" />
+                    <img src="${resources}/images/project/9e1ce5c80084f430bd250c484acb2ab9.jpg" alt="" class="wow scaleOutIn" data-wow-duration="1.2s" />
                 </div>
 
                 <div class="post-prev-title mb-10">
-                    Design & Development
+                    지역 커뮤니티
                 </div>
 
             </div>
@@ -309,11 +307,11 @@
             <div class="col-sm-6 col-md-4 col-lg-4 mb-md-50">
 
                 <div class="post-prev-img">
-                    <img src="${resources}/images/blog/post-prev-3.jpg" alt="" class="wow scaleOutIn" data-wow-duration="1.2s" />
+                    <img src="${resources}/images/project/cc1d9bdb189fe961bcd502d88aa882d7.jpg" alt="" class="wow scaleOutIn" data-wow-duration="1.2s" />
                 </div>
 
                 <div class="post-prev-title mb-10">
-                    Marketing
+                    주식 투자 앱 개발
                 </div>
 
             </div>

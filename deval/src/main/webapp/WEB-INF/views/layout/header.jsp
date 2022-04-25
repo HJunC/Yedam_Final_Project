@@ -122,7 +122,7 @@
 				</li>
 
 				<li>
-					<a href="${root}/project/main.do">팀 프로젝트</a>
+					<a href="${root}/project/main.do">프로젝트</a>
 				</li>
 				
 				<li>
