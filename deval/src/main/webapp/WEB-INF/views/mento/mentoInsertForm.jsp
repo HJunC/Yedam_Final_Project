@@ -31,7 +31,7 @@
                     </div>
                     <!-- 자기소개글-->
                     <div class="mb-20 mb-md-10" >
-                        <textarea name="text" id="info" name="info" class="input-md round form-control bg-dark-input" rows="4" placeholder="자기소개글을 써주세요." maxlength="400"></textarea>
+                        <textarea name="info" id="info" class="input-md round form-control bg-dark-input" rows="4" placeholder="자기소개글을 써주세요." maxlength="400"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
