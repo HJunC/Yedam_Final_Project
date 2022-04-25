@@ -15,7 +15,7 @@
  <main id="main">    
             
                 <!-- Home Section -->
-                <section class="small-section bg-dark-alfa-50 bg-scroll light-content" data-background="images/full-width-images/section-bg-19.jpg" id="home">
+                <section class="small-section bg-dark-alfa-50 bg-scroll light-content" id="home">
                     <div class="container relative pt-70">
                     
                         <div class="row">
