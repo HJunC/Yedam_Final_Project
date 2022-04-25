@@ -475,6 +475,12 @@
 	    		    	  logPrice.value = parseInt($('#totalPrice').text());
 	    		    	  
 	    		    	  //insert submit
+	    		    	  msg = {
+							memberId : "${mento.mentoId}",
+                    		subject : "${member.memberId}님이 서비스를 신청했습니다."
+                    				}
+                    		webSocket.send(JSON.stringify(msg));
+	    		    	  
 	    		    	  alert('서비스가 성공적을 신청되었습니다.');
 	    				  frm.submit();
     				  }
