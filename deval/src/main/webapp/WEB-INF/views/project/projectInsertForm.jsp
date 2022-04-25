@@ -187,8 +187,7 @@
                             <label for="recruitEdt">프로젝트 모집 마감일</label>
                             <p class="input-info">최소 1일, 최대 15일</p>
                             <div class="form-group">
-                                <input type="date" name="recruitEdt" id="recruitEdt" class="input-lg round form-control bg-dark-input" required aria-required="true">
-                                <input type="time" id="recruitEdtTime" class="input-lg round form-control bg-dark-input" value="00:00" required aria-required="true">
+                                <input type="datetime-local" name="recruitEdt" id="recruitEdt" class="input-lg round form-control bg-dark-input" required aria-required="true">
                             </div>
                         </div>
                         <div class="form-group">
@@ -236,7 +235,7 @@
   var today = new Date();
   today.setDate(today.getDate() + 1);
   const recruitEdt = document.getElementById("recruitEdt");
-  recruitEdt.setAttribute("value", moment(today).format("YYYY-MM-DD"));
+  recruitEdt.setAttribute("value", moment(today).format("YYYY-MM-DD") + "");
   recruitEdt.setAttribute("min", moment(today).format("YYYY-MM-DD"));
   recruitEdt.setAttribute("max", moment(today.setDate(today.getDate() + 14)).format("YYYY-MM-DD")); // 프로젝트 모집 최대 마감일
 
@@ -336,7 +335,7 @@
     }
 
     delete data.langArray;
-    data.recruitEdt = data.recruitEdt + " " + $("#recruitEdtTime").val() + ":00";
+    data.recruitEdt = data.recruitEdt.replace("T", " ") + ":00";
     data.subject = editorObject.getHTML();
 
     if (data.subject === '<p><br></p>') {

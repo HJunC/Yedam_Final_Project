@@ -268,6 +268,67 @@
 <hr class="mt-0 mb-0 white" />
 <!-- End Divider -->
 
+<!-- Section -->
+<section class="page-section bg-dark light-content pt-60">
+    <div class="container relative">
+
+        <div class="row">
+            <h3 class="me-4" style="display: inline-block;">완료된 프로젝트</h3>
+            <%--<c:forEach items="${completedList }" var="item">
+                ${item.projectName}
+            </c:forEach>--%>
+            <!-- Post Item -->
+            <div class="col-sm-6 col-md-4 col-lg-4 mb-md-50">
+
+                <div class="post-prev-img">
+                    <img src="${resources}/images/blog/post-prev-1.jpg" alt="" class="wow scaleOutIn" data-wow-duration="1.2s" />
+                </div>
+
+                <div class="post-prev-title mb-10">
+                    Branding
+                </div>
+
+            </div>
+            <!-- End Post Item -->
+
+            <!-- Post Item -->
+            <div class="col-sm-6 col-md-4 col-lg-4 mb-md-50">
+
+                <div class="post-prev-img">
+                    <img src="${resources}/images/blog/post-prev-2.jpg" alt="" class="wow scaleOutIn" data-wow-duration="1.2s" />
+                </div>
+
+                <div class="post-prev-title mb-10">
+                    Design & Development
+                </div>
+
+            </div>
+            <!-- End Post Item -->
+
+            <!-- Post Item -->
+            <div class="col-sm-6 col-md-4 col-lg-4 mb-md-50">
+
+                <div class="post-prev-img">
+                    <img src="${resources}/images/blog/post-prev-3.jpg" alt="" class="wow scaleOutIn" data-wow-duration="1.2s" />
+                </div>
+
+                <div class="post-prev-title mb-10">
+                    Marketing
+                </div>
+
+            </div>
+            <!-- End Post Item -->
+
+        </div>
+
+    </div>
+</section>
+<!-- End Section -->
+
+<!-- Divider -->
+<hr class="mt-0 mb-0 white" />
+<!-- End Divider -->
+
 <!-- Process Section -->
 <section class="page-section bg-dark light-content">
     <div class="container relative">
