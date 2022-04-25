@@ -475,7 +475,7 @@
 	    		    	  logPrice.value = parseInt($('#totalPrice').text());
 	    		    	  
 	    		    	  //insert submit
-	    		    	  console.log('서비스가 성공적을 신청되었습니다.');
+	    		    	  alert('서비스가 성공적을 신청되었습니다.');
 	    				  frm.submit();
     				  }
     			  }
