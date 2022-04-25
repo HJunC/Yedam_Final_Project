@@ -388,5 +388,12 @@
 		FROM STUDY_INFO
 		WHERE MEMBER_ID = #{memberId}
 	</select>
+	
+	<select id="teamAllMember" resultType="co.yd.deval.study.service.StudyReqVO">
+		SELECT *
+		FROM STUDY_REQUEST
+		WHERE STATE = 1
+        AND study_no = #{studyNo}
+	</select>
 
 </mapper>

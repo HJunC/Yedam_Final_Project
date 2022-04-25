@@ -7,6 +7,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>studyMember.jsp</title>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	
 	<!-- image 반복 -->
 	<script type="text/javascript">
@@ -183,20 +184,23 @@
                 <!-- button -->
                <c:if test="${leaderId.leaderId ne user }">
 	                <div align="center" style="border-radius: 5px; margin: 20px;">
-			           	<button class="btn btn-mod btn-glass btn-round btn-small" id="teambyebye" name="teambyebye" onclick="teambyebyeBtn('${study[0].studyNo}', '${user}')">팀 나가기</button>
+			           	<button class="btn btn-mod btn-glass btn-round btn-small" id="teambyebye" name="teambyebye" onclick="teambyebyeBtn('${study[0].studyNo}', '${user}')"
+			           	style="border-radius: 82px; margin-bottom: 30px; padding: 10px 25px 10px;">팀 나가기</button>
 			        </div>
 			   </c:if>     
                
                <c:if test="${leaderId.leaderId eq user }">
                 <c:if test="${leaderId.state eq 0 }">
 	               <div align="center" style="border-radius: 5px; margin: 20px;">
-			           	<button class="btn btn-mod btn-glass btn-round btn-small" id="teamPause" name="teamPause" onclick="teamPauseBtn(${study[0].studyNo})">스터디 모집중단</button>
+			           	<button class="btn btn-mod btn-glass btn-round btn-small" id="teamPause" name="teamPause" onclick="teamPauseBtn(${study[0].studyNo})"
+			           	style="border-radius: 82px; margin-bottom: 30px; padding: 10px 25px 10px;">스터디 모집중단</button>
 			        </div>
              	</c:if>
               
               	<c:if test="${leaderId.state eq 1  || (leaderId.rcnt ne leaderId.maxRcnt && leaderId.state eq 2)}">
 	                <div align="center" style="border-radius: 5px; margin: 20px;">
-			           	<button class="btn btn-mod btn-glass btn-round btn-small" id="teamRestart" name="teamRestart" onclick="teamRestartBtn(${study[0].studyNo})">스터디 모집재개</button>
+			           	<button class="btn btn-mod btn-glass btn-round btn-small" id="teamRestart" name="teamRestart" onclick="teamRestartBtn(${study[0].studyNo})"
+			           	style="border-radius: 82px; margin-bottom: 30px; padding: 10px 25px 10px;">스터디 모집재개</button>
 			        </div>
               	</c:if>
               </c:if>
@@ -211,8 +215,13 @@
         				success : function(result) {
         					console.log("succ", result);
         					if (result == 1) {
-        						alert("스터디 모집을 중단하였습니다.");
-        						location.reload();
+        						/* alert("스터디 모집을 중단하였습니다.");
+        						location.reload(); */
+        						
+        						swal('모집중단!', '스터디 모집을 중단하였습니다.', 'success')
+								.then(function(e){
+									location.reload();        
+								});
         					}
         				},
         				error : function(err) {
@@ -232,8 +241,13 @@
         				success : function(result) {
         					console.log("succ", result);
         					if (result == 1) {
-        						alert("스터디 모집을 재개하였습니다.");
-        						location.reload();
+        						/* alert("스터디 모집을 재개하였습니다.");
+        						location.reload(); */
+        						
+        						swal('모집재개!', '스터디 모집을 재개하였습니다.', 'success')
+								.then(function(e){
+									location.reload();        
+								});
         					}
         				},
         				error : function(err) {
@@ -252,8 +266,13 @@
         				success : function(result) {
         					console.log("succ", result);
         					if (result == 1) {
-        						alert(id + "님 " + sno +"번 스터디를 중단하였습니다.");
-        						location.href = "studyMain.do";
+        						/* alert(id + "님 " + sno +"번 스터디를 중단하였습니다.");
+        						location.href = "studyMain.do"; */
+        						
+        						swal('스터디 중단', id + '님 ' + sno +'번 스터디를 나갔습니다.', 'success')
+								.then(function(e){
+									location.href = "studyMain.do";       
+								});
         					}
         				},
         				error : function(err) {

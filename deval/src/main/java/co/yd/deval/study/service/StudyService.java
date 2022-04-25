@@ -13,6 +13,7 @@ public interface StudyService {
 	int findMaxStudyNo();
 	int studyInsert(StudyVO vo);
 	int studyUpdate(StudyVO vo);
+	List<StudyReqVO> teamAllMember(StudyReqVO vo);
 	
 	List<StudyVO> findEndStudy(String id);
 	List<StudyVO> findDoingStudy(String id);
