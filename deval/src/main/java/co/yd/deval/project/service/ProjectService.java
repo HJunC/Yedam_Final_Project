@@ -47,7 +47,11 @@ public interface ProjectService {
      */
     ProjectInfoDTO getProject(int projectNo);
 
-
+  /**
+   * 완료된 프로젝트 리스트
+   * @return
+   */
+  ProjectVO completedProjectList();
 
     /***
      * 검색 서비스 / 페이징 처리

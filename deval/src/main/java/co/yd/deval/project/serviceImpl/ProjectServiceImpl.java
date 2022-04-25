@@ -122,6 +122,11 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    public ProjectVO completedProjectList() {
+        return mapper.completedProjectList();
+    }
+
+    @Override
     public List<ProjectVO> getListWithPaging(ProjectVO vo) {
         return mapper.getListWithPaging(vo);
     }
