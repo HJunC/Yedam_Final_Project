@@ -50,8 +50,7 @@
 								</td>
 							<tr>
 								<td></td>
-								<td><input type="file" id="photo" name="file"
-									accept="image/*"></td>
+								<td></td>
 							</tr>
 						</table>
 

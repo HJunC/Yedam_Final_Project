@@ -64,7 +64,7 @@ td {
 										<option value="all">전체</option>
 										<option value="title">제목</option>
 										<option value="writer">작성자</option>
-		s								<option value="subject">내용</option>
+										<option value="subject">내용</option>
 									</select> <input type="text" name="keyvalue" id="codeSearch"
 										class="input-sm round" placeholder="검색"
 										style="width: 300px; height: 40px;" />
@@ -122,45 +122,7 @@ td {
 				</div>
 			</div>
 		</section>
-				<div class="table-responsive">
-					<table class="table shopping-cart-table">
-								<tr align="center">
-				<th width="50">No</th>
-					<th width="250">제목</th>
-					<th width="100">작성자</th>
-					<th width="100">작성일자</th>
-					<th width="50">조회수</th>
-					<th width="50">추천수</th>
-				</tr>
-
-
-						<c:forEach items="${technicList}" var="list3">
-							<tr class="active" onclick="technicSelect(${list3.boardNo})">
-								<td>${list3.boardNo}</td>
-								<th align="left">${list3.title}</th>
-								<td>${list3.writer}</td>
-								<td><fmt:formatDate pattern="yyyy-MM-dd" value="${list3.boardDate}" /></td>
-								<td>${list3.hit}</td>
-								<td>${list3.recommend}</td>
-							</tr>
-						</c:forEach>
-					</table>
-	<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
-				<div align="right">
-					<input class="btn btn-mod btn-round btn-border-w btn-small"
-						type="button" value="글쓰기" onclick="location.href='write.do?no=3'">
-				</div>
-			</sec:authorize>
-			<form action="technicSelect.do" id="boardSS3">
-				<input type="hidden" name="boardNo" id="boardSe3" />
-			</form>
-
-		<div class="pagination">
-				<ul class="pagination" id="pagination"></ul>
-			</div>
-		</div>
-	</div>
-
+</div>
 
 
 

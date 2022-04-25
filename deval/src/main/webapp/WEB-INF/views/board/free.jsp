@@ -132,62 +132,7 @@ td {
 				</div>
 		</section>
 	</div>
-								</select> <input name="keyword"> <input type="button"
-									onclick="searchData()" value="조회">
-							</form>
-
-						</div>
-
-						<div class="table-responsive">
-							<table class="table shopping-cart-table">
-								<tr align="center">
-									<th width="50">No</th>
-									<th width="250">제목</th>
-									<th width="100">작성자</th>
-									<th width="100">작성일자</th>
-									<th width="50">조회수</th>
-									<th width="100">추천수</th>
-								</tr>
-								<c:forEach items="${boardList}" var="list">
-									<tr class="active" onclick="freeSelect(${list.boardNo})">
-										<td>${list.boardNo}</td>
-										<th align="left">${list.title}</th>
-										<td>${list.writer}</td>
-										<td><fmt:formatDate pattern="yyyy-MM-dd"
-												value="${list.boardDate}" /></td>
-										<td>${list.hit}</td>
-										<td>${list.recommend}</td>
-									</tr>
-								</c:forEach>
-							</table>
-							<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
-
-								<div align="right">
-									<input class="btn btn-mod btn-round btn-border-w btn-small"
-										type="button" value="글쓰기"
-										onclick="location.href='write.do?no=2'">
-								</div>
-							</sec:authorize>
-
-
-							<form action="boardSelect.do" id="boardSS">
-								<input type="hidden" name="boardNo" id="boardSe" />
-							</form>
-
-							<div class="pagination">
-								<ul class="pagination" id="pagination"></ul>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-	</div>
 	<script src="${resources}/js/common/jQueryPage.js"></script>
-
-
-
-
 	<script>
    var endPage = ${pageMaker.endPage}
    var current = ${pageMaker.cri.pageNum}

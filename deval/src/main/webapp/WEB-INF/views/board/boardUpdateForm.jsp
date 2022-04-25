@@ -194,21 +194,6 @@ textarea {
 	<script src="${resources}/js/common/toastui-editor-all.min.js"></script>
 	<script type="text/javascript">
  
-	</section>
-
-		</div>
-</body>
-</html>
-
-
-
-
-
-
-
-
-<script src="${resources}/js/common/toastui-editor-all.min.js"></script>
-<script>
   const { Editor } = toastui;
 
   const editorObject = new Editor({
