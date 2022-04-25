@@ -109,6 +109,15 @@ public class StudyController {
     // 스터디 변경기능
     @PostMapping("/editStudy.do")
     public String editStudy(StudyVO vo) {
+    	
+    	if(vo.getCk_lang()!=null) {
+    		if(vo.getCk_lang().length>0) {
+    			vo.setLang1(vo.getCk_lang()[0]);
+    		}
+    		if(vo.getCk_lang().length>1) {
+    			vo.setLang2(vo.getCk_lang()[1]);
+    		}
+    	}
     	int n = studyDao.studyUpdate(vo);
     	if (n != 0) {
 			return "redirect:studyList.do";
@@ -143,10 +152,13 @@ public class StudyController {
     
     // 스터디 상세글
     @GetMapping("/studySelect.do")
-    public String studySelect(StudyVO vo, Model model, Principal User) {
+    public String studySelect(StudyVO vo, StudyReqVO rvo, Model model, Principal User) {
 		vo = studyDao.studySelectNo(vo);
+		List<StudyReqVO> list = studyDao.teamAllMember(rvo);
+		System.out.println("=============================="+list);
     	if(vo != null) {
     		model.addAttribute("study", vo);
+    		model.addAttribute("studyreq", list);
     		model.addAttribute("member", User);
     		model.addAttribute("list", studyDao.studyMemberFind(User.getName()));
     		return "study/studySelect";

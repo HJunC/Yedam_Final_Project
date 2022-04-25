@@ -257,7 +257,7 @@
 
             <!-- Content -->
             <div class="col-md-8 mb-sm-80">
-                <c:if test="${project.state eq '4'}">
+                <c:if test="${project.state eq '4' and project.gitUri != null}">
                     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
                     <link rel="stylesheet" href="${resources}/css/common/github-markdown-dark.css">
                     <!-- Nav Tabs -->
@@ -643,7 +643,7 @@
                         <div class="widget-body">
                             <div class="tags">
                                 <c:forEach var="item" items="${project.langArray}">
-                                    <a href="#">${item}</a>
+                                    <a href="search.do?langArray=${item}">${item}</a>
                                 </c:forEach>
                             </div>
                         </div>
@@ -795,14 +795,20 @@
    * 프로젝트 합류 요청 ajax
    */
   function addRequest() {
+    var data = $("#addRequestForm").serialize();
     $.ajax({
       url: "../api/project/request",
       type: "POST",
-      data: $("#addRequestForm").serialize(),
+      data: data,
       dataType: "json",
       success: function(res) {
         console.log(res);
         alert("지원하였습니다.");
+        var msg = {
+          memberId : '${project.leaderId}',
+          subject : data.memberId + "님이 프로젝트에 " + data.position + " 포지션으로 지원하였습니다.!"
+        }
+        webSocket.send(JSON.stringify(msg));
         location.reload();
       },
       error: function (error) {

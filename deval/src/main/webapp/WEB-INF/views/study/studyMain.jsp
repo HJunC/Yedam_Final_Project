@@ -32,7 +32,6 @@
                          <c:if test="${not empty study}">
                            <a href="studyReq.do" class="btn btn-mod btn-w btn-small btn-round mx-md-1">Team Applicant</a>
                         </c:if>
-                          <!--  <a href="chat.do">채팅</a> -->
                         </div>
 					</div>
 				</div>
@@ -44,7 +43,7 @@
 		<!-- End Hero Content -->
 	 	<!-- Scroll Down -->
            <div class="local-scroll scroll-down-wrap wow fadeInUpShort" data-wow-offset="0">
-               <a href="#about" class="scroll-down"><i class="scroll-down-icon"></i><span class="sr-only">Scroll to the next section</span></a>
+               <a href="#faq" class="scroll-down"><i class="scroll-down-icon"></i><span class="sr-only">Scroll to the next section</span></a>
            </div>
         <!-- End Scroll Down -->
 		</div>
@@ -55,97 +54,97 @@
                         <ul class="works-grid work-grid-5 clearfix hide-titles" id="work-grid" style=""> 
                             
                          	<li class="work-item mix branding" style="width: 100px; padding: 10px;">
-                                 <img src="${resources }/images/studyimg/main/01 (1).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/01(1).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
                             
                           	<li class="work-item mix branding" style="width: 100px; padding: 10px;">
-                                 <img src="${resources }/images/studyimg/main/01 (2).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/01(2).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
                             
            
                             <li class="work-item mix branding" style="width: 100px; padding: 10px;">
-                                 <img src="${resources }/images/studyimg/main/01 (3).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/01(3).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
                     
                             
                             <li class="work-item mix branding" style="width: 100px; padding: 10px;">
-                                 <img src="${resources }/images/studyimg/main/01 (4).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/01(4).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
                             
                             <li class="work-item mix branding" style="width: 100px; padding: 10px;">
-                                 <img src="${resources }/images/studyimg/main/01 (5).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/01(5).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
                             
                            	<li class="work-item mix branding" style="width: 100px; padding: 10px;">
-                                 <img src="${resources }/images/studyimg/main/01 (6).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/01(6).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
                             
                            <li class="work-item mix branding" style="width: 100px; padding: 10px;">
-                                 <img src="${resources }/images/studyimg/main/01 (7).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/01(7).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                            </li>
                            
                            <li class="work-item mix branding" style="width: 100px; padding: 10px;">
-                                 <img src="${resources }/images/studyimg/main/01 (8).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/01(8).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                            </li>
                             
                             <li class="work-item mix branding" style="width: 100px; padding: 10px;">
-                                 <img src="${resources }/images/studyimg/main/01 (9).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/01(9).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
                             
                            <li class="work-item mix branding" style="width: 100px; padding: 10px;">
-                                 <img src="${resources }/images/studyimg/main/01 (15).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/01(15).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                            </li>
                             
                            	<li class="work-item mix branding" style="width: 100px; padding: 10px;">
-                                 <img src="${resources }/images/studyimg/main/01 (11).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/01(11).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
                             
                            	<li class="work-item mix branding" style="width: 100px; padding: 10px;">
-                                 <img src="${resources }/images/studyimg/main/01 (12).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/01(12).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
                             
                           	 <li class="work-item mix branding" style="width: 100px; padding: 10px;">
-                                 <img src="${resources }/images/studyimg/main/01 (13).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/01(13).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
                             
                            	<li class="work-item mix branding" style="width: 100px; padding: 10px;">
-                                 <img src="${resources }/images/studyimg/main/01 (14).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/01(14).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
                             
                             <li class="work-item mix branding" style="width: 100px; padding: 10px;">
-                                 <img src="${resources }/images/studyimg/main/01 (18).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/01(18).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
                             
                           	<li class="work-item mix branding" style="width: 100px; padding: 10px;">
-                                 <img src="${resources }/images/studyimg/main/01 (17).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/01(17).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
                             
                             <li class="work-item mix branding" style="width: 125px; padding: 10px;">
-                                 <img src="${resources }/images/studyimg/main/1 (19).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/1(19).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
                             
                             <li class="work-item mix branding" style="width: 100px; padding: 10px;">
-                                 <img src="${resources }/images/studyimg/main/1 (20).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/1(20).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
                             
                             <li class="work-item mix branding" style="width: 130px; padding: 10px;">
-                                 <img src="${resources }/images/studyimg/main/1 (21).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/1(21).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
                             
                             <li class="work-item mix branding" style="width: 90px; padding: 10px;">
-                                 <img src="${resources }/images/studyimg/main/1 (23).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/1(23).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
                             
                             <li class="work-item mix branding" style="width: 130px; padding: 10px;">
-                                 <img src="${resources }/images/studyimg/main/1 (24).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/1(24).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
                             
                             <li class="work-item mix branding" style="width: 100px;">
-                                 <img src="${resources }/images/studyimg/main/1 (22).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/1(22).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
                             
                              <li class="work-item mix branding" style="width: 100px; padding: 10px;">
-                                 <img src="${resources }/images/studyimg/main/1 (25).jpg" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/1(25).jpg" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
                            
                         </ul>
@@ -153,7 +152,7 @@
                     </div>
 	
  			<!-- FAQ Section -->
-                <section class="page-section bg-dark light-content">
+                <section class="page-section bg-dark light-content" id="faq">
                     <div class="container relative">
                         
                         <div class="section-text mb-60 mb-sm-40">
@@ -179,36 +178,36 @@
                                     <!-- Accordion -->
                                     <dl class="accordion">
                                         <dt>
-                                            <a href=""># Q1. 스터디 참가는 어디서 신청하나요?</a>
+                                            <a href="" style="font-size: 18px;"># Q1. 스터디 참가는 어디서 신청하나요?</a>
                                         </dt>
-                                        <dd class="gray">
+                                        <dd class="gray" style="font-size: 15px;">
                                            스터디 카테고리 중 '스터디찾기' 에서 가능합니다.<br>
                                            <br>
                                            가까운 지역, 배우고 싶은 언어, 언어의 적정 난이도를 지정하여 참가 하실 수 있습니다.
                                         </dd>
                                         <dt>
-                                            <a href=""># Q2. 스터디모임중에 다른 스터디에도 가입이 가능한가요?</a>
+                                            <a href="" style="font-size: 18px;"># Q2. 스터디모임중에 다른 스터디에도 가입이 가능한가요?</a>
                                         </dt>
-                                        <dd class="gray">
+                                        <dd class="gray" style="font-size: 15px;">
                                             저희 Developers Vally 에서는 원칙적으로<br>
                                             스터디의 기간이 끝나기 전까지는 1인당 1스터디를 원칙으로 하고 있습니다.<br>
                                             <br>
                                             현재 참가중인 스터디에서 중도포기 시 다른 스터디에 참가가 가능합니다.
                                         </dd>
                                         <dt>
-                                            <a href=""># Q3. 스터디장에게 문의를 원합니다</a>
+                                            <a href="" style="font-size: 18px;"># Q3. 스터디장에게 문의를 원합니다</a>
                                         </dt>
-                                        <dd class="gray">
+                                        <dd class="gray" style="font-size: 15px;">
                                            # 스터디를 참여하지 않았을 경우<br>
                                            상세글 하단, 문의하기를 통해서 스터디장에게 문의를 할 수 있습니다.<br>
                                            <br>
                                            # 스터디에 참여를 했을 경우<br>
-                                           그룹원 정보 페이지에서 스터디장에게 문의가 가능합니다.<br>
+                                           그룹원 정보 페이지 하단의 오픈톡 링크를 통해서 문의가 가능합니다.<br>
                                         </dd>
                                         <dt>
-                                            <a href=""># Q4. 스터디 모집글을 변경, 삭제 하고 싶습니다</a>
+                                            <a href="" style="font-size: 18px;"># Q4. 스터디 모집글을 변경, 삭제 하고 싶습니다</a>
                                         </dt>
-                                        <dd class="gray">
+                                        <dd class="gray" style="font-size: 15px;">
                                             변경은 상세글을 통하여 수정이 가능합니다.<br>
                                             삭제는 불가능 하지만, 현재상태를 모집마감으로 변경 하실 수 있습니다.<br>
                                         </dd>

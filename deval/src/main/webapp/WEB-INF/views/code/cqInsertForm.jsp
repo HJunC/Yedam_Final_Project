@@ -40,8 +40,8 @@
 							</c:if>
 						</select>&nbsp;&nbsp;&nbsp;&nbsp;
 						<c:if test="${type == 4}">
-							<label for="git">GIT URI</label> 
-							<input type="url" size="90" id="gitUri" name="gitUri" class="input-sm round" placeholder="GIT주소" style="height: 48px;">
+							<label for="projectNo">프로젝트 번호</label>
+							<input class="input-md round form-control" name="projectNo" id="projectNo" type="text" value="${projectNo}" readonly>
 						</c:if>
 					</div>
 				</div>
@@ -50,7 +50,7 @@
 					<table class="table shopping-cart-table">
 						<tr>
 							<th>제 목</th>
-							<td><input size="122" id="title" name="title"></td>
+							<td><input class="form-control" size="122" id="title" name="title"></td>
 						</tr>
 						<tr>
 							<th style="vertical-align: top;">내 용</th>
@@ -60,7 +60,7 @@
 					</table>
 					<div align="right">
 						<input class="btn btn-mod btn-round btn-border-w btn-small" type="submit" value="등록"> 
-						<input class="btn btn-mod btn-round btn-border-w btn-small" type="button" value="목록" 
+						<input class="btn btn-mod btn-round btn-border-w btn-small" type="button" value="목록"
 						<c:if test="${type == 4}">
 							onclick="location.href='cqList.do?type=code'"
 						</c:if>

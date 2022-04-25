@@ -23,7 +23,8 @@
                              PROJECT_TERM,
                              HIT,
                              APPLY_RCNT,
-                             LEADER_ID)
+                             LEADER_ID,
+                             GIT_URI)
         VALUES (PROJECT_NO_COUNT_SEQ.nextval,
                 #{projectName},
                 '1',
@@ -44,6 +45,7 @@
                 0,
                 0,
                 #{leaderId})
+                #{gitUri})
         <selectKey keyProperty="projectNo" resultType="int" order="AFTER">
             select PROJECT_NO_COUNT_SEQ.currval as projectNo FROM DUAL
         </selectKey>
@@ -61,6 +63,7 @@
             <if test="projectSdt != null">PROJECT_SDT = #{projectSdt},</if>
             <if test="projectEdt != null">PROJECT_EDT = #{projectEdt},</if>
             <if test="projectTerm != 0">PROJECT_TERM = #{projectTerm},</if>
+            <if test="gitUri != null">GIT_URI = #{gitUri},</if>
         </set>
         WHERE PROJECT_NO = #{projectNo}
     </update>
@@ -155,8 +158,9 @@
     <select id="getListWithPaging" resultType="co.yd.deval.project.service.ProjectVO">
         <![CDATA[
         SELECT * FROM (
-            SELECT ROWNUM rn, t.*
-              FROM PROJECT t
+            SELECT /*+ INDEX_ASC(project project_recruit_edt_index) */
+            ROWNUM rn, project.*
+              FROM PROJECT project
 
         ]]>
             <include refid="option"></include>
@@ -207,6 +211,16 @@
         SELECT *
           FROM PROJECT
          WHERE PROJECT_NO = #{projectNo}
+    </select>
+
+    <select id="completedProjectList" resultType="co.yd.deval.project.service.ProjectVO">
+        SELECT *
+        FROM (SELECT t.*
+        FROM DEVAL.PROJECT t
+        WHERE STATE IN ('4')
+        AND GIT_URI IS NOT NULL
+        ORDER BY dbms_random.value)
+        WHERE ROWNUM <![CDATA[<=]]> 3
     </select>
 
 </mapper>

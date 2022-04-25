@@ -141,16 +141,7 @@
 </style>
 <script>
 var URL_CONFIG = '${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath }';
-var socket = null;
-var room = '${roomId}';
-console.log(room)
-if (room == '') {
-	var webSocket = new WebSocket('ws://' + URL_CONFIG + '/socket');
-} else {
-	var webSocket = new WebSocket('ws://' + URL_CONFIG + '/socket?roomId=${roomId}');
-}
-console.log(webSocket)
-socket = webSocket;
+var webSocket = new WebSocket('ws://' + URL_CONFIG + '/socket?roomId=${roomId}');
 webSocket.onopen = function(e) {
 	console.log(e);
 	console.log("웹소켓이 연결되었습니다.");

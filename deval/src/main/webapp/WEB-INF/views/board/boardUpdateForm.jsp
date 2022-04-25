@@ -1,116 +1,226 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="sec"%>
+
 <c:set var="resources"
 	value="${pageContext.request.contextPath}/resources" />
 <link rel="stylesheet"
 	href="${resources}/css/common/toastui-editor.min.css" />
 <link rel="stylesheet"
 	href="${resources}/css/common/toastui-editor-dark.min.css" />
-<head>
+
+
+
 <style>
-.input-info {
-	font-size: 14px;
-	color: #c0c0c0;
+* {
+	margin: 4px 0;
+}
+
+.controller {
+	padding: 25px 0;
+	margin: auto;
+	width: 800px;
+}
+
+#wriTitle {
+	text-align: center;
+	background-color: rgb(100, 100, 100);
+	width: 800px;
+	height: 20px;
+	padding: 12px 0;
+	color: white;
+}
+
+table {
+	width: 800px;
+	margin: 25px 0;
+	padding: 20px;
+	border-collapse: collapse;
+}
+
+#category {
+	width: 100px;
+	height: 30px;
+}
+
+#title {
+	width: 700px;
+	height: 24px;
+}
+
+textarea {
+	width: 800px;
+	height: 400px;
+}
+
+.button {
+	width: 100px;
+	padding: 5px 12px;
+	border: none;
+	background-color: rgb(150, 60, 60);
+	color: white;
+}
+
+button {
+	padding: 5px 12px;
+	background-color: white;
+	border-color: rgb(180, 180, 180);
+	border-width: 1px;
+}
+
+textarea {
+	resize: none;
 }
 </style>
 </head>
 <body>
-	<section class="small-section bg-dark-alfa-50 bg-scroll light-content"
-		data-background="${resources}/images/full-width-images/section-bg-19.jpg"
-		id="home">
-		<div class="container relative pt-70">
-			<div class="row">
-				<div class="col-lg-10 offset-lg-1">
-					<br>
-					<h1>수정페이지 💭</h1>
-					<h4 class="blog-page-title"></h4>
-					<div align="center">
-						<div class="container relative">
-							<div class="row">
-								<div class="col-md-8">
-									<form action="boardUpdate.do" method="post">
-										<table>
-											<tr>
 
-												<td>글번호 : <input type="hidden" value="${board.boardNo}"
-													name="boardNo" id="boardNo">${board.boardNo}</td>
-											</tr>
-											<tr>
-												<td>분류 : <input type="hidden"
-													value="${board.boardTypeNo}" name="boardTypeNo"
-													id="boardTypeNo">${boardTypeNo}
-												<c:if test="${board.boardTypeNo == 1}">공지사항</c:if>
-												<c:if test="${board.boardTypeNo == 2}">자유게시판</c:if>
-												<c:if test="${board.boardTypeNo == 3}">최신기술동향</c:if>
-											</td>
-											</tr>
-											<tr>
-												<td align="center">제목 <input value="${board.title}"
-													name="title" id="title"
-													class="input-md square form-control"></td>
-											</tr>
-											<tr>
+	<div align="center">
+		<section class="page-section bg-dark light-content" id="home">
+			<div class="container relative text-center">
+				<div class="row">
+					<div class="col-lg-10 offset-lg-1">
+						<h2 class="hs-line-7 mb-0 wow fadeInUpShort" data-wow-delay=".2s">글수정</h2>
+						<form action="boardUpdate.do" enctype="multipart/form-data" onsubmit="inputCheck()" method="post" id="writeForm">
+							<h4 class="blog-page-title"></h4>
+							<table class="table shopping-cart-table">
+								<tr>
+									<td>글번호 <input type="hidden" value="${board.boardNo}"
+										name="boardNo" id="boardNo" readonly>${board.boardNo}</td>
+								</tr>
+								<tr>
+									<td>제목</td>
+									<td><input type="text" name="title" required id="title"
+										value="${board.title}" /></td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<div id="editor"></div>
+										<input id="subject" type="hidden" name="subject">
+									</td>
+								</tr>
+								<tr>
+									<th align="center"><input type="submit" value="수정"
+										class="btn btn-mod btn-round btn-border-w btn-small">
+										<input type="reset" value="reset"
+										class="btn btn-mod btn-round btn-border-w btn-small"></th>
+								</tr>
+							</table>
 
-												<td id="editor">${board.subject}</td>
-											</tr>
-											<tr>
-										</table>
+						</form>
 
-										<button type="submit"
-											class="submit_btn btn btn-mod btn-w btn-large btn-round">수정</button>
-
-									</form>
-
-									<!-- Send Button -->
-									<div align="right">
-
-										<c:if test="${board.boardTypeNo == 1}">
-											<a href="free.do"
-												class="btn btn-mod btn-g btn-small btn-square">목록으로</a>
-										</c:if>
-										<br>
-
-
-										<c:if test="${board.boardTypeNo == 2}">
-											<a href="notice.do"
-												class="btn btn-mod btn-g btn-small btn-square">목록으로</a>
-										</c:if>
-
-
-										<c:if test="${board.boardTypeNo == 3}">
-											<a href="technical.do"
-												class="btn btn-mod btn-g btn-small btn-square">목록으로</a>
-										</c:if>
-									</div>
-								</div>
-
-							</div>
-						</div>
+						<c:if test="${board.boardTypeNo == 1}">
+							<a href="free.do"
+								class="btn btn-mod btn-round btn-border-w btn-small">목록으로</a>
+						</c:if>
+						<c:if test="${board.boardTypeNo == 2}">
+							<a href="notice.do"
+								class="btn btn-mod btn-round btn-border-w btn-small">목록으로</a>
+						</c:if>
+						<c:if test="${board.boardTypeNo == 3}">
+							<a href="technical.do"
+								class="btn btn-mod btn-round btn-border-w btn-small">목록으로</a>
+						</c:if>
 
 					</div>
+
+<div align="center">
+	<section class="page-section bg-dark light-content" id="home">
+		<div class="container relative text-center">
+			<div class="row">
+				<div class="col-lg-10 offset-lg-1">
+					<h2 class="hs-line-7 mb-0 wow fadeInUpShort" data-wow-delay=".2s">글작성</h2>
 				</div>
+					<form action="boardUpdate.do" enctype="multipart/form-data"
+						method="post" id="writeForm">
+							<h4 class="blog-page-title"></h4>
+						<table class="table shopping-cart-table">
+						<tr>
+							
+								<td>
+								<td>글번호
+							<input type="hidden" value="${board.boardNo}"
+									name="boardNo" id="boardNo" readonly>${board.boardNo}</td>
+
+							</tr>
+							<tr>
+								<td>Title</td>
+								<td><input type="text" value="${board.title}" name="title"
+									id="title"></td>
+							</tr>
+							<tr>
+								<td>Subject</td>
+								<td><textarea rows="5" cols="30" name="subject"
+										id="subject">${board.subject}</textarea>
+							</tr>
+
+						</table>
+						<button type="submit" class="button">수정</button>
+
+					</form>
+
+				
+
+						<c:if test="${no == 1}">
+							<a href="notice.do"
+							                                                                                	class="btn btn-mod btn-round btn-border-w btn-medium">목록으로</a>
+						</c:if>
+						<c:if test="${no == 2}">
+							<a href="free.do"
+								class="btn btn-mod btn-round btn-border-w btn-medium">목록으로</a>
+						</c:if>
+						<c:if test="${no == 3}">
+							<a href="technical.do"
+								class="btn btn-mod btn-round btn-border-w btn-medium">목록으로</a>
+						</c:if>
+				</section>
 			</div>
-		</div>
-	</section>
+
+
+		</section>
+
+	</div>
+
+<!-- 인풋태그가 없었고 , 온서브밋으로 실행할걸 안넣어줬음. 온서브밋() -->
 
 	<script src="${resources}/js/common/toastui-editor-all.min.js"></script>
+	<script type="text/javascript">
+ 
+  const { Editor } = toastui;
 
-	<script>
-	  const { Editor } = toastui;
+  const editorObject = new Editor({
+    el: document.querySelector('#editor'),
+    previewStyle: 'vertical',
+    height: '500px',
+    initialValue: '${board.subject}',
+    initialEditType: 'wysiwyg',
+    theme: 'dark'
+  });
 
-	  const editorObject = new Editor({
-	    el: document.querySelector('#editor'),
-	    previewStyle: 'vertical',
-	    height: '500px',
-	    initialEditType: 'wysiwyg',
-	    theme: 'dark'
-	  });
-
-	  editorObject.getMarkdown();
-
-	</script>
+  editorObject.getMarkdown();
+  
+   function inputCheck(){
+     if(editor.innerText == '\n\n\nMarkdownWYSIWYG'){
+        alert('내용을 입력해주세요');
+        return false;
+     }
+     if($('#title').val() == ''){
+        alert('제목을 입력해주세요')
+        $('#title').focus();
+        return false;
+     }
+     
+     $('#subject').val(editorObject.getHTML());
+     return true;
+  }  
+   </script>
+</body>
+</html>

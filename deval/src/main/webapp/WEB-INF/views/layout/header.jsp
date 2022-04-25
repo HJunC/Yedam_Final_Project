@@ -13,15 +13,7 @@
 <script>
 	var URL_CONFIG = '${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath }';
 	var socket = null;
-	var room = '${roomId}';
-	console.log(room)
-	if (room == '') {
-		var webSocket = new WebSocket('ws://' + URL_CONFIG + '/socket');
-	} else {
-		var webSocket = new WebSocket('ws://' + URL_CONFIG
-				+ '/socket?roomId=${roomId}');
-	}
-	console.log(webSocket)
+	var webSocket = new WebSocket('ws://' + URL_CONFIG + '/socket');
 	socket = webSocket;
 	webSocket.onopen = function(e) {
 		console.log(e);
@@ -38,7 +30,7 @@
 </script>
 <!-- Navigation panel -->
 <style>
-.inner-nav ul li .mn-sub li form button{
+.inner-nav ul li .mn-sub li button{
 	display: block;
     width: 100%;
     height: auto !important;
@@ -62,6 +54,12 @@
     transition: all 0.27s cubic-bezier(0.000, 0.000, 0.580, 1.000);
     background-color: transparent;
     border: 0;
+}
+.inner-nav ul li .mn-sub li button:hover{
+	background-color : #4E4E4E;
+}
+.main-nav.dark .inner-nav ul li .mn-sub li button {
+    opacity: 1;
 }
 .custom-alert {
 	position: fixed;
@@ -104,18 +102,11 @@
 					<ul class="mn-sub mn-has-multi">
 
 						<li class="mn-sub-multi">
-							<a class="mn-group-title">Free</a>
 							<ul>
 								<li><a href="${root}/board/free.do">자유게시판</a></li>
 								<li><a href="${root}/board/notice.do">공지사항</a></li>
 								<li><a href="${root}/board/technical.do">최신기술</a></li>
-							</ul>
-						</li>
-						<li class="mn-sub-multi">
-							<a class="mn-group-title">Code</a>
-							<ul>
 								<li><a href="${root}/cq/codeList.do">코드공유</a></li>
-								<li><a href="${root}/cq/reviewList.do">코드리뷰</a></li>
 								<li><a href="${root}/cq/questionList.do">질문</a></li>
 							</ul>
 						</li>
@@ -123,7 +114,7 @@
 				</li>
 
 				<li>
-					<a href="${root}/project/main.do">팀 프로젝트</a>
+					<a href="${root}/project/main.do">프로젝트</a>
 				</li>
 				
 				<li>
@@ -146,12 +137,12 @@
 				<sec:authorize access="isAuthenticated()">
 					<li>
 						<a href="#" class="mn-has-sub">
-						<img class="img-profile rounded-circle" style="width:2rem;height:2rem;" src="/upload/profile/<sec:authentication property='principal.profileImg'/>">
+							<img class="img-profile rounded-circle" style="width:2rem;height:2rem;" src="/upload/profile/<sec:authentication property='principal.profileImg'/>">
 						<sec:authentication property="principal.username"/>
 						<i class="mn-has-sub-icon"></i></a>
 						<ul class="mn-sub">
 							<li><a href="${root}/myPage.do">마이페이지</a></li>	
-							<li><a href="#mod_chatList" id="mod_open" class="lightbox-gallery-5 mfp-inline" onclick="myChatList()">채팅목록</a></li>					
+							<li><button type="button" data-bs-toggle="modal" data-bs-target="#chatBox" onclick="myChatList()">채팅목록</button></li>					
 							<li><form action="${root}/logout" method="post">
 									<sec:csrfInput/>
 									<button type="submit">로그아웃</button>
@@ -167,20 +158,30 @@
 	</div>
 </nav>
 <!-- End Navigation panel -->
-<div id="mod_chatList" class="mfp-hide">
-	<h4>채팅방 리스트</h4>
-	<div class="overflow-auto" style="height:500px;">
-		<table id="chatList" class="table table-hover">
-			<thead>
-				<tr>
-					<th>생성자</th>
-					<th>참가자</th>
-				</tr>
-			</thead>
-			<tbody>
-			</tbody>
-		</table>
-	</div>
+<div class="modal fade" id="chatBox" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content bg-secondary">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">채팅방</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body overflow-auto" style="height:300px;">
+      	<table class="table table-hover" id="chatList">
+      		<thead>
+	      		<tr>
+	      			<th>생성자</th>
+	      			<th>참여자</th>
+	      		</tr>
+      		</thead>
+      		<tbody>
+      		</tbody>
+      	</table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+      </div>
+    </div>
+  </div>
 </div>
 <script>
 	function myChatList() {
@@ -206,7 +207,8 @@
 	
 	function makeTr(data){
 		var tr = $('<tr>').on('click',function(){
-			window.open("${root}/chatSelect.do?roomId="+data.roomId)
+			var option = "top=50, left=60, width=500, height=750, resizable=0, scrollbars=no";
+			window.open("${root}/chatSelect.do?roomId="+data.roomId,"",option)
 		});
 		tr.append($('<td>').text(data.ownerId),$('<td>').text(data.entryId))
 		return tr;

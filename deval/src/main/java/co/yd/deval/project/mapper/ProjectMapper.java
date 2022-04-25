@@ -26,6 +26,8 @@ public interface ProjectMapper {
     List<ProjectVO> searchMainPageProject(ProjectVO vo);
     ProjectInfoDTO getProject(int projectNo);
 
+    ProjectVO completedProjectList();
+
     // 검색 페이징 처리
     List<ProjectVO> getListWithPaging(ProjectVO vo);
     int getTotalCount(ProjectVO vo);

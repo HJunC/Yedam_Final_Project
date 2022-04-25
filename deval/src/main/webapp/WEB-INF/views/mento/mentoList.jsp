@@ -69,7 +69,7 @@
                                 	<div class="sdsdssdsds">
 	                                    <!-- 사진출력 -->
 	                                    <c:if test="${not empty mento.photo }">
-	                                    	<img src="/upload/${mento.photo}" alt=".."/>
+	                                    	<img src="/upload/${mento.photo}" style="height: 400px; width: 296px; object-fit: cover;" alt=".."/>
 	                                    </c:if>
 	                                    <c:if test="${empty mento.photo }">
 	                                    	<img src="${resources}/images/mento/prev.bmp" style="height: 400px; width: 296px; object-fit: cover;" alt=".."/>

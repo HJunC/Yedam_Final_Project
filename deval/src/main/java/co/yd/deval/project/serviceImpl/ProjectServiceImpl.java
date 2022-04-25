@@ -122,6 +122,11 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    public ProjectVO completedProjectList() {
+        return mapper.completedProjectList();
+    }
+
+    @Override
     public List<ProjectVO> getListWithPaging(ProjectVO vo) {
         return mapper.getListWithPaging(vo);
     }
@@ -182,11 +187,12 @@ public class ProjectServiceImpl implements ProjectService {
 		return mapper.findWaitingProject(id);
 	}
 
-    /***
+    /**
      * 유저의 검토중인 요청을 취소 처리
      * @param memberId 유저 아이디
      * @param exceptionProjectNo 프로젝트 번호를 제외
      */
+    @Override
     public void cancelRequest(String memberId, int exceptionProjectNo) {
         ProjectRequestVO requestVO = new ProjectRequestVO();
         requestVO.setMemberId(memberId);
@@ -195,4 +201,5 @@ public class ProjectServiceImpl implements ProjectService {
         if (exceptionProjectNo != 0) requestVO.setExceptionProjectNo(exceptionProjectNo);
         requestMapper.updateProjectRequest(requestVO);
     }
+
 }

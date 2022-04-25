@@ -65,6 +65,11 @@ public class BoardServiceImpl implements BoardService {
 		return map.getMainPageList();
 	}
 
+	@Override
+	public List<BoardVO> getSearchList(String option, String keyvalue) {
+		return map.getSearchList(option, keyvalue);
+	}
+
 	/*
 	 * public static int getBoardListCnt(Search search) { // TODO Auto-generated
 	 * method stub return 0; }

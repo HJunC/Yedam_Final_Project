@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="${resources}/css/common/toastui-editor-dark.min.css" />
 
 <!-- Home Section -->
-<section class="page-section bg-dark-alfa-50 bg-scroll" data-background="${resources}/images/full-width-images/section-bg-11.jpg" id="home">
+<section class="page-section bg-dark-alfa-50 bg-scroll" data-background="${resources}/images/project/brands-people-Ax8IA8GAjVg-unsplash.jpg" id="home">
     <div class="container relative">
 
         <div class="row">
@@ -16,7 +16,7 @@
                 <div class="wow fadeInUpShort" data-wow-delay=".1s">
                     <h1 class="hs-line-7 mb-20 mb-xs-10">
                         👀<br>
-                        팀 프로젝트 생성하기
+                        프로젝트 생성하기
                     </h1>
                 </div>
                 <div class="wow fadeInUpShort" data-wow-delay=".2s"></div>
@@ -187,8 +187,7 @@
                             <label for="recruitEdt">프로젝트 모집 마감일</label>
                             <p class="input-info">최소 1일, 최대 15일</p>
                             <div class="form-group">
-                                <input type="date" name="recruitEdt" id="recruitEdt" class="input-lg round form-control bg-dark-input" required aria-required="true">
-                                <input type="time" id="recruitEdtTime" class="input-lg round form-control bg-dark-input" value="00:00" required aria-required="true">
+                                <input type="datetime-local" name="recruitEdt" id="recruitEdt" class="input-lg round form-control bg-dark-input" required aria-required="true">
                             </div>
                         </div>
                         <div class="form-group">
@@ -234,10 +233,11 @@
   editorObject.getMarkdown();
 
   var today = new Date();
+  today.setDate(today.getDate() + 1);
   const recruitEdt = document.getElementById("recruitEdt");
-  recruitEdt.setAttribute("value", moment(today).format("YYYY-MM-DD"));
-  recruitEdt.setAttribute("min", moment(today).format("YYYY-MM-DD"));
-  recruitEdt.setAttribute("max", moment(today.setDate(today.getDate() + 15)).format("YYYY-MM-DD")); // 프로젝트 모집 최대 마감일
+  recruitEdt.setAttribute("value", moment(today).format("YYYY-MM-DDTHH:MM"));
+  recruitEdt.setAttribute("min", moment(today).format("YYYY-MM-DD") + "T00:00");
+  recruitEdt.setAttribute("max", moment(today.setDate(today.getDate() + 14)).format("YYYY-MM-DD") + "T00:00"); // 프로젝트 모집 최대 마감일
 
   $("input[name=langArray]").on("change", handleLangCheckbox);
 
@@ -257,7 +257,6 @@
     $("#viewLang").html(lang);
     $("input[name=lang]").val(lang);
   }
-
 
   document.getElementById("positionCountBox").addEventListener("change", handlePositionCount);
 
@@ -284,41 +283,86 @@
    */
   function handleSubmit() {
     var data = $("#insertForm").serializeObject();
-    var isDone = true;
 
     if (data.leaderId === "") {
       alert("error");
-      isDone = false;
+      return;
     }
 
-    if (data.totalRcnt === 0) {
-      alert("인원수를 입력해주세요");
-      isDone = false;
+    var regExp = /[!?@#$%^&*():;+-=~{}<>\_\[\]\|\\\"\'\,\.\/\`\₩]/g;
+    if (data.projectName === '') {
+      alert("프로젝트명을 입력해주세요.");
+      return;
+    } else if (regExp.test(data.projectName)) {
+      alert("특수문자는 입력이 불가능합니다.");
+      return;
     }
+
+    if (data.totalRcnt == 0) {
+      alert("인원수를 입력해주세요.");
+      return;
+    } else if (data.totalRcnt < 2) {
+      alert("최소 인원수는 2명입니다.");
+      return;
+    } else if (data.totalRcnt > 15) {
+      alert("최대 인원수는 15명입니다.");
+      return;
+    } else if (
+      (data.leaderPosition === 'FE' && data.frontRcnt == 0)
+      || (data.leaderPosition === 'BE' && data.backRcnt == 0)
+      || (data.leaderPosition === 'FS' && data.fullRcnt == 0)
+      || (data.leaderPosition === 'DE' && data.designRcnt == 0)
+      || (data.leaderPosition === 'PL' && data.plannerRcnt == 0)
+    ) {
+      alert("선택한 포지션에 +1을 해주세요");
+      return;
+    }
+
+    if (data.lang === '') {
+      alert("언어를 선택해주세요.");
+      return;
+    }
+
+    if (data.projectTerm === '') {
+      alert("기간을 선택해주세요.");
+      return;
+    } else if (data.projectTerm < 3) {
+      alert("최소 기간은 3일입니다.");
+      return;
+    } else if (data.projectTerm > 365) {
+      alert("최대 기간은 365일입니다.");
+      return;
+    }
+
     delete data.langArray;
-    data.recruitEdt = data.recruitEdt + " " + $("#recruitEdtTime").val() + ":00";
+    data.recruitEdt = data.recruitEdt.replace("T", " ") + ":00";
     data.subject = editorObject.getHTML();
-    if (isDone) {
-        $.ajax({
-          type: "POST",
-          url: "../api/project/insert",
-          data: data,
-          dataType: "json",
-          success: function(res) {
-            if (res.result === "success") {
-              console.log(res);
-              alert("등록완료하였습니다.");
-              location.href = "main.do";
-            } else {
-              console.log(res);
-              alert(res.message);
-            }
-          },
-          error: function(res) {
-            console.log(res);
-            alert(res.message)
-          }
-        })
+
+    if (data.subject === '<p><br></p>') {
+      alert("내용을 입력해주세요.");
+      return;
     }
+
+    $.ajax({
+      type: "POST",
+      url: "../api/project/insert",
+      data: data,
+      dataType: "json",
+      success: function(res) {
+        if (res.result === "success") {
+          console.log(res);
+          alert("등록완료하였습니다.");
+          location.href = "main.do";
+        } else {
+          console.log(res);
+          alert(res.message);
+        }
+      },
+      error: function(res) {
+        console.log(res);
+        alert(res.message)
+      }
+    })
+
   }
 </script>

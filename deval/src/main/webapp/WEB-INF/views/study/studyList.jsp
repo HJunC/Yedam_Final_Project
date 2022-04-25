@@ -7,6 +7,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <c:set var="resources" value="${pageContext.request.contextPath}/resources" />
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <!-- 모달창 링크 -->
 <link rel="stylesheet" href="${resources}/css/custom/study_modal_style.css">
@@ -55,27 +56,26 @@
 							<form class="form mt-80 mb-10" id="searchForm" action="studyList.do" style="position: sticky; top: 100px;" method="get">
 							<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
 	  						<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
-	  						
 	  							<label for="location" style="font-size: 17px;">지역 </label>
 	  							<select id="cqLang" name="location" class="input-md round form-control" style="width: 100px; height: 30px; font-size: 13px;">
 	  							<option value="">전체</option>
-	  							<option>서울특별시</option>
-	  							<option>경기도</option>
-	  							<option>인천광역시</option>
-	  							<option>강원도</option>
-	  							<option>충청북도</option>
-	  							<option>충청남도</option>
-	  							<option>세종특별자치시</option>
-	  							<option>대전광역시</option>
-	  							<option>경상북도</option>
-	  							<option>경상남도</option>
-	  							<option>대구광역시</option>
-	  							<option>울산광역시</option>
-	  							<option>부산광역시</option>
-	  							<option>전라북도</option>
-	  							<option>전라남도</option>
-	  							<option>광주광역시</option>
-	  							<option>제주특별자치도</option>
+	  							<option value="서울특별시">서울특별시</option>
+	  							<option value="경기도">경기도</option>
+	  							<option value="인천광역시">인천광역시</option>
+	  							<option value="강원도">강원도</option>
+	  							<option value="충청북도">충청북도</option>
+	  							<option value="충청남도">충청남도</option>
+	  							<option value="세종특별자치시">세종특별자치시</option>
+	  							<option value="대전광역시">대전광역시</option>
+	  							<option value="경상북도">경상북도</option>
+	  							<option value="경상남도">경상남도</option>
+	  							<option value="대구광역시">대구광역시</option>
+	  							<option value="울산광역시">울산광역시</option>
+	  							<option value="부산광역시">부산광역시</option>
+	  							<option value="전라북도">전라북도</option>
+	  							<option value="전라남도">전라남도</option>
+	  							<option value="광주광역시">광주광역시</option>
+	  							<option value="제주특별자치도">제주특별자치도</option>
 	  							</select>&nbsp;&nbsp;&nbsp;&nbsp;
 	  							
 	  							
@@ -148,7 +148,7 @@
 								<th width="150">현재상태</th>
 							 </tr>
 							</thead>
-							<tbody style="font-size: 14px;">
+							<tbody style="font-size: 14px; cursor:pointer;">
 							<c:forEach items="${study }" var="std">
 								<tr onclick="studySearch('${std.studyNo }')">
 									<td>${std.studyNo }</td>
@@ -305,7 +305,7 @@
 						</div>
 					</div>
 					<div class="py-3 pb-4 border-bottom">
-						<button class="btn btn-primary mr-3" id="btn_md_save"> Save </button>
+ 						<button type="button" class="btn btn-primary mr-3" id="btn_md_save"> Save </button>
 						<input type="reset" class="btn border button" value="Reset">
 					</div>
 					<div class="d-sm-flex align-items-center pt-3" id="deactivate">
@@ -319,7 +319,27 @@
 						</div> -->
 						
 						<!-- Modal close & Modal User data -->
-						<script type="text/javascript">
+						
+					</div>
+				</div>
+			</form>
+		</div>
+	<!-- End Modal -->
+	</div>
+	<!-- 게시글 번호 값으로 상세글 넘기기 -->
+	<div>
+		<form id="selfrm" action="studySelect.do" method="get">
+			<sec:csrfInput />
+			<input type="hidden" id="studyNo" name="studyNo">
+		</form>
+	</div>
+	<script type="text/javascript">
+		function studySearch(n) {
+			document.forms.selfrm.studyNo.value = n;
+			document.forms.selfrm.submit();
+		}
+	</script>
+	<script type="text/javascript">
 							$('#btn_md_cls').on('click', function() {
 								$('#mod_myinfo').modal('hide');
 							});
@@ -361,8 +381,13 @@
 									success : function(result) {
 										console.log("succ", result);
 										if (result != "0") {
-											alert("나의 스터디 정보 입력을 성공하였습니다.");
-										}
+											
+											swal('내정보 입력이 완료되었습니다!', '스터디 참가와 모집이 가능합니다.', 'success')
+											.then(function(e){
+													location.href = "studyList.do";
+											
+										})
+									}
 									},
 									error : function(err) {
 										console.log("err", err);
@@ -372,26 +397,6 @@
 								console.log("-- Study UserInfo Save End --");
 							});
 						</script>
-					</div>
-				</div>
-			</form>
-		</div>
-	<!-- End Modal -->
-	</div>
-	<!-- 게시글 번호 값으로 상세글 넘기기 -->
-	<div>
-		<form id="selfrm" action="studySelect.do" method="get">
-			<sec:csrfInput />
-			<input type="hidden" id="studyNo" name="studyNo">
-		</form>
-	</div>
-	<script type="text/javascript">
-		function studySearch(n) {
-			document.forms.selfrm.studyNo.value = n;
-			document.forms.selfrm.submit();
-		}
-	</script>
-	
 	<script>
 	function infoCheck(){
 		$.ajax({
@@ -399,7 +404,8 @@
 			type:"get",
 			success:function(result){
 				if(result == 0){
-					alert('내정보를 등록해주세요');
+					swal('등록된 내정보가 없습니다!', '모집을 원하시면 내정보를 등록해주세요.', 'info');
+					
 				} else {
 					location.href='addStudy.do';
 				}
@@ -446,7 +452,8 @@
 		
 	};
 $(document).ready(function() {
-	
+	$("select[name=location]").val('${param.location}');
+	$("select[name=state]").val('${param.state}');
 	$("select[name=defficulty]").val('${param.defficulty}');
 	$("select[name=lang1]").val('${param.lang1}');
 });

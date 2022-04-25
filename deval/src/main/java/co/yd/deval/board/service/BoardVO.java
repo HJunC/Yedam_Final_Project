@@ -21,6 +21,9 @@ public class BoardVO {
 	private String writer;
 	private String category;
 	private String photo;
+	
+	private String keyvalue;
 	private int rn;
+	private String option;
 	private Criteria criteria;
 }

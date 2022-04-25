@@ -13,16 +13,16 @@
 <title></title>
 <style>
 tr {
-	text-decoration: bold;
-	font-size: 20px;
-	border: 10px;
-	line-height: 30px;
+	text-decoration: none;
+	font-size: 15px;
+	border: 30px;
+	line-height: 40px;
 }
 
 td {
-	border: 1;
+	border: 2;
 	text-align: center;
-	margin: 10px 1px;
+	margin: 10px 10px;
 	cursor: pointer;
 }
 
@@ -43,82 +43,96 @@ td {
 </style>
 </head>
 <body>
+
+	<br>
+	<br>
 	<br>
 	<br>
 	<div align="center">
 		<section class="page-section bg-dark light-content" id="home">
 			<div class="container relative text-center">
 				<div class="row">
-					<div class="col-lg-10 offset-lg-1"></div>
-					<h1 class="hs-line-7 mb-10 wow fadeInUpShort" data-wow-delay=".2s">자유게시판</h1>
+					<div class="col-lg-11 offset-lg-10"></div>
+					<h1 class="hs-line-7 mb-20 wow fadeInUpShort" data-wow-delay=".2s">자유게시판</h1>
+					<br> <br> <br> <br> <br> <br> <br>
+					<br> <br>
+
 				</div>
-			</div>
-		</section>
-		<section class="page-section bg-dark light-content pt-0">
-			<div class="container relative">
-				<div class="row">
-					<form id="searchForm" class="row">
-						<div align="left">
-							<input type="text" name="title" id="codeSearch"
-								class="input-sm round" placeholder="검색"
-								style="width: 300px; height: 48px;" /> &nbsp;
-							<button type="submit"
-								class="btn btn-mod btn-round btn-border-w btn-small">검색</button>
-							<input type="hidden" name="pageNum"
-								value="${pageMaker.cri.pageNum}"> <input type="hidden"
-								name="amount" value="${pageMaker.cri.amount}">
+
+				<div class="container relative">
+					<div class="container relative">
+						<form id="searchForm" action="free.do" class="row">
+							<div align="left">
+								<label class="hidden">검색 분류</label> 
+								<select name="option">
+									<option value="all">전체</option>
+									<option value="title">제목</option>
+									<option value="writer">작성자</option>
+									<option value="subject">내용</option>
+								</select> 
+								<input type="text" name="keyvalue"
+									id="codeSearch" class="input-sm round" placeholder="검색"
+									style="width: 300px; height: 40px;" />
+
+								<button type="submit"
+									class="btn btn-mod btn-round btn-border-w btn-small">검색</button>
+								<input type="hidden" name="pageNum"
+									value="${pageMaker.cri.pageNum}"> <input type="hidden"
+									name="amount" value="${pageMaker.cri.amount}">
+
+							</div>
+						</form>
+						<br>
+						<br>
+						<br>
+
+
+
+						<div class="table-responsive">
+							<table class="table shopping-cart-table">
+								<tr align="center">
+									<th width="50">No</th>
+									<th width="250">제목</th>
+									<th width="100">작성자</th>
+									<th width="100">작성일자</th>
+									<th width="50">조회수</th>
+									<th width="100">추천수</th>
+								</tr>
+								<c:forEach items="${boardList}" var="list">
+									<tr class="active" onclick="freeSelect(${list.boardNo})">
+										<td>${list.boardNo}</td>
+										<th align="left">${list.title}</th>
+										<td>${list.writer}</td>
+										<td><fmt:formatDate pattern="yyyy-MM-dd"
+												value="${list.boardDate}" /></td>
+										<td>${list.hit}</td>
+										<td>${list.recommend}</td>
+									</tr>
+								</c:forEach>
+							</table>
+							<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
+
+								<div align="right">
+									<input class="btn btn-mod btn-round btn-border-w btn-small"
+										type="button" value="글쓰기"
+										onclick="location.href='write.do?no=2'">
+								</div>
+							</sec:authorize>
+
+
+							<form action="boardSelect.do" id="boardSS">
+								<input type="hidden" name="boardNo" id="boardSe" />
+							</form>
+
+							<div class="pagination">
+								<ul class="pagination" id="pagination"></ul>
+							</div>
 						</div>
-					</form>
+					</div>
 				</div>
-			</div>
 		</section>
-
-		<div class="table-responsive">
-			<table class="table shopping-cart-table">
-				<tr align="center">
-					<th width="50">No</th>
-					<th width="300">제목</th>
-					<th width="100">작성일자</th>
-					<th width="50">조회수</th>
-					<th width="50">추천수</th>
-				</tr>
-				<c:forEach items="${boardList}" var="list">
-					<tr class="active" onclick="freeSelect(${list.boardNo})">
-						<td>${list.boardNo}</td>
-						<th align="left">${list.title}</th>
-						<td><fmt:formatDate pattern="yyyy-MM-dd"
-								value="${list.boardDate}" /></td>
-						<td>${list.hit}</td>
-						<td>${list.recommend}</td>
-					</tr>
-				</c:forEach>
-			</table>
-			<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
-
-				<div align="right">
-					<input class="btn btn-mod btn-round btn-border-w btn-small"
-						type="button" value="글쓰기" onclick="location.href='write.do?no=2'">
-				</div>
-			</sec:authorize>
-
-
-			<form action="boardSelect.do" id="boardSS">
-				<input type="hidden" name="boardNo" id="boardSe" />
-			</form>
-
-			<div class="pagination">
-				<ul class="pagination" id="pagination"></ul>
-			</div>
-		</div>
 	</div>
-
-
-
 	<script src="${resources}/js/common/jQueryPage.js"></script>
-
-
-
-
 	<script>
    var endPage = ${pageMaker.endPage}
    var current = ${pageMaker.cri.pageNum}
@@ -145,18 +159,32 @@ td {
    searchForm.submit();
  }
  
+ function searchData(){
+    console.log(($('#form1').serializeObject));
+    $.ajax({
+       url:"boardSearch.do",
+       data:$('#form1').serializeObject(),
+       success:function(data){
+          console.log(data)
+       },
+       error:function(err){
+          console.log(err)
+       }
+    })
+ } 
+ 
  function search() {
-   var searchForm = $("#searchForm");
+ 	var searchForm = $("#searchForm");
    searchForm.find("input[name='pageNum']").val("1");
    searchForm.submit();
  }
+ 
  // 상세페이지 가는 함수
  function freeSelect(no){
-	location.href = "boardSelect.do?boardNo=" + no;
+   location.href = "boardSelect.do?boardNo=" + no;
  }
-</script>
 
-
+ </script>
 
 
 </body>

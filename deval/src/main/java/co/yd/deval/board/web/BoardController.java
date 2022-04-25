@@ -22,11 +22,6 @@ import co.yd.deval.comment.service.CommentService;
 import co.yd.deval.comment.service.CommentVO;
 import co.yd.deval.common.Criteria;
 import co.yd.deval.common.PageDTO;
-import java.io.File;
-import java.io.IOException;
-import java.security.Principal;
-import java.util.List;
-import java.util.UUID;
 
 @Controller
 @RequestMapping("/board")
@@ -43,10 +38,7 @@ public class BoardController {
 
 	@GetMapping("/free.do")
 	public String free(Model model, BoardVO vo, Criteria cri) {
-		if (cri.getPageNum() == 0)
-			cri.setPageNum(1);
-		if (cri.getAmount() == 0)
-			cri.setAmount(10);
+
 		vo.setBoardTypeNo(2);
 		vo.setCriteria(cri);
 		List<BoardVO> boardList = boardDao.getListWithPaging(vo);
@@ -154,7 +146,9 @@ public class BoardController {
 	@PostMapping("/recommend.do")
 	public int recommend(BoardVO vo) {
 		boardDao.boardRecUp(vo.getBoardNo());
-		return boardDao.boardSelect(vo).getRecommend();
+		vo = boardDao.boardSelect(vo);
+		return 1;
+
 	}
 
 	@GetMapping("/boardUpdateForm.do")
@@ -162,6 +156,12 @@ public class BoardController {
 		model.addAttribute("board", boardDao.boardSelect(vo));
 		return "board/boardUpdateForm";
 
+	}
+
+	@GetMapping("/boardSearch.do")
+	@ResponseBody
+	public List<BoardVO> boardSearch(String option, String keyvalue) {
+		return boardDao.getSearchList(option, keyvalue);
 	}
 
 	/*
@@ -187,8 +187,8 @@ public class BoardController {
 
 	@GetMapping("/technicSelect.do")
 	public String technicSelect(BoardVO vo, Model model) {
-		model.addAttribute("board", boardDao.boardSelect(vo));
+		boardDao.boardHitUp(vo.getBoardNo());
+		vo = boardDao.boardSelect(vo);
 		return "board/boardDetail";
 	}
-
 }

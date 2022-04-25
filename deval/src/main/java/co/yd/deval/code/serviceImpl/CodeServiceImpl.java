@@ -16,8 +16,8 @@ public class CodeServiceImpl implements CodeService {
 	private CodeMapper map;
 	
 	@Override
-	public List<CodeVO> cqList(int no) {
-		return map.cqList(no);
+	public List<CodeVO> cqList(CodeVO vo) {
+		return map.cqList(vo);
 	}
 
 	@Override
@@ -48,6 +48,11 @@ public class CodeServiceImpl implements CodeService {
 	@Override
 	public void codeRecommendUp(CodeVO vo) {
 		map.codeRecommendUp(vo);
+	}
+
+	@Override
+	public int getTotalCount(CodeVO vo) {
+		return map.getTotalCount(vo);
 	}
 
 

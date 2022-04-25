@@ -7,6 +7,8 @@
 <head>
 	<meta charset="UTF-8">
 	<title>studyReq.jsp</title>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	
 	<!-- 정보 창 탬플릿 링크 -->
 	<link rel="stylesheet" href="${resources}/css/custom/study_req_style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/3.6.95/css/materialdesignicons.css">
@@ -60,19 +62,25 @@
                 </section>
             <!-- End Home Section -->
             
-	 <div class="page-content page-container" id="page-content">
-        <div class="padding" align="center">
-            <div class="row container d-flex justify-content-center" >
-                <div class="col-xl-6 col-md-12">
+            <style>
+            	.padding {
+			    padding: 0rem !important;
+			}
+            </style>
+            
+	 <!-- <div class="page-content page-container" id="page-content"> -->
+        <div class="container d-flex" align="center">
+            <div class="row" >
 	 			  <c:forEach items="${study}" var="std">
-                    <div class="card user-card-full">
+                <div class="col-xl-6 col-md-12">
+                    <div class="card user-card-full" style="border-radius: 2.25rem;">
                         <div class="row m-l-0 m-r-0" style="color: black">
                         
                             <div class="col-sm-4 bg-c-lite-green user-profile">
                                 <div class="card-block text-center text-white">
                                     <div class="m-b-25"> <img src="${resources}/images/studyimg/probg.png" class="img-radius" alt="User-Profile-Image"> </div>
                                     <h6 class="f-w-600">${std.memberId }</h6>
-                                    <p>${std.present }</p> 
+                                    <p align="center">${std.present }</p> 
                                 </div>
                             </div>
                             <div class="col-sm-8">
@@ -99,17 +107,17 @@
                                     	<button class="btn btn-mod btn-glass btn-round" style="background-color: black; color: white;" onclick="teamGo('${std.memberId }', '${std.studyNo }')">승인</button>
                                     	<button class="btn btn-mod btn-glass btn-round" style="background-color: black; color: white;" onclick="teamBye('${std.memberId }', '${std.studyNo }')">거절</button>
                                     	<button class="btn btn-mod btn-glass btn-round" style="background-color: black; color: white;" onclick="reqChat('${std.memberId}')">Message</button>
-                                    	<!-- <input class="btn btn-mod btn-glass btn-round" style="background-color: black; color: white;" type="button" id="reqChat" name="reqChat" value="Message"> -->
+                                    	
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-       			   </c:forEach>
                 </div>
+       			   </c:forEach>
             </div>
         </div>
-    </div>
+<!--     </div> -->
     
     
     
@@ -127,8 +135,13 @@
                      $("#div_ajax_load_image").hide();
                  },
     			success: function(json) {
-    				alert(id + '님을 거절했습니다.');
-    				location.reload();
+    				/* alert(id + '님을 거절했습니다.');
+    				location.reload(); */
+    				
+    				swal('거절', id + '님을 거절했습니다.', 'error')
+					.then(function(){
+						location.reload();           
+					});
     			},
     			error: function(json) {
     			}
@@ -154,10 +167,17 @@
 					console.log(result);
 					
 					if (result == 0){
-						alert('참가 인원을 초과 했습니다.');
+						/* alert('참가 인원을 초과 했습니다.'); */
+						swal('인원을 초과했습니다!', '승인이 불가능합니다', 'error');
+						
 					} else {
-						alert(id + '님이 ' + sno + '번 스터디에 참가했습니다.');
-						location.reload();
+						/* alert(id + '님이 ' + sno + '번 스터디에 참가했습니다.');
+						location.reload(); */
+						
+						swal('참가!', id + '님이 ' + sno + '번 스터디에 참가했습니다.', 'success')
+						.then(function(){
+							location.reload();           
+						});
 					}
 				},
 				error : function(err) {

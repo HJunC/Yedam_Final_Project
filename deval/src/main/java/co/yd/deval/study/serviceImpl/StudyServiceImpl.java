@@ -195,4 +195,9 @@ public class StudyServiceImpl implements StudyService {
 		return map.addInfoCheck(id);
 	}
 
+	@Override
+	public List<StudyReqVO> teamAllMember(StudyReqVO vo) {
+		return map.teamAllMember(vo);
+	}
+
 }
