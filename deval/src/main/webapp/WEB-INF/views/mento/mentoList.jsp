@@ -72,7 +72,7 @@
 	                                    	<img src="/upload/${mento.photo}" alt=".."/>
 	                                    </c:if>
 	                                    <c:if test="${empty mento.photo }">
-	                                    	<img src="${resources}/images/mento/prev.bmp" alt=".."/>
+	                                    	<img src="${resources}/images/mento/prev.bmp" style="height: 400px; width: 296px; object-fit: cover;" alt=".."/>
 	                                    </c:if>
                                 	</div>                                
                                 </div>

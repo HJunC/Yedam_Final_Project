@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="${resources}/css/common/toastui-editor-dark.min.css" />
 
 <!-- Home Section -->
-<section class="page-section bg-dark-alfa-50 bg-scroll" data-background="${resources}/images/full-width-images/section-bg-11.jpg" id="home">
+<section class="page-section bg-dark-alfa-50 bg-scroll" data-background="${resources}/images/project/brands-people-Ax8IA8GAjVg-unsplash.jpg" id="home">
     <div class="container relative">
 
         <div class="row">
@@ -16,7 +16,7 @@
                 <div class="wow fadeInUpShort" data-wow-delay=".1s">
                     <h1 class="hs-line-7 mb-20 mb-xs-10">
                         👀<br>
-                        팀 프로젝트 생성하기
+                        프로젝트 생성하기
                     </h1>
                 </div>
                 <div class="wow fadeInUpShort" data-wow-delay=".2s"></div>
@@ -187,8 +187,7 @@
                             <label for="recruitEdt">프로젝트 모집 마감일</label>
                             <p class="input-info">최소 1일, 최대 15일</p>
                             <div class="form-group">
-                                <input type="date" name="recruitEdt" id="recruitEdt" class="input-lg round form-control bg-dark-input" required aria-required="true">
-                                <input type="time" id="recruitEdtTime" class="input-lg round form-control bg-dark-input" value="00:00" required aria-required="true">
+                                <input type="datetime-local" name="recruitEdt" id="recruitEdt" class="input-lg round form-control bg-dark-input" required aria-required="true">
                             </div>
                         </div>
                         <div class="form-group">
@@ -236,9 +235,9 @@
   var today = new Date();
   today.setDate(today.getDate() + 1);
   const recruitEdt = document.getElementById("recruitEdt");
-  recruitEdt.setAttribute("value", moment(today).format("YYYY-MM-DD"));
-  recruitEdt.setAttribute("min", moment(today).format("YYYY-MM-DD"));
-  recruitEdt.setAttribute("max", moment(today.setDate(today.getDate() + 14)).format("YYYY-MM-DD")); // 프로젝트 모집 최대 마감일
+  recruitEdt.setAttribute("value", moment(today).format("YYYY-MM-DDTHH:MM"));
+  recruitEdt.setAttribute("min", moment(today).format("YYYY-MM-DD") + "T00:00");
+  recruitEdt.setAttribute("max", moment(today.setDate(today.getDate() + 14)).format("YYYY-MM-DD") + "T00:00"); // 프로젝트 모집 최대 마감일
 
   $("input[name=langArray]").on("change", handleLangCheckbox);
 
@@ -290,7 +289,7 @@
       return;
     }
 
-    var regExp = /[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi;
+    var regExp = /[!?@#$%^&*():;+-=~{}<>\_\[\]\|\\\"\'\,\.\/\`\₩]/g;
     if (data.projectName === '') {
       alert("프로젝트명을 입력해주세요.");
       return;
@@ -336,7 +335,7 @@
     }
 
     delete data.langArray;
-    data.recruitEdt = data.recruitEdt + " " + $("#recruitEdtTime").val() + ":00";
+    data.recruitEdt = data.recruitEdt.replace("T", " ") + ":00";
     data.subject = editorObject.getHTML();
 
     if (data.subject === '<p><br></p>') {

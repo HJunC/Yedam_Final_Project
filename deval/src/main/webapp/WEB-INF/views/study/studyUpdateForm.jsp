@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="${resources}/css/common/toastui-editor-dark.min.css" />
 <link rel="stylesheet" href="${resources}/css/common/toastui-editor.min.css" />
 <link rel="stylesheet" href="${resources}/css/common/toastui-editor-dark.min.css" />
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
  
         <!-- Title -->
                <section class="small-section bg-dark-alfa-50 bg-scroll light-content" data-background="${resources}/images/full-width-images/section-bg-19.jpg" id="home">
@@ -171,11 +171,11 @@
                               checkBox = "";
                               Database.forEach(item => {
                             	var checkId = 'btncheck' + (item.indexOf('.') !== -1) ? item.replace('.', '') : item;	  
-                                checkBox += '><input type="checkbox" class="btn-check" id="'+checkId+'" name="ck_lang" onclick="count_ck(this);" value="' + item + '"'
+                                checkBox += '<input type="checkbox" class="btn-check" id="'+checkId+'" name="ck_lang" onclick="count_ck(this);" value="' + item + '"'
                                 if(lang1 == item || lang2 == item){
                                 	checkBox += "checked"
                                 }
-                                checkBox += '<label class="btn btn-outline-primary" for="'+checkId+'">' + item + '</label>';
+                                checkBox += '><label class="btn btn-outline-primary" for="'+checkId+'">' + item + '</label>';
                               })
                               $("#databaseBox").append(checkBox);
                               checkBox = "";
@@ -183,7 +183,7 @@
                             <script>
                               $("input[name=lang]").val('${study.lang1 }');
                               var ck_lang = '${study.lang1 }'.split(", ");
-                              langArr.forEach(item => {
+                              ck_lang.forEach(item => {
                                 var checkId = 'btncheck' + (item.indexOf('.') !== -1) ? item.replace('.', '') : item;
                                 $("#"+checkId).attr("checked", true);
                               })
@@ -244,9 +244,6 @@
 	
 	<script type="text/javascript">
 	
-
-		
-		
 		//언어 체크박스 - 2개만 체크되게 하기
 		function count_ck(obj){
 			var chkbox = document.getElementsByName("ck_lang");
@@ -259,8 +256,10 @@
 			}
 			
 			if(chkCnt > 2){
-				alert("스터디 기술은 2개까지 선택가능합니다.");
-				obj.checked = false;
+/* 			alert("스터디 기술은 2개까지 선택가능합니다."); */
+			swal("주의!", "스터디 기술은 2개까지 선택가능합니다.", "warning");
+
+ 			obj.checked = false;
 				return false;
 			}
 		}
@@ -274,7 +273,7 @@
 	
 	  const editorObject = new Editor({
 	    el: document.querySelector('#editor'),
-	    previewStyle: 'vertical', 
+	    previewStyle: 'vertical',
 	    initialValue: '${study.subject }',
 	    height: '500px',
 	    initialEditType: 'wysiwyg',
@@ -285,6 +284,7 @@
 	  
 	  function inputSubject() {
 		  $('#editor').prev().val(editorObject.getHTML());
+		  
 	  }
 	 
 	</script>

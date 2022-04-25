@@ -47,6 +47,7 @@ td {
 	<br>
 	<br>
 	<br>
+	<br>
 	<div align="center">
 		<section class="page-section bg-dark light-content" id="home">
 			<div class="container relative text-center">
@@ -86,59 +87,6 @@ td {
 						<br>
 
 
-						<%-- 		<div class="container relative">
-						
-							<label class="hidden">검색 분류</label> <select name="option">
-								<option value="all">전체</option>
-								<option value="title">제목</option>
-								<option value="writer">작성자</option>
-								<option value="subject">내용</option>
-							</select> <label>검색어</label> <input type="button" onclick="searchData()"
-								value="조회"> <input type="text" name="keyvalue" value="" />
-							<input class="btn btn-search" type="submit" value="조회" />
-
-							<c:if test="${empty boardList}">
-								<h3 class="call-action-1-heading"
-									style="font-size: 30px; color: rgba(255, 255, 255, 0.3);">검색
-									결과가 없습니다.</h3>
-							</c:if>
-						</form> --%>
-
-
-
-
-						<%--         <div align="left">
-                              <input type="text" name="title" id="codeSearch"
-                                 class="input-sm round" placeholder="검색"
-                                 style="width: 300px; height: 48px;" /> &nbsp;
-                              <button type="submit"
-                                 class="btn btn-mod btn-round btn-border-w btn-small">검색</button>
-                              <input type="hidden" name="pageNum"
-                                 value="${pageMaker.cri.pageNum}"> <input
-                                 type="hidden" name="amount" value="${pageMaker.cri.amount}">
-                           </div>
-                        </form>
-                         --%>
-
-
-
-						<%-- 		</div>
-					</section>
-
-
-					<form id="form1">
-						<select name="option">
-							<option value="all">전체</option>
-							<option value="writer">작성자</option>
-
-							<option value="title">제목</option>
-
-							<option value="subject">내용</option>
-
-
-						</select> <input name="keyvalue"> <input type="button"
-							onclick="searchData()" value="조회">
-					</form> --%>
 
 						<div class="table-responsive">
 							<table class="table shopping-cart-table">
@@ -184,7 +132,57 @@ td {
 				</div>
 		</section>
 	</div>
+								</select> <input name="keyword"> <input type="button"
+									onclick="searchData()" value="조회">
+							</form>
 
+						</div>
+
+						<div class="table-responsive">
+							<table class="table shopping-cart-table">
+								<tr align="center">
+									<th width="50">No</th>
+									<th width="250">제목</th>
+									<th width="100">작성자</th>
+									<th width="100">작성일자</th>
+									<th width="50">조회수</th>
+									<th width="100">추천수</th>
+								</tr>
+								<c:forEach items="${boardList}" var="list">
+									<tr class="active" onclick="freeSelect(${list.boardNo})">
+										<td>${list.boardNo}</td>
+										<th align="left">${list.title}</th>
+										<td>${list.writer}</td>
+										<td><fmt:formatDate pattern="yyyy-MM-dd"
+												value="${list.boardDate}" /></td>
+										<td>${list.hit}</td>
+										<td>${list.recommend}</td>
+									</tr>
+								</c:forEach>
+							</table>
+							<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
+
+								<div align="right">
+									<input class="btn btn-mod btn-round btn-border-w btn-small"
+										type="button" value="글쓰기"
+										onclick="location.href='write.do?no=2'">
+								</div>
+							</sec:authorize>
+
+
+							<form action="boardSelect.do" id="boardSS">
+								<input type="hidden" name="boardNo" id="boardSe" />
+							</form>
+
+							<div class="pagination">
+								<ul class="pagination" id="pagination"></ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
 	<script src="${resources}/js/common/jQueryPage.js"></script>
 
 
@@ -230,7 +228,6 @@ td {
     })
  } 
  
-
  function search() {
  	var searchForm = $("#searchForm");
    searchForm.find("input[name='pageNum']").val("1");
@@ -245,49 +242,5 @@ td {
  </script>
 
 
-	<%-- 	<c:forEach var="n" items="${list }">
-		<tr>
-			<td>${n.id }</td>
-			<td><a href="detail?id=${n.id }">${n.title }</a></td>
-			<td>${n.writerId}</td>
-			<td><fmt:formatDate pattern="yyyy:MM:dd hh:mm:ss"
-					value="${n.regdate }" /></td>
-			<td><fmt:formatNumber pattern="####,###" value="${n.hit}" /></td>
-		</tr>
-	</c:forEach>
-
-	</tbody>
-	</table>
-	</div>
-
-	<div>
-		<c:set var="page" value="${(empty param.p)? 1 : param.p}" />
-		<c:set var="startNum" value="${page-(page-1)%5}" />
-		<c:set var="lastNum" value="23" />
-
-		<c:if test="${startNum > 1}">
-			<span><a href="?p=${startNum - 1}&f=&q=">이전</a> </span>
-		</c:if>
-		<c:if test="${startNum <= 1}">
-			<span onclick="alert('이전 페이지가 없습니다.');">이전</span>
-		</c:if>
-
-		<span> <c:forEach var="i" begin="0" end="4">
-				<a href="?p=${startNum + i}&f=&q=">${startNum + i}</a>
-			</c:forEach>
-		</span>
-
-		<c:if test="${startNum < lastNum }">
-			<span><a href="?p=${startNum + 5}&f=&q=">다음</a> </span>
-		</c:if>
-		<c:if test="${startNum >= lastNum }">
-			<span onclick="alert('다음 페이지가 없습니다.');">다음</span>
-		</c:if>
-	</div>
-</body>
-</html>
-
-
- --%>
 </body>
 </html>

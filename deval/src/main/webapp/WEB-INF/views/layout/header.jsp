@@ -110,18 +110,11 @@
 					<ul class="mn-sub mn-has-multi">
 
 						<li class="mn-sub-multi">
-							<a class="mn-group-title">Free</a>
 							<ul>
 								<li><a href="${root}/board/free.do">자유게시판</a></li>
 								<li><a href="${root}/board/notice.do">공지사항</a></li>
 								<li><a href="${root}/board/technical.do">최신기술</a></li>
-							</ul>
-						</li>
-						<li class="mn-sub-multi">
-							<a class="mn-group-title">Code</a>
-							<ul>
 								<li><a href="${root}/cq/codeList.do">코드공유</a></li>
-								<li><a href="${root}/cq/reviewList.do">코드리뷰</a></li>
 								<li><a href="${root}/cq/questionList.do">질문</a></li>
 							</ul>
 						</li>
@@ -129,7 +122,7 @@
 				</li>
 
 				<li>
-					<a href="${root}/project/main.do">팀 프로젝트</a>
+					<a href="${root}/project/main.do">프로젝트</a>
 				</li>
 				
 				<li>
@@ -152,7 +145,12 @@
 				<sec:authorize access="isAuthenticated()">
 					<li>
 						<a href="#" class="mn-has-sub">
-						<img class="img-profile rounded-circle" style="width:2rem;height:2rem;" src="/upload/profile/<sec:authentication property='principal.profileImg'/>">
+							<c:if test="${member.profileImg == 'anonymous.png'}">
+								<img class="img-profile rounded-circle" style="width:2rem;height:2rem;" src="${resources }/images/mento/prev.bmp">
+							</c:if>
+							<c:if test="${member.profileImg != 'anonymous.png' }">
+								<img class="img-profile rounded-circle" style="width:2rem;height:2rem;" src="/upload/profile/<sec:authentication property='principal.profileImg'/>">
+							</c:if>
 						<sec:authentication property="principal.username"/>
 						<i class="mn-has-sub-icon"></i></a>
 						<ul class="mn-sub">

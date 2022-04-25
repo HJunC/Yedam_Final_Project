@@ -146,9 +146,7 @@ public class BoardController {
 	@PostMapping("/recommend.do")
 	public int recommend(BoardVO vo) {
 		boardDao.boardRecUp(vo.getBoardNo());
-		System.out.println("========================" + vo + "=================");
 		vo = boardDao.boardSelect(vo);
-		System.out.println("=========================" + vo + "===================");
 		return 1;
 
 	}
@@ -164,7 +162,6 @@ public class BoardController {
 	@ResponseBody
 	public List<BoardVO> boardSearch(String option, String keyvalue) {
 		return boardDao.getSearchList(option, keyvalue);
-
 	}
 
 	/*

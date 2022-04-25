@@ -40,8 +40,8 @@
 							</c:if>
 						</select>&nbsp;&nbsp;&nbsp;&nbsp;
 						<c:if test="${type == 4}">
-							<label>프로젝트 번호</label>
-							<input class="form-control" type="text" value="${projectNo}" readonly>
+							<label for="projectNo">프로젝트 번호</label>
+							<input class="input-md round form-control" name="projectNo" id="projectNo" type="text" value="${projectNo}" readonly>
 						</c:if>
 					</div>
 				</div>

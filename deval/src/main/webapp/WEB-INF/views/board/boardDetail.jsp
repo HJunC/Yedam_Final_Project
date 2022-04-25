@@ -54,7 +54,6 @@ th {
 								</sec:authorize>
 							</c:if>
 						</div>
-						<h4 class="blog-page-title"></h4>
 						<table>
 							<tr>
 								<th><c:if test="${board.boardTypeNo == 1}">[ 공지사항 ]</c:if>
@@ -114,6 +113,7 @@ th {
 											<td><input class="form-control" size="90"
 												id="commentSub"
 												<c:if test="${empty user}">disabled="disabled"</c:if>>
+											</td>
 											<td></td>
 											<td><input
 												class="btn btn-mod btn-round btn-border-w btn-small"

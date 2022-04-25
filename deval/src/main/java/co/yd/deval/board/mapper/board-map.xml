@@ -111,8 +111,8 @@
 
 	<update id="boardHitUp" parameterType="int">
 		UPDATE BOARD
-		SET HIT =
-		HIT+1
+		SET
+		HIT = HIT+1
 		where board_no=#{boardNo}
 	</update>
 

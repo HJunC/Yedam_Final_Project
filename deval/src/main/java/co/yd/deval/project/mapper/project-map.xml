@@ -155,8 +155,9 @@
     <select id="getListWithPaging" resultType="co.yd.deval.project.service.ProjectVO">
         <![CDATA[
         SELECT * FROM (
-            SELECT ROWNUM rn, t.*
-              FROM PROJECT t
+            SELECT /*+ INDEX_ASC(project project_recruit_edt_index) */
+            ROWNUM rn, project.*
+              FROM PROJECT project
 
         ]]>
             <include refid="option"></include>
@@ -207,6 +208,16 @@
         SELECT *
           FROM PROJECT
          WHERE PROJECT_NO = #{projectNo}
+    </select>
+
+    <select id="completedProjectList" resultType="co.yd.deval.project.service.ProjectVO">
+        SELECT *
+        FROM (SELECT t.*
+        FROM DEVAL.PROJECT t
+        WHERE STATE IN ('4')
+        AND GIT_URI IS NOT NULL
+        ORDER BY dbms_random.value)
+        WHERE ROWNUM <![CDATA[<=]]> 3
     </select>
 
 </mapper>
