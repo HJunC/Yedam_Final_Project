@@ -146,7 +146,12 @@
 				<sec:authorize access="isAuthenticated()">
 					<li>
 						<a href="#" class="mn-has-sub">
-						<img class="img-profile rounded-circle" style="width:2rem;height:2rem;" src="/upload/profile/<sec:authentication property='principal.profileImg'/>">
+						<c:if test="${member.profileImg == 'anonymous.png'}">
+							<img class="img-profile rounded-circle" style="width:2rem;height:2rem;" src="${resources }/images/mento/prev.bmp">
+						</c:if>
+						<c:if test="${member.profileImg != 'anonymous.png' }">
+							<img class="img-profile rounded-circle" style="width:2rem;height:2rem;" src="/upload/profile/<sec:authentication property='principal.profileImg'/>">
+						</c:if>
 						<sec:authentication property="principal.username"/>
 						<i class="mn-has-sub-icon"></i></a>
 						<ul class="mn-sub">
