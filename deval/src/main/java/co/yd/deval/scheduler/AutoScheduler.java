@@ -12,7 +12,7 @@ public class AutoScheduler {
 	@Autowired
 	private SchedulerMapper dao;
 	
-	@Scheduled(cron = "0 0 * * * *")
+	@Scheduled(cron = "0 0/10 * * * *")
 	public void updateStates() {
 		dao.updateMentoServieState();
 		dao.updateProjectState();

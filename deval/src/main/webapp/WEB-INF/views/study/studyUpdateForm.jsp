@@ -171,11 +171,11 @@
                               checkBox = "";
                               Database.forEach(item => {
                             	var checkId = 'btncheck' + (item.indexOf('.') !== -1) ? item.replace('.', '') : item;	  
-                                checkBox += '><input type="checkbox" class="btn-check" id="'+checkId+'" name="ck_lang" onclick="count_ck(this);" value="' + item + '"'
+                                checkBox += '<input type="checkbox" class="btn-check" id="'+checkId+'" name="ck_lang" onclick="count_ck(this);" value="' + item + '"'
                                 if(lang1 == item || lang2 == item){
                                 	checkBox += "checked"
                                 }
-                                checkBox += '<label class="btn btn-outline-primary" for="'+checkId+'">' + item + '</label>';
+                                checkBox += '><label class="btn btn-outline-primary" for="'+checkId+'">' + item + '</label>';
                               })
                               $("#databaseBox").append(checkBox);
                               checkBox = "";

@@ -54,97 +54,97 @@
                         <ul class="works-grid work-grid-5 clearfix hide-titles" id="work-grid" style=""> 
                             
                          	<li class="work-item mix branding" style="width: 100px; padding: 10px;">
-                                 <img src="${resources }/images/studyimg/main/01 (1).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/01(1).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
                             
                           	<li class="work-item mix branding" style="width: 100px; padding: 10px;">
-                                 <img src="${resources }/images/studyimg/main/01 (2).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/01(2).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
                             
            
                             <li class="work-item mix branding" style="width: 100px; padding: 10px;">
-                                 <img src="${resources }/images/studyimg/main/01 (3).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/01(3).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
                     
                             
                             <li class="work-item mix branding" style="width: 100px; padding: 10px;">
-                                 <img src="${resources }/images/studyimg/main/01 (4).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/01(4).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
                             
                             <li class="work-item mix branding" style="width: 100px; padding: 10px;">
-                                 <img src="${resources }/images/studyimg/main/01 (5).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/01(5).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
                             
                            	<li class="work-item mix branding" style="width: 100px; padding: 10px;">
-                                 <img src="${resources }/images/studyimg/main/01 (6).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/01(6).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
                             
                            <li class="work-item mix branding" style="width: 100px; padding: 10px;">
-                                 <img src="${resources }/images/studyimg/main/01 (7).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/01(7).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                            </li>
                            
                            <li class="work-item mix branding" style="width: 100px; padding: 10px;">
-                                 <img src="${resources }/images/studyimg/main/01 (8).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/01(8).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                            </li>
                             
                             <li class="work-item mix branding" style="width: 100px; padding: 10px;">
-                                 <img src="${resources }/images/studyimg/main/01 (9).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/01(9).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
                             
                            <li class="work-item mix branding" style="width: 100px; padding: 10px;">
-                                 <img src="${resources }/images/studyimg/main/01 (15).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/01(15).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                            </li>
                             
                            	<li class="work-item mix branding" style="width: 100px; padding: 10px;">
-                                 <img src="${resources }/images/studyimg/main/01 (11).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/01(11).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
                             
                            	<li class="work-item mix branding" style="width: 100px; padding: 10px;">
-                                 <img src="${resources }/images/studyimg/main/01 (12).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/01(12).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
                             
                           	 <li class="work-item mix branding" style="width: 100px; padding: 10px;">
-                                 <img src="${resources }/images/studyimg/main/01 (13).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/01(13).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
                             
                            	<li class="work-item mix branding" style="width: 100px; padding: 10px;">
-                                 <img src="${resources }/images/studyimg/main/01 (14).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/01(14).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
                             
                             <li class="work-item mix branding" style="width: 100px; padding: 10px;">
-                                 <img src="${resources }/images/studyimg/main/01 (18).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/01(18).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
                             
                           	<li class="work-item mix branding" style="width: 100px; padding: 10px;">
-                                 <img src="${resources }/images/studyimg/main/01 (17).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/01(17).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
                             
                             <li class="work-item mix branding" style="width: 125px; padding: 10px;">
-                                 <img src="${resources }/images/studyimg/main/1 (19).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/1(19).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
                             
                             <li class="work-item mix branding" style="width: 100px; padding: 10px;">
-                                 <img src="${resources }/images/studyimg/main/1 (20).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/1(20).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
                             
                             <li class="work-item mix branding" style="width: 130px; padding: 10px;">
-                                 <img src="${resources }/images/studyimg/main/1 (21).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/1(21).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
                             
                             <li class="work-item mix branding" style="width: 90px; padding: 10px;">
-                                 <img src="${resources }/images/studyimg/main/1 (23).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/1(23).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
                             
                             <li class="work-item mix branding" style="width: 130px; padding: 10px;">
-                                 <img src="${resources }/images/studyimg/main/1 (24).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/1(24).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
                             
                             <li class="work-item mix branding" style="width: 100px;">
-                                 <img src="${resources }/images/studyimg/main/1 (22).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/1(22).png" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
                             
                              <li class="work-item mix branding" style="width: 100px; padding: 10px;">
-                                 <img src="${resources }/images/studyimg/main/1 (25).jpg" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
+                                 <img src="${resources }/images/studyimg/main/1(25).jpg" alt="Work Description" class="wow-p fadeIn" data-wow-delay="1s" />     
                             </li>
                            
                         </ul>

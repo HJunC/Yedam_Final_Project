@@ -109,6 +109,15 @@ public class StudyController {
     // 스터디 변경기능
     @PostMapping("/editStudy.do")
     public String editStudy(StudyVO vo) {
+    	
+    	if(vo.getCk_lang()!=null) {
+    		if(vo.getCk_lang().length>0) {
+    			vo.setLang1(vo.getCk_lang()[0]);
+    		}
+    		if(vo.getCk_lang().length>1) {
+    			vo.setLang2(vo.getCk_lang()[1]);
+    		}
+    	}
     	int n = studyDao.studyUpdate(vo);
     	if (n != 0) {
 			return "redirect:studyList.do";

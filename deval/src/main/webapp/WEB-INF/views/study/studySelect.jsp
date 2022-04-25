@@ -161,7 +161,10 @@
                     <div class="widget-body">
                         <div class="tags">
                          	<a href="studyList.do?lang1=${study.lang1}">${study.lang1}</a>
-                         	<a href="studyList.do?lang1=${study.lang2}">${study.lang2}</a>
+                         	
+                         	<c:if test="${not empty study.lang2 }">
+                         		<a href="studyList.do?lang1=${study.lang2}">${study.lang2 }</a>
+                         	</c:if>
                         </div>
                     </div>
                 </div>
@@ -185,28 +188,28 @@
                 
                 <!-- Widget -->
                <div class="widget">
-         		<h3 class="widget-title"># Project</h3>
+         		<h3 class="widget-title"><i class="fa fa-trophy"></i> TOP3 프로젝트</h3>
                     <div class="widget-body">
                         <ul class="clearlist widget-posts">
                             <li class="clearfix">
-                                <a href=""><img src="${resources}/images/blog/previews/post-prev-1.jpg" alt="" width="100" class="widget-posts-img" /></a>
+                                <a href=""><img src="${resources}/images/studyimg/prj1.jpg" alt="" width="100" class="widget-posts-img" /></a>
                                 <div class="widget-posts-descr">
-                                    <a href="#" title="">프로젝트명 테스트 1</a>
-                                    <i class="fa fa-clock"></i> 2022.02.14  
+                                    <a href="#" title="">COVID-19 재택치료 관리</a>
+                                    <i class="fa fa-clock"></i> 2022.02.16 
                                 </div>
                             </li>
                             <li class="clearfix">
-                                <a href=""><img src="${resources}/images/blog/previews/post-prev-2.jpg" alt="" width="100" class="widget-posts-img" /></a>
+                                <a href=""><img src="${resources}/images/studyimg/prj3.jpg" alt="" width="100" class="widget-posts-img" /></a>
                                 <div class="widget-posts-descr">
-                                    <a href="#" title="">프로젝트명 테스트 2</a>
-                                   <i class="fa fa-clock"></i> 2022.03.14  
+                                    <a href="http://3.39.54.67:8080/yedamticket/" title="">예담 티켓 - 1석3조</a>
+                                   <i class="fa fa-clock"></i> 2022.04.28
                                 </div>
                             </li>
                             <li class="clearfix">
-                                <a href=""><img src="${resources}/images/blog/previews/post-prev-3.jpg" alt="" width="100" class="widget-posts-img" /></a>
+                                <a href=""><img src="${resources}/images/studyimg/prj2.jpg" alt="" width="100" class="widget-posts-img" /></a>
                                 <div class="widget-posts-descr">
-                                    <a href="#" title="">프로젝트명 테스트 3</a>
-                                    <i class="fa fa-clock"></i> 2022.04.14  
+                                    <a href="#" title="">아날로그 35mm</a>
+                                    <i class="fa fa-clock"></i> 2022.03.02
                                 </div>
                             </li>
                         </ul>

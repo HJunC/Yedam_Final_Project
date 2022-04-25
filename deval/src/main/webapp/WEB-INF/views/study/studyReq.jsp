@@ -68,11 +68,11 @@
 			}
             </style>
             
-	 <div class="page-content page-container" id="page-content">
-        <div class="padding" align="center">
-            <div class="row container d-flex justify-content-center" >
-                <div class="col-xl-6 col-md-12">
+	 <!-- <div class="page-content page-container" id="page-content"> -->
+        <div class="container d-flex" align="center">
+            <div class="row" >
 	 			  <c:forEach items="${study}" var="std">
+                <div class="col-xl-6 col-md-12">
                     <div class="card user-card-full" style="border-radius: 2.25rem;">
                         <div class="row m-l-0 m-r-0" style="color: black">
                         
@@ -113,11 +113,11 @@
                             </div>
                         </div>
                     </div>
-       			   </c:forEach>
                 </div>
+       			   </c:forEach>
             </div>
         </div>
-    </div>
+<!--     </div> -->
     
     
     
