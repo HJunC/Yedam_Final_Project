@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="${resources}/css/common/toastui-editor-dark.min.css" />
 
 <!-- Home Section -->
-<section class="page-section bg-dark-alfa-50 bg-scroll" data-background="${resources}/images/full-width-images/section-bg-11.jpg" id="home">
+<section class="page-section bg-dark-alfa-50 bg-scroll" data-background="${resources}/images/project/brands-people-Ax8IA8GAjVg-unsplash.jpg" id="home">
     <div class="container relative">
 
         <div class="row">
@@ -235,9 +235,9 @@
   var today = new Date();
   today.setDate(today.getDate() + 1);
   const recruitEdt = document.getElementById("recruitEdt");
-  recruitEdt.setAttribute("value", moment(today).format("YYYY-MM-DD") + "");
-  recruitEdt.setAttribute("min", moment(today).format("YYYY-MM-DD"));
-  recruitEdt.setAttribute("max", moment(today.setDate(today.getDate() + 14)).format("YYYY-MM-DD")); // 프로젝트 모집 최대 마감일
+  recruitEdt.setAttribute("value", moment(today).format("YYYY-MM-DDTHH:MM"));
+  recruitEdt.setAttribute("min", moment(today).format("YYYY-MM-DD") + "T00:00");
+  recruitEdt.setAttribute("max", moment(today.setDate(today.getDate() + 14)).format("YYYY-MM-DD") + "T00:00"); // 프로젝트 모집 최대 마감일
 
   $("input[name=langArray]").on("change", handleLangCheckbox);
 
