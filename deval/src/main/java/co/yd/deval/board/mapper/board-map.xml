@@ -67,10 +67,16 @@
 	<sql id="option">
 		<where>
 			board_type_no = #{boardTypeNo}
-			<if test="title != null">
-				AND (Title LIKE '%'||#{title}||'%'
-				OR subject LIKE
-				'%'||#{title}||'%')
+			<if test="keyvalue != null">
+				<if test="option == 'title'">
+					AND (TITLE LIKE '%'||#{keyvalue}||'%')
+				</if>
+				<if test="option == 'writer'">
+					AND (WRITER LIKE '%'||#{keyvalue}||'%')
+				</if>
+				<if test="option == 'subject'">
+					AND (SUBJECT LIKE '%'||#{keyvalue}||'%')
+				</if>
 			</if>
 		</where>
 	</sql>
@@ -107,8 +113,8 @@
 
 	<update id="boardHitUp" parameterType="int">
 		UPDATE BOARD
-		SET
-		HIT = HIT+1
+		SET HIT =
+		HIT+1
 		where board_no=#{boardNo}
 	</update>
 
@@ -127,9 +133,9 @@
 		from board
 		<where>
 			<if test="option == 'all'"> and 1=1 </if>
-			<if test="option == 'writer'"> and writer like '%'||#{keyword}||'%'</if>
-			<if test="option == 'subject'"> and subject like '%'||#{keyword}||'%'</if>
-			<if test="option == 'title'"> and title like '%'||#{keyword}||'%'</if>
+			<if test="option == 'writer'"> and writer like '%'||#{keyvalue}||'%'</if>
+			<if test="option == 'subject'"> and subject like '%'||#{keyvalue}||'%'</if>
+			<if test="option == 'title'"> and title like '%'||#{keyvalue}||'%'</if>
 		</where>
 
 	</select>
