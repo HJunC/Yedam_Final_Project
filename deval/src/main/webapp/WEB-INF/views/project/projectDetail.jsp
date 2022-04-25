@@ -795,7 +795,7 @@
    * 프로젝트 합류 요청 ajax
    */
   function addRequest() {
-    var data = $("#addRequestForm").serialize();
+    var data = $("#addRequestForm").serializeObject();
     $.ajax({
       url: "../api/project/request",
       type: "POST",
