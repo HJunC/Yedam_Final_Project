@@ -1,12 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.yd.deval.code.mapper.CodeMapper">
+	<sql id="option">
+		<where>
+			BOARD_TYPE_NO = #{boardTypeNo}
+		</where>
+	</sql>
 
 	<select id="cqList" resultType="co.yd.deval.code.service.CodeVO">
-		SELECT *
-		FROM CODE_QUESTION
-		WHERE BOARD_TYPE_NO = #{no}
-		ORDER BY CQ_NO DESC
+		<![CDATA[
+        SELECT * FROM (
+            SELECT ROWNUM rn, t.*
+              FROM CODE_QUESTION t
+
+        ]]>
+		<include refid="option"></include>
+		AND rownum <![CDATA[<=]]> #{criteria.pageNum} * #{criteria.amount}
+		)
+		<![CDATA[
+        WHERE rn > (#{criteria.pageNum} - 1) * #{criteria.amount}
+        ]]>
+	</select>
+
+	<select id="getTotalCount" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM CODE_QUESTION
+		<include refid="option"></include>
 	</select>
 	
 	<select id="cqSelect" resultType="co.yd.deval.code.service.CodeVO">
@@ -17,24 +35,20 @@
 	
 	<insert id="codeInsert" parameterType="co.yd.deval.code.service.CodeVO">
 		INSERT INTO 
-		CODE_QUESTION (
-						CQ_NO
+		CODE_QUESTION (CQ_NO
 			   		  , CQ_LANG
 					  , TITLE
 					  , SUBJECT
 					  , WRITER
 					  , BOARD_TYPE_NO
-					  , GIT_URI
-					  )
-		VALUES (	   
-						BOARD_NO_COUNT_SEQ.NEXTVAL
+					  , PROJECT_NO)
+		VALUES (	   BOARD_NO_COUNT_SEQ.NEXTVAL
 			 		  , #{cqLang}
 			 		  , #{title}
 			 		  , #{subject}
 			 		  , #{writer}
 			 		  , #{boardTypeNo}
-			 		  , #{gitUri} 
-			 		  )
+			 		  , #{projectNo})
 	</insert>
 	
 	<update id="codeUpdate" parameterType="co.yd.deval.code.service.CodeVO">
@@ -43,7 +57,7 @@
 			<if test="cqLang != null and cqLang != ''">CQ_LANG = #{cqLang},</if>
 			<if test="title != null and title != ''">TITLE = #{title},</if>
 			<if test="subject != null and subject != ''">SUBJECT = #{subject},</if>
-			<if test="gitUri != null and gitUri != ''">GIT_URI = #{gitUri},</if>
+			<if test="projectNo != null and projectNo != ''">PROJECT_NO = #{projectNo},</if>
 		</set>
 		WHERE CQ_NO = #{cqNo}
 	</update>

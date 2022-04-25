@@ -30,8 +30,19 @@ public class RestProjectController {
         this.projectRequestService = projectRequestService;
     }
 
-    @GetMapping("/detail")
-    public ResponseEntity<Object> detailProject(@RequestParam("no") int projectNo) {
+    @GetMapping("/detail/{no}")
+    public ResponseEntity<Object> detailProject(@PathVariable(name = "no") int projectNo) {
+        try {
+            ProjectInfoDTO dto = projectService.getProject(projectNo);
+            return ResponseEntity.ok().body(dto);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("error");
+        }
+    }
+
+    @GetMapping("/info/{no}")
+    public ResponseEntity<Object> infoProject(@PathVariable(name = "no") int projectNo) {
         try {
             ProjectInfoDTO dto = projectService.getProject(projectNo);
             return ResponseEntity.ok().body(dto);

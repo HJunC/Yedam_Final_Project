@@ -72,8 +72,13 @@ public class StudyServiceImpl implements StudyService {
 	}
 
 	@Override
-	public List<StudyVO> findStudyByNo(String id) {
-		return map.findStudyByNo(id);
+	public List<StudyVO> findEndStudy(String id) {
+		return map.findEndStudy(id);
+	}
+	
+	@Override
+	public List<StudyVO> findDoingStudy(String id) {
+		return map.findDoingStudy(id);
 	}
 
 	@Override
@@ -163,6 +168,31 @@ public class StudyServiceImpl implements StudyService {
 	@Override
 	public int studyEnd(StudyVO vo) {
 		return map.studyEnd(vo);
+	}
+
+	@Override
+	public int studyPause(StudyVO vo) {
+		return map.studyPause(vo);
+	}
+
+	@Override
+	public int studyRestart(StudyVO vo) {
+		return map.studyRestart(vo);
+	}
+
+	@Override
+	public int studyTeamDel(StudyReqVO vo) {
+		return map.studyTeamDel(vo);
+	}
+
+	@Override
+	public int minusRcnt(int no) {
+		return map.minusRcnt(no);
+	}
+
+	@Override
+	public int addInfoCheck(String id) {
+		return map.addInfoCheck(id);
 	}
 
 }

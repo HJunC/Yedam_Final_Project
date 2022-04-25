@@ -138,6 +138,7 @@ Primary use: Multipurpose Template
     scroll-behavior: auto;
     --font-global: HK_Grotesk, arial, sans-serif;
     --font-global-alt: HK_Grotesk_alt, arial, sans-serif;
+    
 }
 html{
     overflow-y: scroll;

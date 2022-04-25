@@ -257,7 +257,7 @@
 
             <!-- Content -->
             <div class="col-md-8 mb-sm-80">
-                <c:if test="${project.state eq '4'}">
+                <c:if test="${project.state eq '4' and project.gitUri != null}">
                     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
                     <link rel="stylesheet" href="${resources}/css/common/github-markdown-dark.css">
                     <!-- Nav Tabs -->
@@ -643,7 +643,7 @@
                         <div class="widget-body">
                             <div class="tags">
                                 <c:forEach var="item" items="${project.langArray}">
-                                    <a href="#">${item}</a>
+                                    <a href="search.do?langArray=${item}">${item}</a>
                                 </c:forEach>
                             </div>
                         </div>

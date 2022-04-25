@@ -44,13 +44,8 @@
 								<th>추천수 : ${cq.recommend }</th>
 							</tr>
 							<tr>
-								<th colspan="4">GIT URI : 
-									<c:if test="${not empty cq.gitUri }">
-										<a href="${cq.gitUri }" target="_blank">바로가기</a>
-									</c:if>
-									<c:if test="${empty cq.gitUri}">
-										없음
-									</c:if>
+								<th colspan="4">프로젝트 :
+									<a href="../project/projectDetail.do?no=${cq.projectNo }" target="_blank">바로가기</a>
 								</th>
 							</tr>
 							<tr>

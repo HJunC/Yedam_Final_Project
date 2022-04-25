@@ -23,7 +23,6 @@ public class MentoServVO {
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date endDate;
 	private String serviceTerm;
-	private String mentiInfo;
 	private int startTm;
 	private int endTm;
 	private String mentoId;

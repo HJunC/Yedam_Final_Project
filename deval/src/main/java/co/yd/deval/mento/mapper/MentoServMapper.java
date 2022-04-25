@@ -3,8 +3,6 @@ package co.yd.deval.mento.mapper;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.Param;
-
 import co.yd.deval.mento.service.MentoServVO;
 
 public interface MentoServMapper {
@@ -28,8 +26,9 @@ public interface MentoServMapper {
 		int mentoServAccept(MentoServVO vo);
 		
 		//my Page
-		MentoServVO findWaitMento(String id);
-		List<MentoServVO> findMentoByNo(String id);
+		List<MentoServVO> findWaitMento(String id);
+		List<MentoServVO> findDoingMento(String id);
+		List<MentoServVO> findEndMento(String id);
 		
 		//서비스 평점업데이트
 		int updateRating(Map<String, Object> rate);

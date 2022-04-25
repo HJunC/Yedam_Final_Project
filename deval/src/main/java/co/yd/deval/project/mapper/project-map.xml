@@ -173,12 +173,24 @@
         AND project_no > 0
     </select>
     
-    <select id="findProjectByNo" resultType="co.yd.deval.project.service.ProjectVO">
+    <select id="findEndProject" resultType="co.yd.deval.project.service.ProjectVO">
     	SELECT  *
     	FROM    PROJECT
     	WHERE   PROJECT_NO IN (SELECT  PROJECT_NO
     	                       FROM    PROJECT_TEAM
     	                       WHERE   MEMBER_ID = #{id})
+		AND STATE IN (4,9)
+		ORDER BY PROJECT_NO DESC
+    </select>
+    
+    <select id="findDoingProject" resultType="co.yd.deval.project.service.ProjectVO">
+    	SELECT  *
+    	FROM    PROJECT
+    	WHERE   PROJECT_NO IN (SELECT  PROJECT_NO
+    	                       FROM    PROJECT_TEAM
+    	                       WHERE   MEMBER_ID = #{id})
+		AND STATE IN (1,2,3)
+		ORDER BY PROJECT_NO DESC 
     </select>
 
     <select id="findWaitingProject" resultType="co.yd.deval.project.service.ProjectVO">
@@ -188,6 +200,7 @@
     						   FROM    PROJECT_REQUEST
     						   WHERE   MEMBER_ID = #{id}
     						   AND     STATE = 1)
+    	ORDER BY PROJECT_NO DESC
     </select>
 
     <select id="getProject" resultType="co.yd.deval.project.service.ProjectInfoDTO">

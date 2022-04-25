@@ -31,6 +31,11 @@
 			</div>
 
 		</div>
+            <div class="col-md-4 mt-30 wow fadeInUpShort" data-wow-delay=".1s">
+                <div class="mod-breadcrumbs text-end">
+                    <a href="/project/main.do">프로젝트 메인</a>
+                </div>
+            </div>
 
 	</div>
 </section>
@@ -54,6 +59,12 @@
 				<div class="list-group project-list">
 					<c:if test="${not empty projectList}">
 						<script>
+            <!-- Content -->
+            <div class="col-md-8 offset-lg-1 mb-sm-80 order-first order-md-last">
+                <div class="list-group project-list">
+                    <span style="position: absolute; top: -40px; font-size: 14px; color: #a1a1a1;">모집중인 프로젝트 총 <span class="text-white">${pageMaker.total}</span>건</span>
+                    <c:if test="${not empty projectList}">
+                        <script>
                           var timeArray = [];
                         </script>
 						<c:forEach items="${board}" var="item">
@@ -74,6 +85,22 @@
 										<div class="lang-search-list">${item.lang}</div>
 									</div>
 								</div> <script>
+                        <c:forEach items="${projectList }" var="item">
+                            <a href="projectDetail.do?no=${item.projectNo}" class="list-group-item d-flex justify-content-between align-items-start pt-3 pb-3" aria-current="true">
+                                <div class="ms-2 me-auto">
+                                    <div class="countdown-search-list mb-2">
+                                        <i class="fa fa-users"></i> (${item.crntRcnt}/${item.totalRcnt})&nbsp;&nbsp;&nbsp;
+                                        <i class="fa fa-stopwatch"></i> 마감 <span id="timer${item.projectNo}"></span>
+                                    </div>
+                                    <div>
+                                        <div class="mb-2">
+                                            <h5 class="list-title">${item.projectName}</h5>
+                                            <span class="fs-6" style="color: #727272">(${item.projectTerm}일)</span>
+                                        </div>
+                                        <div class="lang-search-list">${item.lang}</div>
+                                    </div>
+                                </div>
+                                <script>
                                   timeArray.push({
                                     "id": 'timer' + '${item.projectNo}',
                                     "endDate": '<fmt:formatDate value="${item.recruitEdt}" type="both" pattern="yyyy-MM-dd HH:mm:ss"/>'
@@ -190,6 +217,10 @@
 
 						<div>
 							<dl class="toggle">
+                        <script src="${resources}/js/common/Languages.js"></script>
+                        <div id="viewLang" class="mb-3" style="color: #44e6b0;"></div>
+                        <div>
+                            <dl class="toggle" id="positionCountBox">
 
 								<dt>
 									<a href="" role="button" aria-expanded="false">언어</a>
@@ -247,6 +278,33 @@
                           })
                           $("#databaseBox").append(checkBox);
                           checkBox = "";
+
+                          var langArrayInit = '';
+
+                          <c:if test="${not empty search.langArray}">
+                          <c:forEach items="${search.langArray}" var="item">
+                          langArrayInit += '${item}, ';
+                          </c:forEach>
+                          </c:if>
+
+                          $("#viewLang").html(langArrayInit)
+                          /**
+                           * 기술 체크박스 관련
+                           */
+                          function handleLangCheckbox() {
+                            var lang = "";
+                            var list = $("input[name=langArray]:checked");
+                            for(var i = 0; i < list.length; i++) {
+                              if(i + 1 !== list.length) {
+                                lang += list[i].value + ", ";
+                              } else {
+                                lang += list[i].value;
+                              }
+                            }
+                            $("#viewLang").html(lang);
+                          }
+
+                          $("input[name=langArray]").change(handleLangCheckbox);
                         </script>
 					</div>
 					<!-- End Widget -->
@@ -392,6 +450,7 @@
     $("input[name=termEnd]").val(365);
     $("input[type=radio]").prop("checked", false);
     $("input[type=checkbox]").prop("checked", false);
+    $("#viewLang").html('');
   }
 
 </script>

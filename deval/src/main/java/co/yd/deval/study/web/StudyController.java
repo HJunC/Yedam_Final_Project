@@ -26,6 +26,7 @@ import co.yd.deval.member.service.MemberVO;
 import co.yd.deval.study.service.StudyInfoVO;
 import co.yd.deval.study.service.StudyReqVO;
 import co.yd.deval.study.service.StudyService;
+import co.yd.deval.study.service.StudyTeamVO;
 import co.yd.deval.study.service.StudyVO;
 
 @Controller
@@ -141,7 +142,7 @@ public class StudyController {
     }
     
     // 스터디 상세글
-    @PostMapping("/studySelect.do")
+    @GetMapping("/studySelect.do")
     public String studySelect(StudyVO vo, Model model, Principal User) {
 		vo = studyDao.studySelectNo(vo);
     	if(vo != null) {
@@ -269,25 +270,18 @@ public class StudyController {
     }
     
     @RequestMapping("/studyMember.do")
-    public String studyMember(StudyVO vo, StudyReqVO rvo, Model model, Principal User) {
-    	model.addAttribute("study", studyDao.studyTeamMember(User.getName()));
+    public String studyMember(Model model, Principal User) {
+    	List<StudyTeamVO> list = studyDao.studyTeamMember(User.getName());
+    	if (!list.isEmpty()) {
+    		model.addAttribute("study", list);
+    		StudyVO vo = new StudyVO();
+    		vo.setStudyNo(list.get(0).getStudyNo());
+        	model.addAttribute("leaderId", studyDao.studySelectNo(vo));
+        	model.addAttribute("user", User.getName());
+    	}
     	return "study/studyMember";
     }
     
-    
-    // 디자인 테스트
-    
-    @RequestMapping("/designList.do")
-    public String designList(Model model) {
-    	
-    	return "study/designList";
-    }
-    
-    @RequestMapping("/test.do")
-    public String test(Model model) {
-    	
-    	return "study/test";
-    }
     
     /* Chat Service */
     
@@ -337,4 +331,51 @@ public class StudyController {
     	}
     	return cvo.getRoomId();
     }
+    
+    @PostMapping("/studyPause")
+    @ResponseBody
+    public int studyPause(StudyVO vo) {
+    	int r = studyDao.studyPause(vo);
+    	return r;
+    }
+    
+    @PostMapping("/studyRestart")
+    @ResponseBody
+    public int studyRestart(StudyVO vo) {
+    	int r = studyDao.studyRestart(vo);
+    	return r;
+    }
+    
+    @PostMapping("/studyteambye")
+    @ResponseBody
+    public int studyteambye(StudyReqVO vo) {
+    	int no = vo.getStudyNo();
+    	int r = studyDao.studyTeamDel(vo);
+    	
+    	if (r != 0) {
+    		studyDao.minusRcnt(no);
+    	}
+    	return r;
+    }
+    
+    @GetMapping("/infochecking")
+    @ResponseBody
+    public int infochecking(Principal user) {
+    	int r = studyDao.addInfoCheck(user.getName());
+    	return r;
+    }
+    
+   // 디자인 테스트
+    @RequestMapping("/designList.do")
+    public String designList(Model model) {
+    	
+    	return "study/designList";
+    }
+    
+    @RequestMapping("/test.do")
+    public String test(Model model) {
+    	
+    	return "study/test";
+    }
+    
 }

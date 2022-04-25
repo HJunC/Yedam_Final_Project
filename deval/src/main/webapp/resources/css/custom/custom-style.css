@@ -74,3 +74,11 @@
     border-color: #3d3d3d !important;
     padding: 8px 30px 8px 0;
 }
+.list-title {
+    margin: 0;
+    display: inline-block;
+    max-width: 366px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
