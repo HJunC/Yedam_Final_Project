@@ -137,7 +137,6 @@
 				<sec:authorize access="isAuthenticated()">
 					<li>
 						<a href="#" class="mn-has-sub">
-						<sec:authentication property="principal.profileImg"/>
 							<img class="img-profile rounded-circle" style="width:2rem;height:2rem;" src="/upload/profile/<sec:authentication property='principal.profileImg'/>">
 						<sec:authentication property="principal.username"/>
 						<i class="mn-has-sub-icon"></i></a>
