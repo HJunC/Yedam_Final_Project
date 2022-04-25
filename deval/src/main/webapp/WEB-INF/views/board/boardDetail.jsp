@@ -10,6 +10,13 @@
 	href="${resources}/css/common/toastui-editor.min.css" />
 <link rel="stylesheet"
 	href="${resources}/css/common/toastui-editor-dark.min.css" />
+<style>
+th {
+	text-decoration: none;
+	font-size: 16px;
+	line-height: 20px;
+}
+</style>
 <section class="small-section bg-dark-alfa-50 bg-scroll light-content"
 	data-background="${resources}/images/full-width-images/section-bg-19.jpg"
 	id="home">
@@ -49,23 +56,21 @@
 						</div>
 						<table>
 							<tr>
-								<th>#${board.boardNo}</th>
 								<th><c:if test="${board.boardTypeNo == 1}">[ 공지사항 ]</c:if>
 									<c:if test="${board.boardTypeNo == 2}">[ 자유게시판 ]</c:if> <c:if
-										test="${board.boardTypeNo == 3}">[ 최신기술동향 ]</c:if>
-								<td>
-								<th>작성자 : ${board.writer }</th>
-								<th>작성일자 : <fmt:formatDate pattern="yyyy-MM-dd hh:mm"
-										value="${board.boardDate}" /></th>
-								<th>조회수 : ${board.hit}</th>
-								<sec:authorize access="hasAnyRole('ROLE_USER')">
-									<th id="recommend">추천수 : ${board.recommend}</th>
-								</sec:authorize>
-								 <tr>
-                              <td>file</td>
-                              <td class="post-prev-img" style="border-radius: 70%;">
-                              <img src="/upload/${board.photo}" id="photo" alt="이미지 미리보기"/></td>
-                           </tr> 
+										test="${board.boardTypeNo == 3}">[ 최신기술동향 ]</c:if> &nbsp;
+									#${board.boardNo}
+								<th width="45%">👤 ${board.writer}</th>
+								<th>📝 <fmt:formatDate pattern="yyyy.MM.dd일  hh:mm"
+										value="${board.boardDate}" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								</th>
+								<th id="hit" >조회${board.hit}&nbsp;</th>
+
+</tr>
+	
+	<tr>
+								<th id="recommend">👍${board.recommend}</th>
+							<tr>
 							<tr>
 								<th style="vertical-align: top;" height="500px" colspan="4"><input
 									type="hidden" value="${board.subject}" name="subject"
@@ -261,44 +266,44 @@
 
 
    function commentInsert(){
-   	if($('#commentSub').val != '') {
-   		$.ajax({
-   			url : "../comment/commentInsert.do",
-   			type : 'post',
-   			data : {
-   						commentSubject : $('#commentSub').val(),
-   						writer : '${user}',
-   						boardNo : ${board.boardNo}
-   					},
-   			success : function(data){
-   				if(data != 0) {
-   					window.location.reload();
-   				}
-   			}
-   		})
-   	} else {
-   		alert('댓글을 입력해주세요')
-   		$('#commentSub').focus();
-   	}
+      if($('#commentSub').val != '') {
+         $.ajax({
+            url : "../comment/commentInsert.do",
+            type : 'post',
+            data : {
+                     commentSubject : $('#commentSub').val(),
+                     writer : '${user}',
+                     boardNo : ${board.boardNo}
+                  },
+            success : function(data){
+               if(data != 0) {
+                  window.location.reload();
+               }
+            }
+         })
+      } else {
+         alert('댓글을 입력해주세요')
+         $('#commentSub').focus();
+      }
    }
 
    function updateActive() {
-   	$(event.target).parent().children().eq(2).css('display','none');
-   	$(event.target).parent().children().eq(3).css('display','');
-   	$(event.target).parent().children().eq(4).css('display','');
-   	$(event.target).parent().children().eq(5).css('display','none');
-   	var input = $(event.target).parent().parent().children().eq(1);
-   	input.empty();
-   	input.append($('<input class="form-control" id="updInput">'))
+      $(event.target).parent().children().eq(2).css('display','none');
+      $(event.target).parent().children().eq(3).css('display','');
+      $(event.target).parent().children().eq(4).css('display','');
+      $(event.target).parent().children().eq(5).css('display','none');
+      var input = $(event.target).parent().parent().children().eq(1);
+      input.empty();
+      input.append($('<input class="form-control" id="updInput">'))
    }
 
    function updateCancle(subject) {
-   	$(event.target).parent().children().eq(2).css('display','');
-   	$(event.target).parent().children().eq(3).css('display','none');
-   	$(event.target).parent().children().eq(4).css('display','none');
-   	$(event.target).parent().children().eq(5).css('display','');
-   	$(event.target).parent().parent().children().eq(1).empty();
-   	$(event.target).parent().parent().children().eq(1).text(subject);
+      $(event.target).parent().children().eq(2).css('display','');
+      $(event.target).parent().children().eq(3).css('display','none');
+      $(event.target).parent().children().eq(4).css('display','none');
+      $(event.target).parent().children().eq(5).css('display','');
+      $(event.target).parent().parent().children().eq(1).empty();
+      $(event.target).parent().parent().children().eq(1).text(subject);
    }
 
     function commentUpdate(no){

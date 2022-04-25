@@ -117,7 +117,6 @@
                               }
                             }, interval);
                           }
-
                           timeArray.forEach(value => {
                             countDate(value.id, value.endDate);
                           });
@@ -224,15 +223,12 @@
                           })
                           $("#databaseBox").append(checkBox);
                           checkBox = "";
-
                           var langArrayInit = '';
-
                           <c:if test="${not empty search.langArray}">
                           <c:forEach items="${search.langArray}" var="item">
                           langArrayInit += '${item}, ';
                           </c:forEach>
                           </c:if>
-
                           $("#viewLang").html(langArrayInit)
                           /**
                            * 기술 체크박스 관련
@@ -249,7 +245,6 @@
                             }
                             $("#viewLang").html(lang);
                           }
-
                           $("input[name=langArray]").change(handleLangCheckbox);
                         </script>
                     </div>
@@ -345,7 +340,6 @@
 <script>
     var endPage = ${pageMaker.endPage}
     var current = ${pageMaker.cri.pageNum}
-
     window.pagObj = $('#pagination').twbsPagination({
       totalPages: endPage,
       startPage: current,
@@ -359,19 +353,16 @@
       } }).on('page', function (event, page) {
       searchPage(page);
     });
-
   function searchPage(page) {
     var searchForm = $("#searchForm");
     searchForm.find("input[name='pageNum']").val(page);
     searchForm.submit();
   }
-
   function search() {
     var searchForm = $("#searchForm");
     searchForm.find("input[name='pageNum']").val("1");
     searchForm.submit();
   }
-
   function resetForm() {
     $("input[type=text]").val("");
     $("input[name=termStart]").val(3);
@@ -380,5 +371,4 @@
     $("input[type=checkbox]").prop("checked", false);
     $("#viewLang").html('');
   }
-
 </script>
