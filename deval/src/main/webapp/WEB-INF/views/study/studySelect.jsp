@@ -376,7 +376,7 @@
 												
 												swal('완료!', '스터디 참가 신청을하였습니다.', 'success')
 												.then(function(e){
-													location.href = "studyMain.do";
+													location.reload();
 												});
 												
 											} 

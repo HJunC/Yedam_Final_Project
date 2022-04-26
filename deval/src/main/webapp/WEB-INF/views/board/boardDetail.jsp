@@ -3,194 +3,179 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://www.springframework.org/security/tags"
-	prefix="sec"%>
+   prefix="sec"%>
 <c:set var="resources"
-	value="${pageContext.request.contextPath}/resources" />
+   value="${pageContext.request.contextPath}/resources" />
 <link rel="stylesheet"
-	href="${resources}/css/common/toastui-editor.min.css" />
+   href="${resources}/css/common/toastui-editor.min.css" />
 <link rel="stylesheet"
-	href="${resources}/css/common/toastui-editor-dark.min.css" />
+   href="${resources}/css/common/toastui-editor-dark.min.css" />
 <style>
 th {
-	text-decoration: none;
-	font-size: 16px;
-	line-height: 20px;
+   text-decoration: none;
+   font-size: 16px;
+   line-height: 20px;
 }
 </style>
 <section class="small-section bg-dark-alfa-50 bg-scroll light-content"
-	data-background="${resources}/images/full-width-images/section-bg-19.jpg"
-	id="home">
-	<div class="container relative pt-100">
-		<div class="row">
-			<div class="col-lg-10 offset-lg-1">
-				<h2 class="hs-line-7 mb-0 wow fadeInUpShort" data-wow-delay=".2s">
-					<input type="hidden" value="${board.title}" name="title" id="title">
-					${board.title}
-				</h2>
-				<br> <br>
-				<div class="table-responsive">
-					<c:set var="upload" value="/upload" />
-					<form action="boardUpdateForm.do">
-						<input type="hidden" name="boardTypeNo" value="${board.boardNo}">
-						<div align="right">
-							<c:if test="${board.boardTypeNo != 1}">
-								<c:if test="${user == board.writer}">
-									<input class="btn btn-mod btn-round btn-border-w btn-small"
-										type="button"
-										onclick="location.href='boardUpdateForm.do?boardNo=${board.boardNo}'"
-										value="수정">
-									<a href='boardDelete.do?boardNo=${board.boardNo}'
-										class="btn btn-mod btn-round btn-border-w btn-small">삭제</a>
-								</c:if>
-							</c:if>
-							<c:if test="${board.boardTypeNo == 1}">
-								<sec:authorize access="hasAnyRole('ROLE_ADMIN')">
-									<input class="btn btn-mod btn-round btn-border-w btn-small"
-										type="button"
-										onclick="location.href='boardUpdateForm.do?boardNo=${board.boardNo}'"
-										value="수정">
-									<a href='boardDelete.do?boardNo=${board.boardNo}'
-										class="btn btn-mod btn-round btn-border-w btn-small">삭제</a>
-								</sec:authorize>
-							</c:if>
-						</div>
-						<table>
-							<tr>
-								<th><c:if test="${board.boardTypeNo == 1}">[ 공지사항 ]</c:if>
-									<c:if test="${board.boardTypeNo == 2}">[ 자유게시판 ]</c:if> <c:if
-										test="${board.boardTypeNo == 3}">[ 최신기술동향 ]</c:if> &nbsp;
-									#${board.boardNo}
-								<th width="45%">👤 ${board.writer}</th>
-								<th>📝 <fmt:formatDate pattern="yyyy.MM.dd일  hh:mm"
-										value="${board.boardDate}" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								</th>
-								<th id="hit" >조회${board.hit}&nbsp;</th>
+   data-background="${resources}/images/full-width-images/section-bg-19.jpg"
+   id="home">
+   <div class="container relative pt-100">
+      <div class="row">
+         <div class="col-lg-10 offset-lg-1">
+            <h2 class="hs-line-7 mb-0 wow fadeInUpShort" data-wow-delay=".2s">
+               <input type="hidden" value="${board.title}" name="title" id="title">
+               ${board.title}
+            </h2>
+            <br> <br>
+            <div class="table-responsive">
+               <c:set var="upload" value="/upload" />
+               <form action="boardUpdateForm.do">
+                  <input type="hidden" name="boardTypeNo" value="${board.boardNo}">
+                  <div align="right">
+                     <c:if test="${board.boardTypeNo != 1}">
+                        <c:if test="${user == board.writer}">
+                           <input class="btn btn-mod btn-round btn-border-w btn-small"
+                              type="button"
+                              onclick="location.href='boardUpdateForm.do?boardNo=${board.boardNo}'"
+                              value="수정">
+                           <a href='boardDelete.do?boardNo=${board.boardNo}'
+                              class="btn btn-mod btn-round btn-border-w btn-small">삭제</a>
+                        </c:if>
+                     </c:if>
+                     <c:if test="${board.boardTypeNo == 1}">
+                        <sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+                           <input class="btn btn-mod btn-round btn-border-w btn-small"
+                              type="button"
+                              onclick="location.href='boardUpdateForm.do?boardNo=${board.boardNo}'"
+                              value="수정">
+                           <a href='boardDelete.do?boardNo=${board.boardNo}'
+                              class="btn btn-mod btn-round btn-border-w btn-small">삭제</a>
+                        </sec:authorize>
+                     </c:if>
+                  </div>
+                  <h4 class="blog-page-title"></h4>
+                  <table style="width:100%">
+                     <tr>
+                        <th><c:if test="${board.boardTypeNo == 1}">[ 공지사항 ]</c:if>
+                           <c:if test="${board.boardTypeNo == 2}">[ 자유게시판 ]</c:if> <c:if
+                              test="${board.boardTypeNo == 3}">[ 최신기술동향 ]</c:if> &nbsp;
+                           #${board.boardNo}
+                        <th width="45%">👤 ${board.writer}</th>
+                        <th>📝 <fmt:formatDate pattern="yyyy.MM.dd일  hh:mm"
+                              value="${board.boardDate}" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </th>
+                        <th id="hit" >조회${board.hit}&nbsp;</th>
 
-</tr>
-	
-	<tr>
-								<th id="recommend">👍${board.recommend}</th>
-							<tr>
-							<tr>
-								<th style="vertical-align: top;" height="500px" colspan="4"><input
-									type="hidden" value="${board.subject}" name="subject"
-									id="subject">${board.subject}</th>
-							<tr>
-								<%-- <tr>
-                              <td>유형</td>
-                              <td><input type="hidden" value="${board.boardTypeNo}"
-                                 name="boardTypeNo" id="boardTypeNo">${board.boardTypeNo}</td>
-                           </tr>
-                           <tr>
-                              <td>카테고리</td>
-                              <td><input type="hidden" value="${board.category}"
-                                 name="category" id="category">${board.category}</td>
-                           </tr> --%>
-							</tbody>
-						</table>
-						<!--    <div class="container relative">
-                  <div class="mb-80 mb-xs-40"> -->
-					</form>
+                        <th id="recommend" >👍${board.recommend}</th>
+                     </tr>
+                     
+                     <tr>
+                        <td style="margin-top: 20px; vertical-align: top;" height="500px" colspan="4">   
+                        <br> ${board.subject}</td>
+                     </tr>
+                     </tbody>
+                  </table>
+               </form>
 
-					<div align="right" class="col">
-						<c:if test="${board.boardTypeNo != 1}">
-							<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
-								<p class="btn btn-mod btn-round btn-border-w btn-small"
-									id="recommenBtn">게시글추천</p>
-								<h1 class="blog-page-title"></h1>
+               <div align="right" class="col">
+                  <c:if test="${board.boardTypeNo != 1}">
+                     <sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
+                        <p class="btn btn-mod btn-round btn-border-w btn-small"
+                           id="recommenBtn">게시글추천</p>
+                        <h1 class="blog-page-title"></h1>
 
-							</sec:authorize>
-						</c:if>
+                     </sec:authorize>
+                  </c:if>
 
-						<div align="left">
-							<!-- Accordion -->
+                  <div align="left">
+                     <!-- Accordion -->
 
 
-							<form action="commentInsert.do" method="post">
-								<table class="table shopping-cart-table">
-									<tbody id="commentBody">
-										<tr>
-											<td><input class="form-control" size="90"
-												id="commentSub"
-												<c:if test="${empty user}">disabled="disabled"</c:if>>
-											</td>
-											<td></td>
-											<td><input
-												class="btn btn-mod btn-round btn-border-w btn-small"
-												<c:if test="${empty user}">disabled="disabled"</c:if>
-												type="button" value="등록" onclick="commentInsert()">
-											</td>
-										</tr>
-									</tbody>
-								</table>
+                     <form action="commentInsert.do" method="post">
+                        <table class="table shopping-cart-table">
+                           <tbody id="commentBody">
+                              <tr>
+                                 <td><input class="form-control" size="90"
+                                    id="commentSub"
+                                    <c:if test="${empty user}">disabled="disabled"</c:if>>
+                                 <td></td>
+                                 <td><input
+                                    class="btn btn-mod btn-round btn-border-w btn-small"
+                                    <c:if test="${empty user}">disabled="disabled"</c:if>
+                                    type="button" value="등록" onclick="commentInsert()">
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
 
-							</form>
+                     </form>
 
 
 
-							<div class="mb-80 mb-xs-40">
-								<ul class="media-list comment-list clearlist">
-									<!-- Comment Item -->
-									<c:forEach var="comment" items="${comments}">
-										<li class="media comment-item">
-											<div class="media-body">
-												<div class="comment-item-data">
-													<div class="comment-author">${comment.writer}</div>
-													<br>
+                     <div class="mb-80 mb-xs-40">
+                        <ul class="media-list comment-list clearlist">
+                           <!-- Comment Item -->
+                           <c:forEach var="comment" items="${comments}">
+                              <li class="media comment-item">
+                                 <div class="media-body">
+                                    <div class="comment-item-data">
+                                       <div class="comment-author">${comment.writer}</div>
+                                       <br>
 
-													<fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss"
-														value="${comment.commentDate}" />
-													<c:if test="${comment.writer eq user}">
-														<span class="separator">&mdash;</span>
+                                       <fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss"
+                                          value="${comment.commentDate}" />
+                                       <c:if test="${comment.writer eq user}">
+                                          <span class="separator">&mdash;</span>
 
 
-														<input class="btn btn-mod btn-border-w btn-round"
-															type="button" onclick="updateActive()" value="수정">
-														<input class="btn btn-mod btn-border-w btn-circle"
-															type="button" style="display: none;"
-															onclick="commentUpdate(${comment.commentNo})"
-															value="수정하기">
-														<input class="btn btn-mod btn-border-w btn-circle"
-															type="button" style="display: none;"
-															onclick="updateCancle('${comment.commentSubject}')"
-															value="취소">
-														<input class="btn btn-mod btn-border-w btn-round"
-															type="button"
-															onclick="commentDelete(${comment.commentNo})" value="삭제">
-													</c:if>
-												</div>
+                                          <input class="btn btn-mod btn-border-w btn-round"
+                                             type="button" onclick="updateActive()" value="수정">
+                                          <input class="btn btn-mod btn-border-w btn-circle"
+                                             type="button" style="display: none;"
+                                             onclick="commentUpdate(${comment.commentNo})"
+                                             value="수정하기">
+                                          <input class="btn btn-mod btn-border-w btn-circle"
+                                             type="button" style="display: none;"
+                                             onclick="updateCancle('${comment.commentSubject}')"
+                                             value="취소">
+                                          <input class="btn btn-mod btn-border-w btn-round"
+                                             type="button"
+                                             onclick="commentDelete(${comment.commentNo})" value="삭제">
+                                       </c:if>
+                                    </div>
 
-												<p>${comment.commentSubject}</p>
-											</div>
-										</li>
-									</c:forEach>
-									<!-- End Comment Item -->
-								</ul>
-							</div>
+                                    <p>${comment.commentSubject}</p>
+                                 </div>
+                              </li>
+                           </c:forEach>
+                           <!-- End Comment Item -->
+                        </ul>
+                     </div>
 
-							<!-- <button class="btn btn-secondary"
+                     <!-- <button class="btn btn-secondary"
                onclick="location.href='boardDetail.do'">목록으로</button> -->
-							<div align="right">
-								<c:if test="${board.boardTypeNo == 1}">
-									<a href="notice.do"
-										class="btn btn-mod btn-round btn-border-w btn-small">목록으로</a>
-								</c:if>
-								<c:if test="${board.boardTypeNo == 2}">
-									<a href="free.do"
-										class="btn btn-mod btn-round btn-border-w btn-small">목록으로</a>
-								</c:if>
-								<c:if test="${board.boardTypeNo == 3}">
-									<a href="technical.do"
-										class="btn btn-mod btn-round btn-border-w btn-small">목록으로</a>
-								</c:if>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+                     <div align="right">
+                        <c:if test="${board.boardTypeNo == 1}">
+                           <a href="notice.do"
+                              class="btn btn-mod btn-round btn-border-w btn-small">목록으로</a>
+                        </c:if>
+                        <c:if test="${board.boardTypeNo == 2}">
+                           <a href="free.do"
+                              class="btn btn-mod btn-round btn-border-w btn-small">목록으로</a>
+                        </c:if>
+                        <c:if test="${board.boardTypeNo == 3}">
+                           <a href="technical.do"
+                              class="btn btn-mod btn-round btn-border-w btn-small">목록으로</a>
+                        </c:if>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
 
-		</div>
-	</div>
+      </div>
+   </div>
 
 </section>
 

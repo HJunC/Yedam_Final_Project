@@ -73,7 +73,7 @@
                                                 </p>
                                                 <c:if test="${leaderId.leaderId eq user }">
                                                 	<c:if test="${leaderId.leaderId ne std.memberId}">
-	                                                	<button type="button" onclick="teambyebyeBtn('${std.studyNo }', '${std.memberId }')" class="btn btn-mod btn-glass btn-round btn-small">
+	                                                	<button type="button" onclick="teamputoutBtn('${std.studyNo }', '${std.memberId }')" class="btn btn-mod btn-glass btn-round btn-small">
 			                                              <i class="fa fa-minus-circle"></i> 내보내기
 			                                            </button>
                                                 	</c:if>
@@ -279,7 +279,32 @@
         					console.log("err", err);
         				}
         			});
-             	}	
+             	}
+            	
+            	function teamputoutBtn(sno, id){
+					console.log("Study teambyebye");
+        			
+        			$.ajax({
+        				url : "studyteambye.do",
+        				type : "post",
+        				data : {"studyNo": sno, "memberId": id},
+        				success : function(result) {
+        					console.log("succ", result);
+        					if (result == 1) {
+        						/* alert(id + "님 " + sno +"번 스터디를 중단하였습니다.");
+        						location.href = "studyMain.do"; */
+        						
+        						swal('스터디 중단', id + '님을 ' + sno +'번 스터디에서 내보냈습니다.', 'success')
+								.then(function(e){
+									location.reload();       
+								});
+        					}
+        				},
+        				error : function(err) {
+        					console.log("err", err);
+        				}
+        			});
+             	}
              </script> 
 		</body>
 	</html>

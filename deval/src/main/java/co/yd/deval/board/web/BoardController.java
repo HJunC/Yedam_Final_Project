@@ -188,7 +188,7 @@ public class BoardController {
 	@GetMapping("/technicSelect.do")
 	public String technicSelect(BoardVO vo, Model model) {
 		boardDao.boardHitUp(vo.getBoardNo());
-		vo = boardDao.boardSelect(vo);
+		model.addAttribute("board",boardDao.boardSelect(vo));
 		return "board/boardDetail";
 	}
 }
