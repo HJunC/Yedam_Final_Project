@@ -397,11 +397,13 @@
     	        	$('#totalPrice').append(totalPrice);
     	        	// 충전버튼 생성
     	        	if(totalPrice > $('#nowCash').text()) {
+    	        		$('#putPointBox').css('display','none');
     	        		$("#putPointBox").css("display", "flex");
     	        		var chargeBtn = $('<input type="button" class="btn btn-mod btn-w btn-medium round" id="charge" onclick="chargePt()" value="충전하기">');
     	        		$('#btnDiv').empty();
     	        		$('#btnDiv').append(chargeBtn);
     	        	}else if(totalPrice <= $('#nowCash').text()) {
+    	        		$('#putPointBox').css('display','none');
     	        		var paymentBtn = $('<input type="button" class="btn btn-mod btn-w btn-medium round" id="payment" onclick="payment()" value="결제하기">');
     	        		$('#btnDiv').empty();
     	        		$('#btnDiv').append(paymentBtn);
@@ -456,7 +458,6 @@
     	  function payment() {
 	    	  var totalPrice = $('#totalPrice').text();
 	    	  var price = parseInt(totalPrice);
-	    	  console.log(totalPrice);
     		  $.ajax({
     			  url : "mentoPayment.do",
     			  type : "POST",
@@ -474,6 +475,13 @@
 	    		    	  logPrice.value = parseInt($('#totalPrice').text());
 	    		    	  
 	    		    	  //insert submit
+	    		    	  msg = {
+							memberId : "${mento.mentoId}",
+                    		subject : "${member.memberId}님이 서비스를 신청했습니다."
+                    				}
+                    		webSocket.send(JSON.stringify(msg));
+	    		    	  
+	    		    	  alert('서비스가 성공적을 신청되었습니다.');
 	    				  frm.submit();
     				  }
     			  }

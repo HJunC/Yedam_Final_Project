@@ -80,8 +80,6 @@ public class ProjectController {
         ProjectVO searchVO = new ProjectVO();
         List<ProjectVO> projectList = projectService.searchMainPageProject(searchVO);
         model.addAttribute("projectList", projectList);
-        // 완료된 프로젝트
-        model.addAttribute("completedList", projectService.completedProjectList());
         return "project/projectMain";
 
     }

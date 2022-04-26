@@ -795,14 +795,20 @@
    * 프로젝트 합류 요청 ajax
    */
   function addRequest() {
+    var data = $("#addRequestForm").serializeObject();
     $.ajax({
       url: "../api/project/request",
       type: "POST",
-      data: $("#addRequestForm").serialize(),
+      data: data,
       dataType: "json",
       success: function(res) {
         console.log(res);
         alert("지원하였습니다.");
+        var msg = {
+          memberId : '${project.leaderId}',
+          subject : data.memberId + "님이 프로젝트에 " + data.position + " 포지션으로 지원하였습니다.!"
+        }
+        webSocket.send(JSON.stringify(msg));
         location.reload();
       },
       error: function (error) {
