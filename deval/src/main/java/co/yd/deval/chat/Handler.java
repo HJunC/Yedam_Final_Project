@@ -33,10 +33,12 @@ public class Handler extends TextWebSocketHandler {
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		sessionList.add(session);
-		for(AlarmVO vo : alarmDAO.alarmList(Objects.requireNonNull(session.getPrincipal()).getName())) {
-			session.sendMessage(new TextMessage(vo.getSubject()));
+		if(session.getPrincipal() != null) {
+			for(AlarmVO vo : alarmDAO.alarmList(Objects.requireNonNull(session.getPrincipal()).getName())) {
+				session.sendMessage(new TextMessage(vo.getSubject()));
+			}
+			alarmDAO.updateAlarm(session.getPrincipal().getName());
 		}
-		alarmDAO.updateAlarm(session.getPrincipal().getName());
 	}
 
 	@Override
