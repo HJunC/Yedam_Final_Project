@@ -12,7 +12,7 @@
 	
 	<!-- 테스트용, 실제 서버에서는 사용 안함 -->
 	<bean class="java.lang.String" id="uploadPath">
-		<constructor-arg value="/home/ubuntu/apache-tomcat-9.0.62/webapps/upload/"/>
+		<constructor-arg value="C:/DEV/apache-tomcat-9.0.56/webapps/upload/"/>
 	</bean>
 	
 </beans>

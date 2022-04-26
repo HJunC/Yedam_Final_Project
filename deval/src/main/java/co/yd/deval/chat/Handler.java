@@ -28,11 +28,11 @@ public class Handler extends TextWebSocketHandler {
 
 	List<WebSocketSession> sessionList = new ArrayList<>();
 
-	private final static String uri = "ws://3.35.117.72:8080/deval/socket";
 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		sessionList.add(session);
+		
 		if(session.getPrincipal() != null) {
 			for(AlarmVO vo : alarmDAO.alarmList(Objects.requireNonNull(session.getPrincipal()).getName())) {
 				session.sendMessage(new TextMessage(vo.getSubject()));
@@ -45,8 +45,8 @@ public class Handler extends TextWebSocketHandler {
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		System.out.println(message.getPayload());
 		String userId = Objects.requireNonNull(session.getPrincipal()).getName();
-
-		if (!Objects.requireNonNull(session.getUri()).toString().equals(uri)) {
+		Boolean roomCheck = session.getUri().toString().contains("roomId"); 
+		if (roomCheck) {
 			ChatLogVO chatvo = objectMapper.readValue(message.getPayload(), ChatLogVO.class);
 			for (WebSocketSession sess : sessionList) {
 				if (sess.getUri().equals(session.getUri()) && !Objects.requireNonNull(sess.getPrincipal()).getName().equals(userId)) {

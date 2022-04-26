@@ -76,7 +76,7 @@
         
         <div class="row">
         
-        <div class="col-md-4 col-lg-3 mt-10">
+        <div class="col-md-4 col-lg-2 mt-10">
                 <!-- Widget -->
                 <div class="widget">
                     
@@ -106,19 +106,19 @@
                 <!-- End Widget -->
            </div>
 
-           <div id="info_box" class="col-md-8 offset-lg-1 mb-sm-80 order-first order-md-last">
+           <div id="info_box" class="col-md-10 mb-sm-80 order-first order-md-last">
             <!-- 나의 정보가 보이는 div -->
             <div id="my_info_box" class="border border-secondary" style="height:400px;">
                <h2>나의 정보</h2>
                <hr>
                <div>
                   <div class="row">
-                     <div class="col">
-                        <div style="width:300px;height:300px;">
-                           <img src="/upload/profile/${member.profileImg}" alt=".." style="object-fit: fill;width: 300px;height: 300px;">
+                     <div class="col-5">
+                        <div style="width:100%">
+                           <img src="/upload/profile/${member.profileImg}" alt=".." style="object-fit: fill;width:100%;max-height:300px;">
                         </div>
                      </div>
-                  <div class="col">
+                  <div class="col-7">
                      <table class="table">
                         <tr>
                            <th>아이디</th>
@@ -441,6 +441,10 @@
                            $('#joinProject').append(makeNotTr(1));
                            $('#endProject').append(makeNotTr(2));
                         } else {
+                        	console.log(data)
+                        	console.log("doing : "+data.project.length);
+                        	console.log("end : "+data.end.length);
+                        	console.log("wait : "+data.wait.length);
                            if(data.project.length == 0){
                               $('#joinProject>tbody').empty();
                               $('#joinProject').append(makeNotTr(1));
@@ -461,9 +465,11 @@
                            }
                            
                            if(data.wait.length == 0){
+                        	   console.log('없음')
                               $('#waitProject>tbody').empty();
                               $('#waitProject').append(makeNotTr(0))   
                            } else {
+                        	   console.log('있음')
                               $('#waitProject>tbody').empty();
                               $.each(data.wait,function(item,idx){
                                  $('#waitProject').append(makeWaitTr(idx,1))   
@@ -562,7 +568,7 @@
                                })
                             }
                            
-                           if(data.wait == null){
+                           if(data.wait.length == 0){
                               $('#waitMento>tbody').empty();
                               $('#waitMento').append(makeNotTr(0))   
                            } else {
@@ -632,15 +638,15 @@
    // 정보가 없는 항목의 tr을 만들어주는 기능
    function makeNotTr(n){
       var tr = $('<tr>');
-      var td;
+      var td = $('<th>');
       if(n == 0){
-         td = $('<th colspan="6">').text('신청 이력이 없습니다').css('color','#A7A9A5')
+         td.attr('colspan','6').text('신청 이력이 없습니다').css('color','#A7A9A5')
       }else if(n == 1) {
-         td = $('<th colspan="7">').text('참여 이력이 없습니다.').css('color','#A7A9A5')      
+         td.attr('colspan',"7").text('참여 이력이 없습니다.').css('color','#A7A9A5')      
       } else {
-         td = $('<th colspan="6">').text('종료 이력이 없습니다.').css('color','#A7A9A5')
-      tr.append(td);
+         td.attr("colspan","6").text('종료 이력이 없습니다.').css('color','#A7A9A5')
       }
+      tr.append(td);
       return tr;
    }
    

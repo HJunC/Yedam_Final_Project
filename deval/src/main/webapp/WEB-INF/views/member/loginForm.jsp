@@ -23,16 +23,12 @@
 		<div class="tab-content tpl-minimal-tabs-cont section-text wow fadeInUpShort" id="myTabContent-1">
 
 			<div class="tab-pane fade show active" id="account-login" role="tabpanel" aria-labelledby="account-login-tab">
-				<c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">
- 				 로그인 에러입니다.<br>
-  				 예외 타입：${SPRING_SECURITY_LAST_EXCEPTION.getClass().name}<br>
-  				 메시지：${SPRING_SECURITY_LAST_EXCEPTION.message}<br>
-					<c:remove var="SPRING_SECURITY_LAST_EXCEPTION" scope="session" />
-				</c:if>
+				
 				<!-- Login Form -->
 				<div class="row">
 					<div class="col-md-6 offset-md-3">
 
+						
 						<form action="login" method="post" class="form contact-form">
 						<sec:csrfInput/>
 							<div class="clearfix">
@@ -52,19 +48,18 @@
 									<input type="checkbox" name="remember-me" value="True">로그인 유지
 								</div>
 							</div>
-
-							<div class="clearfix">
+						<c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">
+							<div align="center" style="color:red;"><h4>아이디 또는 비밀번호가 일치하지 않습니다.</h4></div>
+							<c:remove var="SPRING_SECURITY_LAST_EXCEPTION" scope="session" />
+						</c:if>
+						<div class="clearfix">
 
 								<div class="cf-left-col">
 
-									<!-- Inform Tip -->
-									<div class="form-tip pt-20">
-										<a href="">Forgot Password?</a>
-									</div>
+							
 
 								</div>
-
-								<div class="cf-right-col">
+							<div class="cf-right-col">
 
 									<!-- Send Button -->
 									<div class="text-end pt-10">
