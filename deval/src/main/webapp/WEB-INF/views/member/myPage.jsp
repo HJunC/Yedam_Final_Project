@@ -725,7 +725,7 @@
          var td2 = $('<td>').text(idx.mentiId);
          var td3 = $('<td>').text(idx.startDate);
          var td4 = $('<td>').text(idx.endDate);
-         var td5 = $('<td>').text(idx.startTm+'-'+idx.endTm);
+         var td5 = $('<td>').text(idx.startTm + ':00'+'-'+idx.endTm+':00');
          if(state == 1){
             var td6 = $('<td>').text('진행중').css('color','#7F8DF5');
             var td7 = $('<td>')
