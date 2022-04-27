@@ -34,6 +34,10 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 			uri = prevPage;
 		}
 		
+		if(uri.contains("loginForm.do") || uri.contains("signUpForm")) {
+			uri = "/deval/";
+		}
+		
 		response.sendRedirect(uri);
 	}
 

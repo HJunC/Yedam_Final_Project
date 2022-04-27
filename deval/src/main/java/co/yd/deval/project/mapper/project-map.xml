@@ -23,8 +23,7 @@
                              PROJECT_TERM,
                              HIT,
                              APPLY_RCNT,
-                             LEADER_ID,
-                             GIT_URI)
+                             LEADER_ID)
         VALUES (PROJECT_NO_COUNT_SEQ.nextval,
                 #{projectName},
                 '1',
@@ -45,7 +44,6 @@
                 0,
                 0,
                 #{leaderId})
-                #{gitUri})
         <selectKey keyProperty="projectNo" resultType="int" order="AFTER">
             select PROJECT_NO_COUNT_SEQ.currval as projectNo FROM DUAL
         </selectKey>

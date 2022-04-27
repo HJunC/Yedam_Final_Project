@@ -42,8 +42,14 @@
 		<div class="mb-20 mb-md-10" id="langBtnDiv">
 			<div class="tags mb-60">
 				<c:forEach var="lang" items="${choice}">
-					<a href="mentoList.do?lang=${lang}"
-						class="btn btn-mod btn-border-w btn-round btn-medium">${lang}</a>
+					<c:if test="${lang != 'C#' }">
+						<a href="mentoList.do?lang=${lang}"
+							class="btn btn-mod btn-border-w btn-round btn-medium">${lang}</a>
+					</c:if>
+					<c:if test="${lang == 'C#' }">
+						<a href="mentoList.do?lang=C%23"
+							class="btn btn-mod btn-border-w btn-round btn-medium">${lang}</a>
+					</c:if>
 				</c:forEach>
 			</div>
 		</div>

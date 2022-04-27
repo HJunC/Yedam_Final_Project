@@ -32,7 +32,9 @@ public class Handler extends TextWebSocketHandler {
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		sessionList.add(session);
-		
+		System.out.println(session);
+		System.out.println(session.getPrincipal());
+		System.out.println(session.getPrincipal().getName());
 		if(session.getPrincipal() != null) {
 			for(AlarmVO vo : alarmDAO.alarmList(Objects.requireNonNull(session.getPrincipal()).getName())) {
 				session.sendMessage(new TextMessage(vo.getSubject()));
@@ -60,6 +62,7 @@ public class Handler extends TextWebSocketHandler {
 		AlarmVO alarmvo = objectMapper.readValue(msg, AlarmVO.class);
 		alarmDAO.insertAlarm(alarmvo);
 		for (WebSocketSession sess : sessionList) {
+			System.out.println(sess.getPrincipal().getName());
 			if (Objects.requireNonNull(sess.getPrincipal()).getName().equals(alarmvo.getMemberId())) {
 				sess.sendMessage(new TextMessage(alarmvo.getSubject()));
 				alarmDAO.updateAlarm(alarmvo.getMemberId());

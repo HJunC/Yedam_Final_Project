@@ -1,20 +1,15 @@
 package co.yd.deval.board.web;
 
-import java.io.File;
-import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
 import co.yd.deval.board.service.BoardService;
 import co.yd.deval.board.service.BoardVO;
@@ -33,8 +28,6 @@ public class BoardController {
 	@Autowired
 	private CommentService commentDAO;
 
-	@Autowired
-	private String uploadPath;
 
 	@GetMapping("/free.do")
 	public String free(Model model, BoardVO vo, Criteria cri) {
@@ -64,24 +57,8 @@ public class BoardController {
 	}
 
 	@PostMapping("/writePost.do")
-	public String write(BoardVO vo, MultipartFile file) {
-		String originalName = file.getOriginalFilename();
-		String fileType = originalName.substring(originalName.lastIndexOf(".") + 1, originalName.length());
-		String fileName = UUID.randomUUID().toString() + "." + fileType;
-		String pathName = uploadPath + fileName;
-		File dest = new File(pathName);
-		System.out.println(vo);
-		try {
-			FileCopyUtils.copy(file.getBytes(), dest);
-		} catch (IllegalStateException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		vo.setPhoto(fileName);
+	public String write(BoardVO vo) {
 		int n = boardDao.boardInsert(vo);
-
 		if (vo.getBoardTypeNo() == 1) {
 			return "redirect:notice.do";
 		} else if (vo.getBoardTypeNo() == 2) {
@@ -186,9 +163,12 @@ public class BoardController {
 	}
 
 	@GetMapping("/technicSelect.do")
-	public String technicSelect(BoardVO vo, Model model) {
+	public String technicSelect(BoardVO vo, Model model, CommentVO cvo, Principal user) {
 		boardDao.boardHitUp(vo.getBoardNo());
+		cvo.setBoardNo(vo.getBoardNo());
 		model.addAttribute("board",boardDao.boardSelect(vo));
+		model.addAttribute("user",user.getName());
+		model.addAttribute("comments",commentDAO.commentSelectList(cvo));
 		return "board/boardDetail";
 	}
 }

@@ -86,7 +86,7 @@
        <![CDATA[
        SELECT * FROM (
            SELECT ROWNUM rn, t.*
-             FROM BOARD t
+             FROM (SELECT * FROM BOARD ORDER BY BOARD_NO DESC) t
        ]]>
 		<include refid="option"></include>
 		AND rownum <![CDATA[<=]]>
