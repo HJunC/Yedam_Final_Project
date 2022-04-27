@@ -489,7 +489,7 @@
                               and (project.state eq '1' or project.state eq '2')}">
                 <div class="mb-80 mb-xs-40">
 
-                    <h4 class="blog-page-title">신청현황</h4>
+                    <h4 class="blog-page-title">지원자</h4>
 
                     <c:choose>
                         <c:when test="${not empty project.requestList}">
@@ -786,10 +786,6 @@
   projectSdtInput.setAttribute("value", moment(today).format("YYYY-MM-DD"));
   var projectEdtInput = document.getElementById("projectEdt");
   projectEdtInput.setAttribute("value", moment(today.setDate(today.getDate() + ${project.projectTerm})).format("YYYY-MM-DD"));
-  /*$("#projectSdt").on("change", (e) => {
-    const sdtDate = new Date(projectSdtInput.value);
-    projectEdtInput.setAttribute("value", moment(sdtDate.setDate(sdtDate.getDate() + ${project.projectTerm})).format("YYYY-MM-DD"));
-  })*/
 
   /**
    * 프로젝트 합류 요청 ajax
